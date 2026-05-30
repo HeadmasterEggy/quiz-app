@@ -340,7 +340,25 @@ body {
 
 .loading-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-/* Results card animations */
+.score-history {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: rgba(99, 102, 241, 0.08);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.4s ease 0.28s both;
+}
+
+.history-row {
+    margin: 2px 0;
+}
+
+.score-history strong {
+    color: var(--primary);
+}
 .trophy { animation: trophyBounce 0.6s ease 0.1s both; }
 
 @keyframes trophyBounce {

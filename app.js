@@ -3,6 +3,7 @@ let current = 0;
 let score = 0;
 let answered = false;
 const answers = [];
+const SCORE_HISTORY_KEY = 'quiz_score_history';
 
 const $ = id => document.getElementById(id);
 const show = id => $(id).classList.remove('hidden');
@@ -101,6 +102,40 @@ function showExplanation(isCorrect, q) {
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next Question →' : 'See Results 🏆';
 }
 
+function saveScore(correct, total) {
+    const history = JSON.parse(localStorage.getItem(SCORE_HISTORY_KEY) || '[]');
+    history.push({ correct, total, date: new Date().toISOString() });
+    // Keep only last 20 attempts
+    if (history.length > 20) history.shift();
+    localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(history));
+}
+
+function renderScoreHistory() {
+    const history = JSON.parse(localStorage.getItem(SCORE_HISTORY_KEY) || '[]');
+    if (history.length === 0) return;
+
+    const best = history.reduce((max, h) => {
+        const pct = h.correct / h.total;
+        return pct > max.pct ? { pct, entry: h } : max;
+    }, { pct: -1, entry: null });
+
+    const attempts = history.length;
+
+    const historyEl = document.createElement('div');
+    historyEl.className = 'score-history';
+    historyEl.innerHTML = `
+        <div class="history-row">Best: <strong>${Math.round(best.pct * 100)}%</strong> (${best.entry.correct}/${best.entry.total})</div>
+        <div class="history-row">Attempts: ${attempts}</div>
+    `;
+
+    const existing = document.querySelector('.score-history');
+    if (existing) existing.remove();
+
+    const resultsCard = $('resultsCard');
+    resultsCard.insertBefore(historyEl, resultsCard.querySelector('.answers-review'));
+}
+
+
 function showResults() {
     hide('explanationCard');
     show('resultsCard');
@@ -129,6 +164,10 @@ function showResults() {
     else if (pct >= 60) msg = 'Good effort! Keep practicing! 💪';
     else msg = 'Keep learning! You\'ll get better! 📚';
     $('scoreMessage').textContent = msg;
+
+    // Save and display score history
+    saveScore(score, questions.length);
+    renderScoreHistory();
 }
 
 $('nextBtn').onclick = () => {
@@ -141,6 +180,8 @@ $('restartBtn').onclick = () => {
     current = 0;
     score = 0;
     answers.length = 0;
+    const oldHistory = document.querySelector('.score-history');
+    if (oldHistory) oldHistory.remove();
     showQuestion();
 };
 
