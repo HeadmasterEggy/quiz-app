@@ -111,6 +111,17 @@ function showResults() {
     const wrongCount = questions.length - score;
     $('scoreBreakdown').textContent = `${score} correct, ${wrongCount} incorrect`;
 
+    // Build per-question answer review
+    const review = $('answersReview');
+    review.innerHTML = '';
+    answers.forEach(a => {
+        const dot = document.createElement('span');
+        dot.className = 'answer-dot ' + (a.correct ? 'dot-correct' : 'dot-wrong');
+        dot.textContent = a.correct ? '✓' : '✗';
+        dot.title = `Q${a.questionIndex + 1}: ${a.question.substring(0, 60)}…`;
+        review.appendChild(dot);
+    });
+
     let msg = '';
     if (pct === 100) msg = 'Perfect score! Amazing! 🎉';
     else if (pct >= 80) msg = 'Great job! Almost there! 👏';
