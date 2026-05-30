@@ -12,9 +12,43 @@
     --glow-primary: rgba(99, 102, 241, 0.35);
 }
 
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+::selection { background: rgba(99, 102, 241, 0.35); color: var(--text); }
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+    animation: ambientDrift 18s ease-in-out infinite;
+}
+
+@keyframes ambientDrift {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
+    33% { transform: translate(2%, -1.5%) scale(1.03); opacity: 0.9; }
+    66% { transform: translate(-1.5%, 1%) scale(0.98); opacity: 0.95; }
+}
+
+.container { position: relative; z-index: 1; }
+
 html { scroll-behavior: smooth; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -177,7 +211,9 @@ body {
 
 .option-btn.disabled {
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.6;
+    filter: grayscale(0.4);
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .result-badge {
