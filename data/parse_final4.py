@@ -84,7 +84,7 @@ print(f"Canvas quizzes: {sorted(canvas_quizzes.keys())}")
 print(f"Mock exams: {list(mock_exams.keys())}")
 
 # ============================================================
-# PARSE CANVAS QUIZZES - Improved parser
+# PARSE CANVAS QUIZZES - Comprehensive approach
 # ============================================================
 
 all_canvas_questions = []
@@ -92,7 +92,85 @@ all_canvas_questions = []
 for week, text in sorted(canvas_quizzes.items()):
     print(f"\nParsing Week {week} ({len(text)} chars)")
     
-    # Find all question headers
+    # Step 1: Find all question texts in the entire week text
+    # Question texts appear at the bottom of pages with markers
+    question_texts = []
+    
+    # Look for all question markers and extract the text after them
+    # Patterns: (MCQ, choose 1), (MAQ, choose 2), (MCQ, choose one), (MAQ, choose two)
+    # Also: MCQ (choose 1), MAQ (choose 2)
+    # Also: plain text questions without markers
+    
+    # Find all occurrences of "Take the Quiz Again" and extract question texts after them
+    quiz_again_positions = list(re.finditer(r'Take the Quiz Again', text))
+    
+    for pos in quiz_again_positions:
+        start = pos.end()
+        # Extract text until the next footer or next page
+        block = text[start:]
+        lines = block.split('\n')
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith('5/31/26') or line.startswith('INFO5995') or line.startswith('http') or line.startswith('Quiz Score'):
+                break
+            # Check if this is a question text
+            if line.startswith('(MCQ') or line.startswith('(MAQ') or line.startswith('MCQ') or line.startswith('MAQ'):
+                # Extract the question text after the marker
+                q_match = re.match(r'\((MCQ|MAQ), choose (\w+)\)\s*(.*)', line)
+                if not q_match:
+                    q_match = re.match(r'(MCQ|MAQ)\s*\(choose (\w+)\)\s*(.*)', line)
+                if q_match:
+                    q_type = q_match.group(1)
+                    q_choose = q_match.group(2)
+                    q_text = q_match.group(3)
+                    question_texts.append({'type': q_type, 'choose': q_choose, 'text': q_text})
+                else:
+                    # Just the marker, text is on next line
+                    question_texts.append({'type': 'MCQ', 'choose': '1', 'text': ''})
+            elif line and not line.startswith('(') and not line.startswith('Correct answer') and not line.startswith('Question'):
+                # Plain text question (Week 02)
+                if question_texts and question_texts[-1]['text'] == '':
+                    question_texts[-1]['text'] = line
+                else:
+                    question_texts.append({'type': 'MCQ', 'choose': '1', 'text': line})
+    
+    # Also look for question texts after "Quiz Score"
+    quiz_score_positions = list(re.finditer(r'Quiz Score', text))
+    for pos in quiz_score_positions:
+        start = pos.end()
+        block = text[start:]
+        lines = block.split('\n')
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith('5/31/26') or line.startswith('INFO5995') or line.startswith('http'):
+                break
+            if line.startswith('(MCQ') or line.startswith('(MAQ') or line.startswith('MCQ') or line.startswith('MAQ'):
+                q_match = re.match(r'\((MCQ|MAQ), choose (\w+)\)\s*(.*)', line)
+                if not q_match:
+                    q_match = re.match(r'(MCQ|MAQ)\s*\(choose (\w+)\)\s*(.*)', line)
+                if q_match:
+                    q_type = q_match.group(1)
+                    q_choose = q_match.group(2)
+                    q_text = q_match.group(3)
+                    question_texts.append({'type': q_type, 'choose': q_choose, 'text': q_text})
+                else:
+                    question_texts.append({'type': 'MCQ', 'choose': '1', 'text': ''})
+            elif line and not line.startswith('(') and not line.startswith('Correct answer') and not line.startswith('Question'):
+                if question_texts and question_texts[-1]['text'] == '':
+                    question_texts[-1]['text'] = line
+                else:
+                    question_texts.append({'type': 'MCQ', 'choose': '1', 'text': line})
+    
+    # Also handle multi-line question texts
+    # If a question text is empty, the text is on the next line
+    for i in range(len(question_texts)):
+        if question_texts[i]['text'] == '':
+            # Find the next non-empty, non-marker line
+            pass  # This is complex, skip for now
+    
+    print(f"  Found {len(question_texts)} question texts")
+    
+    # Step 2: Find all question headers and extract options
     qheaders = list(re.finditer(r'Question\s+(\d+)\s+(\d+)\s*/\s*(\d+)\s*pts', text))
     print(f"  Found {len(qheaders)} question headers")
     
@@ -110,12 +188,13 @@ for week, text in sorted(canvas_quizzes.items()):
         end = qheaders[i+1].start() if i+1 < len(qheaders) else len(text)
         qblock = text[start:end]
         
-        # Extract options and explanation using improved logic
+        # Extract options and explanation
         lines = qblock.split('\n')
         options = []
         explanation = ""
         in_options = True
         current_option = None
+        last_xa0_was_empty = False
         
         for line in lines:
             raw_line = line
@@ -129,37 +208,43 @@ for week, text in sorted(canvas_quizzes.items()):
                     current_option = None
                 continue
             
-            # Check if this is a new option (has \xa0 in raw line)
             if '\xa0' in raw_line or '\u2022' in raw_line or '\u00a0' in raw_line:
-                # Save previous option if exists
                 if current_option is not None:
                     options.append(current_option)
                 
-                # Start new option - remove \xa0 and strip
                 clean_opt = raw_line.replace('\xa0', '').replace('\u2022', '').replace('\u00a0', '').strip()
                 if clean_opt and not clean_opt.startswith('(') and not clean_opt.startswith('5/31/26') and not clean_opt.startswith('INFO5995') and not clean_opt.startswith('http') and not clean_opt.startswith('Quiz Score') and not clean_opt.startswith('Take the Quiz Again'):
                     current_option = clean_opt
+                    last_xa0_was_empty = False
                 else:
-                    # Empty \xa0 line - start option but text is on next line
                     current_option = ''
+                    last_xa0_was_empty = True
             elif line == 'Correct answer' or line == 'Take the Quiz Again' or line.startswith('Quiz Score') or line.startswith('(MCQ') or line.startswith('(MAQ') or line.startswith('MCQ') or line.startswith('MAQ') or line.startswith('5/31/26') or line.startswith('INFO5995') or line.startswith('http'):
-                # End of options - save current option and stop collecting
                 if current_option is not None:
                     options.append(current_option)
                     current_option = None
-                in_options = False  # Set in_options to False for any end marker
+                in_options = False
                 if line == 'Correct answer':
-                    in_options = False  # Already set above, but keep for clarity
+                    in_options = False
             elif not in_options:
-                # This is explanation text
-                if line not in ['Correct answer', 'Take the Quiz Again', 'Quiz Score'] and not line.startswith('5/31/26') and not line.startswith('INFO5995') and not line.startswith('http') and not line.startswith('('):
+                if line not in ['Correct answer', 'Take the Quiz Again', 'Quiz Score'] and not line.startswith('5/31/26') and not line.startswith('INFO5995') and not line.startswith('http') and not line.startswith('(') and not line.startswith('Question'):
                     explanation += line + ' '
             elif current_option is not None:
-                # This might be a continuation of the current option
-                current_option += ' ' + line
+                # Check if this is a continuation or an explanation
+                if last_xa0_was_empty:
+                    current_option += ' ' + line
+                    last_xa0_was_empty = False
+                else:
+                    # This is likely an explanation or footer, not a continuation
+                    # Save the option and stop collecting
+                    options.append(current_option)
+                    current_option = None
+                    in_options = False
+                    # If it's not an end marker, it might be explanation
+                    if line not in ['Correct answer', 'Take the Quiz Again', 'Quiz Score'] and not line.startswith('5/31/26') and not line.startswith('INFO5995') and not line.startswith('http') and not line.startswith('(') and not line.startswith('Question'):
+                        explanation += line + ' '
         
-        # Save last option if exists
-        if current_option:
+        if current_option is not None:
             options.append(current_option)
         
         explanation = explanation.strip()
@@ -168,11 +253,21 @@ for week, text in sorted(canvas_quizzes.items()):
         explanation = re.sub(r'https?://.*$', '', explanation).strip()
         explanation = explanation.replace('\uea6a', '').strip()
         
+        # Match question text to this question
+        q_text = ""
+        if i < len(question_texts):
+            q_text = question_texts[i]['text']
+            q_type = question_texts[i]['type']
+            q_choose = question_texts[i]['choose']
+        
         week_questions.append({
             'week': week,
             'num': q_num,
             'score': score,
             'max_score': max_score,
+            'question': q_text,
+            'type': q_type if i < len(question_texts) else 'MCQ',
+            'choose': q_choose if i < len(question_texts) else '1',
             'options': options,
             'explanation': explanation
         })
@@ -263,8 +358,8 @@ for mock_name, text in mock_exams.items():
 print(f"\nTotal Mock questions parsed: {len(all_mock_questions)}")
 
 # Print some stats
-for q in all_canvas_questions[:5]:
-    print(f"Canvas W{q['week']} Q{q['num']}: {len(q['options'])} options, expl={len(q['explanation'])} chars")
+for q in all_canvas_questions[:10]:
+    print(f"Canvas W{q['week']} Q{q['num']}: {q['type']}(choose {q['choose']}), {len(q['options'])} options, expl={len(q['explanation'])} chars, question={q['question'][:80]}")
 
-for q in all_mock_questions[:5]:
+for q in all_mock_questions[:10]:
     print(f"Mock {q['mock']} Q{q['num']}: {q['question'][:80]}")
