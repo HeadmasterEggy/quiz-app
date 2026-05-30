@@ -10,6 +10,8 @@
     --border: #334155;
 }
 
+html { scroll-behavior: smooth; }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -386,6 +388,19 @@ body {
 .explanation-card { animation: fadeIn 0.4s ease; }
 
 .results-card { animation: fadeIn 0.3s ease; }
+
+@media (max-width: 768px) {
+    .container { padding: 0 12px; }
+    .quiz-header h1 { font-size: 1.5rem; }
+    .quiz-card, .explanation-card, .results-card {
+        padding: 28px 24px;
+        border-radius: 14px;
+    }
+    .question-text { font-size: 1.15rem; }
+    .option-btn { padding: 14px 18px; font-size: 0.95rem; }
+    .final-score { font-size: 2.75rem; }
+    .trophy { font-size: 3.5rem; }
+}
 
 @media (max-width: 480px) {
     .quiz-card, .explanation-card, .results-card {
