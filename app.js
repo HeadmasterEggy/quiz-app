@@ -5,13 +5,15 @@ let answered = false;
 const answers = [];
 
 const $ = id => document.getElementById(id);
+const show = id => $(id).classList.remove('hidden');
+const hide = id => $(id).classList.add('hidden');
 
 const DELAY_BEFORE_EXPLANATION = 600;
 
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
-    $('loadingCard').classList.remove('hidden');
-    $('quizCard').classList.add('hidden');
+    show('loadingCard');
+    hide('quizCard');
     try {
         const res = await fetch('data/questions.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -20,7 +22,7 @@ async function loadQuestions() {
         if (!Array.isArray(questions) || questions.length === 0) {
             throw new Error('No questions found in data file');
         }
-        $('loadingCard').classList.add('hidden');
+        hide('loadingCard');
         $('quizCard').classList.add('active');
         showQuestion();
     } catch (err) {
@@ -56,8 +58,8 @@ function showQuestion() {
 
     $('quizCard').classList.remove('hidden', 'leaving');
     $('quizCard').classList.add('active');
-    $('explanationCard').classList.add('hidden');
-    $('resultsCard').classList.add('hidden');
+    hide('explanationCard');
+    hide('resultsCard');
 }
 
 function handleAnswer(index, btn) {
@@ -87,8 +89,8 @@ function handleAnswer(index, btn) {
 }
 
 function showExplanation(isCorrect, q) {
-    $('quizCard').classList.add('hidden');
-    $('explanationCard').classList.remove('hidden');
+    hide('quizCard');
+    show('explanationCard');
 
     const badge = $('resultBadge');
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
@@ -99,8 +101,8 @@ function showExplanation(isCorrect, q) {
 }
 
 function showResults() {
-    $('explanationCard').classList.add('hidden');
-    $('resultsCard').classList.remove('hidden');
+    hide('explanationCard');
+    show('resultsCard');
     $('progressFill').style.width = '100%';
 
     const pct = Math.round((score / questions.length) * 100);
