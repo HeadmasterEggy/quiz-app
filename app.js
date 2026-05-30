@@ -5,14 +5,27 @@ let answered = false;
 const answers = [];
 const SCORE_HISTORY_KEY = 'quiz_score_history';
 
-const $ = id => document.getElementById(id);
-const show = id => $(id).classList.remove('hidden');
-const hide = id => $(id).classList.add('hidden');
+const $ = id => {
+    const el = document.getElementById(id);
+    if (!el) console.warn(`Element #${id} not found`);
+    return el;
+};
+const show = id => {
+    const el = $(id);
+    if (el) el.classList.remove('hidden');
+};
+const hide = id => {
+    const el = $(id);
+    if (el) el.classList.add('hidden');
+};
 
 const DELAY_BEFORE_EXPLANATION = 600;
 
+const LOADING_CARD_HTML = `<div class="spinner"></div><p>Loading questions...</p>`;
+
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
+    $('loadingCard').innerHTML = LOADING_CARD_HTML;
     show('loadingCard');
     hide('quizCard');
     try {
