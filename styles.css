@@ -245,6 +245,13 @@ body {
     margin-bottom: 8px;
 }
 
+.score-breakdown {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
 .score-message {
     text-align: center;
     color: var(--text-muted);
@@ -284,7 +291,9 @@ body {
 
 .final-score { animation: popIn 0.5s ease 0.35s both; }
 
-.score-message { animation: fadeIn 0.4s ease 0.45s both; }
+.score-breakdown { animation: fadeIn 0.4s ease 0.42s both; }
+
+.score-message { animation: fadeIn 0.4s ease 0.5s both; }
 
 .restart-btn { animation: fadeIn 0.4s ease 0.55s both; }
 

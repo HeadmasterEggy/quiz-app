@@ -2,6 +2,7 @@ let questions = [];
 let current = 0;
 let score = 0;
 let answered = false;
+const answers = [];
 
 const $ = id => document.getElementById(id);
 
@@ -77,6 +78,8 @@ function handleAnswer(index, btn) {
         allBtns[q.correct].classList.add('correct');
     }
 
+    answers.push({ questionIndex: current, correct: isCorrect, question: q.question });
+
     setTimeout(() => {
         $('quizCard').classList.add('leaving');
         setTimeout(() => showExplanation(isCorrect, q), 350);
@@ -103,6 +106,9 @@ function showResults() {
     const pct = Math.round((score / questions.length) * 100);
     $('finalScore').textContent = `${score}/${questions.length}`;
 
+    const wrongCount = questions.length - score;
+    $('scoreBreakdown').textContent = `${score} correct, ${wrongCount} incorrect`;
+
     let msg = '';
     if (pct === 100) msg = 'Perfect score! Amazing! 🎉';
     else if (pct >= 80) msg = 'Great job! Almost there! 👏';
@@ -120,6 +126,7 @@ $('nextBtn').onclick = () => {
 $('restartBtn').onclick = () => {
     current = 0;
     score = 0;
+    answers.length = 0;
     showQuestion();
 };
 
