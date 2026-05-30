@@ -77,6 +77,7 @@ function handleAnswer(index, btn) {
         btn.classList.add('correct');
     } else {
         btn.classList.add('wrong');
+        btn.classList.add('shake');
         allBtns[q.correct].classList.add('correct');
     }
 
