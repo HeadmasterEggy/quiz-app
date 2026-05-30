@@ -6,9 +6,20 @@ let answered = false;
 const $ = id => document.getElementById(id);
 
 async function loadQuestions() {
-    const res = await fetch('data/questions.json');
-    questions = (await res.json()).questions;
-    showQuestion();
+    $('questionCounter').textContent = 'Loading...';
+    $('loadingCard').classList.remove('hidden');
+    $('quizCard').classList.add('hidden');
+    try {
+        const res = await fetch('data/questions.json');
+        const data = await res.json();
+        questions = data.questions;
+        $('loadingCard').classList.add('hidden');
+        $('quizCard').classList.add('active');
+        showQuestion();
+    } catch (err) {
+        $('questionCounter').textContent = 'Error loading questions';
+        $('loadingCard').innerHTML = '<p style="color:var(--error)">Failed to load questions. Please check the data file.</p>';
+    }
 }
 
 function showQuestion() {
@@ -29,7 +40,8 @@ function showQuestion() {
         opts.appendChild(btn);
     });
 
-    $('quizCard').classList.remove('hidden');
+    $('quizCard').classList.remove('hidden', 'leaving');
+    $('quizCard').classList.add('active');
     $('explanationCard').classList.add('hidden');
     $('resultsCard').classList.add('hidden');
 }
@@ -52,7 +64,10 @@ function handleAnswer(index, btn) {
         allBtns[q.correct].classList.add('correct');
     }
 
-    setTimeout(() => showExplanation(isCorrect, q), 600);
+    setTimeout(() => {
+        $('quizCard').classList.add('leaving');
+        setTimeout(() => showExplanation(isCorrect, q), 350);
+    }, 600);
 }
 
 function showExplanation(isCorrect, q) {
