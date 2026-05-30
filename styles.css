@@ -75,7 +75,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .explanation-card, .results-card, .option-btn, .next-btn, .restart-btn, .progress-fill, .loading-card, .spinner {
+    .quiz-card, .explanation-card, .results-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .progress-fill, .loading-card, .spinner {
         animation: none !important;
         transition: none !important;
     }
@@ -185,7 +185,7 @@ body {
     margin-bottom: 24px;
 }
 
-.next-btn, .restart-btn {
+.next-btn, .restart-btn, .retry-btn {
     width: 100%;
     padding: 16px;
     border-radius: 12px;
@@ -197,17 +197,17 @@ body {
     outline: none;
 }
 
-.next-btn:focus-visible, .restart-btn:focus-visible {
+.next-btn:focus-visible, .restart-btn:focus-visible, .retry-btn:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
-.next-btn {
+.next-btn, .retry-btn {
     background: var(--primary);
     color: white;
 }
 
-.next-btn:hover {
+.next-btn:hover, .retry-btn:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);

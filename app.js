@@ -5,25 +5,38 @@ let answered = false;
 
 const $ = id => document.getElementById(id);
 
+const DELAY_BEFORE_EXPLANATION = 600;
+
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
     $('loadingCard').classList.remove('hidden');
     $('quizCard').classList.add('hidden');
     try {
         const res = await fetch('data/questions.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         questions = data.questions;
+        if (!Array.isArray(questions) || questions.length === 0) {
+            throw new Error('No questions found in data file');
+        }
         $('loadingCard').classList.add('hidden');
         $('quizCard').classList.add('active');
         showQuestion();
     } catch (err) {
         $('questionCounter').textContent = 'Error loading questions';
-        $('loadingCard').innerHTML = '<p style="color:var(--error)">Failed to load questions. Please check the data file.</p>';
+        $('loadingCard').innerHTML = `
+            <p style="color:var(--error);margin-bottom:16px;">Failed to load: ${err.message}</p>
+            <button class="retry-btn" onclick="loadQuestions()">↻ Retry</button>
+        `;
     }
 }
 
 function showQuestion() {
     answered = false;
+    if (current >= questions.length) {
+        showResults();
+        return;
+    }
     const q = questions[current];
 
     $('questionCounter').textContent = `Question ${current + 1} of ${questions.length}`;
@@ -67,7 +80,7 @@ function handleAnswer(index, btn) {
     setTimeout(() => {
         $('quizCard').classList.add('leaving');
         setTimeout(() => showExplanation(isCorrect, q), 350);
-    }, 600);
+    }, DELAY_BEFORE_EXPLANATION);
 }
 
 function showExplanation(isCorrect, q) {
