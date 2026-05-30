@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the primary purpose of a session token in web authentication?",
+      "options": [
+        "To store user passwords securely",
+        "To maintain user state across multiple requests",
+        "To encrypt database connections",
+        "To compress response data"
+      ],
+      "correct": 1,
+      "explanation": "Session tokens are used to maintain user state across multiple HTTP requests. After a user authenticates, the server issues a session token that the client sends with subsequent requests, allowing the server to identify the user without requiring re-authentication."
+    },
+    {
+      "id": 2,
+      "question": "Which of the following is a common vulnerability in session management?",
+      "options": [
+        "Using HTTPS for token transmission",
+        "Implementing token expiration",
+        "Storing tokens in localStorage without XSS protection",
+        "Rotating tokens after privilege changes"
+      ],
+      "correct": 2,
+      "explanation": "Storing session tokens in localStorage without proper XSS protection is dangerous because an attacker who can inject JavaScript (via XSS) can steal the token and impersonate the user. Tokens should be stored in httpOnly cookies when possible."
+    },
+    {
+      "id": 3,
+      "question": "What does the principle of least privilege mean in security?",
+      "options": [
+        "Giving all users maximum permissions",
+        "Granting only the minimum permissions necessary",
+        "Requiring multiple passwords for authentication",
+        "Encrypting all data with the strongest algorithm"
+      ],
+      "correct": 1,
+      "explanation": "The principle of least privilege states that users and processes should be granted only the minimum permissions necessary to perform their tasks. This limits the potential damage if an account is compromised."
+    }
+  ]
+}
