@@ -76,7 +76,9 @@ function showQuestion() {
     hide('resultsCard');
 }
 
-function handleAnswer(index, btn) {
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function handleAnswer(index, btn) {
     if (answered) return;
     answered = true;
 
@@ -97,10 +99,10 @@ function handleAnswer(index, btn) {
 
     answers.push({ questionIndex: current, correct: isCorrect, question: q.question });
 
-    setTimeout(() => {
-        $('quizCard').classList.add('leaving');
-        setTimeout(() => showExplanation(isCorrect, q), 350);
-    }, DELAY_BEFORE_EXPLANATION);
+    await wait(DELAY_BEFORE_EXPLANATION);
+    $('quizCard').classList.add('leaving');
+    await wait(350);
+    showExplanation(isCorrect, q);
 }
 
 function showExplanation(isCorrect, q) {
