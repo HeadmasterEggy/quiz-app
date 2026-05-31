@@ -23,6 +23,26 @@ const DELAY_BEFORE_EXPLANATION = 600;
 
 const LOADING_CARD_HTML = `<div class="spinner"></div><p>Loading questions...</p>`;
 
+function validateQuestion(q, index) {
+    if (!q || typeof q.question !== 'string' || q.question.trim() === '') {
+        console.warn(`Question ${index + 1}: missing or empty question text`);
+        return false;
+    }
+    if (!Array.isArray(q.options) || q.options.length === 0) {
+        console.warn(`Question ${index + 1}: missing or empty options`);
+        return false;
+    }
+    if (typeof q.correct !== 'number' || q.correct < 0 || q.correct >= q.options.length) {
+        console.warn(`Question ${index + 1}: correct index ${q.correct} is out of bounds (0-${q.options.length - 1})`);
+        return false;
+    }
+    if (typeof q.explanation !== 'string' || q.explanation.trim() === '') {
+        console.warn(`Question ${index + 1}: missing or empty explanation`);
+        return false;
+    }
+    return true;
+}
+
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
     $('loadingCard').innerHTML = LOADING_CARD_HTML;
@@ -32,10 +52,11 @@ async function loadQuestions() {
         const res = await fetch('data/questions.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        questions = data.questions;
-        if (!Array.isArray(questions) || questions.length === 0) {
-            throw new Error('No questions found in data file');
+        questions = (data.questions || []).filter((q, i) => validateQuestion(q, i));
+        if (questions.length === 0) {
+            throw new Error('No valid questions found in data file');
         }
+        console.log(`Loaded ${questions.length} valid question(s)`);
         hide('loadingCard');
         $('quizCard').classList.add('active');
         showQuestion();
@@ -46,6 +67,18 @@ async function loadQuestions() {
             <button class="retry-btn" onclick="loadQuestions()">↻ Retry</button>
         `;
     }
+}
+
+function renderOptions(q) {
+    const opts = $('options');
+    opts.innerHTML = '';
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="label">${String.fromCharCode(65 + i)}</span><span class="text">${opt}</span>`;
+        btn.onclick = () => handleAnswer(i, btn);
+        opts.appendChild(btn);
+    });
 }
 
 function showQuestion() {
@@ -60,15 +93,7 @@ function showQuestion() {
     $('progressFill').style.width = `${((current) / questions.length) * 100}%`;
     $('questionText').textContent = q.question;
 
-    const opts = $('options');
-    opts.innerHTML = '';
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = `<span class="label">${String.fromCharCode(65 + i)}</span><span class="text">${opt}</span>`;
-        btn.onclick = () => handleAnswer(i, btn);
-        opts.appendChild(btn);
-    });
+    renderOptions(q);
 
     $('quizCard').classList.remove('hidden', 'leaving');
     $('quizCard').classList.add('active');
@@ -94,7 +119,8 @@ async function handleAnswer(index, btn) {
     } else {
         btn.classList.add('wrong');
         btn.classList.add('shake');
-        allBtns[q.correct].classList.add('correct');
+        const correctBtn = allBtns[q.correct];
+        if (correctBtn) correctBtn.classList.add('correct');
     }
 
     answers.push({ questionIndex: current, correct: isCorrect, question: q.question });
