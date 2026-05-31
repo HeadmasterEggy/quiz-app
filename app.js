@@ -43,6 +43,15 @@ function validateQuestion(q, index) {
     return true;
 }
 
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
     $('loadingCard').innerHTML = LOADING_CARD_HTML;
@@ -52,7 +61,7 @@ async function loadQuestions() {
         const res = await fetch('data/questions.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        questions = (data.questions || []).filter((q, i) => validateQuestion(q, i));
+        questions = shuffleArray((data.questions || []).filter((q, i) => validateQuestion(q, i)));
         if (questions.length === 0) {
             throw new Error('No valid questions found in data file');
         }
