@@ -115,8 +115,9 @@ function startFresh(filter) {
 
 function showResumeBanner(saved) {
     show('resumeBanner');
-    const pct = saved.questionIds.length ? Math.round((saved.score / (saved.current || 1)) * 100) : 0;
-    $('resumeText').textContent = `Saved: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${saved.current || 0}`;
+    const answeredCount = (saved.current || 0) + 1;
+    const pct = saved.questionIds.length ? Math.round((saved.score / answeredCount) * 100) : 0;
+    $('resumeText').textContent = `Saved: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${answeredCount} (${pct}%)`;
     $('resumeBtn').onclick = () => {
         if (resumeState(saved)) {
             hide('resumeBanner');
