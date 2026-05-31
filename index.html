@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>INFO5995 Quiz</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="quiz-header">
-            <h1>🎯 Quiz Challenge</h1>
+            <h1>🔐 INFO5995 Quiz</h1>
+            <div class="header-controls">
+                <select id="weekFilter" class="week-select">
+                    <option value="all">All Weeks & Exams</option>
+                </select>
+                <button id="headerRestartBtn" class="icon-btn" title="Restart">↻</button>
+            </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="question-counter" id="questionCounter">Loading...</div>
+            <div class="question-counter" id="questionCounter">Ready</div>
         </div>
 
         <div class="loading-card" id="loadingCard">
@@ -36,14 +42,18 @@
             <div class="trophy">🏆</div>
             <h2>Quiz Complete!</h2>
             <div class="final-score" id="finalScore"></div>
-            <div class="score-breakdown" id="scoreBreakdown"></div>
             <div class="score-percentage" id="scorePercentage"></div>
+            <div class="score-breakdown" id="scoreBreakdown"></div>
             <div class="score-message" id="scoreMessage"></div>
             <div class="answers-review" id="answersReview"></div>
-            <button class="restart-btn" id="restartBtn">↻ Restart Quiz</button>
+            <div class="results-actions">
+                <button class="restart-btn" id="restartBtn">↻ Restart</button>
+                <button class="retry-wrong-btn hidden" id="retryWrongBtn">🔄 Retry Wrong Answers</button>
+            </div>
         </div>
     </div>
 
+    <script src="data/questions.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

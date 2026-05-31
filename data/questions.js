@@ -1,4 +1,4 @@
-{
+window.QUIZ_DATA = {
   "questions": [
     {
       "question": "Rice's theorem says that no automatic tool can perfectly decide every non-trivial semantic property of every possible program. What is the most practical lesson for security analysis?",
@@ -2598,4 +2598,4 @@
     "Mock Exam 2",
     "Mock Exam 1"
   ]
-}
+};
