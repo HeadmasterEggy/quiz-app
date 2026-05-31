@@ -114,7 +114,7 @@ body {
     animation: fadeIn 0.5s ease 0.3s both;
 }
 
-.quiz-card, .explanation-card, .results-card {
+.quiz-card, .explanation-card, .results-card, .loading-card {
     background: var(--card);
     border-radius: 16px;
     padding: 32px;
@@ -124,9 +124,14 @@ body {
 }
 
 @media (hover: hover) {
-    .quiz-card:hover, .explanation-card:hover, .results-card:hover {
+    .quiz-card:hover, .explanation-card:hover, .results-card:hover, .loading-card:hover {
         box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
     }
+}
+
+.loading-card {
+    text-align: center;
+    animation: fadeIn 0.35s ease both;
 }
 
 /* Option button label: circular letter badge */
@@ -233,7 +238,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .explanation-card, .results-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .progress-fill, .loading-card, .spinner {
+    .quiz-card, .explanation-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .progress-fill, .spinner {
         animation: none !important;
         transition: none !important;
     }
@@ -591,7 +596,7 @@ body {
 @media (max-width: 768px) {
     .container { padding: 0 12px; }
     .quiz-header h1 { font-size: 1.5rem; }
-    .quiz-card, .explanation-card, .results-card {
+    .quiz-card, .explanation-card, .results-card, .loading-card {
         padding: 28px 24px;
         border-radius: 14px;
     }
@@ -602,7 +607,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .quiz-card, .explanation-card, .results-card {
+    .quiz-card, .explanation-card, .results-card, .loading-card {
         padding: 24px 20px;
     }
     .question-text { font-size: 1.1rem; }
