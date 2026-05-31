@@ -667,6 +667,15 @@ body {
 
 .results-card { animation: fadeIn 0.3s ease; }
 
+.explanation-inline {
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(99, 102, 241, 0.06);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.3s ease;
+}
+
 @media (max-width: 768px) {
     .container { padding: 0 12px; }
     .quiz-header h1 { font-size: 1.5rem; }

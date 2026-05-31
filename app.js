@@ -18,7 +18,7 @@ let isRetryMode = false;
 // ── Load ──
 function loadQuestions(filter = 'all') {
     currentWeekFilter = filter;
-    hide('quizCard'); hide('explanationCard'); hide('resultsCard');
+    hide('quizCard'); hide('resultsCard');
     show('loadingCard');
     $('questionCounter').textContent = 'Loading...';
 
@@ -90,8 +90,9 @@ function showQuestion() {
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
     $('questionText').textContent = q.question;
     renderOptions();
+    hide('explanationInline');
+    hide('nextBtn');
     show('quizCard');
-    hide('explanationCard');
     hide('resultsCard');
 }
 
@@ -121,14 +122,15 @@ function handleAnswer(index, btn) {
     if (!isCorrect) saveWrongAnswer(q);
 
     setTimeout(() => {
-        show('explanationCard');
-        hide('quizCard');
         const badge = $('resultBadge');
         badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
         badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
         $('explanationText').textContent = q.explanation || '';
+        show('explanationInline');
+        show('nextBtn');
         $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
-    }, 500);
+        $('nextBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 400);
 }
 
 // ── Wrong answer tracking ──
@@ -155,7 +157,7 @@ function clearWrongAnswers() {
 // ── Show Results ──
 function showResults() {
     hide('quizCard');
-    hide('explanationCard');
+    hide('nextBtn');
     show('resultsCard');
     $('progressFill').style.width = '100%';
 
@@ -243,7 +245,7 @@ document.addEventListener('keydown', (e) => {
         if (idx >= 0) document.querySelectorAll('.option-btn')[idx]?.click();
     }
     if (e.key === 'Enter') {
-        if (!$('explanationCard').classList.contains('hidden')) $('nextBtn').click();
+        if (answered && !$('nextBtn').classList.contains('hidden')) $('nextBtn').click();
         else if (!$('resultsCard').classList.contains('hidden')) $('restartBtn').click();
     }
 });
