@@ -143,8 +143,17 @@ function showExplanation(isCorrect, q) {
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next Question →' : 'See Results 🏆';
 }
 
+function getScoreHistory() {
+    try {
+        const raw = localStorage.getItem(SCORE_HISTORY_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch { return []; }
+}
+
 function saveScore(correct, total) {
-    const history = JSON.parse(localStorage.getItem(SCORE_HISTORY_KEY) || '[]');
+    const history = getScoreHistory();
     history.push({ correct, total, date: new Date().toISOString() });
     // Keep only last 20 attempts
     if (history.length > 20) history.shift();
@@ -152,7 +161,7 @@ function saveScore(correct, total) {
 }
 
 function renderScoreHistory() {
-    const history = JSON.parse(localStorage.getItem(SCORE_HISTORY_KEY) || '[]');
+    const history = getScoreHistory();
     if (history.length === 0) return;
 
     const best = history.reduce((max, h) => {
