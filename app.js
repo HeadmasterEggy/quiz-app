@@ -398,7 +398,9 @@ $('restartBtn').onclick = restart;
 $('headerRestartBtn').onclick = restart;
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
-$('themeToggleBtn').onclick = toggleTheme;
+var themeBtn = $('themeToggleBtn');
+if (themeBtn) themeBtn.onclick = toggleTheme;
+else console.warn('themeToggleBtn not found in DOM');
 
 document.addEventListener('keydown', (e) => {
     if (isInteractiveTarget(e.target)) return;
