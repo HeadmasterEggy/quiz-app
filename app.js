@@ -30,7 +30,7 @@ function saveState() {
         const state = {
             filter: currentWeekFilter,
             questionIds: questions.map(q => q.id),
-            current, score,
+            current: answers.length, score,
             answers: answers.map(a => ({ qid: a.question.id, correct: a.correct })),
             timestamp: Date.now()
         };
@@ -109,7 +109,7 @@ function startFresh(filter) {
     currentWeekFilter = filter;
     questions = filter === 'all' ? [...allQuestions] : allQuestions.filter(q => q.week === filter);
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
-    hide('loadingCard');
+    hide('loadingCard'); hide('resumeBanner');
     showQuestion();
 }
 
