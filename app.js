@@ -6,9 +6,10 @@ let answered = false;
 const answers = [];
 const SCORE_KEY = 'quiz_score_history';
 const WRONG_KEY = 'quiz_wrong_answers';
+const STATE_KEY = 'quiz_session_state';
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-let selectedMAQ = []; // tracks selected options for MAQ
+let selectedMAQ = [];
 let currentWeekFilter = 'all';
 let isRetryMode = false;
 
@@ -18,24 +19,113 @@ const hide = id => $(id).classList.add('hidden');
 
 function isMAQ(q) { return Array.isArray(q.correct); }
 
+// ── State persistence ──
+function saveState() {
+    if (isRetryMode) return; // don't persist retry sessions
+    try {
+        const state = {
+            filter: currentWeekFilter,
+            questionIds: questions.map(q => q.id),
+            current, score,
+            answers: answers.map(a => ({ qid: a.question.id, correct: a.correct })),
+            timestamp: Date.now()
+        };
+        localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    } catch { /* ignore */ }
+}
+
+function loadState() {
+    try {
+        const raw = localStorage.getItem(STATE_KEY);
+        if (!raw) return null;
+        const state = JSON.parse(raw);
+        if (!state.questionIds || !state.questionIds.length) return null;
+        // Expire after 24 hours
+        if (Date.now() - state.timestamp > 86400000) {
+            localStorage.removeItem(STATE_KEY);
+            return null;
+        }
+        return state;
+    } catch { return null; }
+}
+
+function clearState() {
+    try { localStorage.removeItem(STATE_KEY); } catch { /* ignore */ }
+}
+
+// ── Resume from saved state ──
+function resumeState(state) {
+    currentWeekFilter = state.filter;
+    // Look up questions by ID from allQuestions
+    const lookup = {};
+    allQuestions.forEach(q => lookup[q.id] = q);
+    questions = state.questionIds.map(id => lookup[id]).filter(Boolean);
+    if (!questions.length) return false;
+    current = state.current;
+    score = state.score;
+    answers.length = 0;
+    (state.answers || []).forEach(a => {
+        const q = lookup[a.qid];
+        if (q) answers.push({ question: q, correct: a.correct });
+    });
+    isRetryMode = false;
+    // Update dropdown
+    const sel = $('weekFilter');
+    if (sel) sel.value = state.filter;
+    return true;
+}
+
 // ── Load ──
-function loadQuestions(filter = 'all') {
+function loadQuestions(filter = 'all', skipState = false) {
     currentWeekFilter = filter;
-    hide('quizCard'); hide('resultsCard');
+    hide('quizCard'); hide('resultsCard'); hide('resumeBanner');
     show('loadingCard');
-    $('questionCounter').textContent = 'Loading...';
 
     if (!window.QUIZ_DATA || !window.QUIZ_DATA.questions) {
         $('loadingCard').innerHTML = `<p style="color:var(--error)">No question data found</p>`;
         return;
     }
 
-    allQuestions = window.QUIZ_DATA.questions;
-    questions = filter === 'all' ? [...allQuestions] : allQuestions.filter(q => q.week === filter);
+    allQuestions = window.QUIZ_DATA.questions || [];
 
+    if (!skipState) {
+        const saved = loadState();
+        if (saved && saved.filter === filter && saved.current < saved.questionIds.length) {
+            hide('loadingCard');
+            showResumeBanner(saved);
+            return;
+        }
+    }
+
+    startFresh(filter);
+}
+
+function startFresh(filter) {
+    clearState();
+    currentWeekFilter = filter;
+    questions = filter === 'all' ? [...allQuestions] : allQuestions.filter(q => q.week === filter);
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
     hide('loadingCard');
     showQuestion();
+}
+
+function showResumeBanner(saved) {
+    show('resumeBanner');
+    const pct = saved.questionIds.length ? Math.round((saved.score / (saved.current || 1)) * 100) : 0;
+    $('resumeText').textContent = `Saved: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${saved.current || 0}`;
+    $('resumeBtn').onclick = () => {
+        if (resumeState(saved)) {
+            hide('resumeBanner');
+            hide('loadingCard');
+            showQuestion();
+            saveState();
+        }
+    };
+    $('resumeDiscardBtn').onclick = () => {
+        clearState();
+        hide('resumeBanner');
+        startFresh(currentWeekFilter);
+    };
 }
 
 function buildWeekFilter() {
@@ -48,15 +138,6 @@ function buildWeekFilter() {
     });
     sel.value = currentWeekFilter;
     sel.onchange = () => loadQuestions(sel.value);
-}
-
-function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
 }
 
 function renderOptions() {
@@ -72,21 +153,12 @@ function renderOptions() {
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
         opts.appendChild(btn);
     });
-
-    // MAQ hint + check button
-    if (maq) {
-        $('maqHint').classList.remove('hidden');
-        $('maqCheckBtn').classList.add('hidden');
-    } else {
-        $('maqHint').classList.add('hidden');
-        $('maqCheckBtn').classList.add('hidden');
-    }
+    if (maq) { show('maqHint'); hide('maqCheckBtn'); }
+    else { hide('maqHint'); hide('maqCheckBtn'); }
 }
 
-// ── Show question ──
 function showQuestion() {
-    answered = false;
-    selectedMAQ = [];
+    answered = false; selectedMAQ = [];
     if (current >= questions.length) { showResults(); return; }
 
     const q = questions[current];
@@ -95,102 +167,70 @@ function showQuestion() {
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
     $('questionText').textContent = q.question;
     renderOptions();
-    hide('explanationInline');
-    hide('nextBtn');
-    show('quizCard');
-    hide('resultsCard');
+    hide('explanationInline'); hide('nextBtn');
+    show('quizCard'); hide('resultsCard');
 }
 
-// ── MCQ: single click → immediate feedback ──
+// ── MCQ ──
 function handleAnswer(index, btn) {
-    if (answered) return;
-    answered = true;
-
+    if (answered) return; answered = true;
     const q = questions[current];
     const allBtns = document.querySelectorAll('.option-btn');
     const isCorrect = index === q.correct;
-
     allBtns.forEach(b => b.classList.add('disabled'));
     btn.classList.add(isCorrect ? 'correct' : 'wrong');
     if (!isCorrect) allBtns[q.correct].classList.add('correct');
     if (isCorrect) score++;
-
     answers.push({ question: q, correct: isCorrect });
     if (!isCorrect) saveWrongAnswer(q);
-
+    saveState();
     setTimeout(showInlineExplanation, 400, isCorrect, q);
 }
 
-// ── MAQ: two-click toggle → check button ──
+// ── MAQ ──
 function handleMAQClick(index, btn) {
     if (answered) return;
-
     if (selectedMAQ.includes(index)) {
-        // Deselect
         selectedMAQ = selectedMAQ.filter(i => i !== index);
         btn.classList.remove('selected');
     } else if (selectedMAQ.length < 2) {
-        // Select
         selectedMAQ.push(index);
         btn.classList.add('selected');
     }
-
-    // Show check button when 2 selected
-    const checkBtn = $('maqCheckBtn');
-    if (selectedMAQ.length === 2) {
-        checkBtn.classList.remove('hidden');
-        checkBtn.focus();
-    } else {
-        checkBtn.classList.add('hidden');
-    }
+    if (selectedMAQ.length === 2) { show('maqCheckBtn'); $('maqCheckBtn').focus(); }
+    else hide('maqCheckBtn');
 }
 
-// ── MAQ: check both answers ──
 function checkMAQ() {
-    if (answered || selectedMAQ.length !== 2) return;
-    answered = true;
-
+    if (answered || selectedMAQ.length !== 2) return; answered = true;
     const q = questions[current];
-    const correctIdx = q.correct; // [int, int]
+    const correctIdx = q.correct;
     const allBtns = document.querySelectorAll('.option-btn');
     const sortedSel = [...selectedMAQ].sort();
     const sortedCorrect = [...correctIdx].sort();
-
-    // Check if both selections are exactly the correct set
-    const isFullyCorrect = sortedSel[0] === sortedCorrect[0] && sortedSel[1] === sortedCorrect[1];
-
+    const ok = sortedSel[0] === sortedCorrect[0] && sortedSel[1] === sortedCorrect[1];
     allBtns.forEach(b => b.classList.add('disabled'));
-
-    // Highlight correct answers and user's selections
     correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
-    selectedMAQ.forEach(i => {
-        if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong');
-    });
-
-    if (isFullyCorrect) score++;
-
-    const wasCorrect = isFullyCorrect;
-    answers.push({ question: q, correct: wasCorrect });
-    if (!wasCorrect) saveWrongAnswer(q);
-
-    setTimeout(showInlineExplanation, 400, wasCorrect, q);
+    selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
+    if (ok) score++;
+    answers.push({ question: q, correct: ok });
+    if (!ok) saveWrongAnswer(q);
+    saveState();
+    setTimeout(showInlineExplanation, 400, ok, q);
 }
 
-// ── Shared: show explanation ──
 function showInlineExplanation(isCorrect, q) {
     const badge = $('resultBadge');
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
     $('explanationText').textContent = q.explanation || '';
-    hide('maqHint');
-    hide('maqCheckBtn');
-    show('explanationInline');
-    show('nextBtn');
+    hide('maqHint'); hide('maqCheckBtn');
+    show('explanationInline'); show('nextBtn');
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
     $('nextBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ── Wrong answer tracking ──
+// ── Wrong answers ──
 function saveWrongAnswer(q) {
     try {
         const raw = localStorage.getItem(WRONG_KEY);
@@ -209,21 +249,18 @@ function clearWrongAnswers() {
     try { localStorage.removeItem(WRONG_KEY); } catch { /* ignore */ }
 }
 
-// ── Show Results ──
+// ── Results ──
 function showResults() {
+    clearState();
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
-
     const pct = questions.length ? Math.round((score / questions.length) * 100) : 0;
     $('finalScore').textContent = `${score}/${questions.length}`;
     $('scorePercentage').textContent = `${pct}%`;
     $('scoreBreakdown').textContent = `${score} ✓ · ${questions.length - score} ✗`;
+    $('scoreMessage').textContent = pct === 100 ? 'Perfect! 🎉' : pct >= 80 ? 'Great job! 👏' : pct >= 60 ? 'Good effort! 💪' : 'Keep practicing! 📚';
 
-    let msg = pct === 100 ? 'Perfect! 🎉' : pct >= 80 ? 'Great job! 👏' : pct >= 60 ? 'Good effort! 💪' : 'Keep practicing! 📚';
-    $('scoreMessage').textContent = msg;
-
-    const review = $('answersReview');
-    review.innerHTML = '';
+    const review = $('answersReview'); review.innerHTML = '';
     answers.forEach((a, i) => {
         const dot = document.createElement('span');
         dot.className = 'answer-dot ' + (a.correct ? 'dot-correct' : 'dot-wrong');
@@ -233,13 +270,10 @@ function showResults() {
     });
 
     const wrongCount = answers.filter(a => !a.correct).length;
-    const retryBtn = $('retryWrongBtn');
     if (wrongCount > 0 && !isRetryMode) {
-        retryBtn.textContent = `🔄 Retry ${wrongCount} Wrong (${questions.length - score})`;
-        retryBtn.classList.remove('hidden');
-    } else {
-        retryBtn.classList.add('hidden');
-    }
+        $('retryWrongBtn').textContent = `🔄 Retry ${wrongCount} Wrong`;
+        show('retryWrongBtn');
+    } else hide('retryWrongBtn');
 
     saveScore(); renderScoreHistory();
 }
@@ -247,12 +281,13 @@ function showResults() {
 function retryWrongAnswers() {
     const wrong = getWrongAnswers();
     if (!wrong.length) return;
-    questions = shuffle(wrong);
-    current = 0; score = 0; answers.length = 0; isRetryMode = true;
+    clearState();
+    questions = wrong; current = 0; score = 0; answers.length = 0; isRetryMode = true;
     $('questionCounter').textContent = `Retry: ${questions.length} wrong`;
     showQuestion();
 }
 
+// ── Score history ──
 function saveScore() {
     try {
         const raw = localStorage.getItem(SCORE_KEY);
@@ -272,11 +307,7 @@ function renderScoreHistory() {
     const history = getScoreHistory().slice(-3).reverse();
     const el = $('scoreHistory');
     if (!history.length) { hide('scoreHistory'); return; }
-
-    const heading = document.createElement('strong');
-    heading.textContent = 'Recent attempts';
-    el.replaceChildren(heading);
-
+    el.innerHTML = '<strong>Recent</strong>';
     history.forEach(item => {
         const pct = item.total ? Math.round((item.correct / item.total) * 100) : 0;
         const row = document.createElement('div');
@@ -288,26 +319,28 @@ function renderScoreHistory() {
 }
 
 function restart() {
-    clearWrongAnswers();
+    clearState(); clearWrongAnswers();
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
     showQuestion();
 }
 
 // ── Event bindings ──
-$('nextBtn').onclick = () => { current++; current < questions.length ? showQuestion() : showResults(); };
+$('nextBtn').onclick = () => {
+    current++;
+    if (current < questions.length) { saveState(); showQuestion(); }
+    else showResults();
+};
 $('restartBtn').onclick = restart;
 $('headerRestartBtn').onclick = restart;
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
 
-// Keyboard
 document.addEventListener('keydown', (e) => {
     if (!$('quizCard').classList.contains('hidden')) {
         const idx = OPTION_SHORTCUTS.indexOf(e.key.toUpperCase());
         if (idx >= 0) document.querySelectorAll('.option-btn')[idx]?.click();
         if (e.key === 'Enter' && !$('maqCheckBtn').classList.contains('hidden')) {
-            e.preventDefault();
-            checkMAQ();
+            e.preventDefault(); checkMAQ();
         }
     }
     if (e.key === 'Enter') {

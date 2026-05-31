@@ -81,6 +81,26 @@ body {
     animation: fadeIn 0.5s ease 0.1s both;
 }
 
+.resume-banner {
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+.resume-icon { font-size: 1.5rem; }
+#resumeText { color: var(--text); font-size: 0.95rem; font-weight: 500; }
+.resume-btn { background: var(--primary); color: white; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.resume-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.resume-discard { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+.resume-discard:hover { border-color: var(--text-muted); color: var(--text); }
+
 .header-controls {
     display: flex;
     gap: 10px;
