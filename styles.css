@@ -614,6 +614,36 @@ body {
     .final-score { font-size: 2.5rem; }
 }
 
+@media (max-height: 680px) {
+    body {
+        align-items: flex-start;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .quiz-header {
+        margin-bottom: 16px;
+    }
+
+    .quiz-header h1 {
+        margin-bottom: 10px;
+    }
+
+    .question-text {
+        margin-bottom: 18px;
+    }
+
+    .quiz-card, .explanation-card, .results-card, .loading-card {
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+
+    .trophy {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+}
+
 @media (max-width: 360px) {
     body {
         padding: 12px;
