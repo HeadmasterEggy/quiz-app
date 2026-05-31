@@ -350,7 +350,6 @@ function renderScoreHistory() {
 }
 
 function restart() {
-    clearWrongAnswers();
     startFresh(currentWeekFilter);
 }
 
