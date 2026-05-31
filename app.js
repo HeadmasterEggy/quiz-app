@@ -73,7 +73,7 @@ function renderOptions() {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         const key = OPTION_SHORTCUTS[i];
-        btn.innerHTML = `<span class="label">${key}</span><span class="text">${opt}</span><span class="key-hint">${key}</span>`;
+        btn.innerHTML = `<span class="label">${key}</span><span class="text">${opt}</span>`;
         btn.onclick = () => handleAnswer(i, btn);
         opts.appendChild(btn);
     });
