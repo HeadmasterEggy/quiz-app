@@ -11,7 +11,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Rice's theorem proves that perfect automatic analysis of all non-trivial semantic properties is undecidable. The practical takeaway: tools must make trade-offs between soundness, completeness, and precision.",
       "id": 1,
-      "week": "Week 02"
+      "week": "Week 11"
     },
     {
       "question": "A bug detector warns that a vending machine can dispense a snack without payment. After investigation, the warning is impossible because a separate payment lock always prevents it. What kind of result is this?",
@@ -24,7 +24,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "A false positive occurs when a tool reports a bug or vulnerability that does not actually exist. The payment lock makes the reported scenario impossible, so the warning is incorrect — a false positive.",
       "id": 2,
-      "week": "Week 02"
+      "week": "Week 11"
     },
     {
       "question": "Static analysis reads code without running it. Which vending-machine analogy best matches static analysis?",
@@ -37,7 +37,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Static analysis examines source code without executing it — analogous to reading a blueprint and reasoning about behavior, rather than testing by running the program.",
       "id": 3,
-      "week": "Week 02"
+      "week": "Week 11"
     },
     {
       "question": "Fuzzing runs a program with many unexpected inputs. What is fuzzing mainly trying to find?",
@@ -50,7 +50,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Fuzzing feeds unexpected/corrupted inputs to find crash-inducing or behavior-violating inputs — it finds concrete evidence of bugs, not proofs of correctness.",
       "id": 4,
-      "week": "Week 02"
+      "week": "Week 11"
     },
     {
       "question": "Model checking builds a model of a system and checks whether a property can be violated. What is a key limitation of model checking?",
@@ -63,7 +63,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Model checking's key limitation is that it only works if the abstract model accurately captures the relevant behavior. If the model is wrong, the verification is meaningless for the real system.",
       "id": 5,
-      "week": "Week 02"
+      "week": "Week 11"
     },
     {
       "question": "Which statements about over-approximation and under-approximation are correct?",
@@ -79,7 +79,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Under-approximation only explores some real behaviors and can miss bugs (no proof of absence). Over-approximation covers all real behaviors but may include impossible ones, leading to false positives.",
       "id": 6,
-      "week": "Week 03"
+      "week": "Week 11"
     },
     {
       "question": "Symbolic or concolic execution can start with unknown variables and solve for real inputs. Which statements are correct?",
@@ -95,7 +95,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Symbolic execution solves constraints to find inputs that reach specific paths. However, it suffers from path explosion when programs have many branches and loops, making full exploration impractical.",
       "id": 7,
-      "week": "Week 03"
+      "week": "Week 11"
     },
     {
       "question": "Which statements about AI-assisted program analysis are correct?",
@@ -111,7 +111,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "AI can investigate code for suspicious patterns like missing authorization checks. However, AI findings should be treated as hypotheses requiring validation — they don't provide formal guarantees.",
       "id": 8,
-      "week": "Week 03"
+      "week": "Week 11"
     },
     {
       "question": "Which statements about human factors and usable security are correct?",
@@ -127,7 +127,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "A secure interface must communicate real system state clearly. Humans can over-trust indicators (dashboards, checkmarks, warnings) especially under stress. Strong crypto alone doesn't solve usability/trust issues.",
       "id": 9,
-      "week": "Week 03"
+      "week": "Week 11"
     },
     {
       "question": "Which statements about responsible security research and risk management are correct?",
@@ -143,7 +143,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Good intentions don't legalize unauthorized testing. Responsible research involves careful validation, minimizing harm, private reporting, and giving time to fix. If sensitive data is exposed, the researcher must stop and report, not continue.",
       "id": 10,
-      "week": "Week 03"
+      "week": "Week 11"
     },
     {
       "question": "A student asks an LLM to review a decompiled Android app. The model claims an admin-only screen can be opened from outside through a deep link. What is the best next step?",
@@ -156,7 +156,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "LLM findings are hypotheses. The correct approach is to verify by checking the manifest and handler code, then building a minimal reproduction to confirm the vulnerability exists.",
       "id": 11,
-      "week": "Week 03"
+      "week": "Week 12"
     },
     {
       "question": "A reset-token service computes SHA-256(username || current_minute || 4_digit_code). The digest is 256 bits but the attacker knows usernames and can try likely minutes and all 4-digit codes. Which assessment is most accurate?",
@@ -169,7 +169,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "SHA-256 output length ≠ entropy. If the input space is small (known usernames + ~60 minutes + 10,000 codes), the effective entropy is much lower than 256 bits, making brute force feasible.",
       "id": 12,
-      "week": "Week 03"
+      "week": "Week 12"
     },
     {
       "question": "A protocol sends C = Enc(k_enc, M) and T = MAC(k_mac, M). The receiver decrypts C first, then checks MAC over plaintext. Which change best matches encrypt-then-MAC?",
@@ -182,7 +182,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Encrypt-then-MAC (EtM) means computing the MAC over the ciphertext and verifying it BEFORE decryption. This prevents attacks on the decryption process and is the recommended order.",
       "id": 13,
-      "week": "Week 03"
+      "week": "Week 12"
     },
     {
       "question": "During a TLS-like handshake, the server sends an ephemeral Diffie-Hellman public value. What prevents an active attacker from replacing that value with their own?",
@@ -195,7 +195,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "In an authenticated ECDHE handshake, the server signs its ephemeral DH public key. The certificate chain validates this signature, binding the ephemeral value to the server's authenticated identity and preventing MITM substitution.",
       "id": 14,
-      "week": "Week 03"
+      "week": "Week 12"
     },
     {
       "question": "A static analyzer reports an authorization bypass on a path that requires an impossible combination of states. A fuzzer runs many inputs and does not find the bypass. What is the most accurate interpretation?",
@@ -208,7 +208,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "Static analysis can produce false positives (warning about impossible states). Fuzzing cannot prove absence of bugs — it only finds bugs, it doesn't prove none exist. Absence of evidence ≠ evidence of absence.",
       "id": 15,
-      "week": "Week 03"
+      "week": "Week 12"
     },
     {
       "question": "Which statements about Android component exposure and deep links are correct?",
@@ -224,7 +224,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "External intent/deep-link parameters must be validated as untrusted input — attackers can control them. Internal-only activities should use exported=\"false\" for defense-in-depth. BROWSABLE does NOT guarantee vendor-only access.",
       "id": 16,
-      "week": "Week 04"
+      "week": "Week 12"
     },
     {
       "question": "Two six-bit plaintexts are encrypted with the same XOR keystream. The attacker sees C1 = 001111 and C2 = 010010, and later learns that M1 = 101010. Which statements are correct?",
@@ -240,7 +240,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "With keystream reuse: C1 xor C2 = M1 xor M2 = 001111 xor 010010 = 011101. If M1 = 101010 is known, M2 = (C1 xor C2) xor M1 = 011101 xor 101010 = 110111. Knowing one plaintext reveals the keystream.",
       "id": 17,
-      "week": "Week 04"
+      "week": "Week 12"
     },
     {
       "question": "A web app uses HTTPS with a valid certificate, but login input is concatenated into SQL and profile comments are rendered as raw HTML. Which defenses directly address these application-layer bugs?",
@@ -256,7 +256,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "HTTPS only protects data in transit — it does NOT prevent SQL injection or XSS. Prepared statements prevent SQL injection by separating code from data. Output encoding prevents XSS by neutralizing HTML in user content.",
       "id": 18,
-      "week": "Week 04"
+      "week": "Week 12"
     },
     {
       "question": "Which statements about consensus, blockchains, and DeFi are correct?",
@@ -272,7 +272,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Longest-chain/most-work rule resolves forks in PoW blockchains. PoW replaces identity-based voting with computational work. Slippage protection prevents (not maximizes) sandwich attack losses. Raft is for closed membership.",
       "id": 19,
-      "week": "Week 04"
+      "week": "Week 12"
     },
     {
       "question": "Which statements about security analysis and responsible research are correct?",
@@ -288,7 +288,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "When unexpectedly exposing sensitive data: stop, minimize harm, report privately. AI findings are hypotheses needing validation. A false positive means a non-existent bug was reported. Responsible disclosure involves private reporting first, not public exploit publication.",
       "id": 20,
-      "week": "Week 04"
+      "week": "Week 12"
     },
     {
       "question": "Which statement best captures the \"security is end-to-end\" idea?",
@@ -301,7 +301,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "End-to-end security means the chain is only as strong as its weakest link. If any one critical layer fails, the attacker can compromise the entire system — all layers must be secured.",
       "id": 21,
-      "week": "Week 04"
+      "week": "Week 02"
     },
     {
       "question": "Which activity belongs primarily to the \"After Incident\" phase of the security lifecycle?",
@@ -314,7 +314,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Post-mortem analysis and disaster recovery are explicit after-incident lifecycle activities. Static analysis, defining goals, and unit testing occur before or during development.",
       "id": 22,
-      "week": "Week 04"
+      "week": "Week 02"
     },
     {
       "question": "Which statements about the CIA triad are correct?",
@@ -330,7 +330,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Confidentiality: only authorized parties can access data. Integrity: information cannot be modified without authorization. Availability means systems are accessible when needed (not 'instant'). Confidentiality and integrity are distinct properties.",
       "id": 23,
-      "week": "Week 04"
+      "week": "Week 02"
     },
     {
       "question": "Which items are part of a system model (as presented in the ATM example in Week01's lecture)?",
@@ -346,7 +346,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "System models describe system structure: actors (customers, staff) and components (ATM terminal, bank server, database). Attacker goals and capabilities belong to threat models, not system models.",
       "id": 24,
-      "week": "Week 04"
+      "week": "Week 02"
     },
     {
       "question": "Which items are part of a threat model?",
@@ -362,7 +362,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Threat models define who the attacker is (types like skimmer, insider, remote attacker) and what they can do (capabilities like physical access, traffic interception). Project admin details are unrelated.",
       "id": 25,
-      "week": "Week 04"
+      "week": "Week 02"
     },
     {
       "question": "Which statement best matches the slides' description of GPT or LLM behavior?",
@@ -375,7 +375,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "LLMs like GPT are next-token/pattern-prediction systems, not truth engines. They predict likely text continuations based on training patterns — they don't verify ground truth or perform formal verification.",
       "id": 26,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Why is decompilation from machine code back to high-level code difficult for an LLM?",
@@ -388,7 +388,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Decompilation is difficult because machine code has less natural-language signal, is low-level and ambiguous, and requires reasoning about program semantics rather than just surface syntax.",
       "id": 27,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which statement about Android app sandboxing is correct?",
@@ -401,7 +401,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "Each Android app normally runs as a separate Linux user, providing process isolation, memory isolation, and file-permission separation. This is OS-level sandboxing, not app-store review.",
       "id": 28,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which statement about APKs is correct?",
@@ -414,7 +414,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "classes.dex contains compiled Android bytecode (Dalvik Executable). APKs are essentially zip archives that can be unpacked. Android runs bytecode, not original source. Decompilation does not produce exact original source.",
       "id": 29,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Why does the runtime UI tree matter for mobile agents?",
@@ -427,7 +427,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "The runtime UI tree exposes the screen's structure (text, bounds, clickability) in machine-readable form, enabling agents to parse and interact with the interface programmatically.",
       "id": 30,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which actions help reduce hallucinated vulnerability reports?",
@@ -443,7 +443,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "To reduce hallucinations: ask for concrete proof, minimal reproducible examples, or exact execution traces. Asking the model to generate a PoC demands evidence. Don't treat first findings as report-ready without validation.",
       "id": 31,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which actions help reduce missed vulnerabilities during AI-assisted analysis?",
@@ -459,7 +459,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Changing phrasing, models, or temperature can expose different findings. Running multiple analyses helps because models can miss issues. One long run doesn't cover all attack paths.",
       "id": 32,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which statements about Android component exposure are correct?",
@@ -475,7 +475,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Launcher activities are commonly exported as app entry points. exported=\"false\" is safer for internal-only screens. Being launched by intent doesn't inherently mean insecure. Sensitive activities must always perform auth/session checks.",
       "id": 33,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which statements about deep links are correct?",
@@ -491,7 +491,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Unvalidated deep-link parameters can let attackers influence app behavior. Android matches deep links via manifest intent-filter rules. BROWSABLE does NOT guarantee vendor-only access.",
       "id": 34,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which disclosure practices are appropriate when a real vulnerability is discovered during research or coursework?",
@@ -507,7 +507,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Appropriate disclosure: report privately and make sure you're talking to the right person. Don't exploit real systems just to measure impact, and don't publish details publicly before vendor notification.",
       "id": 35,
-      "week": "Week 05"
+      "week": "Week 03"
     },
     {
       "question": "Which statement best matches Kerckhoffs's principle?",
@@ -520,7 +520,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Kerckhoffs's principle: security should depend on the secret key, not on keeping the algorithm hidden. The system should be secure even if the attacker knows everything about it except the key.",
       "id": 36,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Which statement about key length and entropy is correct?",
@@ -533,7 +533,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Key length ≠ entropy. A 256-bit key generated from predictable input (e.g., a timestamp) may have only ~20 bits of real entropy. Entropy measures unpredictability, not visual randomness or character variety.",
       "id": 37,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "A system needs to generate a cryptographic key. Which source best matches the kind of stronger randomness source discussed in the slides?",
@@ -546,7 +546,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Strong cryptographic randomness comes from hard-to-predict physical-world events (timing jitter, hardware noise) collected into the OS entropy pool. Predictable values like timestamps or student IDs are insufficient.",
       "id": 38,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Which statement about symmetric encryption is correct?",
@@ -559,7 +559,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "In symmetric encryption, the same secret key is used for both encryption and decryption. Non-repudiation is typically a property of digital signatures, not symmetric encryption.",
       "id": 39,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Why is the one-time pad barely usable in practice?",
@@ -572,7 +572,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "OTP requires a truly random key at least as long as the message, and the key must never be reused. Key distribution and management at scale make OTP impractical for most real-world applications.",
       "id": 40,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "A system displays a 32-bit key, but only 16 of those bits were actually generated randomly and the other 16 are fixed. Which statements are correct?",
@@ -588,7 +588,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "With only 16 random bits and 16 fixed bits, the real entropy is just 16 bits (not 32). An attacker only needs to try 2^16 possibilities in the worst case, not 2^32.",
       "id": 41,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Which statements about hash functions are correct?",
@@ -604,7 +604,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Avalanche effect: small input change → large output change. Deterministic: same input → same digest. Collisions exist in theory (pigeonhole principle), collision resistance means they're hard to find. MD5/SHA-1 are deprecated.",
       "id": 42,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Which statements about one-time pads are correct?",
@@ -620,7 +620,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Perfect secrecy requires random, secret, never-reused keys. Reusing an OTP key reveals information: C1 xor C2 = M1 xor M2, allowing an attacker to learn about the plaintexts without knowing the key.",
       "id": 43,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Which statements about pseudorandom generators (PRGs) and stream ciphers are correct?",
@@ -636,7 +636,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "PRGs stretch a short random seed into longer pseudorandom output. Security means fooling efficient (polynomial-time) distinguishers, not all-powerful attackers. PRGs are deterministic for a given seed. Stream ciphers need sender/receiver sync.",
       "id": 44,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "Suppose a one-time pad uses plaintext M = 010010101 and key K = 110001011. Which statements are correct?",
@@ -652,7 +652,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "C = M xor K = 010010101 xor 110001011 = 100011110. Decryption: C xor K = 100011110 xor 110001011 = 010010101 = M. OTP uses the same key for encryption and decryption.",
       "id": 45,
-      "week": "Week 06"
+      "week": "Week 04"
     },
     {
       "question": "A designer considers three ways to combine encryption and MAC using independent keys k_enc and k_mac: I. Enc(k_enc, M || MAC(k_mac, M)), II. Enc(k_enc, M) || MAC(k_mac, Enc(k_enc, M)), III. Enc(k_enc, M) || MAC(k_mac, M). Which design lets the receiver verify the integrity of the transmitted ciphertext before attempting decryption?",
@@ -665,7 +665,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "Only design II (Encrypt-then-MAC) computes the MAC on the ciphertext. The receiver can verify the tag before decrypting, rejecting tampered messages early. Designs I and III require decryption before MAC verification.",
       "id": 46,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "You observe two ciphertexts split into 16-byte blocks. Ciphertext A: AB12 CD34 AB12 CD34 AB12 CD34 (repeating blocks). Ciphertext B: X9F2 K3L1 P8Q4 Z7M2 Q1W2 E3R4 (unique blocks). Which is more likely from ECB mode for a plaintext with many repeated blocks?",
@@ -678,7 +678,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "ECB mode encrypts identical plaintext blocks into identical ciphertext blocks under the same key. The repeating pattern in Ciphertext A strongly suggests ECB mode with repeated plaintext.",
       "id": 47,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "A system encrypts one byte using C = M xor K. ASCII '4' = 00110100 and '9' = 00111001. Without knowing K, which value should an attacker XOR into the ciphertext byte to turn an encrypted '4' into an encrypted '9'?",
@@ -691,7 +691,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "The attacker can flip bits without knowing K: '4' xor '9' = 00110100 xor 00111001 = 00001101. XORing this into the ciphertext toggles the plaintext from '4' to '9' without knowing K.",
       "id": 48,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Alice sends message || SHA-256(message) with no secret key. Why does this fail to authenticate Alice against an active attacker?",
@@ -704,7 +704,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Without a secret key, anyone can modify the message and recompute a valid hash. SHA-256 alone provides integrity against accidental corruption but not authentication against active attackers.",
       "id": 49,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Some iterative hash constructions make H(K || M) a poor MAC design. Which attack best explains why?",
@@ -717,7 +717,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Length extension attacks: for certain hash constructions (like SHA-256's Merkle-Damgård), knowing H(K || M) and the length allows computing H(K || M || padding || extra) without knowing K. HMAC prevents this with its two-layer construction.",
       "id": 50,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Alice sends Bob a valid protected message (ciphertext, tag). Eve cannot forge a new valid tag, but she records the pair and later retransmits the exact same (ciphertext, tag) again. Which statements are correct?",
@@ -733,7 +733,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "A MAC guarantees authenticity and integrity but NOT freshness. This is a classic replay attack — Eve retransmits a valid message. Freshness requires additional mechanisms like nonces, counters, or timestamps.",
       "id": 51,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Consider ECB mode with 16-byte blocks. Which statements are correct?",
@@ -749,7 +749,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "ECB encrypts identical plaintext blocks to identical ciphertext blocks, revealing patterns. Swapping ciphertext blocks in ECB swaps the corresponding plaintext blocks — there's no chaining between blocks.",
       "id": 52,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Two systems protect a message M using encryption and MAC with independent keys. System A (MAC-then-Encrypt): compute T=MAC(k_mac, M), then Enc(k_enc, M || T). System B (Encrypt-then-MAC): compute C=Enc(k_enc, M), then T=MAC(k_mac, C), send C || T. Which statements are correct?",
@@ -765,7 +765,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "In MtE (System A), the receiver must decrypt first before checking the MAC, potentially processing tampered data. In EtM (System B), tampered ciphertexts are rejected immediately before any decryption. EtM is the recommended order.",
       "id": 53,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Which statements about hashes, MACs, and HMAC are correct?",
@@ -781,7 +781,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "An unkeyed hash detects accidental corruption but not forgery. A MAC uses a shared secret key for authentication. MAC verification requires the secret key. HMAC is a specific keyed construction, not just repeated hashing.",
       "id": 54,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "A developer needs to generate encryption keys. Options: A - use cryptographic API backed by entropy from hardware noise, B - use a PRNG seeded only with the current timestamp, C - use values that 'look random enough' generated by humans. Which statements are correct?",
@@ -797,7 +797,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Option A (hardware entropy) is appropriate for cryptographic keys. Option B (timestamp seed) is dangerous because timestamps are predictable — an attacker can enumerate likely seeds. Option C (human-generated) is insufficient for cryptographic security.",
       "id": 55,
-      "week": "Week 07"
+      "week": "Week 05"
     },
     {
       "question": "Why do system and threat models matter before making a security claim?",
@@ -810,7 +810,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Security claims need a clear baseline. System and threat models define the assumptions, attacker capabilities, and security goals — without them, a security claim is meaningless.",
       "id": 56,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Why is decompilation hard for an LLM?",
@@ -823,7 +823,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Machine code is low-level and ambiguous, so decompilation requires reasoning about program semantics (control flow, data types, algorithms) — not just surface syntax. LLMs struggle with this semantic gap.",
       "id": 57,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Why can deep links become dangerous in Android Apps?",
@@ -836,7 +836,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Deep links allow external URLs to open internal app screens. If parameters from the URL are not validated, attacker-controlled inputs can influence app behavior — a significant attack surface.",
       "id": 58,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "A key generator outputs 256-bit strings, but only 20 bits are actually unpredictable. Which statement is most accurate?",
@@ -849,7 +849,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Key length ≠ entropy. If only 20 bits are unpredictable, the effective search space is ~2^20, not 2^256. The key is only as strong as its actual entropy, not its bit length.",
       "id": 59,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Why is HMAC safer than H(K || M) for some iterative hash constructions?",
@@ -862,7 +862,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "HMAC's two-layer construction prevents length-extension attacks that affect H(K || M). The inner and outer hashing prevent an attacker from extending the message and computing a valid tag without knowing K.",
       "id": 60,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "About Diffie-Hellman, which statements are correct?",
@@ -878,7 +878,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Diffie-Hellman lets two parties establish a shared secret over a public channel. Public values (g^a mod p, g^b mod p) can be sent openly. However, DH alone does not authenticate who you're talking to.",
       "id": 61,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "With Diffie-Hellman formulas A = g^a mod p, B = g^b mod p, k_A = B^a mod p, k_B = A^b mod p. Which are correct?",
@@ -894,7 +894,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Recovering a from g^a mod p is the discrete log problem (computationally hard). k_A = B^a = (g^b)^a = g^(ab) = (g^a)^b = A^b = k_B. The private exponents a and b are never exchanged.",
       "id": 62,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Key agreement vs key transport. Which statements are correct?",
@@ -910,7 +910,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "In key transport, one party picks the session key and encrypts it with the receiver's public key. In DH key agreement, both parties jointly derive the shared secret — the key is never transmitted over the wire.",
       "id": 63,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Forward secrecy. Which statements are correct?",
@@ -926,7 +926,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Without forward secrecy, compromising a long-term private key exposes ALL past sessions. Ephemeral DH (ECDHE) provides forward secrecy: session keys are derived from temporary values that are discarded after the session ends.",
       "id": 64,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Which statements about crypto concepts are correct?",
@@ -942,7 +942,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "MACs require a pre-shared secret key. DH alone provides key agreement without authentication — an active MITM attacker can still impersonate both parties. Symmetric encryption doesn't solve key distribution. Public-key crypto still needs private keys.",
       "id": 65,
-      "week": "Week 08"
+      "week": "Week 06"
     },
     {
       "question": "Why is plain Diffie-Hellman vulnerable to a man-in-the-middle attack?",
@@ -955,7 +955,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Plain DH provides no authentication. An active attacker (Mallory) can replace Alice's and Bob's public values with her own, establishing separate shared secrets with each and reading/modifying all traffic.",
       "id": 66,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "In TLS, what is the main purpose of a server certificate?",
@@ -968,7 +968,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "The server certificate binds the server's identity (domain name) to its public key. By proving control of the corresponding private key, the server authenticates itself to the client.",
       "id": 67,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statement best describes TCP compared with UDP?",
@@ -981,7 +981,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "TCP provides reliable, ordered delivery through acknowledgements, retransmissions, and flow control. UDP is connectionless: it sends datagrams without guarantees of delivery, ordering, or duplication protection.",
       "id": 68,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "In a TLS 1.2 ECDHE handshake, why does the server sign its ephemeral Diffie-Hellman public key?",
@@ -994,7 +994,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "The server signs its ephemeral DH public key to cryptographically bind it to its authenticated identity (via the certificate chain). This prevents an attacker from substituting their own ephemeral key in a MITM attack.",
       "id": 69,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "What was the core bug behind Heartbleed?",
@@ -1007,7 +1007,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "Heartbleed was caused by a missing bounds check: the TLS heartbeat request specified a payload length, but OpenSSL didn't verify that this matched the actual payload size, causing it to read and return adjacent memory contents.",
       "id": 70,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statements about digital signatures and MACs are correct?",
@@ -1023,7 +1023,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Digital signatures use asymmetric crypto: created with private key, verified with public key. This enables non-repudiation — anyone can verify, but only the key holder could have created it. MACs use symmetric keys known to both parties.",
       "id": 71,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statements about IP and UDP are correct?",
@@ -1039,7 +1039,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "IP provides best-effort delivery — packets can be lost, corrupted, duplicated, or reordered. UDP adds port numbers for application-level multiplexing but adds NO reliability guarantees (no retransmission, no ordering).",
       "id": 72,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statements about TCP are correct?",
@@ -1055,7 +1055,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "TCP uses a three-way handshake (SYN → SYN-ACK → ACK) for connection establishment. The ACK number advances by the amount of in-order data received. SYN floods exploit the half-open connection state, not completed TLS handshakes.",
       "id": 73,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statements about TLS 1.2 are correct?",
@@ -1071,7 +1071,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "The TLS handshake negotiates protocol version, cipher suite, key exchange, and session keys. The record protocol frames and protects application data with encryption and integrity. ChangeCipherSpec signals key changes, not certificate delivery.",
       "id": 74,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statements about HTTPS, certificates, and TLS 1.3 are correct?",
@@ -1087,7 +1087,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "TLS provides confidentiality, integrity, and authentication. HTTPS = HTTP over TLS. TLS 1.3 actually removed the heartbeat protocol. Certificate pinning stores a hash of the server's certificate/public key, not the user's password.",
       "id": 75,
-      "week": "Week 09"
+      "week": "Week 07"
     },
     {
       "question": "Which statement best describes the difference between identification and authentication?",
@@ -1100,7 +1100,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Identification = claiming an identity ('I am user X'). Authentication = proving that claim (providing a password, token, or biometric). These are distinct steps in the access control process.",
       "id": 76,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "What is the main purpose of using a unique salt when storing password hashes?",
@@ -1113,7 +1113,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "A unique salt per user ensures that even if two users have the same password, their hashes differ. This also makes precomputed rainbow tables useless — an attacker must brute force each salted hash individually.",
       "id": 77,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "What is a good defense against SQL injection?",
@@ -1126,7 +1126,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Prepared statements/parameterized queries separate SQL code from data, ensuring user input is treated as data values rather than executable SQL. This is the primary defense against SQL injection.",
       "id": 78,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Why do biometric authentication systems often need fuzzy matching?",
@@ -1139,7 +1139,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Biometric readings are inherently noisy — the same finger scanned twice produces slightly different data due to angle, pressure, moisture, etc. Fuzzy matching accommodates this natural variation while still distinguishing between different people.",
       "id": 79,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "What is an amplification attack?",
@@ -1152,7 +1152,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "An amplification attack exploits protocols where a small request triggers a much larger response. The attacker spoofs the victim's IP address, causing third-party servers to flood the victim with large responses.",
       "id": 80,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Which statements about authentication factors are correct?",
@@ -1168,7 +1168,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Authentication factors: something you know (password), something you have (smart card, phone), something you are (fingerprint). Two-factor authentication requires factors from different categories, not the same type.",
       "id": 81,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Which statements about password attacks and storage are correct?",
@@ -1184,7 +1184,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Online guessing attacks the live system and can be mitigated with rate limiting and account lockout. Offline guessing happens after hash theft — the attacker computes hashes locally. Passwords should never be stored in plaintext.",
       "id": 82,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Which statements about salts, peppers, and password hashing functions are correct?",
@@ -1200,7 +1200,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "A pepper is a secret stored outside the database, adding defense-in-depth. Per-user salts defeat rainbow tables. MD5 and SHA-1 are NOT recommended for passwords — use bcrypt, Argon2id, or scrypt instead.",
       "id": 83,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Which statements about database and web attacks are correct?",
@@ -1216,7 +1216,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Inference attacks extract information through patterns of allowed queries. SQL injection occurs when unsanitized user input becomes part of SQL queries. XSS can steal cookies and enable phishing/malware — TLS doesn't prevent it.",
       "id": 84,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "Which statements about data and cloud security are correct?",
@@ -1232,7 +1232,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Cloud security follows a shared responsibility model: the provider secures the infrastructure, customers secure their data and configurations. Misconfigured storage (public S3 buckets) is a common cause of data breaches.",
       "id": 85,
-      "week": "Week 10"
+      "week": "Week 08"
     },
     {
       "question": "A developer generates 256-bit-looking API keys as SHA-256(student_id || current_year). They argue this is secure because SHA-256 is public and the output is 256 bits long. Which statement is most accurate?",
@@ -1245,7 +1245,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "SHA-256 output length ≠ entropy. If inputs are predictable (student IDs + current year), an attacker can enumerate all likely inputs, compute SHA-256 for each, and find matches. The effective security is limited by input entropy, not output length.",
       "id": 86,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "Two plaintext messages M1 and M2 are encrypted with the same one-time-pad key K, producing C1 = M1 xor K and C2 = M2 xor K. An attacker sees only C1 and C2. What can the attacker compute directly?",
@@ -1258,7 +1258,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "C1 xor C2 = (M1 xor K) xor (M2 xor K) = M1 xor M2. The key cancels out. The attacker learns the XOR of the plaintexts, which can reveal information about both messages, especially if one plaintext is known or has known structure.",
       "id": 87,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A protocol sends C = Enc(k_enc, M) and T = MAC(k_mac, C), using independent keys. The receiver checks T over C before decrypting. What security design principle does this mainly illustrate?",
@@ -1271,7 +1271,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "Encrypt-then-MAC (EtM) computes the MAC over the ciphertext. The receiver verifies the tag before decrypting, rejecting tampered messages early. This is the recommended order for combining encryption and authentication.",
       "id": 88,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "Alice and Bob run plain Diffie-Hellman over a public network. Mallory sits between them, replaces both public values with her own, and can read/rewrite all traffic. What was missing?",
@@ -1284,7 +1284,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "The MITM attack succeeds because plain DH provides no authentication. Mallory can replace public values because there's no cryptographic binding between the exchanged values and the participants' identities — authentication (e.g., via certificates/signatures) is missing.",
       "id": 89,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A web app uses HTTPS with a valid certificate. Its search endpoint builds SQL by string concatenation and then renders matching comments into HTML without output encoding. Which statement is most accurate?",
@@ -1297,7 +1297,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "HTTPS protects data in transit but does NOT prevent SQL injection (unsafe query construction) or XSS (unsafe HTML rendering). Application-layer defenses — prepared statements and output encoding — are still required.",
       "id": 90,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A password database is stolen. Each row contains username, a random per-user salt, and a password hash produced with Argon2id. The attacker does not have any separate pepper. Which statements are correct?",
@@ -1313,7 +1313,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Per-user salts make rainbow tables useless — each account needs separate cracking. Offline cracking still requires computing Argon2id(salt, candidate) for each guess. Salts are stored alongside hashes and don't need secrecy. The hash is not the password.",
       "id": 91,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A browser connects to https://bank.example. The server presents a certificate for bank.example, and the TLS handshake uses ephemeral Diffie-Hellman. Which statements are correct?",
@@ -1329,7 +1329,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "The certificate binds the domain to a public key through the CA chain. Ephemeral DH provides forward secrecy: even if the long-term private key is later compromised, past session keys cannot be recovered because ephemeral values were discarded.",
       "id": 92,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "An attacker sends many small UDP packets with the victim's spoofed source IP address to third-party servers. Each third-party server sends a much larger response to the victim. Which statements are correct?",
@@ -1345,7 +1345,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "This is a reflection/amplification DDoS attack: the attacker spoofs the victim's IP, causing third-party servers to send amplified responses to the victim. Mitigation includes filtering, rate limiting, and traffic scrubbing.",
       "id": 93,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A developer wants to fix two bugs: user input is concatenated into SQL queries, and stored comments are displayed as raw HTML. Which statements are correct?",
@@ -1361,7 +1361,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Output encoding prevents XSS by neutralizing HTML in user content. Prepared statements prevent SQL injection by separating code from data. These are distinct defenses for distinct vulnerabilities — HTTPS alone doesn't fix either.",
       "id": 94,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "Alice sends Bob message || tag, where tag = MAC(k, message) and only Alice and Bob know k. Eve records one valid message and later sends the exact same message || tag again. Which statements are correct?",
@@ -1377,7 +1377,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "A MAC guarantees authenticity and integrity but NOT freshness. This is a replay attack. Freshness requires additional mechanisms: counters, nonces, or timestamps that let the receiver distinguish new messages from old ones.",
       "id": 95,
-      "week": "Week 11"
+      "week": "Week 09"
     },
     {
       "question": "A replicated system is modelled as State + Action → New State, where all nodes should apply the same deterministic transition rule. What does this model mean?",
@@ -1390,7 +1390,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "In a replicated state machine, all nodes apply the same deterministic transition rule to an input action, producing a new state. This ensures all replicas converge to identical states when they process the same sequence of actions.",
       "id": 96,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "In Raft, what is the main role of the leader?",
@@ -1403,7 +1403,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "In Raft, the leader is the central coordinator: it receives client requests, decides their ordering, appends them to its log, and replicates log entries to followers. Followers apply entries once committed.",
       "id": 97,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Why does identity-based voting, such as 'one identity equals one vote', not work well for a permissionless shared computer?",
@@ -1416,7 +1416,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "In permissionless systems, anyone can create unlimited identities (Sybil attack) — there's no trusted identity layer. This makes identity-based voting meaningless. Proof of Work solves this by replacing identity-based voting with computational work.",
       "id": 98,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "A Proof of Work system asks miners to find a nonce such that SHA256(data || nonce) < target. What is the key property of this puzzle?",
@@ -1429,7 +1429,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "PoW puzzles are asymmetric: finding a valid nonce requires many hash computations (hard to solve), but verifying the solution requires just one hash computation (easy to verify). This asymmetry is essential to PoW's economic security.",
       "id": 99,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "An automated market maker (AMM) pool holds asset X and asset Y and uses the constant-product rule x * y = k. What happens when asset X is purchased from the pool?",
@@ -1442,7 +1442,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Under the constant-product rule x * y = k, buying X removes X from the pool and adds Y. With less X and more Y in the pool, the relative price of X increases (more Y needed per X) and Y's price decreases.",
       "id": 100,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Which statements about Raft leader election are correct?",
@@ -1458,7 +1458,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Each Raft term has at most one leader. Election timeouts are randomized to reduce the chance of split votes (multiple candidates simultaneously). A node votes at most once per term. Followers become candidates when they stop receiving heartbeats.",
       "id": 101,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Which statements about closed-system consensus assumptions are correct?",
@@ -1474,7 +1474,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "PBFT tolerates up to f Byzantine (malicious) nodes with 3f+1 total nodes (≥2/3 honest). Raft and Paxos handle crash faults with >50% honest nodes. Closed systems assume known, permissioned membership — not anonymous open access.",
       "id": 102,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Which statements about permissionless Proof of Work blockchains are correct?",
@@ -1490,7 +1490,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "The longest-chain (most-work) rule resolves blockchain forks. P2P networks relay transactions across nodes. There's no fixed leader in permissionless systems. One-identity-one-vote fails due to Sybil attacks.",
       "id": 103,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Which statements about attacks and incentives in Proof of Work blockchains are correct?",
@@ -1506,7 +1506,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Eclipse attacks isolate a target node from the honest network. Selfish mining withholds discovered blocks and releases them strategically to waste other miners' work and gain an advantage. Miners DO receive block rewards and transaction fees.",
       "id": 104,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "Which statements about smart contracts and decentralised finance are correct?",
@@ -1522,7 +1522,7 @@ window.QUIZ_DATA = {
       ],
       "explanation": "Smart contracts compile to bytecode/opcodes defining deterministic state transitions. Slippage protection sets a maximum acceptable price movement threshold. Sandwich attacks exploit (not reduce) slippage. DeFi relies on code, not human intermediaries.",
       "id": 105,
-      "week": "Week 12"
+      "week": "Week 10"
     },
     {
       "question": "A company makes a service reachable from more networks and devices to improve availability. Which statement best captures the relevant security trade-off?",
@@ -2038,7 +2038,7 @@ window.QUIZ_DATA = {
       "correct": 3,
       "explanation": "Before deployment, security activities include defining security goals, threat modeling, security testing, and code review. Post-mortems and monitoring happen after deployment.",
       "id": 141,
-      "week": "Mock Exam 2"
+      "week": "Mock Exam 1"
     },
     {
       "question": "A bank is modelling an ATM system before analysing attacks. Which item belongs in the system model rather than the threat model?",
@@ -2051,7 +2051,7 @@ window.QUIZ_DATA = {
       "correct": 2,
       "explanation": "System models describe system components and actors (ATM terminal, server, database). Threat models describe attacker goals, capabilities, and motivations — what they want and what they can do.",
       "id": 142,
-      "week": "Mock Exam 2"
+      "week": "Mock Exam 1"
     },
     {
       "question": "Which practice helps reduce missed vulnerabilities during AI-assisted analysis?",
@@ -2064,7 +2064,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "Running multiple analyses with varied phrasing, models, or temperature can expose different findings. Stopping early or avoiding evidence risks missing vulnerabilities. No single prompt covers all attack paths.",
       "id": 143,
-      "week": "Mock Exam 2"
+      "week": "Mock Exam 1"
     },
     {
       "question": "For an Android activity used only inside the app, why is android:exported='false' safer by default?",
@@ -2077,7 +2077,7 @@ window.QUIZ_DATA = {
       "correct": 0,
       "explanation": "android:exported='false' prevents other apps from launching the activity, reducing the attack surface. It doesn't guarantee bug-free code, encrypt data, or bypass permissions — it just limits who can invoke the component.",
       "id": 144,
-      "week": "Mock Exam 2"
+      "week": "Mock Exam 1"
     },
     {
       "question": "Why can deep links be a security concern in Android?",
@@ -2090,7 +2090,7 @@ window.QUIZ_DATA = {
       "correct": 1,
       "explanation": "Deep links allow external URLs to open app screens with attacker-controlled parameters. If parameters aren't validated, attackers can manipulate app behavior. BROWSABLE doesn't restrict to vendor websites only.",
       "id": 145,
-      "week": "Mock Exam 2"
+      "week": "Mock Exam 1"
     },
     {
       "question": "What does android.intent.category.BROWSABLE mean in a deep-link context?",

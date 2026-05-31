@@ -191,6 +191,7 @@ function showResults() {
     }
 
     saveScore();
+    renderScoreHistory();
 }
 
 // ── Retry wrong ──
@@ -216,6 +217,36 @@ function saveScore() {
         if (history.length > 20) history.shift();
         localStorage.setItem(SCORE_KEY, JSON.stringify(history));
     } catch { /* ignore */ }
+}
+
+function getScoreHistory() {
+    try {
+        const raw = localStorage.getItem(SCORE_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+}
+
+function renderScoreHistory() {
+    const history = getScoreHistory().slice(-3).reverse();
+    const el = $('scoreHistory');
+    if (!history.length) {
+        hide('scoreHistory');
+        return;
+    }
+
+    const heading = document.createElement('strong');
+    heading.textContent = 'Recent attempts';
+    el.replaceChildren(heading);
+
+    history.forEach(item => {
+        const pct = item.total ? Math.round((item.correct / item.total) * 100) : 0;
+        const label = item.filter === 'all' ? 'All' : item.filter;
+        const row = document.createElement('div');
+        row.className = 'history-row';
+        row.textContent = `${label}: ${item.correct}/${item.total} (${pct}%)`;
+        el.appendChild(row);
+    });
+    show('scoreHistory');
 }
 
 // ── Restart ──
