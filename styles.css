@@ -123,6 +123,24 @@ body {
     box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
 }
 
+/* Add text span styling for proper flex behavior and long text handling */
+.option-btn .text {
+    flex: 1;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* Improve mobile tap responsiveness and prevent layout shifts */
+.option-btn,
+.next-btn,
+.restart-btn,
+.retry-btn {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    user-select: none;
+    min-height: 52px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .quiz-card, .explanation-card, .results-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .progress-fill, .loading-card, .spinner {
         animation: none !important;
