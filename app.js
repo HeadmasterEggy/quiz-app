@@ -75,7 +75,8 @@ function renderOptions(q) {
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.innerHTML = `<span class="label">${String.fromCharCode(65 + i)}</span><span class="text">${opt}</span>`;
+        const letter = String.fromCharCode(65 + i);
+        btn.innerHTML = `<span class="label">${letter}</span><span class="text">${opt}</span><span class="key-hint">${letter}</span>`;
         btn.onclick = () => handleAnswer(i, btn);
         opts.appendChild(btn);
     });
@@ -235,25 +236,28 @@ $('restartBtn').onclick = () => {
     showQuestion();
 };
 
-// Keyboard navigation: 1-4 / A-D to select, Enter/Space to advance
+// Keyboard navigation: A-D to select, Enter/Space to advance
 document.addEventListener('keydown', (e) => {
+    const quizCard = $('quizCard');
+    const explanationCard = $('explanationCard');
+    const resultsCard = $('resultsCard');
+
     // Select options during the question phase
-    if (!answered && !$('quizCard').classList.contains('hidden')) {
-        let optIndex = -1;
+    if (!answered && quizCard && !quizCard.classList.contains('hidden')) {
         const key = e.key.toUpperCase();
-        if (key >= '1' && key <= '4') optIndex = parseInt(key) - 1;
-        else if (key >= 'A' && key <= 'D') optIndex = key.charCodeAt(0) - 65;
+        const optIndex = key >= 'A' && key <= 'D' ? key.charCodeAt(0) - 65 : -1;
         if (optIndex >= 0) {
             const btns = document.querySelectorAll('.option-btn');
             if (btns[optIndex]) btns[optIndex].click();
         }
     }
+
     // Enter / Space to advance or restart
     if (e.key === 'Enter' || e.key === ' ') {
-        if (!$('explanationCard').classList.contains('hidden')) {
+        if (explanationCard && !explanationCard.classList.contains('hidden')) {
             e.preventDefault();
             $('nextBtn').click();
-        } else if (!$('resultsCard').classList.contains('hidden')) {
+        } else if (resultsCard && !resultsCard.classList.contains('hidden')) {
             e.preventDefault();
             $('restartBtn').click();
         }
