@@ -190,7 +190,7 @@ function handleAnswer(index, btn) {
     const isCorrect = index === q.correct;
     allBtns.forEach(b => b.classList.add('disabled'));
     btn.classList.add(isCorrect ? 'correct' : 'wrong');
-    if (!isCorrect) allBtns[q.correct].classList.add('correct');
+    if (!isCorrect) allBtns[q.correct]?.classList.add('correct');
     if (isCorrect) score++;
     answers.push({ question: q, correct: isCorrect });
     if (!isCorrect) saveWrongAnswer(q);
