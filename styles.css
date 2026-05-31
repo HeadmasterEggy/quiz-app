@@ -359,6 +359,51 @@ body {
     transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease;
 }
 
+.option-btn.selected {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+}
+
+.option-btn.selected .label {
+    background: var(--primary);
+    color: white;
+}
+
+.maq-hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.maq-hint strong {
+    color: var(--primary-light);
+}
+
+.maq-check-btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: popIn 0.3s ease;
+}
+
+.maq-check-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
 @keyframes correctGlowPulse {
     0%, 100% { box-shadow: 0 0 16px rgba(34, 197, 94, 0.2); }
     50% { box-shadow: 0 0 28px rgba(34, 197, 94, 0.35); }
