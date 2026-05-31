@@ -95,7 +95,14 @@ function loadQuestions(filter = 'all', skipState = false) {
 
     if (!skipState) {
         const saved = loadState();
-        if (saved && saved.filter === filter && saved.current < saved.questionIds.length) {
+        if (saved && saved.filter === filter) {
+            if (saved.current >= saved.questionIds.length) {
+                // All questions answered — go straight to results
+                if (!resumeState(saved)) { startFresh(filter); return; }
+                hide('loadingCard');
+                showResults();
+                return;
+            }
             hide('loadingCard');
             showResumeBanner(saved);
             return;
