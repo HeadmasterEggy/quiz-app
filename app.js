@@ -52,6 +52,19 @@ function shuffleArray(array) {
     return arr;
 }
 
+function animateValue(element, start, end, duration, formatter) {
+    const startTime = performance.now();
+    function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 4);
+        const value = Math.round(start + (end - start) * ease);
+        element.textContent = formatter ? formatter(value) : value;
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
 async function loadQuestions() {
     $('questionCounter').textContent = 'Loading...';
     $('loadingCard').innerHTML = LOADING_CARD_HTML;
@@ -202,7 +215,8 @@ function showResults() {
     $('progressFill').style.width = '100%';
 
     const pct = Math.round((score / questions.length) * 100);
-    $('finalScore').textContent = `${score}/${questions.length}`;
+    animateValue($('finalScore'), 0, score, 800, v => `${v}/${questions.length}`);
+    animateValue($('scorePercentage'), 0, pct, 800, v => `${v}%`);
 
     const wrongCount = questions.length - score;
     $('scoreBreakdown').textContent = `${score} correct, ${wrongCount} incorrect`;
