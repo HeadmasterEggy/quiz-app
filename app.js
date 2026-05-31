@@ -6,7 +6,7 @@ let answered = false;
 const answers = [];
 const SCORE_KEY = 'quiz_score_history';
 const WRONG_KEY = 'quiz_wrong_answers';
-const STATE_KEY = 'quiz_session_state';
+const stateKey = (filter) => `quiz_session_state_${filter}`;
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let selectedMAQ = [];
@@ -35,27 +35,28 @@ function saveState() {
             answers: answers.map(a => ({ qid: a.question.id, correct: a.correct })),
             timestamp: Date.now()
         };
-        localStorage.setItem(STATE_KEY, JSON.stringify(state));
+        localStorage.setItem(stateKey(currentWeekFilter), JSON.stringify(state));
     } catch { /* ignore */ }
 }
 
-function loadState() {
+function loadState(filter) {
+    const key = stateKey(filter || currentWeekFilter);
     try {
-        const raw = localStorage.getItem(STATE_KEY);
+        const raw = localStorage.getItem(key);
         if (!raw) return null;
         const state = JSON.parse(raw);
         if (!state.questionIds || !state.questionIds.length) return null;
         // Expire after 24 hours
         if (Date.now() - state.timestamp > 86400000) {
-            localStorage.removeItem(STATE_KEY);
+            localStorage.removeItem(key);
             return null;
         }
         return state;
     } catch { return null; }
 }
 
-function clearState() {
-    try { localStorage.removeItem(STATE_KEY); } catch { /* ignore */ }
+function clearState(filter) {
+    try { localStorage.removeItem(stateKey(filter || currentWeekFilter)); } catch { /* ignore */ }
 }
 
 // ── Resume from saved state ──
@@ -94,7 +95,7 @@ function loadQuestions(filter = 'all', skipState = false) {
     allQuestions = window.QUIZ_DATA.questions || [];
 
     if (!skipState) {
-        const saved = loadState();
+        const saved = loadState(filter);
         if (saved && saved.filter === filter) {
             if (saved.current >= saved.questionIds.length) {
                 // All questions answered — go straight to results
