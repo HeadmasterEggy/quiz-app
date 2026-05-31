@@ -176,11 +176,15 @@ function getScoreHistory() {
 }
 
 function saveScore(correct, total) {
-    const history = getScoreHistory();
-    history.push({ correct, total, date: new Date().toISOString() });
-    // Keep only last 20 attempts
-    if (history.length > 20) history.shift();
-    localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(history));
+    try {
+        const history = getScoreHistory();
+        history.push({ correct, total, date: new Date().toISOString() });
+        // Keep only last 20 attempts
+        if (history.length > 20) history.shift();
+        localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(history));
+    } catch (err) {
+        console.warn('Unable to save score history', err);
+    }
 }
 
 function renderScoreHistory() {
