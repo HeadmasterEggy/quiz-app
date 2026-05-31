@@ -114,6 +114,13 @@ body {
     border-color: var(--primary);
 }
 
+.week-select:focus-visible,
+.icon-btn:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px var(--glow-primary);
+}
+
 .icon-btn {
     width: 42px;
     height: 42px;
