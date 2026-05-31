@@ -336,9 +336,8 @@ function renderScoreHistory() {
 }
 
 function restart() {
-    clearState(); clearWrongAnswers();
-    current = 0; score = 0; answers.length = 0; isRetryMode = false;
-    showQuestion();
+    clearWrongAnswers();
+    startFresh(currentWeekFilter);
 }
 
 // ── Event bindings ──
