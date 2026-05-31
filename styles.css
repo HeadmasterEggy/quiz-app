@@ -284,7 +284,8 @@ body {
 .option-btn,
 .next-btn,
 .restart-btn,
-.retry-btn {
+.retry-btn,
+.retry-wrong-btn {
     touch-action: manipulation;
     -webkit-touch-callout: none;
     user-select: none;
@@ -292,7 +293,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .explanation-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .progress-fill, .spinner {
+    .quiz-card, .explanation-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .retry-wrong-btn, .progress-fill, .spinner {
         animation: none !important;
         transition: none !important;
     }
@@ -417,7 +418,7 @@ body {
     margin-bottom: 24px;
 }
 
-.next-btn, .restart-btn, .retry-btn {
+.next-btn, .restart-btn, .retry-btn, .retry-wrong-btn {
     width: 100%;
     padding: 16px;
     border-radius: 12px;
@@ -429,7 +430,7 @@ body {
     outline: none;
 }
 
-.next-btn:focus-visible, .restart-btn:focus-visible, .retry-btn:focus-visible {
+.next-btn:focus-visible, .restart-btn:focus-visible, .retry-btn:focus-visible, .retry-wrong-btn:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
@@ -771,7 +772,7 @@ body {
         font-size: 0.8rem;
     }
 
-    .next-btn, .restart-btn, .retry-btn {
+    .next-btn, .restart-btn, .retry-btn, .retry-wrong-btn {
         padding: 14px;
     }
 
