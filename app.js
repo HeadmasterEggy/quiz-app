@@ -241,6 +241,7 @@ function showInlineExplanation(isCorrect, q) {
     $('explanationText').textContent = q.explanation || '';
     hide('maqHint'); hide('maqCheckBtn');
     show('explanationInline'); show('nextBtn');
+    $('nextBtn').disabled = false;
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
     $('nextBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -342,6 +343,8 @@ function restart() {
 
 // ── Event bindings ──
 $('nextBtn').onclick = () => {
+    if ($('nextBtn').disabled) return;
+    $('nextBtn').disabled = true;
     current++;
     if (current < questions.length) { saveState(); showQuestion(); }
     else showResults();
