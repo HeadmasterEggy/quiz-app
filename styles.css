@@ -458,6 +458,7 @@ body {
     font-size: 0.8rem;
     font-weight: 700;
     cursor: default;
+    border: 1px solid transparent;
     transition: transform 0.15s ease;
 }
 
@@ -467,11 +468,13 @@ body {
 
 .dot-correct {
     background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.45);
     color: var(--success);
 }
 
 .dot-wrong {
     background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.45);
     color: var(--error);
 }
 

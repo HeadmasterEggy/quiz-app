@@ -227,8 +227,11 @@ function showResults() {
     answers.forEach(a => {
         const dot = document.createElement('span');
         dot.className = 'answer-dot ' + (a.correct ? 'dot-correct' : 'dot-wrong');
-        dot.textContent = a.correct ? '✓' : '✗';
-        dot.title = `Q${a.questionIndex + 1}: ${a.question.substring(0, 60)}…`;
+        const questionNumber = a.questionIndex + 1;
+        const resultText = a.correct ? 'Correct' : 'Incorrect';
+        dot.textContent = questionNumber;
+        dot.setAttribute('aria-label', `Question ${questionNumber}: ${resultText}`);
+        dot.title = `Q${questionNumber}: ${resultText} - ${a.question.substring(0, 60)}…`;
         review.appendChild(dot);
     });
 
