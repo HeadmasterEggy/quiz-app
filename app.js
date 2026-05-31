@@ -294,10 +294,11 @@ function showResults() {
 }
 
 function retryWrongAnswers() {
-    const wrong = getWrongAnswers();
-    if (!wrong.length) return;
+    // Use current session's wrong answers, not all-time localStorage (avoids mixing weeks)
+    const wrongQs = answers.filter(a => !a.correct).map(a => a.question);
+    if (!wrongQs.length) return;
     clearState();
-    questions = wrong; current = 0; score = 0; answers.length = 0; isRetryMode = true;
+    questions = wrongQs; current = 0; score = 0; answers.length = 0; isRetryMode = true;
     $('questionCounter').textContent = `Retry: ${questions.length} wrong`;
     showQuestion();
 }
