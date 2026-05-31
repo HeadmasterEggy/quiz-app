@@ -154,6 +154,7 @@ function renderOptions() {
         btn.className = 'option-btn';
         const key = OPTION_SHORTCUTS[i];
         btn.innerHTML = `<span class="label">${key}</span><span class="text">${opt}</span>`;
+        if (maq) btn.setAttribute('aria-pressed', 'false');
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
         opts.appendChild(btn);
     });
@@ -197,9 +198,11 @@ function handleMAQClick(index, btn) {
     if (selectedMAQ.includes(index)) {
         selectedMAQ = selectedMAQ.filter(i => i !== index);
         btn.classList.remove('selected');
+        btn.setAttribute('aria-pressed', 'false');
     } else if (selectedMAQ.length < 2) {
         selectedMAQ.push(index);
         btn.classList.add('selected');
+        btn.setAttribute('aria-pressed', 'true');
     }
     if (selectedMAQ.length === 2) { show('maqCheckBtn'); $('maqCheckBtn').focus(); }
     else hide('maqCheckBtn');
