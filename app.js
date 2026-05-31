@@ -12,6 +12,7 @@ const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 let selectedMAQ = [];
 let currentWeekFilter = 'all';
 let isRetryMode = false;
+let explanationTimeout = null;
 
 const $ = id => document.getElementById(id);
 const show = id => $(id).classList.remove('hidden');
@@ -169,6 +170,7 @@ function renderOptions() {
 }
 
 function showQuestion() {
+    if (explanationTimeout) { clearTimeout(explanationTimeout); explanationTimeout = null; }
     answered = false; selectedMAQ = [];
     if (current >= questions.length) { showResults(); return; }
 
@@ -195,7 +197,7 @@ function handleAnswer(index, btn) {
     answers.push({ question: q, correct: isCorrect });
     if (!isCorrect) saveWrongAnswer(q);
     saveState();
-    setTimeout(showInlineExplanation, 400, isCorrect, q);
+    explanationTimeout = setTimeout(showInlineExplanation, 400, isCorrect, q);
 }
 
 // ── MAQ ──
@@ -231,7 +233,7 @@ function checkMAQ() {
     answers.push({ question: q, correct: ok });
     if (!ok) saveWrongAnswer(q);
     saveState();
-    setTimeout(showInlineExplanation, 400, ok, q);
+    explanationTimeout = setTimeout(showInlineExplanation, 400, ok, q);
 }
 
 function showInlineExplanation(isCorrect, q) {
