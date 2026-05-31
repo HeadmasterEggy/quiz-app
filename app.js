@@ -115,8 +115,8 @@ function startFresh(filter) {
 
 function showResumeBanner(saved) {
     show('resumeBanner');
-    const answeredCount = (saved.current || 0) + 1;
-    const pct = saved.questionIds.length ? Math.round((saved.score / answeredCount) * 100) : 0;
+    const answeredCount = (saved.answers || []).length;
+    const pct = answeredCount ? Math.round((saved.score / answeredCount) * 100) : 0;
     $('resumeText').textContent = `Saved: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${answeredCount} (${pct}%)`;
     $('resumeBtn').onclick = () => {
         if (resumeState(saved)) {
