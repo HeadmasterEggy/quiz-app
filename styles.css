@@ -613,3 +613,57 @@ body {
     .question-text { font-size: 1.1rem; }
     .final-score { font-size: 2.5rem; }
 }
+
+@media (max-width: 360px) {
+    body {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .quiz-header {
+        margin-bottom: 18px;
+    }
+
+    .quiz-header h1 {
+        font-size: 1.35rem;
+        margin-bottom: 12px;
+    }
+
+    .quiz-card, .explanation-card, .results-card, .loading-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .question-text {
+        margin-bottom: 18px;
+    }
+
+    .options {
+        gap: 10px;
+    }
+
+    .option-btn {
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 10px;
+    }
+
+    .option-btn .label {
+        width: 26px;
+        height: 26px;
+        font-size: 0.8rem;
+    }
+
+    .next-btn, .restart-btn, .retry-btn {
+        padding: 14px;
+    }
+
+    .answer-dot {
+        width: 32px;
+        height: 32px;
+    }
+}
