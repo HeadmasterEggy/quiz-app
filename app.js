@@ -150,6 +150,7 @@ function renderOptions() {
     const opts = $('options');
     opts.innerHTML = '';
     const maq = isMAQ(q);
+    const maqCount = maq ? q.correct.length : 0;
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
@@ -159,7 +160,11 @@ function renderOptions() {
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
         opts.appendChild(btn);
     });
-    if (maq) { show('maqHint'); hide('maqCheckBtn'); }
+    if (maq) {
+        $('maqHint').innerHTML = `Pick <strong>${maqCount}</strong> answer${maqCount !== 1 ? 's' : ''}`;
+        show('maqHint');
+        hide('maqCheckBtn');
+    }
     else { hide('maqHint'); hide('maqCheckBtn'); }
 }
 
@@ -196,27 +201,29 @@ function handleAnswer(index, btn) {
 // ── MAQ ──
 function handleMAQClick(index, btn) {
     if (answered) return;
+    const maxSelect = questions[current].correct.length;
     if (selectedMAQ.includes(index)) {
         selectedMAQ = selectedMAQ.filter(i => i !== index);
         btn.classList.remove('selected');
         btn.setAttribute('aria-pressed', 'false');
-    } else if (selectedMAQ.length < 2) {
+    } else if (selectedMAQ.length < maxSelect) {
         selectedMAQ.push(index);
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
     }
-    if (selectedMAQ.length === 2) { show('maqCheckBtn'); $('maqCheckBtn').focus(); }
+    if (selectedMAQ.length === maxSelect) { show('maqCheckBtn'); $('maqCheckBtn').focus(); }
     else hide('maqCheckBtn');
 }
 
 function checkMAQ() {
-    if (answered || selectedMAQ.length !== 2) return; answered = true;
     const q = questions[current];
+    const maxSelect = q.correct.length;
+    if (answered || selectedMAQ.length !== maxSelect) return; answered = true;
     const correctIdx = q.correct;
     const allBtns = document.querySelectorAll('.option-btn');
-    const sortedSel = [...selectedMAQ].sort();
-    const sortedCorrect = [...correctIdx].sort();
-    const ok = sortedSel[0] === sortedCorrect[0] && sortedSel[1] === sortedCorrect[1];
+    const sortedSel = [...selectedMAQ].sort((a, b) => a - b);
+    const sortedCorrect = [...correctIdx].sort((a, b) => a - b);
+    const ok = sortedSel.length === sortedCorrect.length && sortedSel.every((val, i) => val === sortedCorrect[i]);
     allBtns.forEach(b => b.classList.add('disabled'));
     correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
     selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
