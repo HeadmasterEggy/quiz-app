@@ -310,7 +310,8 @@ function retryWrongAnswers() {
 function saveScore() {
     try {
         const raw = localStorage.getItem(SCORE_KEY);
-        const history = raw ? JSON.parse(raw) : [];
+        const parsed = raw ? JSON.parse(raw) : [];
+        const history = Array.isArray(parsed) ? parsed : [];
         history.push({ correct: score, total: questions.length, filter: currentWeekFilter, date: new Date().toISOString() });
         if (history.length > 20) history.shift();
         localStorage.setItem(SCORE_KEY, JSON.stringify(history));
@@ -318,7 +319,11 @@ function saveScore() {
 }
 
 function getScoreHistory() {
-    try { const raw = localStorage.getItem(SCORE_KEY); return raw ? JSON.parse(raw) : []; }
+    try {
+        const raw = localStorage.getItem(SCORE_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    }
     catch { return []; }
 }
 
