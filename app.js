@@ -19,6 +19,10 @@ const hide = id => $(id).classList.add('hidden');
 
 function isMAQ(q) { return Array.isArray(q.correct); }
 
+function isInteractiveTarget(target) {
+    return target?.closest('button, input, select, textarea, [contenteditable="true"]');
+}
+
 // ── State persistence ──
 function saveState() {
     if (isRetryMode) return; // don't persist retry sessions
@@ -336,6 +340,8 @@ $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
 
 document.addEventListener('keydown', (e) => {
+    if (isInteractiveTarget(e.target)) return;
+
     if (!$('quizCard').classList.contains('hidden')) {
         const idx = OPTION_SHORTCUTS.indexOf(e.key.toUpperCase());
         if (idx >= 0) document.querySelectorAll('.option-btn')[idx]?.click();
