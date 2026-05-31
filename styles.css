@@ -1,4 +1,5 @@
 :root {
+    color-scheme: dark;
     --primary: #6366f1;
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
@@ -10,9 +11,37 @@
     --text-muted: #94a3b8;
     --border: #334155;
     --glow-primary: rgba(99, 102, 241, 0.35);
+    --body-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    --card-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
-/* Custom scrollbar for dark theme */
+/* Light theme — activated via data-theme="light" on <html> */
+:root[data-theme="light"] {
+    color-scheme: light;
+    --primary: #4f46e5;
+    --primary-light: #6366f1;
+    --primary-dark: #4338ca;
+    --success: #16a34a;
+    --error: #dc2626;
+    --bg: #eef2ff;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #d8dee9;
+    --glow-primary: rgba(99, 102, 241, 0.22);
+    --body-gradient: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #eef2ff 100%);
+    --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* Light-theme: darker dropdown arrow for contrast on white */
+:root[data-theme="light"] .week-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+}
+
+/* Theme toggle button glyph sizing */
+#themeToggleBtn { font-size: 1rem; line-height: 1; }
+
+/* Custom scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -52,10 +81,11 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background: var(--body-gradient);
     background-size: 400% 400%;
     animation: gradientShift 20s ease infinite;
     color: var(--text);
+    transition: color 0.4s ease;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -196,17 +226,17 @@ body {
     animation: fadeIn 0.5s ease 0.3s both;
 }
 
-.quiz-card, .explanation-card, .results-card, .loading-card {
+.quiz-card, .results-card, .loading-card {
     background: var(--card);
     border-radius: 16px;
     padding: 32px;
     border: 1px solid var(--border);
-    transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+    box-shadow: var(--card-shadow);
 }
 
 @media (hover: hover) {
-    .quiz-card:hover, .explanation-card:hover, .results-card:hover, .loading-card:hover {
+    .quiz-card:hover, .results-card:hover, .loading-card:hover {
         box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
     }
 }
@@ -230,27 +260,6 @@ body {
     font-weight: 700;
     flex-shrink: 0;
     transition: background 0.2s ease, color 0.2s ease;
-}
-
-/* Option button key-hint: subtle keyboard shortcut */
-.option-btn .key-hint {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    opacity: 0.6;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-left: auto;
-    flex-shrink: 0;
-    font-weight: 500;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-/* Hide key-hints on touch devices (no keyboard) */
-@media (hover: none) and (pointer: coarse) {
-    .option-btn .key-hint {
-        display: none;
-    }
 }
 
 /* Accessibility: visible focus indicator for option buttons */
@@ -312,7 +321,6 @@ body {
 .option-btn,
 .next-btn,
 .restart-btn,
-.retry-btn,
 .retry-wrong-btn {
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -321,7 +329,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .explanation-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-btn, .retry-wrong-btn, .progress-fill, .spinner {
+    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner {
         animation: none !important;
         transition: none !important;
     }
@@ -364,11 +372,6 @@ body {
         background: rgba(99, 102, 241, 0.1);
         transform: translateY(-2px);
         box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
-    }
-    .option-btn:hover .key-hint {
-        background: rgba(99, 102, 241, 0.15);
-        color: var(--primary-light);
-        border-color: rgba(99, 102, 241, 0.25);
     }
 }
 
@@ -491,7 +494,7 @@ body {
     margin-bottom: 24px;
 }
 
-.next-btn, .restart-btn, .retry-btn, .retry-wrong-btn {
+.next-btn, .restart-btn, .retry-wrong-btn {
     width: 100%;
     padding: 16px;
     border-radius: 12px;
@@ -503,17 +506,17 @@ body {
     outline: none;
 }
 
-.next-btn:focus-visible, .restart-btn:focus-visible, .retry-btn:focus-visible, .retry-wrong-btn:focus-visible {
+.next-btn:focus-visible, .restart-btn:focus-visible, .retry-wrong-btn:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
-.next-btn, .retry-btn {
+.next-btn {
     background: var(--primary);
     color: white;
 }
 
-.next-btn:hover, .retry-btn:hover {
+.next-btn:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
@@ -637,25 +640,9 @@ body {
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-@keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10% { transform: translateX(-8px); }
-  20% { transform: translateX(7px); }
-  30% { transform: translateX(-5px); }
-  40% { transform: translateX(4px); }
-  50% { transform: translateX(-3px); }
-  60% { transform: translateX(2px); }
-  70% { transform: translateX(-1px); }
-  80% { transform: translateX(1px); }
-}
 
 @keyframes scaleXIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
@@ -668,10 +655,6 @@ body {
 @keyframes loadingPulse {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
-}
-
-.option-btn.shake {
-  animation: shake 0.5s ease-in-out;
 }
 
 .score-history {
@@ -723,11 +706,6 @@ body {
 .answer-dot:nth-child(9) { animation-delay: 0.64s; }
 .answer-dot:nth-child(10) { animation-delay: 0.67s; }
 
-/* Quiz card animations - transition inherited from .quiz-card above */
-.quiz-card.active { animation: slideIn 0.4s ease; }
-
-.quiz-card.leaving { opacity: 0; transform: translateX(-20px); }
-
 .option-btn { animation: popIn 0.3s ease backwards; }
 
 .option-btn:nth-child(1) { animation-delay: 0.05s; }
@@ -736,8 +714,6 @@ body {
 .option-btn:nth-child(4) { animation-delay: 0.2s; }
 
 .option-btn:active { transform: scale(0.98); }
-
-.explanation-card { animation: slideInRight 0.45s ease; }
 
 .results-card { animation: fadeIn 0.3s ease; }
 
@@ -753,7 +729,7 @@ body {
 @media (max-width: 768px) {
     .container { padding: 0 12px; }
     .quiz-header h1 { font-size: 1.5rem; }
-    .quiz-card, .explanation-card, .results-card, .loading-card {
+    .quiz-card, .results-card, .loading-card {
         padding: 28px 24px;
         border-radius: 14px;
     }
@@ -784,7 +760,7 @@ body {
         border-radius: 9px;
     }
 
-    .quiz-card, .explanation-card, .results-card, .loading-card {
+    .quiz-card, .results-card, .loading-card {
         padding: 24px 20px;
     }
     .question-text { font-size: 1.1rem; }
@@ -810,7 +786,7 @@ body {
         margin-bottom: 18px;
     }
 
-    .quiz-card, .explanation-card, .results-card, .loading-card {
+    .quiz-card, .results-card, .loading-card {
         padding-top: 24px;
         padding-bottom: 24px;
     }
@@ -840,7 +816,7 @@ body {
         margin-bottom: 12px;
     }
 
-    .quiz-card, .explanation-card, .results-card, .loading-card {
+    .quiz-card, .results-card, .loading-card {
         padding: 20px 16px;
         border-radius: 12px;
     }
@@ -865,7 +841,7 @@ body {
         font-size: 0.8rem;
     }
 
-    .next-btn, .restart-btn, .retry-btn, .retry-wrong-btn {
+    .next-btn, .restart-btn, .retry-wrong-btn {
         padding: 14px;
     }
 

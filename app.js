@@ -6,6 +6,7 @@ let answered = false;
 const answers = [];
 const SCORE_KEY = 'quiz_score_history';
 const WRONG_KEY = 'quiz_wrong_answers';
+const THEME_KEY = 'quiz_theme';
 const stateKey = (filter) => `quiz_session_state_${filter}`;
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -22,6 +23,37 @@ function isMAQ(q) { return Array.isArray(q.correct); }
 
 function isInteractiveTarget(target) {
     return target?.closest('button, input, select, textarea, [contenteditable="true"]');
+}
+
+// ── Theme ──
+function applyTheme(theme) {
+    const dark = theme !== 'light';
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    const btn = $('themeToggleBtn');
+    if (btn) {
+        btn.textContent = dark ? '☀️' : '🌙';
+        const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
+        btn.title = label;
+        btn.setAttribute('aria-label', label);
+    }
+}
+
+function initTheme() {
+    // The inline <head> script already set data-theme to avoid a flash; sync the button to it.
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme !== 'light' && theme !== 'dark') {
+        try { theme = localStorage.getItem(THEME_KEY); } catch { theme = null; }
+        if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+    }
+    applyTheme(theme);
+}
+
+function toggleTheme() {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
 }
 
 // ── State persistence ──
@@ -366,6 +398,7 @@ $('restartBtn').onclick = restart;
 $('headerRestartBtn').onclick = restart;
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
+$('themeToggleBtn').onclick = toggleTheme;
 
 document.addEventListener('keydown', (e) => {
     if (isInteractiveTarget(e.target)) return;
@@ -385,7 +418,7 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { buildWeekFilter(); loadQuestions('all'); });
+    document.addEventListener('DOMContentLoaded', () => { initTheme(); buildWeekFilter(); loadQuestions('all'); });
 } else {
-    buildWeekFilter(); loadQuestions('all');
+    initTheme(); buildWeekFilter(); loadQuestions('all');
 }

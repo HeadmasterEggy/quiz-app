@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INFO5995 Quiz</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Apply saved/system theme before first paint to avoid a flash of the wrong theme
+        (function () {
+            try {
+                var t = localStorage.getItem('quiz_theme');
+                if (t !== 'light' && t !== 'dark') {
+                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -14,6 +28,7 @@
                 <select id="weekFilter" class="week-select">
                     <option value="all">All Weeks & Exams</option>
                 </select>
+                <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
                 <button id="headerRestartBtn" class="icon-btn" title="Restart">↻</button>
             </div>
             <div class="progress-bar">
