@@ -91,6 +91,7 @@ body {
 
 .week-select {
     flex: 1;
+    min-width: 0;
     max-width: 340px;
     padding: 10px 14px;
     border-radius: 10px;
@@ -691,6 +692,26 @@ body {
 }
 
 @media (max-width: 480px) {
+    .header-controls {
+        gap: 8px;
+        justify-content: stretch;
+    }
+
+    .week-select {
+        max-width: none;
+        width: 100%;
+        font-size: 0.85rem;
+        padding-left: 12px;
+        padding-right: 32px;
+        background-position: right 12px center;
+    }
+
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 9px;
+    }
+
     .quiz-card, .explanation-card, .results-card, .loading-card {
         padding: 24px 20px;
     }
