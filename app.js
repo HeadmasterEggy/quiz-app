@@ -20,6 +20,7 @@ const hide = id => {
 };
 
 const DELAY_BEFORE_EXPLANATION = 600;
+const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 const LOADING_CARD_HTML = `<div class="spinner"></div><p>Loading questions...</p>`;
 
@@ -97,8 +98,8 @@ function renderOptions(q) {
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        const letter = String.fromCharCode(65 + i);
-        btn.innerHTML = `<span class="label">${letter}</span><span class="text">${opt}</span><span class="key-hint">${letter}</span>`;
+        const shortcut = OPTION_SHORTCUTS[i] || String(i + 1);
+        btn.innerHTML = `<span class="label">${shortcut}</span><span class="text">${opt}</span><span class="key-hint">${shortcut}</span>`;
         btn.onclick = () => handleAnswer(i, btn);
         opts.appendChild(btn);
     });
@@ -266,7 +267,7 @@ $('restartBtn').onclick = () => {
     showQuestion();
 };
 
-// Keyboard navigation: A-D to select, Enter/Space to advance
+// Keyboard navigation: option letter to select, Enter/Space to advance
 document.addEventListener('keydown', (e) => {
     const quizCard = $('quizCard');
     const explanationCard = $('explanationCard');
@@ -275,7 +276,7 @@ document.addEventListener('keydown', (e) => {
     // Select options during the question phase
     if (!answered && quizCard && !quizCard.classList.contains('hidden')) {
         const key = e.key.toUpperCase();
-        const optIndex = key >= 'A' && key <= 'D' ? key.charCodeAt(0) - 65 : -1;
+        const optIndex = OPTION_SHORTCUTS.indexOf(key);
         if (optIndex >= 0) {
             const btns = document.querySelectorAll('.option-btn');
             if (btns[optIndex]) btns[optIndex].click();
