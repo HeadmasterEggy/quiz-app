@@ -4,15 +4,13 @@ let current = 0;
 let score = 0;
 let answered = false;
 const answers = [];
-const SCORE_KEY = 'quiz_score_history';
-const WRONG_KEY = 'quiz_wrong_answers';
 const THEME_KEY = 'quiz_theme';
-const stateKey = (course, week) => `quiz_session_state_${course || 'all'}_${week || 'all'}`;
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let selectedMAQ = [];
 let currentCourseFilter = 'all';
 let currentWeekFilter = 'all';
+let shuffleEnabled = false;
 let isRetryMode = false;
 let explanationTimeout = null;
 
@@ -55,12 +53,6 @@ function getWeeksForCourse(course) {
     return window.QUIZ_DATA?.weeksByCourse?.[course] || [...new Set((window.QUIZ_DATA?.questions || []).filter(q => q.course === course).map(q => q.week).filter(Boolean))];
 }
 
-function formatFilterLabel(course, week) {
-    const courseLabel = !course || course === 'all' ? 'All Courses' : course;
-    const weekLabel = !week || week === 'all' ? 'All Weeks' : week;
-    return `${courseLabel} / ${weekLabel}`;
-}
-
 function getFilteredQuestions(course, week) {
     return allQuestions.filter(q => {
         const matchesCourse = course === 'all' || q.course === course;
@@ -69,10 +61,13 @@ function getFilteredQuestions(course, week) {
     });
 }
 
-function isSavedStateCompatible(state, course, week) {
-    if ((state.course || 'all') !== course || (state.filter || 'all') !== week) return false;
-    const validIds = new Set(getFilteredQuestions(course, week).map(q => q.id));
-    return state.questionIds.length === validIds.size && state.questionIds.every(id => validIds.has(id));
+function shuffled(items) {
+    const copy = [...items];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
 }
 
 // ── Theme ──
@@ -106,73 +101,24 @@ function toggleTheme() {
     try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
 }
 
-// ── State persistence ──
-function saveState() {
-    if (isRetryMode) return; // don't persist retry sessions
+function clearLegacyQuizMemory() {
     try {
-        const state = {
-            course: currentCourseFilter,
-            filter: currentWeekFilter,
-            questionIds: questions.map(q => q.id),
-            current: answers.length, score,
-            answers: answers.map(a => ({ qid: a.question.id, correct: a.correct })),
-            timestamp: Date.now()
-        };
-        localStorage.setItem(stateKey(currentCourseFilter, currentWeekFilter), JSON.stringify(state));
+        localStorage.removeItem('quiz_score_history');
+        localStorage.removeItem('quiz_wrong_answers');
+        if (typeof localStorage.key === 'function') {
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                if (key?.startsWith('quiz_session_state_')) localStorage.removeItem(key);
+            }
+        }
     } catch { /* ignore */ }
 }
 
-function loadState(course, week) {
-    const key = stateKey(course || currentCourseFilter, week || currentWeekFilter);
-    try {
-        const raw = localStorage.getItem(key);
-        if (!raw) return null;
-        const state = JSON.parse(raw);
-        if (!state.questionIds || !state.questionIds.length) return null;
-        // Expire after 24 hours
-        if (Date.now() - state.timestamp > 86400000) {
-            localStorage.removeItem(key);
-            return null;
-        }
-        return state;
-    } catch { return null; }
-}
-
-function clearState(course, week) {
-    try { localStorage.removeItem(stateKey(course || currentCourseFilter, week || currentWeekFilter)); } catch { /* ignore */ }
-}
-
-// ── Resume from saved state ──
-function resumeState(state) {
-    currentCourseFilter = state.course || 'all';
-    currentWeekFilter = state.filter || 'all';
-    // Look up questions by ID from allQuestions
-    const lookup = {};
-    allQuestions.forEach(q => lookup[q.id] = q);
-    questions = state.questionIds.map(id => lookup[id]).filter(Boolean);
-    if (!questions.length) return false;
-    current = state.current;
-    score = state.score;
-    answers.length = 0;
-    (state.answers || []).forEach(a => {
-        const q = lookup[a.qid];
-        if (q) answers.push({ question: q, correct: a.correct });
-    });
-    isRetryMode = false;
-    buildCourseFilter();
-    buildWeekFilter();
-    const courseSel = $('courseFilter');
-    const weekSel = $('weekFilter');
-    if (courseSel) courseSel.value = currentCourseFilter;
-    if (weekSel) weekSel.value = currentWeekFilter;
-    return true;
-}
-
 // ── Load ──
-function loadQuestions(course = 'all', week = 'all', skipState = false) {
+function loadQuestions(course = 'all', week = 'all') {
     currentCourseFilter = course;
     currentWeekFilter = week;
-    hide('quizCard'); hide('resultsCard'); hide('resumeBanner');
+    hide('quizCard'); hide('resultsCard');
     show('loadingCard');
 
     if (!window.QUIZ_DATA || !window.QUIZ_DATA.questions) {
@@ -181,55 +127,17 @@ function loadQuestions(course = 'all', week = 'all', skipState = false) {
     }
 
     allQuestions = window.QUIZ_DATA.questions || [];
-
-    if (!skipState) {
-        const saved = loadState(course, week);
-        if (saved && isSavedStateCompatible(saved, course, week)) {
-            if (saved.current >= saved.questionIds.length) {
-                // All questions answered — go straight to results
-                if (!resumeState(saved)) { startFresh(course, week); return; }
-                hide('loadingCard');
-                showResults();
-                return;
-            }
-            hide('loadingCard');
-            showResumeBanner(saved);
-            return;
-        }
-        if (saved) clearState(course, week);
-    }
-
     startFresh(course, week);
 }
 
 function startFresh(course = 'all', week = 'all') {
-    clearState(course, week);
     currentCourseFilter = course;
     currentWeekFilter = week;
-    questions = getFilteredQuestions(course, week);
+    const filtered = getFilteredQuestions(course, week);
+    questions = shuffleEnabled ? shuffled(filtered) : filtered;
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
-    hide('loadingCard'); hide('resumeBanner');
+    hide('loadingCard');
     showQuestion();
-}
-
-function showResumeBanner(saved) {
-    show('resumeBanner');
-    const answeredCount = (saved.answers || []).length;
-    const pct = answeredCount ? Math.round((saved.score / answeredCount) * 100) : 0;
-    $('resumeText').textContent = `Saved ${formatFilterLabel(saved.course, saved.filter)}: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${answeredCount} (${pct}%)`;
-    $('resumeBtn').onclick = () => {
-        if (resumeState(saved)) {
-            hide('resumeBanner');
-            hide('loadingCard');
-            showQuestion();
-            saveState();
-        }
-    };
-    $('resumeDiscardBtn').onclick = () => {
-        clearState(saved.course, saved.filter);
-        hide('resumeBanner');
-        startFresh(currentCourseFilter, currentWeekFilter);
-    };
 }
 
 function buildCourseFilter() {
@@ -267,6 +175,21 @@ function buildWeekFilter() {
     sel.disabled = currentCourseFilter === 'all';
     sel.title = sel.disabled ? 'Select a course to filter by week' : 'Filter by week';
     sel.onchange = () => loadQuestions(currentCourseFilter, sel.value);
+}
+
+function updateShuffleButton() {
+    const btn = $('shuffleToggleBtn');
+    if (!btn) return;
+    btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
+    const label = shuffleEnabled ? 'Shuffle on' : 'Shuffle off';
+    btn.title = label;
+    btn.setAttribute('aria-label', label);
+}
+
+function toggleShuffle() {
+    shuffleEnabled = !shuffleEnabled;
+    updateShuffleButton();
+    startFresh(currentCourseFilter, currentWeekFilter);
 }
 
 function renderOptions() {
@@ -325,8 +248,6 @@ function handleAnswer(index, btn) {
     if (!isCorrect) allBtns[q.correct]?.classList.add('correct');
     if (isCorrect) score++;
     answers.push({ question: q, correct: isCorrect });
-    if (!isCorrect) saveWrongAnswer(q);
-    saveState();
     explanationTimeout = setTimeout(showInlineExplanation, 400, isCorrect, q);
 }
 
@@ -343,7 +264,7 @@ function handleMAQClick(index, btn) {
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
     }
-    if (selectedMAQ.length === maxSelect) { show('maqCheckBtn'); $('maqCheckBtn').focus(); }
+    if (selectedMAQ.length === maxSelect) show('maqCheckBtn');
     else hide('maqCheckBtn');
 }
 
@@ -361,8 +282,6 @@ function checkMAQ() {
     selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
     if (ok) score++;
     answers.push({ question: q, correct: ok });
-    if (!ok) saveWrongAnswer(q);
-    saveState();
     explanationTimeout = setTimeout(showInlineExplanation, 400, ok, q);
 }
 
@@ -378,28 +297,8 @@ function showInlineExplanation(isCorrect, q) {
     $('nextBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ── Wrong answers ──
-function saveWrongAnswer(q) {
-    try {
-        const raw = localStorage.getItem(WRONG_KEY);
-        const list = raw ? JSON.parse(raw) : [];
-        if (!list.find(w => w.question === q.question)) list.push(q);
-        localStorage.setItem(WRONG_KEY, JSON.stringify(list));
-    } catch { /* ignore */ }
-}
-
-function getWrongAnswers() {
-    try { const raw = localStorage.getItem(WRONG_KEY); return raw ? JSON.parse(raw) : []; }
-    catch { return []; }
-}
-
-function clearWrongAnswers() {
-    try { localStorage.removeItem(WRONG_KEY); } catch { /* ignore */ }
-}
-
 // ── Results ──
 function showResults() {
-    clearState();
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
     const pct = questions.length ? Math.round((score / questions.length) * 100) : 0;
@@ -423,53 +322,15 @@ function showResults() {
         show('retryWrongBtn');
     } else hide('retryWrongBtn');
 
-    saveScore(); renderScoreHistory();
 }
 
 function retryWrongAnswers() {
-    // Use current session's wrong answers, not all-time localStorage (avoids mixing weeks)
     const wrongQs = answers.filter(a => !a.correct).map(a => a.question);
     if (!wrongQs.length) return;
-    clearState();
-    questions = wrongQs; current = 0; score = 0; answers.length = 0; isRetryMode = true;
+    questions = shuffleEnabled ? shuffled(wrongQs) : wrongQs;
+    current = 0; score = 0; answers.length = 0; isRetryMode = true;
     $('questionCounter').textContent = `Retry: ${questions.length} wrong`;
     showQuestion();
-}
-
-// ── Score history ──
-function saveScore() {
-    try {
-        const raw = localStorage.getItem(SCORE_KEY);
-        const parsed = raw ? JSON.parse(raw) : [];
-        const history = Array.isArray(parsed) ? parsed : [];
-        history.push({ correct: score, total: questions.length, course: currentCourseFilter, filter: currentWeekFilter, date: new Date().toISOString() });
-        if (history.length > 20) history.shift();
-        localStorage.setItem(SCORE_KEY, JSON.stringify(history));
-    } catch { /* ignore */ }
-}
-
-function getScoreHistory() {
-    try {
-        const raw = localStorage.getItem(SCORE_KEY);
-        const parsed = raw ? JSON.parse(raw) : [];
-        return Array.isArray(parsed) ? parsed : [];
-    }
-    catch { return []; }
-}
-
-function renderScoreHistory() {
-    const history = getScoreHistory().slice(-3).reverse();
-    const el = $('scoreHistory');
-    if (!history.length) { hide('scoreHistory'); return; }
-    el.innerHTML = '<strong>Recent</strong>';
-    history.forEach(item => {
-        const pct = item.total ? Math.round((item.correct / item.total) * 100) : 0;
-        const row = document.createElement('div');
-        row.className = 'history-row';
-        row.textContent = `${formatFilterLabel(item.course, item.filter)}: ${item.correct}/${item.total} (${pct}%)`;
-        el.appendChild(row);
-    });
-    show('scoreHistory');
 }
 
 function restart() {
@@ -481,13 +342,14 @@ $('nextBtn').onclick = () => {
     if ($('nextBtn').disabled) return;
     $('nextBtn').disabled = true;
     current++;
-    if (current < questions.length) { saveState(); showQuestion(); }
+    if (current < questions.length) showQuestion();
     else showResults();
 };
 $('restartBtn').onclick = restart;
 $('headerRestartBtn').onclick = restart;
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
+$('shuffleToggleBtn').onclick = toggleShuffle;
 var themeBtn = $('themeToggleBtn');
 if (themeBtn) themeBtn.onclick = toggleTheme;
 else console.warn('themeToggleBtn not found in DOM');
@@ -510,7 +372,7 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initTheme(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
+    document.addEventListener('DOMContentLoaded', () => { initTheme(); clearLegacyQuizMemory(); updateShuffleButton(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
 } else {
-    initTheme(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
+    initTheme(); clearLegacyQuizMemory(); updateShuffleButton(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
 }

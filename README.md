@@ -40,10 +40,10 @@ A browser-based quiz app for USYD course revision.
 
 - **MCQ & MAQ** — single-select and multi-select question types
 - **Course and week filters** — study one course or topic at a time
+- **Shuffle mode** — randomize the current quiz without saving state
 - **Inline explanations** — answer feedback shown below the question
 - **Keyboard shortcuts** — A/B/C/D to select, Enter to advance
-- **Progress persistence** — refresh-safe, auto-resume mid-quiz
-- **Wrong answer retry** — redo only the questions you missed
+- **Wrong answer retry** — redo only the questions you missed in the current run
 - **Dark theme** — easy on the eyes
 
 ## 🚀 Run Locally

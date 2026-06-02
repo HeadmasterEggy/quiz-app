@@ -32,6 +32,7 @@
                 <select id="weekFilter" class="filter-select week-select" aria-label="Week filter">
                     <option value="all">All Weeks & Exams</option>
                 </select>
+                <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false">🔀</button>
                 <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
                 <button id="headerRestartBtn" class="icon-btn" title="Restart">↻</button>
             </div>
@@ -44,13 +45,6 @@
         <div class="loading-card" id="loadingCard">
             <div class="spinner"></div>
             <p>Loading questions...</p>
-        </div>
-
-        <div class="resume-banner hidden" id="resumeBanner">
-            <span class="resume-icon">💾</span>
-            <span id="resumeText">Continue where you left off?</span>
-            <button class="resume-btn" id="resumeBtn">Continue</button>
-            <button class="resume-discard" id="resumeDiscardBtn">Start Fresh</button>
         </div>
 
         <div class="quiz-card hidden" id="quizCard">
@@ -72,7 +66,6 @@
             <div class="score-percentage" id="scorePercentage"></div>
             <div class="score-breakdown" id="scoreBreakdown"></div>
             <div class="score-message" id="scoreMessage"></div>
-            <div class="score-history hidden" id="scoreHistory"></div>
             <div class="answers-review" id="answersReview"></div>
             <div class="results-actions">
                 <button class="restart-btn" id="restartBtn">↻ Restart</button>
