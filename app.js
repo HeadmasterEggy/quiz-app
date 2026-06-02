@@ -26,6 +26,26 @@ function isInteractiveTarget(target) {
     return target?.closest('button, input, select, textarea, [contenteditable="true"]');
 }
 
+// Set text that may contain $...$ LaTeX, rendering it with KaTeX when available.
+// Falls back to plain text if KaTeX hasn't loaded (e.g. offline / CDN blocked).
+function setMath(el, str) {
+    if (!el) return;
+    el.textContent = str || '';
+    if (window.renderMathInElement) {
+        try {
+            renderMathInElement(el, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '\\[', right: '\\]', display: true },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '$', right: '$', display: false }
+                ],
+                throwOnError: false
+            });
+        } catch (e) { /* leave plain text on render error */ }
+    }
+}
+
 function getCourses() {
     return window.QUIZ_DATA?.courses || [...new Set((window.QUIZ_DATA?.questions || []).map(q => q.course).filter(Boolean))];
 }
@@ -264,7 +284,7 @@ function renderOptions() {
         label.textContent = key;
         const text = document.createElement('span');
         text.className = 'text';
-        text.textContent = opt;
+        setMath(text, opt);
         btn.append(label, text);
         if (maq) btn.setAttribute('aria-pressed', 'false');
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
@@ -288,7 +308,7 @@ function showQuestion() {
     const source = sourceParts.length ? ` [${sourceParts.join(' · ')}]` : '';
     $('questionCounter').textContent = `Q${current + 1} / ${questions.length}${source}`;
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
-    $('questionText').textContent = q.question;
+    setMath($('questionText'), q.question);
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
     show('quizCard'); hide('resultsCard');
@@ -350,7 +370,7 @@ function showInlineExplanation(isCorrect, q) {
     const badge = $('resultBadge');
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
-    $('explanationText').textContent = q.explanation || '';
+    setMath($('explanationText'), q.explanation);
     hide('maqHint'); hide('maqCheckBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
