@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Course Quiz</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -26,15 +26,19 @@
         <div class="quiz-header">
             <h1>📚 Course Quiz</h1>
             <div class="header-controls">
-                <select id="courseFilter" class="filter-select course-select" aria-label="Course filter">
-                    <option value="all">All Courses</option>
-                </select>
-                <select id="weekFilter" class="filter-select week-select" aria-label="Week filter">
-                    <option value="all">All Weeks & Exams</option>
-                </select>
-                <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false">🔀</button>
-                <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
-                <button id="headerRestartBtn" class="icon-btn" title="Restart">↻</button>
+                <div class="filter-controls">
+                    <select id="courseFilter" class="filter-select course-select" aria-label="Course filter">
+                        <option value="all">All Courses</option>
+                    </select>
+                    <select id="weekFilter" class="filter-select week-select" aria-label="Week filter">
+                        <option value="all">All Weeks & Exams</option>
+                    </select>
+                </div>
+                <div class="tool-controls">
+                    <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false">🔀</button>
+                    <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
+                    <button id="headerRestartBtn" class="icon-btn" title="Restart" aria-label="Restart quiz">↻</button>
+                </div>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>

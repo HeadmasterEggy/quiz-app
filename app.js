@@ -237,6 +237,11 @@ function showQuestion() {
     show('quizCard'); hide('resultsCard');
 }
 
+function scrollQuizIntoView() {
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    $('quizCard').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+}
+
 // ── MCQ ──
 function handleAnswer(index, btn) {
     if (answered) return; answered = true;
@@ -342,7 +347,7 @@ $('nextBtn').onclick = () => {
     if ($('nextBtn').disabled) return;
     $('nextBtn').disabled = true;
     current++;
-    if (current < questions.length) showQuestion();
+    if (current < questions.length) { showQuestion(); scrollQuizIntoView(); }
     else showResults();
 };
 $('restartBtn').onclick = restart;
