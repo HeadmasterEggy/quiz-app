@@ -41,6 +41,20 @@ function formatFilterLabel(course, week) {
     return `${courseLabel} / ${weekLabel}`;
 }
 
+function getFilteredQuestions(course, week) {
+    return allQuestions.filter(q => {
+        const matchesCourse = course === 'all' || q.course === course;
+        const matchesWeek = week === 'all' || q.week === week;
+        return matchesCourse && matchesWeek;
+    });
+}
+
+function isSavedStateCompatible(state, course, week) {
+    if ((state.course || 'all') !== course || (state.filter || 'all') !== week) return false;
+    const validIds = new Set(getFilteredQuestions(course, week).map(q => q.id));
+    return state.questionIds.length === validIds.size && state.questionIds.every(id => validIds.has(id));
+}
+
 // ── Theme ──
 function applyTheme(theme) {
     const dark = theme !== 'light';
@@ -150,7 +164,7 @@ function loadQuestions(course = 'all', week = 'all', skipState = false) {
 
     if (!skipState) {
         const saved = loadState(course, week);
-        if (saved && (saved.course || 'all') === course && saved.filter === week) {
+        if (saved && isSavedStateCompatible(saved, course, week)) {
             if (saved.current >= saved.questionIds.length) {
                 // All questions answered — go straight to results
                 if (!resumeState(saved)) { startFresh(course, week); return; }
@@ -162,6 +176,7 @@ function loadQuestions(course = 'all', week = 'all', skipState = false) {
             showResumeBanner(saved);
             return;
         }
+        if (saved) clearState(course, week);
     }
 
     startFresh(course, week);
@@ -171,11 +186,7 @@ function startFresh(course = 'all', week = 'all') {
     clearState(course, week);
     currentCourseFilter = course;
     currentWeekFilter = week;
-    questions = allQuestions.filter(q => {
-        const matchesCourse = course === 'all' || q.course === course;
-        const matchesWeek = week === 'all' || q.week === week;
-        return matchesCourse && matchesWeek;
-    });
+    questions = getFilteredQuestions(course, week);
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
     hide('loadingCard'); hide('resumeBanner');
     showQuestion();

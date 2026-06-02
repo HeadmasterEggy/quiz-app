@@ -8,7 +8,7 @@ A browser-based quiz app for USYD course revision.
 
 | Course / Section | Questions |
 |------------------|-----------|
-| INFO5995 total | 179 |
+| INFO5995 total | 185 |
 | Week 02 – Security Basics | 5 |
 | Week 03 – AI & Mobile Security | 10 |
 | Week 04 – Cryptography Basics | 10 |
@@ -20,8 +20,8 @@ A browser-based quiz app for USYD course revision.
 | Week 10 – Blockchain & Consensus | 10 |
 | Week 11 – Program Analysis | 10 |
 | Week 12 – DeFi & Security | 10 |
-| Mock Exam 2 | 35 |
-| Mock Exam 1 | 39 |
+| Mock Exam 2 | 40 |
+| Mock Exam 1 | 40 |
 | COMP5270 total | 110 |
 | Week 01 – Random variables & expectation | 10 |
 | Week 02 – Concentration inequalities & algorithm types | 10 |
@@ -34,7 +34,7 @@ A browser-based quiz app for USYD course revision.
 | Week 10 – Linear programming & randomized rounding | 10 |
 | Week 11 – Distribution learning & testing | 10 |
 | Week 12 – Learning from experts | 10 |
-| **Total** | **289** |
+| **Total** | **295** |
 
 ## ✨ Features
 
