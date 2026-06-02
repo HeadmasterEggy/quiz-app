@@ -1,13 +1,14 @@
-# 🔐 INFO5995 Quiz
+# 📚 Course Quiz
 
-A browser-based quiz app for INFO5995 Introduction to Cybersecurity (USYD Semester 1, 2026).
+A browser-based quiz app for USYD course revision.
 
 **Live:** [qiao1.top/quiz-app](https://qiao1.top/quiz-app/)
 
 ## 📊 Content
 
-| Section | Questions |
-|---------|-----------|
+| Course / Section | Questions |
+|------------------|-----------|
+| INFO5995 total | 179 |
 | Week 02 – Security Basics | 5 |
 | Week 03 – AI & Mobile Security | 10 |
 | Week 04 – Cryptography Basics | 10 |
@@ -21,12 +22,24 @@ A browser-based quiz app for INFO5995 Introduction to Cybersecurity (USYD Semest
 | Week 12 – DeFi & Security | 10 |
 | Mock Exam 2 | 35 |
 | Mock Exam 1 | 39 |
-| **Total** | **179** |
+| COMP5270 total | 110 |
+| Week 01 – Random variables & expectation | 10 |
+| Week 02 – Concentration inequalities & algorithm types | 10 |
+| Week 03 – Balls into bins & hashing | 10 |
+| Week 05 – Min-Cut & Karger algorithms | 10 |
+| Week 06 – Hash tables | 10 |
+| Week 07 – Approximate nearest neighbour | 10 |
+| Week 08 – Streaming algorithms | 10 |
+| Week 09 – Sketching | 10 |
+| Week 10 – Linear programming & randomized rounding | 10 |
+| Week 11 – Distribution learning & testing | 10 |
+| Week 12 – Learning from experts | 10 |
+| **Total** | **289** |
 
 ## ✨ Features
 
 - **MCQ & MAQ** — single-select and multi-select question types
-- **Week filter** — study one topic at a time
+- **Course and week filters** — study one course or topic at a time
 - **Inline explanations** — answer feedback shown below the question
 - **Keyboard shortcuts** — A/B/C/D to select, Enter to advance
 - **Progress persistence** — refresh-safe, auto-resume mid-quiz

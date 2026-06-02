@@ -7,10 +7,11 @@ const answers = [];
 const SCORE_KEY = 'quiz_score_history';
 const WRONG_KEY = 'quiz_wrong_answers';
 const THEME_KEY = 'quiz_theme';
-const stateKey = (filter) => `quiz_session_state_${filter}`;
+const stateKey = (course, week) => `quiz_session_state_${course || 'all'}_${week || 'all'}`;
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let selectedMAQ = [];
+let currentCourseFilter = 'all';
 let currentWeekFilter = 'all';
 let isRetryMode = false;
 let explanationTimeout = null;
@@ -23,6 +24,21 @@ function isMAQ(q) { return Array.isArray(q.correct); }
 
 function isInteractiveTarget(target) {
     return target?.closest('button, input, select, textarea, [contenteditable="true"]');
+}
+
+function getCourses() {
+    return window.QUIZ_DATA?.courses || [...new Set((window.QUIZ_DATA?.questions || []).map(q => q.course).filter(Boolean))];
+}
+
+function getWeeksForCourse(course) {
+    if (!course || course === 'all') return [];
+    return window.QUIZ_DATA?.weeksByCourse?.[course] || [...new Set((window.QUIZ_DATA?.questions || []).filter(q => q.course === course).map(q => q.week).filter(Boolean))];
+}
+
+function formatFilterLabel(course, week) {
+    const courseLabel = !course || course === 'all' ? 'All Courses' : course;
+    const weekLabel = !week || week === 'all' ? 'All Weeks' : week;
+    return `${courseLabel} / ${weekLabel}`;
 }
 
 // ── Theme ──
@@ -61,18 +77,19 @@ function saveState() {
     if (isRetryMode) return; // don't persist retry sessions
     try {
         const state = {
+            course: currentCourseFilter,
             filter: currentWeekFilter,
             questionIds: questions.map(q => q.id),
             current: answers.length, score,
             answers: answers.map(a => ({ qid: a.question.id, correct: a.correct })),
             timestamp: Date.now()
         };
-        localStorage.setItem(stateKey(currentWeekFilter), JSON.stringify(state));
+        localStorage.setItem(stateKey(currentCourseFilter, currentWeekFilter), JSON.stringify(state));
     } catch { /* ignore */ }
 }
 
-function loadState(filter) {
-    const key = stateKey(filter || currentWeekFilter);
+function loadState(course, week) {
+    const key = stateKey(course || currentCourseFilter, week || currentWeekFilter);
     try {
         const raw = localStorage.getItem(key);
         if (!raw) return null;
@@ -87,13 +104,14 @@ function loadState(filter) {
     } catch { return null; }
 }
 
-function clearState(filter) {
-    try { localStorage.removeItem(stateKey(filter || currentWeekFilter)); } catch { /* ignore */ }
+function clearState(course, week) {
+    try { localStorage.removeItem(stateKey(course || currentCourseFilter, week || currentWeekFilter)); } catch { /* ignore */ }
 }
 
 // ── Resume from saved state ──
 function resumeState(state) {
-    currentWeekFilter = state.filter;
+    currentCourseFilter = state.course || 'all';
+    currentWeekFilter = state.filter || 'all';
     // Look up questions by ID from allQuestions
     const lookup = {};
     allQuestions.forEach(q => lookup[q.id] = q);
@@ -107,15 +125,19 @@ function resumeState(state) {
         if (q) answers.push({ question: q, correct: a.correct });
     });
     isRetryMode = false;
-    // Update dropdown
-    const sel = $('weekFilter');
-    if (sel) sel.value = state.filter;
+    buildCourseFilter();
+    buildWeekFilter();
+    const courseSel = $('courseFilter');
+    const weekSel = $('weekFilter');
+    if (courseSel) courseSel.value = currentCourseFilter;
+    if (weekSel) weekSel.value = currentWeekFilter;
     return true;
 }
 
 // ── Load ──
-function loadQuestions(filter = 'all', skipState = false) {
-    currentWeekFilter = filter;
+function loadQuestions(course = 'all', week = 'all', skipState = false) {
+    currentCourseFilter = course;
+    currentWeekFilter = week;
     hide('quizCard'); hide('resultsCard'); hide('resumeBanner');
     show('loadingCard');
 
@@ -127,11 +149,11 @@ function loadQuestions(filter = 'all', skipState = false) {
     allQuestions = window.QUIZ_DATA.questions || [];
 
     if (!skipState) {
-        const saved = loadState(filter);
-        if (saved && saved.filter === filter) {
+        const saved = loadState(course, week);
+        if (saved && (saved.course || 'all') === course && saved.filter === week) {
             if (saved.current >= saved.questionIds.length) {
                 // All questions answered — go straight to results
-                if (!resumeState(saved)) { startFresh(filter); return; }
+                if (!resumeState(saved)) { startFresh(course, week); return; }
                 hide('loadingCard');
                 showResults();
                 return;
@@ -142,13 +164,18 @@ function loadQuestions(filter = 'all', skipState = false) {
         }
     }
 
-    startFresh(filter);
+    startFresh(course, week);
 }
 
-function startFresh(filter) {
-    clearState();
-    currentWeekFilter = filter;
-    questions = filter === 'all' ? [...allQuestions] : allQuestions.filter(q => q.week === filter);
+function startFresh(course = 'all', week = 'all') {
+    clearState(course, week);
+    currentCourseFilter = course;
+    currentWeekFilter = week;
+    questions = allQuestions.filter(q => {
+        const matchesCourse = course === 'all' || q.course === course;
+        const matchesWeek = week === 'all' || q.week === week;
+        return matchesCourse && matchesWeek;
+    });
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
     hide('loadingCard'); hide('resumeBanner');
     showQuestion();
@@ -158,7 +185,7 @@ function showResumeBanner(saved) {
     show('resumeBanner');
     const answeredCount = (saved.answers || []).length;
     const pct = answeredCount ? Math.round((saved.score / answeredCount) * 100) : 0;
-    $('resumeText').textContent = `Saved: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${answeredCount} (${pct}%)`;
+    $('resumeText').textContent = `Saved ${formatFilterLabel(saved.course, saved.filter)}: Q${(saved.current || 0) + 1}/${saved.questionIds.length} · Score ${saved.score}/${answeredCount} (${pct}%)`;
     $('resumeBtn').onclick = () => {
         if (resumeState(saved)) {
             hide('resumeBanner');
@@ -168,22 +195,47 @@ function showResumeBanner(saved) {
         }
     };
     $('resumeDiscardBtn').onclick = () => {
-        clearState();
+        clearState(saved.course, saved.filter);
         hide('resumeBanner');
-        startFresh(currentWeekFilter);
+        startFresh(currentCourseFilter, currentWeekFilter);
+    };
+}
+
+function buildCourseFilter() {
+    const sel = $('courseFilter');
+    if (!sel) return;
+    sel.innerHTML = '<option value="all">All Courses</option>';
+    getCourses().forEach(course => {
+        const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === course).length;
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = `${course} (${count} Qs)`;
+        sel.appendChild(option);
+    });
+    sel.value = currentCourseFilter;
+    sel.onchange = () => {
+        currentCourseFilter = sel.value;
+        currentWeekFilter = 'all';
+        buildWeekFilter();
+        loadQuestions(currentCourseFilter, currentWeekFilter);
     };
 }
 
 function buildWeekFilter() {
     const sel = $('weekFilter');
-    sel.innerHTML = '<option value="all">All Weeks & Exams</option>';
-    const weeks = window.QUIZ_DATA.weeks || [];
+    sel.innerHTML = `<option value="all">${currentCourseFilter === 'all' ? 'All Weeks & Exams' : `All ${currentCourseFilter} Weeks & Exams`}</option>`;
+    const weeks = getWeeksForCourse(currentCourseFilter);
     weeks.forEach(w => {
-        const count = (window.QUIZ_DATA.questions || []).filter(q => q.week === w).length;
-        sel.innerHTML += `<option value="${w}">${w} (${count} Qs)</option>`;
+        const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === currentCourseFilter && q.week === w).length;
+        const option = document.createElement('option');
+        option.value = w;
+        option.textContent = `${w} (${count} Qs)`;
+        sel.appendChild(option);
     });
     sel.value = currentWeekFilter;
-    sel.onchange = () => loadQuestions(sel.value);
+    sel.disabled = currentCourseFilter === 'all';
+    sel.title = sel.disabled ? 'Select a course to filter by week' : 'Filter by week';
+    sel.onchange = () => loadQuestions(currentCourseFilter, sel.value);
 }
 
 function renderOptions() {
@@ -196,7 +248,13 @@ function renderOptions() {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         const key = OPTION_SHORTCUTS[i];
-        btn.innerHTML = `<span class="label">${key}</span><span class="text">${opt}</span>`;
+        const label = document.createElement('span');
+        label.className = 'label';
+        label.textContent = key;
+        const text = document.createElement('span');
+        text.className = 'text';
+        text.textContent = opt;
+        btn.append(label, text);
         if (maq) btn.setAttribute('aria-pressed', 'false');
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
         opts.appendChild(btn);
@@ -215,7 +273,8 @@ function showQuestion() {
     if (current >= questions.length) { showResults(); return; }
 
     const q = questions[current];
-    const source = q.week ? ` [${q.week}]` : '';
+    const sourceParts = [q.course, q.week].filter(Boolean);
+    const source = sourceParts.length ? ` [${sourceParts.join(' · ')}]` : '';
     $('questionCounter').textContent = `Q${current + 1} / ${questions.length}${source}`;
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
     $('questionText').textContent = q.question;
@@ -352,7 +411,7 @@ function saveScore() {
         const raw = localStorage.getItem(SCORE_KEY);
         const parsed = raw ? JSON.parse(raw) : [];
         const history = Array.isArray(parsed) ? parsed : [];
-        history.push({ correct: score, total: questions.length, filter: currentWeekFilter, date: new Date().toISOString() });
+        history.push({ correct: score, total: questions.length, course: currentCourseFilter, filter: currentWeekFilter, date: new Date().toISOString() });
         if (history.length > 20) history.shift();
         localStorage.setItem(SCORE_KEY, JSON.stringify(history));
     } catch { /* ignore */ }
@@ -376,14 +435,14 @@ function renderScoreHistory() {
         const pct = item.total ? Math.round((item.correct / item.total) * 100) : 0;
         const row = document.createElement('div');
         row.className = 'history-row';
-        row.textContent = `${item.filter === 'all' ? 'All' : item.filter}: ${item.correct}/${item.total} (${pct}%)`;
+        row.textContent = `${formatFilterLabel(item.course, item.filter)}: ${item.correct}/${item.total} (${pct}%)`;
         el.appendChild(row);
     });
     show('scoreHistory');
 }
 
 function restart() {
-    startFresh(currentWeekFilter);
+    startFresh(currentCourseFilter, currentWeekFilter);
 }
 
 // ── Event bindings ──
@@ -420,7 +479,7 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initTheme(); buildWeekFilter(); loadQuestions('all'); });
+    document.addEventListener('DOMContentLoaded', () => { initTheme(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
 } else {
-    initTheme(); buildWeekFilter(); loadQuestions('all');
+    initTheme(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
 }
