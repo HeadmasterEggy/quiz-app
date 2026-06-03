@@ -5,6 +5,7 @@ let score = 0;
 let answered = false;
 const answers = [];
 const THEME_KEY = 'quiz_theme';
+const SHUFFLE_KEY = 'quiz_shuffle_enabled';
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 let selectedMAQ = [];
@@ -70,6 +71,33 @@ function shuffled(items) {
     return copy;
 }
 
+function groupedShuffleByCourse(items) {
+    const grouped = new Map();
+    items.forEach(q => {
+        const key = q.course || 'Other';
+        if (!grouped.has(key)) grouped.set(key, []);
+        grouped.get(key).push(q);
+    });
+
+    const configuredCourses = getCourses();
+    const orderedCourses = [
+        ...configuredCourses.filter(course => grouped.has(course)),
+        ...[...grouped.keys()].filter(course => !configuredCourses.includes(course))
+    ];
+
+    return orderedCourses.flatMap(course => shuffled(grouped.get(course)));
+}
+
+function orderQuestions(items, course) {
+    if (!shuffleEnabled) return [...items];
+    return course === 'all' ? groupedShuffleByCourse(items) : shuffled(items);
+}
+
+function getShuffleScopeLabel() {
+    if (currentCourseFilter === 'all') return 'by course';
+    return currentWeekFilter === 'all' ? currentCourseFilter : `${currentCourseFilter} · ${currentWeekFilter}`;
+}
+
 // ── Theme ──
 function applyTheme(theme) {
     const dark = theme !== 'light';
@@ -99,6 +127,17 @@ function toggleTheme() {
     const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     applyTheme(next);
     try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
+}
+
+function initShuffle() {
+    try { shuffleEnabled = localStorage.getItem(SHUFFLE_KEY) === 'true'; }
+    catch { shuffleEnabled = false; }
+    updateShuffleButton();
+}
+
+function saveShufflePreference() {
+    try { localStorage.setItem(SHUFFLE_KEY, shuffleEnabled ? 'true' : 'false'); }
+    catch { /* ignore */ }
 }
 
 function clearLegacyQuizMemory() {
@@ -134,8 +173,9 @@ function startFresh(course = 'all', week = 'all') {
     currentCourseFilter = course;
     currentWeekFilter = week;
     const filtered = getFilteredQuestions(course, week);
-    questions = shuffleEnabled ? shuffled(filtered) : filtered;
+    questions = orderQuestions(filtered, course);
     current = 0; score = 0; answers.length = 0; isRetryMode = false;
+    updateShuffleButton();
     hide('loadingCard');
     showQuestion();
 }
@@ -181,13 +221,15 @@ function updateShuffleButton() {
     const btn = $('shuffleToggleBtn');
     if (!btn) return;
     btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
-    const label = shuffleEnabled ? 'Shuffle on' : 'Shuffle off';
+    const scope = getShuffleScopeLabel();
+    const label = shuffleEnabled ? `Shuffle on: ${scope}` : `Shuffle off: ${scope}`;
     btn.title = label;
     btn.setAttribute('aria-label', label);
 }
 
 function toggleShuffle() {
     shuffleEnabled = !shuffleEnabled;
+    saveShufflePreference();
     updateShuffleButton();
     startFresh(currentCourseFilter, currentWeekFilter);
 }
@@ -332,7 +374,7 @@ function showResults() {
 function retryWrongAnswers() {
     const wrongQs = answers.filter(a => !a.correct).map(a => a.question);
     if (!wrongQs.length) return;
-    questions = shuffleEnabled ? shuffled(wrongQs) : wrongQs;
+    questions = orderQuestions(wrongQs, currentCourseFilter);
     current = 0; score = 0; answers.length = 0; isRetryMode = true;
     $('questionCounter').textContent = `Retry: ${questions.length} wrong`;
     showQuestion();
@@ -377,7 +419,7 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initTheme(); clearLegacyQuizMemory(); updateShuffleButton(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
+    document.addEventListener('DOMContentLoaded', () => { initTheme(); clearLegacyQuizMemory(); initShuffle(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
 } else {
-    initTheme(); clearLegacyQuizMemory(); updateShuffleButton(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
+    initTheme(); clearLegacyQuizMemory(); initShuffle(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
 }
