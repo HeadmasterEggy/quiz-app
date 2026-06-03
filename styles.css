@@ -95,8 +95,8 @@ body {
     min-height: 100svh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+    align-items: flex-start;
+    padding: max(28px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
     overscroll-behavior-y: contain;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -203,7 +203,7 @@ body {
     border-color: var(--primary);
     background: rgba(99, 102, 241, 0.22);
     color: var(--primary-light);
-    box-shadow: 0 0 0 3px var(--glow-primary);
+    box-shadow: none;
 }
 
 .progress-bar {
@@ -235,7 +235,12 @@ body {
 
 .question-counter {
     font-size: 0.875rem;
+    line-height: 1.25rem;
+    min-height: 1.25rem;
     color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     animation: fadeIn 0.5s ease 0.3s both;
 }
 

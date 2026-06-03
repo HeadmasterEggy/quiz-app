@@ -98,6 +98,33 @@ function getShuffleScopeLabel() {
     return currentWeekFilter === 'all' ? currentCourseFilter : `${currentCourseFilter} · ${currentWeekFilter}`;
 }
 
+function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function isCompactViewport() {
+    return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+}
+
+function afterLayout(fn) {
+    if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => window.requestAnimationFrame(fn));
+    } else {
+        setTimeout(() => setTimeout(fn, 0), 0);
+    }
+}
+
+function scrollActionIntoView(id) {
+    const el = $(id);
+    if (!el || el.classList.contains('hidden')) return;
+    const block = isCompactViewport() ? 'end' : 'nearest';
+    afterLayout(() => {
+        if (!el.classList.contains('hidden')) {
+            el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block, inline: 'nearest' });
+        }
+    });
+}
+
 // ── Theme ──
 function applyTheme(theme) {
     const dark = theme !== 'light';
@@ -280,8 +307,7 @@ function showQuestion() {
 }
 
 function scrollQuizIntoView() {
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    $('quizCard').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    $('quizCard').scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
 }
 
 // ── MCQ ──
@@ -311,8 +337,10 @@ function handleMAQClick(index, btn) {
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
     }
-    if (selectedMAQ.length === maxSelect) show('maqCheckBtn');
-    else hide('maqCheckBtn');
+    if (selectedMAQ.length === maxSelect) {
+        show('maqCheckBtn');
+        scrollActionIntoView('maqCheckBtn');
+    } else hide('maqCheckBtn');
 }
 
 function checkMAQ() {
@@ -341,7 +369,7 @@ function showInlineExplanation(isCorrect, q) {
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
-    $('nextBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    scrollActionIntoView('nextBtn');
 }
 
 // ── Results ──
