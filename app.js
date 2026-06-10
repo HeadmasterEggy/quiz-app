@@ -231,6 +231,7 @@ function buildCourseFilter() {
         currentCourseFilter = sel.value;
         currentWeekFilter = 'all';
         buildWeekFilter();
+        closeDrawer();
         loadQuestions(currentCourseFilter, currentWeekFilter);
     };
 }
@@ -249,7 +250,7 @@ function buildWeekFilter() {
     sel.value = currentWeekFilter;
     sel.disabled = currentCourseFilter === 'all';
     sel.title = sel.disabled ? 'Select a course to filter by week' : 'Filter by week';
-    sel.onchange = () => loadQuestions(currentCourseFilter, sel.value);
+    sel.onchange = () => { closeDrawer(); loadQuestions(currentCourseFilter, sel.value); };
 }
 
 function updateShuffleButton() {
@@ -457,6 +458,31 @@ function retryWrongAnswers() {
     showQuestion();
 }
 
+// ── Settings drawer (mobile) ──
+function isDrawerOpen() {
+    const el = $('headerControls');
+    return el ? el.classList.contains('open') : false;
+}
+
+function openDrawer() {
+    $('headerControls').classList.add('open');
+    show('drawerBackdrop');
+    $('menuBtn').setAttribute('aria-expanded', 'true');
+    document.body.classList.add('drawer-open');
+}
+
+function closeDrawer() {
+    $('headerControls').classList.remove('open');
+    hide('drawerBackdrop');
+    $('menuBtn').setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('drawer-open');
+}
+
+function toggleDrawer() {
+    if (isDrawerOpen()) closeDrawer();
+    else openDrawer();
+}
+
 // ── Jump-to-question panel ──
 function isJumpOpen() {
     const panel = $('jumpPanel');
@@ -519,11 +545,14 @@ $('nextBtn').onclick = () => {
     else showResults();
 };
 $('restartBtn').onclick = restart;
-$('headerRestartBtn').onclick = restart;
+$('headerRestartBtn').onclick = () => { closeDrawer(); restart(); };
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
-$('shuffleToggleBtn').onclick = toggleShuffle;
+$('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
 $('questionCounter').onclick = toggleJumpPanel;
+$('menuBtn').onclick = toggleDrawer;
+$('drawerCloseBtn').onclick = closeDrawer;
+$('drawerBackdrop').onclick = closeDrawer;
 
 document.addEventListener('click', (e) => {
     if (!isJumpOpen()) return;
@@ -535,7 +564,10 @@ if (themeBtn) themeBtn.onclick = toggleTheme;
 else console.warn('themeToggleBtn not found in DOM');
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isJumpOpen()) { closeJumpPanel(); return; }
+    if (e.key === 'Escape') {
+        if (isDrawerOpen()) { closeDrawer(); return; }
+        if (isJumpOpen()) { closeJumpPanel(); return; }
+    }
     if (isInteractiveTarget(e.target)) return;
 
     if (!$('quizCard').classList.contains('hidden')) {

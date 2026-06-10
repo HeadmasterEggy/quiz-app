@@ -23,10 +23,16 @@
     </script>
 </head>
 <body>
+    <div class="drawer-backdrop hidden" id="drawerBackdrop"></div>
     <div class="container">
         <div class="quiz-header">
+            <button id="menuBtn" class="icon-btn menu-btn" title="Settings" aria-label="Open settings" aria-expanded="false" aria-controls="headerControls">☰</button>
             <h1><span class="h1-emoji">📚</span> <span class="h1-text">Course Quiz</span></h1>
-            <div class="header-controls">
+            <div class="header-controls" id="headerControls">
+                <div class="drawer-header">
+                    <span class="drawer-title">⚙️ Settings</span>
+                    <button id="drawerCloseBtn" class="icon-btn drawer-close" title="Close" aria-label="Close settings">✕</button>
+                </div>
                 <div class="filter-controls">
                     <select id="courseFilter" class="filter-select course-select" aria-label="Course filter">
                         <option value="all">All Courses</option>

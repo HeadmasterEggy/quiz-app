@@ -136,6 +136,29 @@ body {
     align-items: center;
 }
 
+/* Drawer chrome — only visible in drawer mode (small screens) */
+.icon-btn.menu-btn,
+.drawer-header {
+    display: none;
+}
+
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 55;
+    animation: backdropIn 0.25s ease;
+}
+
+@keyframes backdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body.drawer-open {
+    overflow: hidden;
+}
+
 .filter-controls {
     display: grid;
     grid-template-columns: minmax(150px, 185px) minmax(190px, 255px);
@@ -484,7 +507,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip {
+    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip, .header-controls, .drawer-backdrop {
         animation: none !important;
         transition: none !important;
     }
@@ -951,20 +974,75 @@ body {
 }
 
 @media (max-width: 600px) {
-    .quiz-header { margin-bottom: 18px; }
-    .quiz-header h1 { font-size: 1.4rem; margin-bottom: 10px; }
+    .quiz-header { position: relative; margin-bottom: 14px; }
+    .quiz-header h1 { font-size: 1.4rem; margin-bottom: 12px; }
     .progress-bar { height: 8px; }
 
+    .icon-btn.menu-btn {
+        display: flex;
+        position: absolute;
+        top: -2px;
+        right: 0;
+        width: 42px;
+        height: 42px;
+        z-index: 2;
+    }
+
+    /* Header controls become a right-hand slide-in drawer */
     .header-controls {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(320px, 86vw);
+        margin-bottom: 0;
+        background: var(--card);
+        border-left: 1px solid var(--border);
+        box-shadow: -12px 0 32px rgba(0, 0, 0, 0.3);
+        z-index: 60;
         flex-direction: column;
-        gap: 8px;
         align-items: stretch;
+        justify-content: flex-start;
+        gap: 14px;
+        padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) 16px;
+        overflow-y: auto;
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s;
+    }
+
+    .header-controls.open {
+        transform: translateX(0);
+        visibility: visible;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .drawer-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+
+    .drawer-title {
+        white-space: nowrap;
+    }
+
+    .header-controls .drawer-close {
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
     }
 
     .filter-controls {
         width: 100%;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: 8px;
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .tool-controls {
@@ -973,7 +1051,7 @@ body {
         gap: 8px;
     }
 
-    .icon-btn {
+    .tool-controls .icon-btn {
         width: 100%;
         height: 44px;
         border-radius: 9px;
