@@ -2683,23 +2683,6 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A mobile app uses ECDHE and AES-GCM, but accepts any server certificate without checking the hostname or certificate chain. A network attacker sits between the app and the real server. Which two statements are correct?",
-      "options": [
-        "ECDHE can establish a strong key with the attacker instead of the real server if authentication is missing.",
-        "AES-GCM protects the records against outsiders, but not against the active endpoint chosen by the broken handshake.",
-        "Hiding the server's Diffie-Hellman public value would fix the missing identity check.",
-        "Certificate validation is optional because encryption already proves who the peer is."
-      ],
-      "correct": [
-        0,
-        1
-      ],
-      "explanation": "Without certificate validation, ECDHE can authenticate the wrong endpoint; AES-GCM then protects records only against outsiders, not the accepted active endpoint.",
-      "id": 176,
-      "week": "Mock Exam 1",
-      "course": "INFO5995"
-    },
-    {
       "question": "An app seeds a PRNG with the current Unix time in milliseconds and uses the next 128 output bits as a reset token. The attacker can narrow token creation to within +/-5 seconds. Which two statements are correct?",
       "options": [
         "Hashing the PRNG output would automatically make the token unguessable.",
