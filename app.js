@@ -88,9 +88,22 @@ function groupedShuffleByCourse(items) {
     return orderedCourses.flatMap(course => shuffled(grouped.get(course)));
 }
 
+// Return a copy of the question with its options reordered and `correct` remapped,
+// so the original data in QUIZ_DATA is never mutated.
+function withShuffledOptions(q) {
+    const order = shuffled(q.options.map((_, i) => i));
+    const remap = i => order.indexOf(i);
+    return {
+        ...q,
+        options: order.map(i => q.options[i]),
+        correct: Array.isArray(q.correct) ? q.correct.map(remap) : remap(q.correct)
+    };
+}
+
 function orderQuestions(items, course) {
     if (!shuffleEnabled) return [...items];
-    return course === 'all' ? groupedShuffleByCourse(items) : shuffled(items);
+    const arranged = course === 'all' ? groupedShuffleByCourse(items) : shuffled(items);
+    return arranged.map(withShuffledOptions);
 }
 
 function getShuffleScopeLabel() {
@@ -258,7 +271,7 @@ function updateShuffleButton() {
     if (!btn) return;
     btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
     const scope = getShuffleScopeLabel();
-    const label = shuffleEnabled ? `Shuffle on: ${scope}` : `Shuffle off: ${scope}`;
+    const label = shuffleEnabled ? `Shuffle on (questions & options): ${scope}` : `Shuffle off: ${scope}`;
     btn.title = label;
     btn.setAttribute('aria-label', label);
 }
