@@ -44,7 +44,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="question-counter" id="questionCounter">Ready</div>
+            <button class="question-counter" id="questionCounter" aria-expanded="false" aria-controls="jumpPanel" title="Jump to a specific question">Ready</button>
+        </div>
+
+        <div class="jump-panel hidden" id="jumpPanel" role="dialog" aria-label="Jump to question">
+            <div class="jump-grid" id="jumpGrid"></div>
         </div>
 
         <div class="loading-card" id="loadingCard">

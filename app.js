@@ -1,8 +1,8 @@
 let allQuestions = [];
 let questions = [];
 let current = 0;
-let score = 0;
 let answered = false;
+// Sparse array keyed by question position, so jumping around keeps scoring correct
 const answers = [];
 const THEME_KEY = 'quiz_theme';
 const SHUFFLE_KEY = 'quiz_shuffle_enabled';
@@ -209,7 +209,7 @@ function startFresh(course = 'all', week = 'all') {
     currentWeekFilter = week;
     const filtered = getFilteredQuestions(course, week);
     questions = orderQuestions(filtered, course);
-    current = 0; score = 0; answers.length = 0; isRetryMode = false;
+    current = 0; answers.length = 0; isRetryMode = false;
     updateShuffleButton();
     hide('loadingCard');
     showQuestion();
@@ -307,6 +307,7 @@ function updateMaqHint() {
 
 function showQuestion() {
     if (explanationTimeout) { clearTimeout(explanationTimeout); explanationTimeout = null; }
+    if (isJumpOpen()) closeJumpPanel();
     answered = false; selectedMAQ = [];
     if (current >= questions.length) { showResults(); return; }
 
@@ -325,6 +326,10 @@ function showQuestion() {
         chip.title = chip.textContent;
         counter.appendChild(chip);
     }
+    const caret = document.createElement('span');
+    caret.className = 'counter-caret';
+    caret.textContent = '▾';
+    counter.appendChild(caret);
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
     const questionText = $('questionText');
     setMath(questionText, q.question);
@@ -349,9 +354,8 @@ function handleAnswer(index, btn) {
     allBtns.forEach(b => b.classList.add('disabled'));
     btn.classList.add(isCorrect ? 'correct' : 'wrong');
     if (!isCorrect) allBtns[q.correct]?.classList.add('correct');
-    if (isCorrect) score++;
     hapticFeedback(isCorrect ? 12 : [10, 60, 18]);
-    answers.push({ question: q, correct: isCorrect });
+    answers[current] = { question: q, correct: isCorrect };
     explanationTimeout = setTimeout(showInlineExplanation, 400, isCorrect, q);
 }
 
@@ -389,9 +393,8 @@ function checkMAQ() {
     allBtns.forEach(b => b.classList.add('disabled'));
     correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
     selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
-    if (ok) score++;
     hapticFeedback(ok ? 12 : [10, 60, 18]);
-    answers.push({ question: q, correct: ok });
+    answers[current] = { question: q, correct: ok };
     explanationTimeout = setTimeout(showInlineExplanation, 400, ok, q);
 }
 
@@ -400,6 +403,7 @@ function showInlineExplanation(isCorrect, q) {
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
     setMath($('explanationText'), q.explanation);
+    if (isJumpOpen()) buildJumpGrid();
     hide('maqHint'); hide('maqCheckBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
@@ -410,25 +414,34 @@ function showInlineExplanation(isCorrect, q) {
 
 // ── Results ──
 function showResults() {
+    if (isJumpOpen()) closeJumpPanel();
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
     $('questionCounter').textContent = `Done · ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
-    const pct = questions.length ? Math.round((score / questions.length) * 100) : 0;
-    $('finalScore').textContent = `${score}/${questions.length}`;
+    const total = questions.length;
+    const correct = answers.filter(a => a && a.correct).length;
+    const answeredCount = answers.filter(Boolean).length;
+    const wrong = answeredCount - correct;
+    const skipped = total - answeredCount;
+    const pct = total ? Math.round((correct / total) * 100) : 0;
+    $('finalScore').textContent = `${correct}/${total}`;
     $('scorePercentage').textContent = `${pct}%`;
-    $('scoreBreakdown').textContent = `${score} ✓ · ${questions.length - score} ✗`;
+    $('scoreBreakdown').textContent = `${correct} ✓ · ${wrong} ✗` + (skipped ? ` · ${skipped} skipped` : '');
     $('scoreMessage').textContent = pct === 100 ? 'Perfect! 🎉' : pct >= 80 ? 'Great job! 👏' : pct >= 60 ? 'Good effort! 💪' : 'Keep practicing! 📚';
 
     const review = $('answersReview'); review.innerHTML = '';
-    answers.forEach((a, i) => {
+    for (let i = 0; i < total; i++) {
+        const a = answers[i];
         const dot = document.createElement('span');
-        dot.className = 'answer-dot ' + (a.correct ? 'dot-correct' : 'dot-wrong');
+        dot.className = 'answer-dot ' + (a ? (a.correct ? 'dot-correct' : 'dot-wrong') : 'dot-skipped');
         dot.textContent = i + 1;
-        dot.title = `Q${i + 1}: ${a.correct ? '✓' : '✗'} — ${(a.question.question || '').substring(0, 80)}`;
+        dot.title = a
+            ? `Q${i + 1}: ${a.correct ? '✓' : '✗'} — ${(a.question.question || '').substring(0, 80)}`
+            : `Q${i + 1}: skipped`;
         review.appendChild(dot);
-    });
+    }
 
-    const wrongCount = answers.filter(a => !a.correct).length;
+    const wrongCount = wrong;
     if (wrongCount > 0 && !isRetryMode) {
         $('retryWrongBtn').textContent = `🔄 Retry ${wrongCount} Wrong`;
         show('retryWrongBtn');
@@ -437,12 +450,60 @@ function showResults() {
 }
 
 function retryWrongAnswers() {
-    const wrongQs = answers.filter(a => !a.correct).map(a => a.question);
+    const wrongQs = answers.filter(a => a && !a.correct).map(a => a.question);
     if (!wrongQs.length) return;
     questions = orderQuestions(wrongQs, currentCourseFilter);
-    current = 0; score = 0; answers.length = 0; isRetryMode = true;
-    $('questionCounter').textContent = `Retry: ${questions.length} wrong`;
+    current = 0; answers.length = 0; isRetryMode = true;
     showQuestion();
+}
+
+// ── Jump-to-question panel ──
+function isJumpOpen() {
+    const panel = $('jumpPanel');
+    return panel ? !panel.classList.contains('hidden') : false;
+}
+
+function buildJumpGrid() {
+    const grid = $('jumpGrid');
+    grid.innerHTML = '';
+    questions.forEach((q, i) => {
+        const chip = document.createElement('button');
+        chip.className = 'jump-chip';
+        const a = answers[i];
+        if (a) chip.classList.add(a.correct ? 'answered-correct' : 'answered-wrong');
+        if (i === current) chip.classList.add('current');
+        chip.textContent = i + 1;
+        const sourceParts = [q.course, q.week].filter(Boolean);
+        chip.title = `Q${i + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + (a ? (a.correct ? ' · ✓' : ' · ✗') : '');
+        chip.onclick = () => jumpToQuestion(i);
+        grid.appendChild(chip);
+    });
+}
+
+function openJumpPanel() {
+    buildJumpGrid();
+    show('jumpPanel');
+    $('questionCounter').setAttribute('aria-expanded', 'true');
+    const cur = document.querySelector('.jump-chip.current');
+    if (cur) cur.scrollIntoView({ block: 'nearest' });
+}
+
+function closeJumpPanel() {
+    hide('jumpPanel');
+    $('questionCounter').setAttribute('aria-expanded', 'false');
+}
+
+function toggleJumpPanel() {
+    if (!questions.length) return;
+    if (isJumpOpen()) closeJumpPanel();
+    else openJumpPanel();
+}
+
+function jumpToQuestion(i) {
+    if (i < 0 || i >= questions.length) return;
+    current = i;
+    showQuestion();
+    scrollQuizIntoView();
 }
 
 function restart() {
@@ -462,11 +523,19 @@ $('headerRestartBtn').onclick = restart;
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
 $('shuffleToggleBtn').onclick = toggleShuffle;
+$('questionCounter').onclick = toggleJumpPanel;
+
+document.addEventListener('click', (e) => {
+    if (!isJumpOpen()) return;
+    if (e.target.closest('#jumpPanel') || e.target.closest('#questionCounter')) return;
+    closeJumpPanel();
+});
 var themeBtn = $('themeToggleBtn');
 if (themeBtn) themeBtn.onclick = toggleTheme;
 else console.warn('themeToggleBtn not found in DOM');
 
 document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isJumpOpen()) { closeJumpPanel(); return; }
     if (isInteractiveTarget(e.target)) return;
 
     if (!$('quizCard').classList.contains('hidden')) {
