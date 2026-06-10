@@ -102,6 +102,12 @@ function prefersReducedMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+// Subtle haptics on touch devices that support it (no-op elsewhere)
+function hapticFeedback(pattern) {
+    if (prefersReducedMotion()) return;
+    try { navigator.vibrate?.(pattern); } catch { /* ignore */ }
+}
+
 function isCompactViewport() {
     return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
 }
@@ -129,6 +135,8 @@ function scrollActionIntoView(id) {
 function applyTheme(theme) {
     const dark = theme !== 'light';
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#0f172a' : '#eef2ff');
     const btn = $('themeToggleBtn');
     if (btn) {
         btn.textContent = dark ? '☀️' : '🌙';
@@ -266,7 +274,6 @@ function renderOptions() {
     const opts = $('options');
     opts.innerHTML = '';
     const maq = isMAQ(q);
-    const maqCount = maq ? q.correct.length : 0;
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
@@ -283,11 +290,19 @@ function renderOptions() {
         opts.appendChild(btn);
     });
     if (maq) {
-        $('maqHint').innerHTML = `Pick <strong>${maqCount}</strong> answer${maqCount !== 1 ? 's' : ''}`;
+        updateMaqHint();
         show('maqHint');
         hide('maqCheckBtn');
     }
     else { hide('maqHint'); hide('maqCheckBtn'); }
+}
+
+function updateMaqHint() {
+    const q = questions[current];
+    if (!q || !isMAQ(q)) return;
+    const n = q.correct.length;
+    const base = `Pick <strong>${n}</strong> answer${n !== 1 ? 's' : ''}`;
+    $('maqHint').innerHTML = selectedMAQ.length ? `${base} · <strong>${selectedMAQ.length}/${n}</strong> selected` : base;
 }
 
 function showQuestion() {
@@ -296,11 +311,26 @@ function showQuestion() {
     if (current >= questions.length) { showResults(); return; }
 
     const q = questions[current];
+    const counter = $('questionCounter');
+    counter.textContent = '';
+    const num = document.createElement('span');
+    num.className = 'counter-num';
+    num.textContent = `Q${current + 1} / ${questions.length}`;
+    counter.appendChild(num);
     const sourceParts = [q.course, q.week].filter(Boolean);
-    const source = sourceParts.length ? ` [${sourceParts.join(' · ')}]` : '';
-    $('questionCounter').textContent = `Q${current + 1} / ${questions.length}${source}`;
+    if (sourceParts.length) {
+        const chip = document.createElement('span');
+        chip.className = 'counter-chip';
+        chip.textContent = sourceParts.join(' · ');
+        chip.title = chip.textContent;
+        counter.appendChild(chip);
+    }
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
-    setMath($('questionText'), q.question);
+    const questionText = $('questionText');
+    setMath(questionText, q.question);
+    questionText.classList.remove('q-fade');
+    void questionText.offsetWidth;
+    questionText.classList.add('q-fade');
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
     show('quizCard'); hide('resultsCard');
@@ -320,6 +350,7 @@ function handleAnswer(index, btn) {
     btn.classList.add(isCorrect ? 'correct' : 'wrong');
     if (!isCorrect) allBtns[q.correct]?.classList.add('correct');
     if (isCorrect) score++;
+    hapticFeedback(isCorrect ? 12 : [10, 60, 18]);
     answers.push({ question: q, correct: isCorrect });
     explanationTimeout = setTimeout(showInlineExplanation, 400, isCorrect, q);
 }
@@ -336,10 +367,13 @@ function handleMAQClick(index, btn) {
         selectedMAQ.push(index);
         btn.classList.add('selected');
         btn.setAttribute('aria-pressed', 'true');
+        hapticFeedback(8);
     }
+    updateMaqHint();
     if (selectedMAQ.length === maxSelect) {
         show('maqCheckBtn');
-        scrollActionIntoView('maqCheckBtn');
+        // On compact viewports the check button is sticky-pinned, so it is already visible
+        if (!isCompactViewport()) scrollActionIntoView('maqCheckBtn');
     } else hide('maqCheckBtn');
 }
 
@@ -356,6 +390,7 @@ function checkMAQ() {
     correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
     selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
     if (ok) score++;
+    hapticFeedback(ok ? 12 : [10, 60, 18]);
     answers.push({ question: q, correct: ok });
     explanationTimeout = setTimeout(showInlineExplanation, 400, ok, q);
 }
@@ -369,13 +404,15 @@ function showInlineExplanation(isCorrect, q) {
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
-    scrollActionIntoView('nextBtn');
+    // On compact viewports the next button is sticky-pinned, so bring the explanation into view instead
+    scrollActionIntoView(isCompactViewport() ? 'explanationInline' : 'nextBtn');
 }
 
 // ── Results ──
 function showResults() {
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
+    $('questionCounter').textContent = `Done · ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
     const pct = questions.length ? Math.round((score / questions.length) * 100) : 0;
     $('finalScore').textContent = `${score}/${questions.length}`;
     $('scorePercentage').textContent = `${pct}%`;
