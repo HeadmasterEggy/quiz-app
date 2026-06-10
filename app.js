@@ -150,13 +150,13 @@ function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', dark ? '#0f172a' : '#eef2ff');
-    const btn = $('themeToggleBtn');
-    if (btn) {
+    const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
+    [$('themeToggleBtn'), $('fabThemeBtn')].forEach(btn => {
+        if (!btn) return;
         btn.textContent = dark ? '☀️' : '🌙';
-        const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
         btn.title = label;
         btn.setAttribute('aria-label', label);
-    }
+    });
 }
 
 function initTheme() {
@@ -240,13 +240,76 @@ function buildCourseFilter() {
         sel.appendChild(option);
     });
     sel.value = currentCourseFilter;
-    sel.onchange = () => {
-        currentCourseFilter = sel.value;
-        currentWeekFilter = 'all';
-        buildWeekFilter();
-        closeDrawer();
-        loadQuestions(currentCourseFilter, currentWeekFilter);
+    sel.onchange = () => selectCourse(sel.value);
+}
+
+// Shared selection flow for both the desktop selects and the drawer chips.
+// Picking a course keeps the drawer open so a week can be chosen next;
+// picking a week (or All Courses) closes it and goes straight to the quiz.
+function selectCourse(course) {
+    currentCourseFilter = course;
+    currentWeekFilter = 'all';
+    const sel = $('courseFilter');
+    if (sel) sel.value = course;
+    buildWeekFilter();
+    buildFilterChips();
+    if (course === 'all') closeDrawer();
+    loadQuestions(course, 'all');
+}
+
+function selectWeek(week) {
+    currentWeekFilter = week;
+    const sel = $('weekFilter');
+    if (sel) sel.value = week;
+    buildFilterChips();
+    closeDrawer();
+    loadQuestions(currentCourseFilter, week);
+}
+
+function buildFilterChips() {
+    const courseList = $('courseChips');
+    const weekList = $('weekChips');
+    if (!courseList || !weekList) return;
+    const allQs = window.QUIZ_DATA?.questions || [];
+
+    const makeChip = (text, count, active, onClick) => {
+        const chip = document.createElement('button');
+        chip.className = 'filter-chip' + (active ? ' active' : '');
+        chip.textContent = text;
+        if (count != null) {
+            const n = document.createElement('span');
+            n.className = 'chip-count';
+            n.textContent = ` · ${count}`;
+            chip.appendChild(n);
+        }
+        chip.onclick = onClick;
+        return chip;
     };
+
+    courseList.innerHTML = '';
+    courseList.appendChild(makeChip('All Courses', allQs.length, currentCourseFilter === 'all', () => selectCourse('all')));
+    getCourses().forEach(course => {
+        const count = allQs.filter(q => q.course === course).length;
+        const chip = makeChip(course, count, currentCourseFilter === course, () => selectCourse(course));
+        const fullTitle = window.QUIZ_DATA?.courseTitles?.[course];
+        if (fullTitle) chip.title = fullTitle;
+        courseList.appendChild(chip);
+    });
+
+    weekList.innerHTML = '';
+    if (currentCourseFilter === 'all') {
+        const hint = document.createElement('div');
+        hint.className = 'chip-hint';
+        hint.textContent = 'Pick a course above to filter by week or exam.';
+        weekList.appendChild(hint);
+        return;
+    }
+    const courseQs = allQs.filter(q => q.course === currentCourseFilter);
+    weekList.appendChild(makeChip('All', courseQs.length, currentWeekFilter === 'all', () => selectWeek('all')));
+    getWeeksForCourse(currentCourseFilter).forEach(w => {
+        const count = courseQs.filter(q => q.week === w).length;
+        weekList.appendChild(makeChip(w, count, currentWeekFilter === w, () => selectWeek(w)));
+    });
 }
 
 function buildWeekFilter() {
@@ -263,17 +326,18 @@ function buildWeekFilter() {
     sel.value = currentWeekFilter;
     sel.disabled = currentCourseFilter === 'all';
     sel.title = sel.disabled ? 'Select a course to filter by week' : 'Filter by week';
-    sel.onchange = () => { closeDrawer(); loadQuestions(currentCourseFilter, sel.value); };
+    sel.onchange = () => selectWeek(sel.value);
 }
 
 function updateShuffleButton() {
-    const btn = $('shuffleToggleBtn');
-    if (!btn) return;
-    btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
     const scope = getShuffleScopeLabel();
     const label = shuffleEnabled ? `Shuffle on (questions & options): ${scope}` : `Shuffle off: ${scope}`;
-    btn.title = label;
-    btn.setAttribute('aria-label', label);
+    [$('shuffleToggleBtn'), $('fabShuffleBtn')].forEach(btn => {
+        if (!btn) return;
+        btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
+        btn.title = label;
+        btn.setAttribute('aria-label', label);
+    });
 }
 
 function toggleShuffle() {
@@ -378,6 +442,7 @@ function navPrev() {
     if (current > 0) {
         current--;
         showQuestion();
+        scrollQuizIntoView();
     }
 }
 
@@ -387,6 +452,7 @@ function navNext() {
     if (current < questions.length - 1) {
         current++;
         showQuestion();
+        scrollQuizIntoView();
     } else {
         showResults();
     }
@@ -530,12 +596,16 @@ function retryWrongAnswers() {
 }
 
 // ── Settings drawer (mobile) ──
+let drawerOpenedAt = 0;
+
 function isDrawerOpen() {
     const el = $('headerControls');
     return el ? el.classList.contains('open') : false;
 }
 
 function openDrawer() {
+    drawerOpenedAt = Date.now();
+    closeFab();
     $('headerControls').classList.add('open');
     show('drawerBackdrop');
     $('menuBtn').setAttribute('aria-expanded', 'true');
@@ -552,6 +622,31 @@ function closeDrawer() {
 function toggleDrawer() {
     if (isDrawerOpen()) closeDrawer();
     else openDrawer();
+}
+
+// ── Floating quick actions (mobile) ──
+function isFabOpen() {
+    const el = $('fabStack');
+    return el ? el.classList.contains('open') : false;
+}
+
+function openFab() {
+    $('fabStack').classList.add('open');
+    $('fabMainBtn').textContent = '✕';
+    $('fabMainBtn').setAttribute('aria-expanded', 'true');
+}
+
+function closeFab() {
+    const stack = $('fabStack');
+    if (!stack || !stack.classList.contains('open')) return;
+    stack.classList.remove('open');
+    $('fabMainBtn').textContent = '⚡';
+    $('fabMainBtn').setAttribute('aria-expanded', 'false');
+}
+
+function toggleFab() {
+    if (isFabOpen()) closeFab();
+    else openFab();
 }
 
 // ── Jump-to-question panel ──
@@ -623,16 +718,24 @@ $('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
 $('questionCounter').onclick = toggleJumpPanel;
 $('menuBtn').onclick = toggleDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
-$('drawerBackdrop').onclick = closeDrawer;
+// Guard against ghost/duplicate clicks landing on the backdrop right as the drawer opens
+$('drawerBackdrop').onclick = () => { if (Date.now() - drawerOpenedAt > 350) closeDrawer(); };
 $('prevNavBtn').onclick = navPrev;
 $('nextNavBtn').onclick = navNext;
 $('revealBtn').onclick = revealAnswer;
 $('jumpResultsBtn').onclick = () => { closeJumpPanel(); showResults(); };
+$('fabMainBtn').onclick = toggleFab;
+$('fabShuffleBtn').onclick = () => { closeFab(); toggleShuffle(); };
+$('fabThemeBtn').onclick = toggleTheme;
+$('fabRestartBtn').onclick = () => { closeFab(); restart(); };
 
 document.addEventListener('click', (e) => {
-    if (!isJumpOpen()) return;
-    if (e.target.closest('#jumpPanel') || e.target.closest('#questionCounter')) return;
-    closeJumpPanel();
+    if (isJumpOpen() && !e.target.closest('#jumpPanel') && !e.target.closest('#questionCounter')) {
+        closeJumpPanel();
+    }
+    if (isFabOpen() && !e.target.closest('#fabStack')) {
+        closeFab();
+    }
 });
 var themeBtn = $('themeToggleBtn');
 if (themeBtn) themeBtn.onclick = toggleTheme;
@@ -641,6 +744,7 @@ else console.warn('themeToggleBtn not found in DOM');
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         if (isDrawerOpen()) { closeDrawer(); return; }
+        if (isFabOpen()) { closeFab(); return; }
         if (isJumpOpen()) { closeJumpPanel(); return; }
     }
     if (isInteractiveTarget(e.target)) return;
@@ -662,8 +766,13 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ── Init ──
+function initApp() {
+    initTheme(); clearLegacyQuizMemory(); initShuffle();
+    buildCourseFilter(); buildWeekFilter(); buildFilterChips();
+    loadQuestions('all', 'all');
+}
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initTheme(); clearLegacyQuizMemory(); initShuffle(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all'); });
+    document.addEventListener('DOMContentLoaded', initApp);
 } else {
-    initTheme(); clearLegacyQuizMemory(); initShuffle(); buildCourseFilter(); buildWeekFilter(); loadQuestions('all', 'all');
+    initApp();
 }

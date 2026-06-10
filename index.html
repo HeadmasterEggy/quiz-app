@@ -30,8 +30,8 @@
             <h1><span class="h1-emoji">📚</span> <span class="h1-text">Course Quiz</span></h1>
             <div class="header-controls" id="headerControls">
                 <div class="drawer-header">
-                    <span class="drawer-title">⚙️ Settings</span>
-                    <button id="drawerCloseBtn" class="icon-btn drawer-close" title="Close" aria-label="Close settings">✕</button>
+                    <span class="drawer-title">📚 Course & Week</span>
+                    <button id="drawerCloseBtn" class="icon-btn drawer-close" title="Close" aria-label="Close course picker">✕</button>
                 </div>
                 <div class="filter-controls">
                     <select id="courseFilter" class="filter-select course-select" aria-label="Course filter">
@@ -40,6 +40,12 @@
                     <select id="weekFilter" class="filter-select week-select" aria-label="Week filter">
                         <option value="all">All Weeks & Exams</option>
                     </select>
+                </div>
+                <div class="chip-filters" id="chipFilters">
+                    <div class="chip-section-label">Course</div>
+                    <div class="chip-list" id="courseChips"></div>
+                    <div class="chip-section-label">Week / Exam</div>
+                    <div class="chip-list" id="weekChips"></div>
                 </div>
                 <div class="tool-controls">
                     <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false">🔀</button>
@@ -93,6 +99,15 @@
                 <button class="retry-wrong-btn hidden" id="retryWrongBtn">🔄 Retry Wrong Answers</button>
             </div>
         </div>
+    </div>
+
+    <div class="fab-stack" id="fabStack">
+        <div class="fab-actions" id="fabActions">
+            <button class="fab-mini" id="fabShuffleBtn" title="Shuffle" aria-label="Toggle shuffle" aria-pressed="false">🔀</button>
+            <button class="fab-mini" id="fabThemeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
+            <button class="fab-mini" id="fabRestartBtn" title="Restart" aria-label="Restart quiz">↻</button>
+        </div>
+        <button class="fab-main" id="fabMainBtn" aria-expanded="false" aria-label="Quick actions">⚡</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
