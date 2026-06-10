@@ -266,6 +266,51 @@ body.drawer-open {
     50% { background-position: 100% 0; }
 }
 
+.counter-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.nav-btn {
+    width: 38px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3px;
+}
+
+@media (hover: hover) {
+    .nav-btn:not(:disabled):hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        background: rgba(99, 102, 241, 0.12);
+    }
+}
+
+.nav-btn:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+.nav-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
 .question-counter {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -401,6 +446,35 @@ body.drawer-open {
     border-color: var(--primary);
     background: var(--primary);
     color: #fff;
+}
+
+.jump-results-btn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(99, 102, 241, 0.35);
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--primary-light);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+@media (hover: hover) {
+    .jump-results-btn:hover {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.2);
+    }
+}
+
+.jump-results-btn:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
 }
 
 @media (hover: hover) {
@@ -667,6 +741,40 @@ body.drawer-open {
 .result-badge.wrong {
     background: rgba(239, 68, 68, 0.2);
     color: var(--error);
+}
+
+.result-badge.revealed {
+    background: rgba(99, 102, 241, 0.18);
+    color: var(--primary-light);
+}
+
+.reveal-btn {
+    display: block;
+    margin: 14px auto 0;
+    padding: 9px 18px;
+    border-radius: 9px;
+    border: 1.5px dashed var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+@media (hover: hover) {
+    .reveal-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        background: rgba(99, 102, 241, 0.08);
+    }
+}
+
+.reveal-btn:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
 }
 
 .explanation-text {

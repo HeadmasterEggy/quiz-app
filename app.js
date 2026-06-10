@@ -22,7 +22,7 @@ const hide = id => $(id).classList.add('hidden');
 function isMAQ(q) { return Array.isArray(q.correct); }
 
 function isInteractiveTarget(target) {
-    return target?.closest('button, input, select, textarea, [contenteditable="true"]');
+    return target?.closest?.('button, input, select, textarea, [contenteditable="true"]');
 }
 
 // Set text that may contain $...$ LaTeX, rendering it with KaTeX when available.
@@ -339,7 +339,44 @@ function showQuestion() {
     questionText.classList.add('q-fade');
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
+    show('revealBtn');
     show('quizCard'); hide('resultsCard');
+    updateNavButtons();
+}
+
+function updateNavButtons() {
+    const prev = $('prevNavBtn');
+    const next = $('nextNavBtn');
+    if (!prev || !next) return;
+    const onResults = !$('resultsCard').classList.contains('hidden');
+    prev.disabled = !questions.length || (!onResults && current === 0);
+    next.disabled = !questions.length || onResults;
+}
+
+function navPrev() {
+    if (!questions.length) return;
+    const onResults = !$('resultsCard').classList.contains('hidden');
+    if (onResults) {
+        current = Math.min(current, questions.length - 1);
+        showQuestion();
+        scrollQuizIntoView();
+        return;
+    }
+    if (current > 0) {
+        current--;
+        showQuestion();
+    }
+}
+
+function navNext() {
+    if (!questions.length) return;
+    if (!$('resultsCard').classList.contains('hidden')) return;
+    if (current < questions.length - 1) {
+        current++;
+        showQuestion();
+    } else {
+        showResults();
+    }
 }
 
 function scrollQuizIntoView() {
@@ -405,11 +442,31 @@ function showInlineExplanation(isCorrect, q) {
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
     setMath($('explanationText'), q.explanation);
     if (isJumpOpen()) buildJumpGrid();
-    hide('maqHint'); hide('maqCheckBtn');
+    hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
     // On compact viewports the next button is sticky-pinned, so bring the explanation into view instead
+    scrollActionIntoView(isCompactViewport() ? 'explanationInline' : 'nextBtn');
+}
+
+// Reveal the correct answer without recording a score (question stays unanswered)
+function revealAnswer() {
+    if (answered || current >= questions.length) return;
+    answered = true;
+    const q = questions[current];
+    const allBtns = document.querySelectorAll('.option-btn');
+    const correctIdx = isMAQ(q) ? q.correct : [q.correct];
+    allBtns.forEach(b => b.classList.add('disabled'));
+    correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
+    const badge = $('resultBadge');
+    badge.className = 'result-badge revealed';
+    badge.textContent = '👁 Answer revealed · not scored';
+    setMath($('explanationText'), q.explanation);
+    hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
+    show('explanationInline'); show('nextBtn');
+    $('nextBtn').disabled = false;
+    $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
     scrollActionIntoView(isCompactViewport() ? 'explanationInline' : 'nextBtn');
 }
 
@@ -448,6 +505,7 @@ function showResults() {
         show('retryWrongBtn');
     } else hide('retryWrongBtn');
 
+    updateNavButtons();
 }
 
 function retryWrongAnswers() {
@@ -553,6 +611,10 @@ $('questionCounter').onclick = toggleJumpPanel;
 $('menuBtn').onclick = toggleDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
 $('drawerBackdrop').onclick = closeDrawer;
+$('prevNavBtn').onclick = navPrev;
+$('nextNavBtn').onclick = navNext;
+$('revealBtn').onclick = revealAnswer;
+$('jumpResultsBtn').onclick = () => { closeJumpPanel(); showResults(); };
 
 document.addEventListener('click', (e) => {
     if (!isJumpOpen()) return;
@@ -569,6 +631,9 @@ document.addEventListener('keydown', (e) => {
         if (isJumpOpen()) { closeJumpPanel(); return; }
     }
     if (isInteractiveTarget(e.target)) return;
+
+    if (e.key === 'ArrowLeft') { e.preventDefault(); navPrev(); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); navNext(); return; }
 
     if (!$('quizCard').classList.contains('hidden')) {
         const idx = OPTION_SHORTCUTS.indexOf(e.key.toUpperCase());

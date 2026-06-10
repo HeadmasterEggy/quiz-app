@@ -50,11 +50,16 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <button class="question-counter" id="questionCounter" aria-expanded="false" aria-controls="jumpPanel" title="Jump to a specific question">Ready</button>
+            <div class="counter-row">
+                <button id="prevNavBtn" class="nav-btn" title="Previous question" aria-label="Previous question" disabled>‹</button>
+                <button class="question-counter" id="questionCounter" aria-expanded="false" aria-controls="jumpPanel" title="Jump to a specific question">Ready</button>
+                <button id="nextNavBtn" class="nav-btn" title="Next question" aria-label="Next question" disabled>›</button>
+            </div>
         </div>
 
         <div class="jump-panel hidden" id="jumpPanel" role="dialog" aria-label="Jump to question">
             <div class="jump-grid" id="jumpGrid"></div>
+            <button class="jump-results-btn" id="jumpResultsBtn">🏁 View Results</button>
         </div>
 
         <div class="loading-card" id="loadingCard">
@@ -66,6 +71,7 @@
             <div class="question-text" id="questionText"></div>
             <div class="maq-hint hidden" id="maqHint">Pick <strong>2</strong> answers</div>
             <div class="options" id="options"></div>
+            <button class="reveal-btn hidden" id="revealBtn">👁 Show Answer</button>
             <button class="maq-check-btn hidden" id="maqCheckBtn">✓ Check Answers</button>
             <div class="explanation-inline hidden" id="explanationInline">
                 <div class="result-badge" id="resultBadge"></div>
