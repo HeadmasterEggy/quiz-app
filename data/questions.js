@@ -178,7 +178,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A reset-token service computes SHA-256(username || current_minute || 4_digit_code). The digest is 256 bits but the attacker knows usernames and can try likely minutes and all 4-digit codes. Which assessment is most accurate?",
+      "question": "A reset-token service computes $\\text{SHA-256}(\\text{username} \\,\\|\\, \\text{current\\_minute} \\,\\|\\, \\text{4\\_digit\\_code})$. The digest is 256 bits but the attacker knows usernames and can try likely minutes and all 4-digit codes. Which assessment is most accurate?",
       "options": [
         "The token can be weak because the input space is enumerable even though the digest is long",
         "The token has 256 bits of real entropy because SHA-256 outputs 256 bits",
@@ -251,18 +251,18 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Two six-bit plaintexts are encrypted with the same XOR keystream. The attacker sees C1 = 001111 and C2 = 010010, and later learns that M1 = 101010. Which statements are correct?",
+      "question": "Two six-bit plaintexts are encrypted with the same XOR keystream. The attacker sees $C_1 = 001111$ and $C_2 = 010010$, and later learns that $M_1 = 101010$. Which statements are correct?",
       "options": [
         "Knowing one plaintext still gives no information about the reused keystream",
-        "The attacker can recover M2 = 110111 for these six bits",
-        "The attacker can compute M1 xor M2 = C1 xor C2 = 011101",
-        "C1 xor C2 directly reveals both plaintexts even without any known plaintext"
+        "The attacker can recover $M_2 = 110111$ for these six bits",
+        "The attacker can compute $M_1 \\oplus M_2 = C_1 \\oplus C_2 = 011101$",
+        "$C_1 \\oplus C_2$ directly reveals both plaintexts even without any known plaintext"
       ],
       "correct": [
         1,
         2
       ],
-      "explanation": "With keystream reuse: C1 xor C2 = M1 xor M2 = 001111 xor 010010 = 011101. If M1 = 101010 is known, M2 = (C1 xor C2) xor M1 = 011101 xor 101010 = 110111. Knowing one plaintext reveals the keystream.",
+      "explanation": "With keystream reuse: $C_1 \\oplus C_2 = M_1 \\oplus M_2 = 001111 \\oplus 010010 = 011101$. If $M_1 = 101010$ is known, $M_2 = (C_1 \\oplus C_2) \\oplus M_1 = 011101 \\oplus 101010 = 110111$. Knowing one plaintext reveals the keystream.",
       "id": 17,
       "week": "Week 12",
       "course": "INFO5995"
@@ -627,14 +627,14 @@ window.QUIZ_DATA = {
       "options": [
         "The real entropy is 16 bits",
         "The key has 32 bits of entropy",
-        "In the worst case, it is possible an attacker may only need to try 2^16 possibilities",
+        "In the worst case, it is possible an attacker may only need to try $2^{16}$ possibilities",
         "This is equivalent in strength to a uniformly random 32-bit key"
       ],
       "correct": [
         0,
         2
       ],
-      "explanation": "With only 16 random bits and 16 fixed bits, the real entropy is just 16 bits (not 32). An attacker only needs to try 2^16 possibilities in the worst case, not 2^32.",
+      "explanation": "With only 16 random bits and 16 fixed bits, the real entropy is just 16 bits (not 32). An attacker only needs to try $2^{16}$ possibilities in the worst case, not $2^{32}$.",
       "id": 41,
       "week": "Week 04",
       "course": "INFO5995"
@@ -662,13 +662,13 @@ window.QUIZ_DATA = {
         "OTP solves the short-key reuse problem without needing any extra mechanism",
         "OTP stays perfectly secure even if the same key is reused many times",
         "Perfect secrecy requires the OTP key to be random, secret, and never reused",
-        "Reusing the same OTP key on two messages can reveal information because C1 xor C2 = M1 xor M2"
+        "Reusing the same OTP key on two messages can reveal information because $C_1 \\oplus C_2 = M_1 \\oplus M_2$"
       ],
       "correct": [
         2,
         3
       ],
-      "explanation": "Perfect secrecy requires random, secret, never-reused keys. Reusing an OTP key reveals information: C1 xor C2 = M1 xor M2, allowing an attacker to learn about the plaintexts without knowing the key.",
+      "explanation": "Perfect secrecy requires random, secret, never-reused keys. Reusing an OTP key reveals information: $C_1 \\oplus C_2 = M_1 \\oplus M_2$, allowing an attacker to learn about the plaintexts without knowing the key.",
       "id": 43,
       "week": "Week 04",
       "course": "INFO5995"
@@ -691,24 +691,24 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Suppose a one-time pad uses plaintext M = 010010101 and key K = 110001011. Which statements are correct?",
+      "question": "Suppose a one-time pad uses plaintext $M = 010010101$ and key $K = 110001011$. Which statements are correct?",
       "options": [
-        "Decrypting 100011110 with the same key K gives back 010010101",
-        "The ciphertext is 100111110",
+        "Decrypting $100011110$ with the same key $K$ gives back $010010101$",
+        "The ciphertext is $100111110$",
         "Decryption requires a different key from the encryption key",
-        "The ciphertext is 100011110"
+        "The ciphertext is $100011110$"
       ],
       "correct": [
         0,
         3
       ],
-      "explanation": "C = M xor K = 010010101 xor 110001011 = 100011110. Decryption: C xor K = 100011110 xor 110001011 = 010010101 = M. OTP uses the same key for encryption and decryption.",
+      "explanation": "$C = M \\oplus K = 010010101 \\oplus 110001011 = 100011110$. Decryption: $C \\oplus K = 100011110 \\oplus 110001011 = 010010101 = M$. OTP uses the same key for encryption and decryption.",
       "id": 45,
       "week": "Week 04",
       "course": "INFO5995"
     },
     {
-      "question": "A designer considers three ways to combine encryption and MAC using independent keys k_enc and k_mac: I. Enc(k_enc, M || MAC(k_mac, M)), II. Enc(k_enc, M) || MAC(k_mac, Enc(k_enc, M)), III. Enc(k_enc, M) || MAC(k_mac, M). Which design lets the receiver verify the integrity of the transmitted ciphertext before attempting decryption?",
+      "question": "A designer considers three ways to combine encryption and MAC using independent keys $k_{enc}$ and $k_{mac}$: I. $\\text{Enc}(k_{enc}, M \\,\\|\\, \\text{MAC}(k_{mac}, M))$, II. $\\text{Enc}(k_{enc}, M) \\,\\|\\, \\text{MAC}(k_{mac}, \\text{Enc}(k_{enc}, M))$, III. $\\text{Enc}(k_{enc}, M) \\,\\|\\, \\text{MAC}(k_{mac}, M)$. Which design lets the receiver verify the integrity of the transmitted ciphertext before attempting decryption?",
       "options": [
         "I only",
         "II only",
@@ -736,21 +736,21 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A system encrypts one byte using C = M xor K. ASCII '4' = 00110100 and '9' = 00111001. Without knowing K, which value should an attacker XOR into the ciphertext byte to turn an encrypted '4' into an encrypted '9'?",
+      "question": "A system encrypts one byte using $C = M \\oplus K$. ASCII '4' = $00110100$ and '9' = $00111001$. Without knowing K, which value should an attacker XOR into the ciphertext byte to turn an encrypted '4' into an encrypted '9'?",
       "options": [
-        "00001101",
-        "00000101",
+        "$00001101$",
+        "$00000101$",
         "impossible without the key, both messages are encrypted",
-        "00001000"
+        "$00001000$"
       ],
       "correct": 0,
-      "explanation": "The attacker can flip bits without knowing K: '4' xor '9' = 00110100 xor 00111001 = 00001101. XORing this into the ciphertext toggles the plaintext from '4' to '9' without knowing K.",
+      "explanation": "The attacker can flip bits without knowing K: '4' $\\oplus$ '9' = $00110100 \\oplus 00111001 = 00001101$. XORing this into the ciphertext toggles the plaintext from '4' to '9' without knowing K.",
       "id": 48,
       "week": "Week 05",
       "course": "INFO5995"
     },
     {
-      "question": "Alice sends message || SHA-256(message) with no secret key. Why does this fail to authenticate Alice against an active attacker?",
+      "question": "Alice sends $\\text{message} \\,\\|\\, \\text{SHA-256}(\\text{message})$ with no secret key. Why does this fail to authenticate Alice against an active attacker?",
       "options": [
         "Because SHA-256 is designed only for confidentiality, not for integrity",
         "Because collision resistance means Bob cannot verify who created the hash",
@@ -764,15 +764,15 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Some iterative hash constructions make H(K || M) a poor MAC design. Which attack best explains why?",
+      "question": "Some iterative hash constructions make $H(K \\,\\|\\, M)$ a poor MAC design. Which attack best explains why?",
       "options": [
         "An attacker can always invert the hash",
         "The tag reveals the plaintext in full",
-        "An attacker may extend the message and compute a valid tag for K || M || extra without knowing K",
-        "An attacker can recover K directly from H(K || M)"
+        "An attacker may extend the message and compute a valid tag for $K \\,\\|\\, M \\,\\|\\, \\text{extra}$ without knowing $K$",
+        "An attacker can recover $K$ directly from $H(K \\,\\|\\, M)$"
       ],
       "correct": 2,
-      "explanation": "Length extension attacks: for certain hash constructions (like SHA-256's Merkle-Damgård), knowing H(K || M) and the length allows computing H(K || M || padding || extra) without knowing K. HMAC prevents this with its two-layer construction.",
+      "explanation": "Length extension attacks: for certain hash constructions (like SHA-256's Merkle-Damgård), knowing $H(K \\,\\|\\, M)$ and the length allows computing $H(K \\,\\|\\, M \\,\\|\\, \\text{padding} \\,\\|\\, \\text{extra})$ without knowing $K$. HMAC prevents this with its two-layer construction.",
       "id": 50,
       "week": "Week 05",
       "course": "INFO5995"
@@ -812,7 +812,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Two systems protect a message M using encryption and MAC with independent keys. System A (MAC-then-Encrypt): compute T=MAC(k_mac, M), then Enc(k_enc, M || T). System B (Encrypt-then-MAC): compute C=Enc(k_enc, M), then T=MAC(k_mac, C), send C || T. Which statements are correct?",
+      "question": "Two systems protect a message M using encryption and MAC with independent keys. System A (MAC-then-Encrypt): compute $T = \\text{MAC}(k_{mac}, M)$, then $\\text{Enc}(k_{enc}, M \\,\\|\\, T)$. System B (Encrypt-then-MAC): compute $C = \\text{Enc}(k_{enc}, M)$, then $T = \\text{MAC}(k_{mac}, C)$, send $C \\,\\|\\, T$. Which statements are correct?",
       "options": [
         "Because both systems use a MAC, the order makes no practical difference",
         "System A and System B are equivalent as long as AES is used for encryption",
@@ -913,13 +913,13 @@ window.QUIZ_DATA = {
         "The key has about 20 bits of real entropy, so brute force is far easier than the length suggests"
       ],
       "correct": 3,
-      "explanation": "Key length ≠ entropy. If only 20 bits are unpredictable, the effective search space is ~2^20, not 2^256. The key is only as strong as its actual entropy, not its bit length.",
+      "explanation": "Key length ≠ entropy. If only 20 bits are unpredictable, the effective search space is about $2^{20}$, not $2^{256}$. The key is only as strong as its actual entropy, not its bit length.",
       "id": 59,
       "week": "Week 06",
       "course": "INFO5995"
     },
     {
-      "question": "Why is HMAC safer than H(K || M) for some iterative hash constructions?",
+      "question": "Why is HMAC safer than $H(K \\,\\|\\, M)$ for some iterative hash constructions?",
       "options": [
         "HMAC removes the need for a secret key",
         "HMAC keeps the hash algorithm secret",
@@ -927,7 +927,7 @@ window.QUIZ_DATA = {
         "HMAC works only because its output is longer than a normal hash"
       ],
       "correct": 2,
-      "explanation": "HMAC's two-layer construction prevents length-extension attacks that affect H(K || M). The inner and outer hashing prevent an attacker from extending the message and computing a valid tag without knowing K.",
+      "explanation": "HMAC's two-layer construction prevents length-extension attacks that affect $H(K \\,\\|\\, M)$. The inner and outer hashing prevent an attacker from extending the message and computing a valid tag without knowing $K$.",
       "id": 60,
       "week": "Week 06",
       "course": "INFO5995"
@@ -944,24 +944,24 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "Diffie-Hellman lets two parties establish a shared secret over a public channel. Public values (g^a mod p, g^b mod p) can be sent openly. However, DH alone does not authenticate who you're talking to.",
+      "explanation": "Diffie-Hellman lets two parties establish a shared secret over a public channel. Public values ($g^a \\bmod p$, $g^b \\bmod p$) can be sent openly. However, DH alone does not authenticate who you're talking to.",
       "id": 61,
       "week": "Week 06",
       "course": "INFO5995"
     },
     {
-      "question": "With Diffie-Hellman formulas A = g^a mod p, B = g^b mod p, k_A = B^a mod p, k_B = A^b mod p. Which are correct?",
+      "question": "With Diffie-Hellman formulas $A = g^a \\bmod p$, $B = g^b \\bmod p$, $k_A = B^a \\bmod p$, $k_B = A^b \\bmod p$. Which are correct?",
       "options": [
-        "Recovering a from A = g^a mod p is the discrete logarithm problem",
-        "Anyone who sees A and B can directly get the shared key by computing A * B mod p",
-        "k_A = k_B = g^(ab) mod p",
-        "Alice and Bob must exchange a and b to finish the protocol"
+        "Recovering $a$ from $A = g^a \\bmod p$ is the discrete logarithm problem",
+        "Anyone who sees $A$ and $B$ can directly get the shared key by computing $A \\cdot B \\bmod p$",
+        "$k_A = k_B = g^{ab} \\bmod p$",
+        "Alice and Bob must exchange $a$ and $b$ to finish the protocol"
       ],
       "correct": [
         0,
         2
       ],
-      "explanation": "Recovering a from g^a mod p is the discrete log problem (computationally hard). k_A = B^a = (g^b)^a = g^(ab) = (g^a)^b = A^b = k_B. The private exponents a and b are never exchanged.",
+      "explanation": "Recovering $a$ from $g^a \\bmod p$ is the discrete log problem (computationally hard). $k_A = B^a = (g^b)^a = g^{ab} = (g^a)^b = A^b = k_B$. The private exponents $a$ and $b$ are never exchanged.",
       "id": 62,
       "week": "Week 06",
       "course": "INFO5995"
@@ -1328,7 +1328,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A developer generates 256-bit-looking API keys as SHA-256(student_id || current_year). They argue this is secure because SHA-256 is public and the output is 256 bits long. Which statement is most accurate?",
+      "question": "A developer generates 256-bit-looking API keys as $\\text{SHA-256}(\\text{student\\_id} \\,\\|\\, \\text{current\\_year})$. They argue this is secure because SHA-256 is public and the output is 256 bits long. Which statement is most accurate?",
       "options": [
         "The keys act like one-time-pad keys because SHA-256 is deterministic",
         "The keys have 256 bits of entropy because each digest has 256 bits",
@@ -1342,15 +1342,15 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Two plaintext messages M1 and M2 are encrypted with the same one-time-pad key K, producing C1 = M1 xor K and C2 = M2 xor K. An attacker sees only C1 and C2. What can the attacker compute directly?",
+      "question": "Two plaintext messages $M_1$ and $M_2$ are encrypted with the same one-time-pad key $K$, producing $C_1 = M_1 \\oplus K$ and $C_2 = M_2 \\oplus K$. An attacker sees only $C_1$ and $C_2$. What can the attacker compute directly?",
       "options": [
         "Both plaintexts, because XOR encryption is always reversible",
-        "The XOR of the two plaintexts, written as M1 xor M2",
-        "Only that the two plaintexts have the same bit length as K",
-        "The reused key K, by cancelling the two ciphertexts"
+        "The XOR of the two plaintexts, written as $M_1 \\oplus M_2$",
+        "Only that the two plaintexts have the same bit length as $K$",
+        "The reused key $K$, by cancelling the two ciphertexts"
       ],
       "correct": 1,
-      "explanation": "C1 xor C2 = (M1 xor K) xor (M2 xor K) = M1 xor M2. The key cancels out. The attacker learns the XOR of the plaintexts, which can reveal information about both messages, especially if one plaintext is known or has known structure.",
+      "explanation": "$C_1 \\oplus C_2 = (M_1 \\oplus K) \\oplus (M_2 \\oplus K) = M_1 \\oplus M_2$. The key cancels out. The attacker learns the XOR of the plaintexts, which can reveal information about both messages, especially if one plaintext is known or has known structure.",
       "id": 87,
       "week": "Week 09",
       "course": "INFO5995"
@@ -1373,7 +1373,7 @@ window.QUIZ_DATA = {
       "question": "Alice and Bob run plain Diffie-Hellman over a public network. Mallory sits between them, replaces both public values with her own, and can read/rewrite all traffic. What was missing?",
       "options": [
         "TCP ordering checks before encrypted application data is sent",
-        "Secrecy for Diffie-Hellman public values such as g^a mod p",
+        "Secrecy for Diffie-Hellman public values such as $g^a \\bmod p$",
         "A public hash of each ciphertext appended to every packet",
         "Authentication binding exchanged key values to real identities"
       ],
@@ -1466,10 +1466,10 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Alice sends Bob message || tag, where tag = MAC(k, message) and only Alice and Bob know k. Eve records one valid message and later sends the exact same message || tag again. Which statements are correct?",
+      "question": "Alice sends Bob $\\text{message} \\,\\|\\, \\text{tag}$, where $\\text{tag} = \\text{MAC}(k, \\text{message})$ and only Alice and Bob know $k$. Eve records one valid message and later sends the exact same $\\text{message} \\,\\|\\, \\text{tag}$ again. Which statements are correct?",
       "options": [
-        "A valid MAC proves the pair is valid under k, but not that it is fresh",
-        "A plain SHA-256(message) gives stronger sender authentication than a MAC",
+        "A valid MAC proves the pair is valid under $k$, but not that it is fresh",
+        "A plain $\\text{SHA-256}(\\text{message})$ gives stronger sender authentication than a MAC",
         "Replaying the same pair invalidates the MAC because network time changed",
         "A counter, nonce, or timestamp can help the receiver identify old valid messages"
       ],
@@ -1525,7 +1525,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A Proof of Work system asks miners to find a nonce such that SHA256(data || nonce) < target. What is the key property of this puzzle?",
+      "question": "A Proof of Work system asks miners to find a nonce such that $\\text{SHA256}(\\text{data} \\,\\|\\, \\text{nonce}) < \\text{target}$. What is the key property of this puzzle?",
       "options": [
         "It guarantees that network messages always arrive in the same order",
         "It requires a central authority to assign one puzzle per real-world person",
@@ -1539,15 +1539,15 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "An automated market maker (AMM) pool holds asset X and asset Y and uses the constant-product rule x * y = k. What happens when asset X is purchased from the pool?",
+      "question": "An automated market maker (AMM) pool holds asset X and asset Y and uses the constant-product rule $x \\cdot y = k$. What happens when asset X is purchased from the pool?",
       "options": [
-        "Both prices must stay constant because k is constant",
+        "Both prices must stay constant because $k$ is constant",
         "The smart contract stops providing liquidity until a human market maker approves",
         "The price of X decreases and the price of Y increases",
         "The price of X increases and the price of Y decreases"
       ],
       "correct": 3,
-      "explanation": "Under the constant-product rule x * y = k, buying X removes X from the pool and adds Y. With less X and more Y in the pool, the relative price of X increases (more Y needed per X) and Y's price decreases.",
+      "explanation": "Under the constant-product rule $x \\cdot y = k$, buying X removes X from the pool and adds Y. With less X and more Y in the pool, the relative price of X increases (more Y needed per X) and Y's price decreases.",
       "id": 100,
       "week": "Week 10",
       "course": "INFO5995"
@@ -1581,7 +1581,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "PBFT tolerates up to f Byzantine (malicious) nodes with 3f+1 total nodes (≥2/3 honest). Raft and Paxos handle crash faults with >50% honest nodes. Closed systems assume known, permissioned membership — not anonymous open access.",
+      "explanation": "PBFT tolerates up to $f$ Byzantine (malicious) nodes with $3f+1$ total nodes ($\\geq 2/3$ honest). Raft and Paxos handle crash faults with >50% honest nodes. Closed systems assume known, permissioned membership — not anonymous open access.",
       "id": 102,
       "week": "Week 10",
       "course": "INFO5995"
@@ -1778,7 +1778,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Why is HMAC safer than the simple construction H(K || M) for iterative hashes?",
+      "question": "Why is HMAC safer than the simple construction $H(K \\,\\|\\, M)$ for iterative hashes?",
       "options": [
         "It works by keeping the SHA-256 algorithm secret from attackers.",
         "It removes the need for any shared secret key.",
@@ -1792,7 +1792,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "In Diffie-Hellman, recovering the private exponent a from A = g^a mod p is an instance of which problem?",
+      "question": "In Diffie-Hellman, recovering the private exponent $a$ from $A = g^a \\bmod p$ is an instance of which problem?",
       "options": [
         "The SQL injection problem.",
         "The discrete logarithm problem.",
@@ -1800,7 +1800,7 @@ window.QUIZ_DATA = {
         "The output encoding problem."
       ],
       "correct": 1,
-      "explanation": "Recovering a from g^a mod p is the discrete logarithm problem.",
+      "explanation": "Recovering $a$ from $g^a \\bmod p$ is the discrete logarithm problem.",
       "id": 117,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1999,7 +1999,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "3000 / 60 = 50, so 40 Mbit/s of requests can produce about 2000 Mbit/s, or 2 Gbit/s, of victim traffic.",
+      "explanation": "$3000 / 60 = 50$, so 40 Mbit/s of requests can produce about 2000 Mbit/s, or 2 Gbit/s, of victim traffic.",
       "id": 131,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2158,19 +2158,19 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A web API authorizes requests by sending message and tag = H(K || message), where K is a server secret and H is an iterative hash whose digest can be used as the chaining value for a length-extension continuation. The server checks the tag and then parses the request string, using the last value if a parameter appears twice. An attacker sees one valid message and tag, does not know K, but can guess that the secret length is between 12 and 20 bytes. Which two statements are correct?",
+      "question": "A web API authorizes requests by sending message and $\\text{tag} = H(K \\,\\|\\, \\text{message})$, where $K$ is a server secret and H is an iterative hash whose digest can be used as the chaining value for a length-extension continuation. The server checks the tag and then parses the request string, using the last value if a parameter appears twice. An attacker sees one valid message and tag, does not know K, but can guess that the secret length is between 12 and 20 bytes. Which two statements are correct?",
       "options": [
-        "The attacker must first recover K before producing any valid tag for a longer request.",
+        "The attacker must first recover $K$ before producing any valid tag for a longer request.",
         "The attacker can try plausible secret lengths and compute a valid tag for an extended request that appends another parameter after the original message and hash padding.",
         "TLS in transit repairs this MAC design once the attacker has already observed a valid message and tag.",
-        "Collision resistance alone makes the raw prefix construction H(K || message) safe against arbitrary extension.",
+        "Collision resistance alone makes the raw prefix construction $H(K \\,\\|\\, \\text{message})$ safe against arbitrary extension.",
         "Replacing the raw prefix construction with HMAC is intended to avoid exposing reusable internal hash state in this way."
       ],
       "correct": [
         1,
         4
       ],
-      "explanation": "Raw prefix MACs with iterative hashes can allow length extension without recovering K; HMAC is designed to avoid this internal-state reuse.",
+      "explanation": "Raw prefix MACs with iterative hashes can allow length extension without recovering $K$; HMAC is designed to avoid this internal-state reuse.",
       "id": 141,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2178,8 +2178,8 @@ window.QUIZ_DATA = {
     {
       "question": "A server allocates 96 bytes of memory for each half-open TCP connection after receiving a SYN. If the final ACK never arrives, the entry expires after 45 seconds. An attacker sends spoofed SYN packets at 200,000 packets per second and never completes the handshakes. Ignore backlog caps and other defenses for this calculation. Which two statements are correct?",
       "options": [
-        "The server can accumulate about 200,000 x 45 = 9,000,000 half-open entries before expiry balances arrivals.",
-        "Those entries would consume about 9,000,000 x 96 = 864,000,000 bytes of memory before other overheads.",
+        "The server can accumulate about $200{,}000 \\times 45 = 9{,}000{,}000$ half-open entries before expiry balances arrivals.",
+        "Those entries would consume about $9{,}000{,}000 \\times 96 = 864{,}000{,}000$ bytes of memory before other overheads.",
         "Because the attacker never sends the final ACK, ordinary TCP servers store no state at all after receiving the SYN.",
         "Prepared SQL statements directly prevent this half-open connection state from being allocated.",
         "The attacker must receive every SYN-ACK from the victim before the victim can allocate any half-open state."
@@ -2212,11 +2212,11 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A symbolic executor analyzes a function whose bug branch is reached only when all of these path constraints hold: 0 <= x <= 20, 0 <= y <= 20, x + y = 17, and 2x - y = 1. The inputs x and y are integers. Which two statements are correct?",
+      "question": "A symbolic executor analyzes a function whose bug branch is reached only when all of these path constraints hold: $0 \\leq x \\leq 20$, $0 \\leq y \\leq 20$, $x + y = 17$, and $2x - y = 1$. The inputs $x$ and $y$ are integers. Which two statements are correct?",
       "options": [
         "Those constraints characterize the path that reaches the bug branch in the model being analyzed.",
-        "The concrete input x = 6, y = 11 satisfies the constraints and reaches the modeled bug branch.",
-        "The concrete input x = 8, y = 9 reaches the bug branch because it satisfies x + y = 17.",
+        "The concrete input $x = 6$, $y = 11$ satisfies the constraints and reaches the modeled bug branch.",
+        "The concrete input $x = 8$, $y = 9$ reaches the bug branch because it satisfies $x + y = 17$.",
         "Because symbolic execution found this path, it proves there are no bugs in code outside the analyzed model.",
         "A constraint solver must run every one of the 441 possible input pairs concretely before it can reason about the bug path."
       ],
@@ -2224,19 +2224,19 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Solving x + y = 17 and 2x - y = 1 gives x = 6 and y = 11, and the constraints describe the modeled path.",
+      "explanation": "Solving $x + y = 17$ and $2x - y = 1$ gives $x = 6$ and $y = 11$, and the constraints describe the modeled path.",
       "id": 144,
       "week": "Mock Exam 2",
       "course": "INFO5995"
     },
     {
-      "question": "An incident-response system stores audit records r1, ..., rn in order. For each record it stores a chain value ci = H(ci-1 || ri), where H is a collision-resistant hash and c0 is a fixed public initial value. At the end of each day, the system digitally signs and publishes the final value cn. Later, an attacker can edit the database copy of old records and chain values, but cannot forge the signature on the published cn. Which two statements are correct?",
+      "question": "An incident-response system stores audit records $r_1, \\ldots, r_n$ in order. For each record it stores a chain value $c_i = H(c_{i-1} \\,\\|\\, r_i)$, where $H$ is a collision-resistant hash and $c_0$ is a fixed public initial value. At the end of each day, the system digitally signs and publishes the final value $c_n$. Later, an attacker can edit the database copy of old records and chain values, but cannot forge the signature on the published $c_n$. Which two statements are correct?",
       "options": [
-        "If the attacker changes an old record after publication, recomputing the chain will normally produce a different final value, so verification against the signed cn can detect tampering.",
-        "If a malicious operator omits a record before the final cn is signed and published, the later signature alone does not prove that the omitted record ever existed.",
+        "If the attacker changes an old record after publication, recomputing the chain will normally produce a different final value, so verification against the signed $c_n$ can detect tampering.",
+        "If a malicious operator omits a record before the final $c_n$ is signed and published, the later signature alone does not prove that the omitted record ever existed.",
         "The hash chain encrypts the audit records, so anyone with database access cannot read their contents.",
         "TLS used when records were uploaded proves the database copy cannot be modified after storage.",
-        "Because H is deterministic, the attacker can freely edit any old record and choose new following chain values that still end at the same signed cn without finding a hash collision or preimage."
+        "Because $H$ is deterministic, the attacker can freely edit any old record and choose new following chain values that still end at the same signed $c_n$ without finding a hash collision or preimage."
       ],
       "correct": [
         0,
@@ -2332,7 +2332,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A developer computes API keys as SHA-256(student_id || current_year). Why can this be weak?",
+      "question": "A developer computes API keys as $\\text{SHA-256}(\\text{student\\_id} \\,\\|\\, \\text{current\\_year})$. Why can this be weak?",
       "options": [
         "SHA-256 is secret and therefore cannot be independently audited.",
         "The output is too short to store in a database.",
@@ -2388,7 +2388,7 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "What is the main weakness of sending message || SHA-256(message) against an active attacker?",
+      "question": "What is the main weakness of sending $\\text{message} \\,\\|\\, \\text{SHA-256}(\\text{message})$ against an active attacker?",
       "options": [
         "Receivers cannot recompute SHA-256 on received messages.",
         "Attackers can edit the message and recompute the hash.",
@@ -2598,18 +2598,18 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "Two six-bit plaintexts are encrypted with the same XOR keystream. The attacker sees C1 = 101101, C2 = 110001, and later learns M1 = 011000. Which two statements are correct?",
+      "question": "Two six-bit plaintexts are encrypted with the same XOR keystream. The attacker sees $C_1 = 101101$, $C_2 = 110001$, and later learns $M_1 = 011000$. Which two statements are correct?",
       "options": [
-        "M1 xor M2 = 011100.",
+        "$M_1 \\oplus M_2 = 011100$.",
         "The reused keystream reveals no relation here.",
-        "The second plaintext is M2 = 000100.",
+        "The second plaintext is $M_2 = 000100$.",
         "The attacker must know every bit of the master key."
       ],
       "correct": [
         0,
         2
       ],
-      "explanation": "C1 xor C2 = M1 xor M2 = 011100; XORing that with M1 gives M2 = 000100.",
+      "explanation": "$C_1 \\oplus C_2 = M_1 \\oplus M_2 = 011100$; XORing that with $M_1$ gives $M_2 = 000100$.",
       "id": 171,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2617,16 +2617,16 @@ window.QUIZ_DATA = {
     {
       "question": "A system stores 32-bit public hashes for many uploaded files. Ignore hash weaknesses except output size. Which two statements are correct under the birthday intuition?",
       "options": [
-        "A 32-bit hash needs about 2^32 files for any collision.",
-        "Around 2^16 random files can make collisions likely.",
+        "A 32-bit hash needs about $2^{32}$ files for any collision.",
+        "Around $2^{16}$ random files can make collisions likely.",
         "Collision resistance is unaffected by digest length.",
-        "A 256-bit hash would move this scale near 2^128."
+        "A 256-bit hash would move this scale near $2^{128}$."
       ],
       "correct": [
         1,
         3
       ],
-      "explanation": "The birthday bound makes collisions likely around 2^(n/2), so 32-bit gives about 2^16 and 256-bit gives about 2^128.",
+      "explanation": "The birthday bound makes collisions likely around $2^{n/2}$, so 32-bit gives about $2^{16}$ and 256-bit gives about $2^{128}$.",
       "id": 172,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2643,13 +2643,13 @@ window.QUIZ_DATA = {
         0,
         3
       ],
-      "explanation": "A +/-120 second window contains at most 241 second-level seeds, which is only about 8 bits of uncertainty.",
+      "explanation": "A $\\pm 120$ second window contains at most 241 second-level seeds, which is only about 8 bits of uncertainty.",
       "id": 173,
       "week": "Mock Exam 1",
       "course": "INFO5995"
     },
     {
-      "question": "A transaction wants to buy 20 units of X from a pool with 80 X and 8000 Y, using x * y = k and no fees. The user sets a maximum payment of 2500 Y. Which two statements are correct?",
+      "question": "A transaction wants to buy 20 units of X from a pool with 80 X and 8000 Y, using $x \\cdot y = k$ and no fees. The user sets a maximum payment of 2500 Y. Which two statements are correct?",
       "options": [
         "Slippage protection is irrelevant to this calculation.",
         "After the trade, the pool would have 60 X.",
@@ -2660,7 +2660,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "The pool would have 60 X, so y = 640000 / 60 = 10666.67 and the payment is about 2667 Y, exceeding the 2500 Y limit.",
+      "explanation": "The pool would have 60 X, so $y = 640000 / 60 = 10666.67$ and the payment is about 2667 Y, exceeding the 2500 Y limit.",
       "id": 174,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2670,20 +2670,20 @@ window.QUIZ_DATA = {
       "options": [
         "Symbolic execution runs exactly one path by definition.",
         "Finding no path proves the original program is bug-free.",
-        "The executor may face up to 2^12 = 4096 paths.",
+        "The executor may face up to $2^{12} = 4096$ paths.",
         "Solvers can turn path constraints into concrete inputs."
       ],
       "correct": [
         2,
         3
       ],
-      "explanation": "Twelve independent binary branches can create up to 2^12 paths; solvers can produce concrete inputs from path constraints.",
+      "explanation": "Twelve independent binary branches can create up to $2^{12}$ paths; solvers can produce concrete inputs from path constraints.",
       "id": 175,
       "week": "Mock Exam 1",
       "course": "INFO5995"
     },
     {
-      "question": "An app seeds a PRNG with the current Unix time in milliseconds and uses the next 128 output bits as a reset token. The attacker can narrow token creation to within +/-5 seconds. Which two statements are correct?",
+      "question": "An app seeds a PRNG with the current Unix time in milliseconds and uses the next 128 output bits as a reset token. The attacker can narrow token creation to within $\\pm 5$ seconds. Which two statements are correct?",
       "options": [
         "Hashing the PRNG output would automatically make the token unguessable.",
         "The seed search is only about 10001 millisecond values.",
@@ -2694,7 +2694,7 @@ window.QUIZ_DATA = {
         1,
         3
       ],
-      "explanation": "A +/-5 second millisecond window is about 10001 seed values, and predictable seed entropy limits token strength.",
+      "explanation": "A $\\pm 5$ second millisecond window is about 10001 seed values, and predictable seed entropy limits token strength.",
       "id": 177,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2805,11 +2805,11 @@ window.QUIZ_DATA = {
       "course": "INFO5995"
     },
     {
-      "question": "A toy rainbow table uses two-digit passwords from 00 to 99. The toy hash is H(p) = (37p + 13) mod 100, and the column reduction functions are Ri(h) = (3h + 7 + 11i) mod 100. The attacker stored only chain starts and endpoints after columns R0, R1, R2, R3; one stored row is start 44, endpoint 54. A leaked password database is unsalted, and one stolen hash is 32. Which two statements are correct?",
+      "question": "A toy rainbow table uses two-digit passwords from 00 to 99. The toy hash is $H(p) = (37p + 13) \\bmod 100$, and the column reduction functions are $R_i(h) = (3h + 7 + 11i) \\bmod 100$. The attacker stored only chain starts and endpoints after columns $R_0, R_1, R_2, R_3$; one stored row is start 44, endpoint 54. A leaked password database is unsalted, and one stolen hash is 32. Which two statements are correct?",
       "options": [
-        "To test whether 32 appeared just before column R2, the attacker can compute R2(32) = 25, continue the remaining column, and reach endpoint 54.",
-        "The endpoint match means the attacker should regenerate the row starting at 44; regeneration shows H(87) = 32, so 87 is a password candidate.",
-        "The password must be 25, because 25 is the reduced value immediately after applying R2 to the stolen hash.",
+        "To test whether 32 appeared just before column $R_2$, the attacker can compute $R_2(32) = 25$, continue the remaining column, and reach endpoint 54.",
+        "The endpoint match means the attacker should regenerate the row starting at 44; regeneration shows $H(87) = 32$, so 87 is a password candidate.",
+        "The password must be 25, because 25 is the reduced value immediately after applying $R_2$ to the stolen hash.",
         "Because the table stores only endpoints, the attacker can use it only when the stolen hash itself equals endpoint 54.",
         "A random per-user salt would make this exact precomputed table reusable across all users because the salt is not secret."
       ],
@@ -2817,7 +2817,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "R2(32) = 25, then continuing reaches endpoint 54; regenerating from start 44 shows H(87) = 32, so 87 is a candidate.",
+      "explanation": "$R_2(32) = 25$, then continuing reaches endpoint 54; regenerating from start 44 shows $H(87) = 32$, so 87 is a candidate.",
       "id": 294,
       "week": "Mock Exam 1",
       "course": "INFO5995"
