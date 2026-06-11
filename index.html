@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=12">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -103,16 +103,25 @@
 
     <div class="fab-stack" id="fabStack">
         <div class="fab-actions" id="fabActions">
-            <button class="fab-mini" id="fabShuffleBtn" title="Shuffle" aria-label="Toggle shuffle" aria-pressed="false">🔀</button>
-            <button class="fab-mini" id="fabThemeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
-            <button class="fab-mini" id="fabRestartBtn" title="Restart" aria-label="Restart quiz">↻</button>
+            <div class="fab-row">
+                <span class="fab-label">Shuffle</span>
+                <button class="fab-mini" id="fabShuffleBtn" title="Shuffle" aria-label="Toggle shuffle" aria-pressed="false">🔀</button>
+            </div>
+            <div class="fab-row">
+                <span class="fab-label">Theme</span>
+                <button class="fab-mini" id="fabThemeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
+            </div>
+            <div class="fab-row">
+                <span class="fab-label">Restart</span>
+                <button class="fab-mini" id="fabRestartBtn" title="Restart" aria-label="Restart quiz">↻</button>
+            </div>
         </div>
-        <button class="fab-main" id="fabMainBtn" aria-expanded="false" aria-label="Quick actions">⚡</button>
+        <button class="fab-main" id="fabMainBtn" aria-expanded="false" aria-label="Quick actions">⋮</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="data/questions.js"></script>
-    <script src="app.js"></script>
+    <script src="data/questions.js?v=12"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>

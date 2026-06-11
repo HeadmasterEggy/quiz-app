@@ -56,7 +56,7 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     background:
         radial-gradient(circle at 20% 80%, var(--glow-primary) 0%, transparent 45%),
         radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.08) 0%, transparent 40%),
@@ -70,7 +70,9 @@ body::before {
     66% { transform: translate(-1.5%, 1%) scale(0.98); opacity: 0.95; }
 }
 
-.container { position: relative; z-index: 1; }
+/* No z-index here: a stacking context on the container would trap the
+   fixed drawer below the body-level backdrop and make it untappable */
+.container { position: relative; }
 
 html { scroll-behavior: smooth; }
 
@@ -652,7 +654,7 @@ body.drawer-open .fab-stack {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip, .header-controls, .drawer-backdrop, .fab-actions, .fab-main, .fab-mini {
+    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip, .header-controls, .drawer-backdrop, .fab-actions, .fab-main, .fab-mini, .fab-row {
         animation: none !important;
         transition: none !important;
     }
@@ -1139,17 +1141,16 @@ body.drawer-open .fab-stack {
     .final-score { font-size: 2.75rem; }
     .trophy { font-size: 3.5rem; }
 
-    /* Keep the primary action pinned to the bottom of the viewport while
-       long questions/explanations scroll, so it never has to be hunted for. */
-    .next-btn, .maq-check-btn {
+    /* Pin only the pre-answer MAQ action; the post-answer Next button stays
+       in flow below the explanation so it never covers the text. */
+    .maq-check-btn {
         position: sticky;
         bottom: max(12px, env(safe-area-inset-bottom));
         z-index: 5;
         box-shadow: var(--sticky-shadow);
     }
 
-    /* Leave room for the pinned action when scrolling content into view */
-    .explanation-inline, .options { scroll-margin-bottom: 88px; }
+    .explanation-inline { scroll-margin-bottom: 14px; }
 }
 
 @media (max-width: 600px) {
@@ -1240,76 +1241,105 @@ body.drawer-open .fab-stack {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 10px;
+        gap: 12px;
         position: fixed;
         right: max(14px, env(safe-area-inset-right));
-        bottom: calc(max(14px, env(safe-area-inset-bottom)) + 78px);
+        bottom: calc(max(16px, env(safe-area-inset-bottom)) + 64px);
         z-index: 45;
     }
 
     .fab-main {
-        width: 52px;
-        height: 52px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         border: none;
-        background: var(--primary);
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
         color: #fff;
-        font-size: 1.25rem;
+        font-size: 1.4rem;
+        font-weight: 700;
         line-height: 1;
         cursor: pointer;
         touch-action: manipulation;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-        transition: transform 0.2s ease, background-color 0.2s ease;
+        box-shadow: 0 4px 16px var(--glow-primary), 0 2px 8px rgba(0, 0, 0, 0.25);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+    }
+
+    .fab-stack.open .fab-main {
+        transform: rotate(90deg);
     }
 
     .fab-main:active {
-        transform: scale(0.94);
+        transform: scale(0.92);
     }
 
     .fab-actions {
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
         gap: 10px;
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-        transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .fab-stack.open .fab-actions {
+    .fab-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+        pointer-events: none;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .fab-stack.open .fab-row {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         pointer-events: auto;
     }
 
+    .fab-stack.open .fab-row:nth-last-child(1) { transition-delay: 0s; }
+    .fab-stack.open .fab-row:nth-last-child(2) { transition-delay: 0.05s; }
+    .fab-stack.open .fab-row:nth-last-child(3) { transition-delay: 0.1s; }
+
+    .fab-label {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    }
+
     .fab-mini {
-        width: 46px;
-        height: 46px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         border: 1px solid var(--border);
         background: var(--card);
         color: var(--text);
-        font-size: 1.05rem;
+        font-size: 1rem;
         line-height: 1;
         cursor: pointer;
         touch-action: manipulation;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-        transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.26);
+        transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .fab-mini:active {
-        transform: scale(0.92);
+        transform: scale(0.9);
     }
 
     .fab-mini[aria-pressed="true"] {
         border-color: var(--primary);
         background: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 3px 12px var(--glow-primary);
     }
 }
 

@@ -136,10 +136,11 @@ function afterLayout(fn) {
 function scrollActionIntoView(id) {
     const el = $(id);
     if (!el || el.classList.contains('hidden')) return;
-    const block = isCompactViewport() ? 'end' : 'nearest';
+    // 'nearest': short content is brought fully into view from below;
+    // content taller than the viewport aligns its top so reading starts there
     afterLayout(() => {
         if (!el.classList.contains('hidden')) {
-            el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block, inline: 'nearest' });
+            el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest', inline: 'nearest' });
         }
     });
 }
@@ -640,7 +641,7 @@ function closeFab() {
     const stack = $('fabStack');
     if (!stack || !stack.classList.contains('open')) return;
     stack.classList.remove('open');
-    $('fabMainBtn').textContent = '⚡';
+    $('fabMainBtn').textContent = '⋮';
     $('fabMainBtn').setAttribute('aria-expanded', 'false');
 }
 
