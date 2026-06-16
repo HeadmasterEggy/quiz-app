@@ -1491,7 +1491,7 @@ window.QUIZ_DATA = {
         "Security can be solved once and then ignored."
       ],
       "correct": 2,
-      "explanation": "More exposure increases the number of reachable entry points, so availability and convenience can increase attack surface.",
+      "explanation": "More exposure increases the number of reachable entry points, so availability and convenience can increase attack surface. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / Core principles」。",
       "id": 106,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1505,7 +1505,7 @@ window.QUIZ_DATA = {
         "Forward secrecy."
       ],
       "correct": 0,
-      "explanation": "The problem is that authorized users cannot access the system when needed, which is an availability failure.",
+      "explanation": "The problem is that authorized users cannot access the system when needed, which is an availability failure. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / CIA triad & models」。",
       "id": 107,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1519,7 +1519,7 @@ window.QUIZ_DATA = {
         "They define assumptions, capabilities, goals, and baselines."
       ],
       "correct": 3,
-      "explanation": "Security claims need a model that defines assumptions, attacker capabilities, goals, and comparison baselines.",
+      "explanation": "Security claims need a model that defines assumptions, attacker capabilities, goals, and comparison baselines. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / Core principles」。",
       "id": 108,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1533,7 +1533,7 @@ window.QUIZ_DATA = {
         "It hides package and component details from every mobile agent."
       ],
       "correct": 1,
-      "explanation": "A UI tree gives structured screen information such as labels, bounds, clickability, and hierarchy.",
+      "explanation": "A UI tree gives structured screen information such as labels, bounds, clickability, and hierarchy. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Threats, agents, disclosure」。",
       "id": 109,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1547,7 +1547,7 @@ window.QUIZ_DATA = {
         "APKs contain only screenshots of app screens."
       ],
       "correct": 0,
-      "explanation": "An APK is an Android application package containing the manifest, compiled bytecode, resources, and related files.",
+      "explanation": "An APK is an Android application package containing the manifest, compiled bytecode, resources, and related files. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Ecosystem & architecture」。",
       "id": 110,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1561,7 +1561,7 @@ window.QUIZ_DATA = {
         "It replaces dynamic testing and code review."
       ],
       "correct": 2,
-      "explanation": "The manifest declares components, permissions, intent filters, and exported status, which helps identify attack surface.",
+      "explanation": "The manifest declares components, permissions, intent filters, and exported status, which helps identify attack surface. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest」。",
       "id": 111,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1575,7 +1575,7 @@ window.QUIZ_DATA = {
         "Use one shared password for all maintenance tasks."
       ],
       "correct": 1,
-      "explanation": "Least privilege reduces unnecessary data exposure by granting only the access required.",
+      "explanation": "Least privilege reduces unnecessary data exposure by granting only the access required. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Data & cloud security」。",
       "id": 112,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1589,7 +1589,7 @@ window.QUIZ_DATA = {
         "It is weaker than Caesar cipher for binary data."
       ],
       "correct": 1,
-      "explanation": "A correct one-time pad requires truly random key material as long as the message, and the key must never be reused.",
+      "explanation": "A correct one-time pad requires truly random key material as long as the message, and the key must never be reused. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Encryption & perfect secrecy」。",
       "id": 113,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1603,7 +1603,7 @@ window.QUIZ_DATA = {
         "A MAC gives confidentiality without using encryption."
       ],
       "correct": 0,
-      "explanation": "A MAC uses a secret key to authenticate message integrity; an unkeyed hash can be computed by anyone.",
+      "explanation": "A MAC uses a secret key to authenticate message integrity; an unkeyed hash can be computed by anyone. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 114,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1617,7 +1617,7 @@ window.QUIZ_DATA = {
         "The matching plaintext blocks are swapped after decryption."
       ],
       "correct": 3,
-      "explanation": "ECB encrypts blocks independently, so swapping ciphertext blocks swaps the corresponding plaintext blocks.",
+      "explanation": "ECB encrypts blocks independently, so swapping ciphertext blocks swaps the corresponding plaintext blocks. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Stream & block ciphers」。",
       "id": 115,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1631,7 +1631,7 @@ window.QUIZ_DATA = {
         "It outputs plaintext rather than an authentication tag."
       ],
       "correct": 2,
-      "explanation": "HMAC avoids raw prefix-MAC length-extension weaknesses by using a layered keyed construction.",
+      "explanation": "HMAC avoids raw prefix-MAC length-extension weaknesses by using a layered keyed construction. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 116,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1645,7 +1645,7 @@ window.QUIZ_DATA = {
         "The output encoding problem."
       ],
       "correct": 1,
-      "explanation": "Recovering $a$ from $g^a \\bmod p$ is the discrete logarithm problem.",
+      "explanation": "Recovering $a$ from $g^a \\bmod p$ is the discrete logarithm problem. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W6 --- Key Exchange & Public Key / Diffie--Hellman」。",
       "id": 117,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1659,7 +1659,7 @@ window.QUIZ_DATA = {
         "That the bank stores passwords using Argon2id."
       ],
       "correct": 0,
-      "explanation": "A valid certificate binds a domain identity to a public key through a CA-validated certificate chain.",
+      "explanation": "A valid certificate binds a domain identity to a public key through a CA-validated certificate chain. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 118,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1673,7 +1673,7 @@ window.QUIZ_DATA = {
         "To mine blocks for a blockchain network."
       ],
       "correct": 2,
-      "explanation": "The TLS record protocol frames application data and protects records with encryption and integrity checks.",
+      "explanation": "The TLS record protocol frames application data and protects records with encryption and integrity checks. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 119,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1687,7 +1687,7 @@ window.QUIZ_DATA = {
         "Half-open TCP connection state in the handshake."
       ],
       "correct": 3,
-      "explanation": "A SYN flood consumes server resources for half-open TCP connections before handshakes complete.",
+      "explanation": "A SYN flood consumes server resources for half-open TCP connections before handshakes complete. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / IP, UDP, TCP」。",
       "id": 120,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1701,7 +1701,7 @@ window.QUIZ_DATA = {
         "To prove that no future incident can occur."
       ],
       "correct": 0,
-      "explanation": "Audit logs record events for detection, investigation, accountability, and incident response.",
+      "explanation": "Audit logs record events for detection, investigation, accountability, and incident response. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / Security lifecycle (two cycles)」。",
       "id": 121,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1715,7 +1715,7 @@ window.QUIZ_DATA = {
         "They remove the need for database permissions entirely."
       ],
       "correct": 2,
-      "explanation": "Prepared statements keep SQL structure separate from attacker-controlled values.",
+      "explanation": "Prepared statements keep SQL structure separate from attacker-controlled values. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Database & web attacks」。",
       "id": 122,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1729,7 +1729,7 @@ window.QUIZ_DATA = {
         "A different digest is produced each time for the same input."
       ],
       "correct": 0,
-      "explanation": "Deterministic means equal inputs always produce equal outputs.",
+      "explanation": "Deterministic means equal inputs always produce equal outputs. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Hash functions」。",
       "id": 123,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1743,7 +1743,7 @@ window.QUIZ_DATA = {
         "Misconfigured cloud storage can expose sensitive data."
       ],
       "correct": 3,
-      "explanation": "Cloud resources can be misconfigured, for example by accidentally granting public access.",
+      "explanation": "Cloud resources can be misconfigured, for example by accidentally granting public access. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Data & cloud security」。",
       "id": 124,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1757,7 +1757,7 @@ window.QUIZ_DATA = {
         "A blockchain's longest valid branch."
       ],
       "correct": 0,
-      "explanation": "A control-flow graph represents possible paths between basic blocks or instructions.",
+      "explanation": "A control-flow graph represents possible paths between basic blocks or instructions. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 125,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1771,7 +1771,7 @@ window.QUIZ_DATA = {
         "Influence depends on preventing every network fork."
       ],
       "correct": 1,
-      "explanation": "Proof of Work makes influence depend on costly computation rather than the number of identities.",
+      "explanation": "Proof of Work makes influence depend on costly computation rather than the number of identities. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Proof of Work (permissionless)」。",
       "id": 126,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1785,7 +1785,7 @@ window.QUIZ_DATA = {
         "Proof of Work proves the application data is correct, while Raft only encrypts the database log."
       ],
       "correct": 0,
-      "explanation": "Raft targets known replicas in closed membership; Proof of Work supports open participation by making block production costly.",
+      "explanation": "Raft targets known replicas in closed membership; Proof of Work supports open participation by making block production costly. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Raft (closed membership); W10 --- Consensus, Blockchain, DeFi / Proof of Work (permissionless)」。",
       "id": 127,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1799,7 +1799,7 @@ window.QUIZ_DATA = {
         "Manual votes from blockchain validators."
       ],
       "correct": 1,
-      "explanation": "Symbolic execution reasons about paths using constraints over symbolic inputs.",
+      "explanation": "Symbolic execution reasons about paths using constraints over symbolic inputs. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 128,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1813,7 +1813,7 @@ window.QUIZ_DATA = {
         "TLS certificates for the tested application."
       ],
       "correct": 1,
-      "explanation": "Fuzzing searches for concrete inputs that trigger crashes or behavior violations.",
+      "explanation": "Fuzzing searches for concrete inputs that trigger crashes or behavior violations. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 129,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1827,7 +1827,7 @@ window.QUIZ_DATA = {
         "It always runs production systems with random inputs."
       ],
       "correct": 0,
-      "explanation": "Model checking only proves properties of the model being checked, so model accuracy matters.",
+      "explanation": "Model checking only proves properties of the model being checked, so model accuracy matters. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 130,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1844,7 +1844,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "$3000 / 60 = 50$, so 40 Mbit/s of requests can produce about 2000 Mbit/s, or 2 Gbit/s, of victim traffic.",
+      "explanation": "$3000 / 60 = 50$, so 40 Mbit/s of requests can produce about 2000 Mbit/s, or 2 Gbit/s, of victim traffic. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / DoS / DDoS / amplification」。",
       "id": 131,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1861,7 +1861,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Dynamic tests provide evidence only for the executions exercised; untested paths may still contain bugs.",
+      "explanation": "Dynamic tests provide evidence only for the executions exercised; untested paths may still contain bugs. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 132,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1878,7 +1878,7 @@ window.QUIZ_DATA = {
         2,
         3
       ],
-      "explanation": "The injected OR can make the condition true, and the SQL comment can remove the password check.",
+      "explanation": "The injected OR can make the condition true, and the SQL comment can remove the password check. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Database & web attacks」。",
       "id": 133,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1895,7 +1895,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "The accessibility tree exposes actionable structure; a screenshot alone can miss clickability and bounds.",
+      "explanation": "The accessibility tree exposes actionable structure; a screenshot alone can miss clickability and bounds. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Threats, agents, disclosure」。",
       "id": 134,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1912,7 +1912,7 @@ window.QUIZ_DATA = {
         1,
         3
       ],
-      "explanation": "There are 30 true positives and 10 false negatives; the 50 false alarms are false positives.",
+      "explanation": "There are 30 true positives and 10 false negatives; the 50 false alarms are false positives. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 135,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1929,7 +1929,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Backups support recovery, and logs support investigation. Encryption at rest does not restore deleted data.",
+      "explanation": "Backups support recovery, and logs support investigation. Encryption at rest does not restore deleted data. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Data & cloud security」。",
       "id": 136,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1946,7 +1946,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "A MAC or authentication tag provides integrity; tag verification can reject modified records.",
+      "explanation": "A MAC or authentication tag provides integrity; tag verification can reject modified records. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 137,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1963,7 +1963,7 @@ window.QUIZ_DATA = {
         0,
         3
       ],
-      "explanation": "Raft fits known replicas. Proof of Work resists Sybil identities by requiring costly work for block production.",
+      "explanation": "Raft fits known replicas. Proof of Work resists Sybil identities by requiring costly work for block production. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Raft (closed membership); W10 --- Consensus, Blockchain, DeFi / Proof of Work (permissionless)」。",
       "id": 138,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1980,7 +1980,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Encryption at rest does not override an access policy that allows public reads; incident response should fix access and assess exposure.",
+      "explanation": "Encryption at rest does not override an access policy that allows public reads; incident response should fix access and assess exposure. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Data & cloud security」。",
       "id": 139,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -1997,7 +1997,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Data minimization reduces breach impact, while legal or contractual rules may impose retention or deletion duties.",
+      "explanation": "Data minimization reduces breach impact, while legal or contractual rules may impose retention or deletion duties. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Data & cloud security」。",
       "id": 140,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2015,7 +2015,7 @@ window.QUIZ_DATA = {
         1,
         4
       ],
-      "explanation": "Raw prefix MACs with iterative hashes can allow length extension without recovering $K$; HMAC is designed to avoid this internal-state reuse.",
+      "explanation": "Raw prefix MACs with iterative hashes can allow length extension without recovering $K$; HMAC is designed to avoid this internal-state reuse. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 141,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2033,7 +2033,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "At 200,000 SYNs per second for 45 seconds, about 9,000,000 half-open entries can accumulate, consuming about 864,000,000 bytes before overheads.",
+      "explanation": "At 200,000 SYNs per second for 45 seconds, about 9,000,000 half-open entries can accumulate, consuming about 864,000,000 bytes before overheads. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / IP, UDP, TCP」。",
       "id": 142,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2051,7 +2051,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Untrusted app content can prompt-inject an agent; the UI tree can make both misleading text and actionable controls easier to locate.",
+      "explanation": "Untrusted app content can prompt-inject an agent; the UI tree can make both misleading text and actionable controls easier to locate. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Threats, agents, disclosure; W2 --- LLMs & AI for Security / How GPTs work」。",
       "id": 143,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2069,7 +2069,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "Solving $x + y = 17$ and $2x - y = 1$ gives $x = 6$ and $y = 11$, and the constraints describe the modeled path.",
+      "explanation": "Solving $x + y = 17$ and $2x - y = 1$ gives $x = 6$ and $y = 11$, and the constraints describe the modeled path. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 144,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2087,7 +2087,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "A signed final hash chain value can detect later record tampering, but it cannot prove records omitted before signing ever existed.",
+      "explanation": "A signed final hash chain value can detect later record tampering, but it cannot prove records omitted before signing ever existed. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Hash functions; W7 --- MITM, Signatures, TCP/TLS / MITM & signatures」。",
       "id": 145,
       "week": "Mock Exam 2",
       "course": "INFO5995"
@@ -2101,7 +2101,7 @@ window.QUIZ_DATA = {
         "Define security goals and test before release."
       ],
       "correct": 3,
-      "explanation": "Before deployment includes defining security goals, threat modeling, code review, and testing before release.",
+      "explanation": "Before deployment includes defining security goals, threat modeling, code review, and testing before release. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / Security lifecycle (two cycles)」。",
       "id": 146,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2115,7 +2115,7 @@ window.QUIZ_DATA = {
         "The attacker's goal of breaking confidentiality."
       ],
       "correct": 2,
-      "explanation": "The system model describes components and actors; the threat model describes attacker goals and capabilities.",
+      "explanation": "The system model describes components and actors; the threat model describes attacker goals and capabilities. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W1 --- Security Basics / CIA triad & models」。",
       "id": 147,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2129,7 +2129,7 @@ window.QUIZ_DATA = {
         "Assume one long prompt covers every attack path."
       ],
       "correct": 0,
-      "explanation": "Varying analyses can surface missed issues; model findings still need evidence and validation.",
+      "explanation": "Varying analyses can surface missed issues; model findings still need evidence and validation. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W2 --- LLMs & AI for Security / Using AI to find vulnerabilities」。",
       "id": 148,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2143,7 +2143,7 @@ window.QUIZ_DATA = {
         "It makes the app impossible to decompile."
       ],
       "correct": 1,
-      "explanation": "android:exported=\"false\" prevents other apps from directly launching the activity.",
+      "explanation": "android:exported=\"false\" prevents other apps from directly launching the activity. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest」。",
       "id": 149,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2157,7 +2157,7 @@ window.QUIZ_DATA = {
         "Decompilers can recover code, but not exact source."
       ],
       "correct": 3,
-      "explanation": "Decompilers can recover approximate code from bytecode, but not exact original source, comments, and names.",
+      "explanation": "Decompilers can recover approximate code from bytecode, but not exact original source, comments, and names. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest」。",
       "id": 150,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2171,7 +2171,7 @@ window.QUIZ_DATA = {
         "The activity cannot receive attacker-controlled values."
       ],
       "correct": 0,
-      "explanation": "BROWSABLE allows invocation from browser-like contexts and does not restrict links to the vendor site.",
+      "explanation": "BROWSABLE allows invocation from browser-like contexts and does not restrict links to the vendor site. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest」。",
       "id": 151,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2185,7 +2185,7 @@ window.QUIZ_DATA = {
         "Hash functions cannot be deterministic algorithms."
       ],
       "correct": 2,
-      "explanation": "A long hash output does not add entropy if the input space is small and enumerable.",
+      "explanation": "A long hash output does not add entropy if the input space is small and enumerable. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Strong keys & randomness」。",
       "id": 152,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2199,7 +2199,7 @@ window.QUIZ_DATA = {
         "MD5 is a modern default for collision resistance."
       ],
       "correct": 1,
-      "explanation": "Deterministic hashes give the same digest for the same input; collisions can exist but should be hard to find.",
+      "explanation": "Deterministic hashes give the same digest for the same input; collisions can exist but should be hard to find. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Hash functions」。",
       "id": 153,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2213,7 +2213,7 @@ window.QUIZ_DATA = {
         "The sender must publish the private key after use."
       ],
       "correct": 0,
-      "explanation": "Stream ciphers require both sides to use matching keystream positions for correct decryption.",
+      "explanation": "Stream ciphers require both sides to use matching keystream positions for correct decryption. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Stream & block ciphers」。",
       "id": 154,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2227,7 +2227,7 @@ window.QUIZ_DATA = {
         "Encrypt-then-MAC, with the tag over ciphertext."
       ],
       "correct": 3,
-      "explanation": "Encrypt-then-MAC verifies a tag over ciphertext before decryption, allowing modified ciphertext to be rejected early.",
+      "explanation": "Encrypt-then-MAC verifies a tag over ciphertext before decryption, allowing modified ciphertext to be rejected early. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 155,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2241,7 +2241,7 @@ window.QUIZ_DATA = {
         "The hash makes the message impossible to store."
       ],
       "correct": 1,
-      "explanation": "Without a secret key, an active attacker can modify the message and recompute the hash.",
+      "explanation": "Without a secret key, an active attacker can modify the message and recompute the hash. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Integrity & authenticity (MAC)」。",
       "id": 156,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2255,7 +2255,7 @@ window.QUIZ_DATA = {
         "Signatures require both parties to share one private key."
       ],
       "correct": 2,
-      "explanation": "Digital signatures are verified with public keys; MACs require a shared secret key.",
+      "explanation": "Digital signatures are verified with public keys; MACs require a shared secret key. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / MITM & signatures」。",
       "id": 157,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2269,7 +2269,7 @@ window.QUIZ_DATA = {
         "To bind the temporary key value to server identity."
       ],
       "correct": 3,
-      "explanation": "The signature binds the ephemeral key-exchange value to the authenticated server identity.",
+      "explanation": "The signature binds the ephemeral key-exchange value to the authenticated server identity. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 158,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2283,7 +2283,7 @@ window.QUIZ_DATA = {
         "HTTPS replaces server password hashing entirely."
       ],
       "correct": 0,
-      "explanation": "HTTPS is HTTP over TLS, commonly on TCP port 443.",
+      "explanation": "HTTPS is HTTP over TLS, commonly on TCP port 443. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 159,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2297,7 +2297,7 @@ window.QUIZ_DATA = {
         "It moved encryption from TLS into HTTP."
       ],
       "correct": 1,
-      "explanation": "TLS 1.3 does not include heartbeat in the core protocol.",
+      "explanation": "TLS 1.3 does not include heartbeat in the core protocol. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 160,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2311,7 +2311,7 @@ window.QUIZ_DATA = {
         "A username displayed on a profile page."
       ],
       "correct": 2,
-      "explanation": "Something you have is a possession factor such as a phone, hardware token, or smart card.",
+      "explanation": "Something you have is a possession factor such as a phone, hardware token, or smart card. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Identification & authentication」。",
       "id": 161,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2325,7 +2325,7 @@ window.QUIZ_DATA = {
         "They are used only to encrypt packets."
       ],
       "correct": 0,
-      "explanation": "Argon2id is slow and memory-hard, increasing the cost of offline guesses.",
+      "explanation": "Argon2id is slow and memory-hard, increasing the cost of offline guesses. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Password attacks & defenses」。",
       "id": 162,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2339,7 +2339,7 @@ window.QUIZ_DATA = {
         "Learning hidden data from many allowed query results."
       ],
       "correct": 3,
-      "explanation": "Inference attacks learn hidden data by combining information from allowed query results.",
+      "explanation": "Inference attacks learn hidden data by combining information from allowed query results. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Database & web attacks」。",
       "id": 163,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2353,7 +2353,7 @@ window.QUIZ_DATA = {
         "It replaces filtering and scrubbing completely."
       ],
       "correct": 2,
-      "explanation": "Auto-scaling can add capacity but may increase cost and exposure, and it does not replace filtering or scrubbing.",
+      "explanation": "Auto-scaling can add capacity but may increase cost and exposure, and it does not replace filtering or scrubbing. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / DoS / DDoS / amplification」。",
       "id": 164,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2367,7 +2367,7 @@ window.QUIZ_DATA = {
         "To let anonymous nodes join without identity."
       ],
       "correct": 1,
-      "explanation": "Randomized election timeouts reduce simultaneous candidacies and split votes.",
+      "explanation": "Randomized election timeouts reduce simultaneous candidacies and split votes. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Raft (closed membership)」。",
       "id": 165,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2381,7 +2381,7 @@ window.QUIZ_DATA = {
         "By attaching every transaction to a password salt."
       ],
       "correct": 0,
-      "explanation": "Permissionless blockchain transactions are usually gossiped or relayed peer-to-peer.",
+      "explanation": "Permissionless blockchain transactions are usually gossiped or relayed peer-to-peer. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Proof of Work (permissionless)」。",
       "id": 166,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2395,7 +2395,7 @@ window.QUIZ_DATA = {
         "Withholding blocks and releasing them strategically."
       ],
       "correct": 3,
-      "explanation": "Selfish mining withholds blocks and releases them strategically to gain an advantage.",
+      "explanation": "Selfish mining withholds blocks and releases them strategically to gain an advantage. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Proof of Work (permissionless)」。",
       "id": 167,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2409,7 +2409,7 @@ window.QUIZ_DATA = {
         "Sandwich attacks minimize the victim's slippage in every trade."
       ],
       "correct": 1,
-      "explanation": "DeFi users often interact directly with smart contracts, which can contain bugs and economic risks.",
+      "explanation": "DeFi users often interact directly with smart contracts, which can contain bugs and economic risks. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Smart contracts & DeFi」。",
       "id": 168,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2423,7 +2423,7 @@ window.QUIZ_DATA = {
         "Original plaintext values from password hashes."
       ],
       "correct": 2,
-      "explanation": "Symbolic and concolic execution solve path constraints to find inputs reaching target paths.",
+      "explanation": "Symbolic and concolic execution solve path constraints to find inputs reaching target paths. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 169,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2437,7 +2437,7 @@ window.QUIZ_DATA = {
         "Green checkmarks prove transactions are safe."
       ],
       "correct": 0,
-      "explanation": "Secure interfaces should communicate the real system state accurately, especially for pending actions.",
+      "explanation": "Secure interfaces should communicate the real system state accurately, especially for pending actions. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Human factors」。",
       "id": 170,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2454,7 +2454,7 @@ window.QUIZ_DATA = {
         0,
         2
       ],
-      "explanation": "$C_1 \\oplus C_2 = M_1 \\oplus M_2 = 011100$; XORing that with $M_1$ gives $M_2 = 000100$.",
+      "explanation": "$C_1 \\oplus C_2 = M_1 \\oplus M_2 = 011100$; XORing that with $M_1$ gives $M_2 = 000100$. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Encryption & perfect secrecy; W5 --- Symmetric Crypto / Stream & block ciphers」。",
       "id": 171,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2471,7 +2471,7 @@ window.QUIZ_DATA = {
         1,
         3
       ],
-      "explanation": "The birthday bound makes collisions likely around $2^{n/2}$, so 32-bit gives about $2^{16}$ and 256-bit gives about $2^{128}$.",
+      "explanation": "The birthday bound makes collisions likely around $2^{n/2}$, so 32-bit gives about $2^{16}$ and 256-bit gives about $2^{128}$. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Hash functions」。",
       "id": 172,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2488,7 +2488,7 @@ window.QUIZ_DATA = {
         0,
         3
       ],
-      "explanation": "A $\\pm 120$ second window contains at most 241 second-level seeds, which is only about 8 bits of uncertainty.",
+      "explanation": "A $\\pm 120$ second window contains at most 241 second-level seeds, which is only about 8 bits of uncertainty. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest; W4 --- Keys, Randomness, Hashing / Strong keys & randomness」。",
       "id": 173,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2505,7 +2505,7 @@ window.QUIZ_DATA = {
         1,
         2
       ],
-      "explanation": "The pool would have 60 X, so $y = 640000 / 60 = 10666.67$ and the payment is about 2667 Y, exceeding the 2500 Y limit.",
+      "explanation": "The pool would have 60 X, so $y = 640000 / 60 = 10666.67$ and the payment is about 2667 Y, exceeding the 2500 Y limit. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Smart contracts & DeFi」。",
       "id": 174,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2522,7 +2522,7 @@ window.QUIZ_DATA = {
         2,
         3
       ],
-      "explanation": "Twelve independent binary branches can create up to $2^{12}$ paths; solvers can produce concrete inputs from path constraints.",
+      "explanation": "Twelve independent binary branches can create up to $2^{12}$ paths; solvers can produce concrete inputs from path constraints. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W11 --- Program Analysis, Human, Legal / Methods & trade-offs」。",
       "id": 175,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2539,7 +2539,7 @@ window.QUIZ_DATA = {
         1,
         3
       ],
-      "explanation": "A $\\pm 5$ second millisecond window is about 10001 seed values, and predictable seed entropy limits token strength.",
+      "explanation": "A $\\pm 5$ second millisecond window is about 10001 seed values, and predictable seed entropy limits token strength. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W4 --- Keys, Randomness, Hashing / Strong keys & randomness」。",
       "id": 177,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2556,7 +2556,7 @@ window.QUIZ_DATA = {
         0,
         2
       ],
-      "explanation": "Stored attacker-controlled data can become second-order SQL injection if later concatenated into SQL; parameterization is needed at each SQL construction point.",
+      "explanation": "Stored attacker-controlled data can become second-order SQL injection if later concatenated into SQL; parameterization is needed at each SQL construction point. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Database & web attacks」。",
       "id": 178,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2573,7 +2573,7 @@ window.QUIZ_DATA = {
         2,
         3
       ],
-      "explanation": "Source-address filtering can prevent spoofed packets from leaving the attacker network; victim-side filtering and scrubbing mitigate impact but do not make the attack impossible.",
+      "explanation": "Source-address filtering can prevent spoofed packets from leaving the attacker network; victim-side filtering and scrubbing mitigate impact but do not make the attack impossible. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / DoS / DDoS / amplification」。",
       "id": 179,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2590,7 +2590,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "This is a Heartbleed-style memory disclosure; TLS transport does not fix an application-layer length-check bug.",
+      "explanation": "This is a Heartbleed-style memory disclosure; TLS transport does not fix an application-layer length-check bug. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / TLS & HTTPS」。",
       "id": 290,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2608,7 +2608,7 @@ window.QUIZ_DATA = {
         1,
         3
       ],
-      "explanation": "Nonce reuse can reuse the same mask, revealing the XOR of plaintexts; known plaintext bytes can reveal corresponding bytes in the other plaintext.",
+      "explanation": "Nonce reuse can reuse the same mask, revealing the XOR of plaintexts; known plaintext bytes can reveal corresponding bytes in the other plaintext. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W5 --- Symmetric Crypto / Encryption & perfect secrecy; W5 --- Symmetric Crypto / Stream & block ciphers」。",
       "id": 291,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2626,7 +2626,7 @@ window.QUIZ_DATA = {
         0,
         4
       ],
-      "explanation": "A key-substitution attack can bind the wrong public key to an identity, enabling attacker-controlled encryption or MITM re-encryption.",
+      "explanation": "A key-substitution attack can bind the wrong public key to an identity, enabling attacker-controlled encryption or MITM re-encryption. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W7 --- MITM, Signatures, TCP/TLS / MITM & signatures」。",
       "id": 292,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2644,7 +2644,7 @@ window.QUIZ_DATA = {
         2,
         3
       ],
-      "explanation": "The exported screen can be invoked with attacker-controlled parameters, and an existing session may let the genuine app submit the attacker-chosen payment.",
+      "explanation": "The exported screen can be invoked with attacker-controlled parameters, and an existing session may let the genuine app submit the attacker-chosen payment. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W3 --- Mobile / Android Security / Apps, intents, manifest」。",
       "id": 293,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2662,7 +2662,7 @@ window.QUIZ_DATA = {
         0,
         1
       ],
-      "explanation": "$R_2(32) = 25$, then continuing reaches endpoint 54; regenerating from start 44 shows $H(87) = 32$, so 87 is a candidate.",
+      "explanation": "$R_2(32) = 25$, then continuing reaches endpoint 54; regenerating from start 44 shows $H(87) = 32$, so 87 is a candidate. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W8 --- AuthN, Web, DoS, Data / Password attacks & defenses」。",
       "id": 294,
       "week": "Mock Exam 1",
       "course": "INFO5995"
@@ -2680,7 +2680,7 @@ window.QUIZ_DATA = {
         2,
         4
       ],
-      "explanation": "Two out of five servers is not a majority, so the confirmation can refer to an uncommitted entry that is later lost when the old leader steps down.",
+      "explanation": "Two out of five servers is not a majority, so the confirmation can refer to an uncommitted entry that is later lost when the old leader steps down. 知识点位置：workspace-info5995/lecture/INFO5995_cheatsheet.tex「W10 --- Consensus, Blockchain, DeFi / Raft (closed membership)」。",
       "id": 295,
       "week": "Mock Exam 1",
       "course": "INFO5995"
