@@ -3139,6 +3139,152 @@ window.QUIZ_DATA = {
       "id": 209
     },
     {
+      "question": "We know how to convert every randomised algorithm into a deterministic algorithm with similar running time and guarantees.",
+      "options": [
+        "False",
+        "True",
+        "Only for decision problems"
+      ],
+      "correct": 0,
+      "explanation": "This is too strong. Some randomised algorithms can be derandomised under extra conditions, but we do not know how to convert every randomised algorithm into a deterministic one with similar guarantees.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 1,
+      "id": 296
+    },
+    {
+      "question": "If a (Monte-Carlo) randomised algorithm for a decision problem runs in time $O(n)$ and uses $R=O(1)$ random bits, it can be converted into a deterministic algorithm running in time $O(n)$.",
+      "options": [
+        "False",
+        "True"
+      ],
+      "correct": 1,
+      "explanation": "With only $O(1)$ random bits there are only $2^R=O(1)$ possible random strings. Enumerating all strings and taking the majority/appropriate decision costs only a constant-factor overhead, so the time remains $O(n)$.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 2,
+      "id": 297
+    },
+    {
+      "question": "A PNRG outputs truly uniform random bits.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "A pseudorandom generator expands a short truly random seed into bits that are good enough for the intended tests or algorithms, but the output is not truly uniform over all long bit strings.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 3,
+      "id": 298
+    },
+    {
+      "question": "The method of conditional expectations consists in replacing random choices by making instead a greedy choice at each stage.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 0,
+      "explanation": "The method fixes random choices one by one, always choosing a value that does not decrease the relevant conditional expectation. This gives a deterministic greedy-style derandomisation.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 4,
+      "id": 299
+    },
+    {
+      "question": "If a randomised algorithm uses $R$ uniformly random bits but its analysis only relies on pairwise independence, then it can be implemented with $R'$ uniformly random bits, where $R'$ is...",
+      "options": [
+        "$O(\\log \\log R)$",
+        "$O(1)$",
+        "$O(\\log R)$"
+      ],
+      "correct": 2,
+      "explanation": "Pairwise independent bits can be generated from a seed of logarithmic length in the number of generated bits. So $R$ pairwise independent bits can be implemented using $O(\\log R)$ truly random bits.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 5,
+      "id": 300
+    },
+    {
+      "question": "We know how to derandomise the algorithm for Max-CUT seen in class to solve deterministically the Max-CUT problem in $O(mn)$ time.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "The derandomised Max-CUT algorithm gives a deterministic $1/2$-approximation in $O(mn)$ time. It does not solve exact Max-CUT, which is NP-hard.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 6,
+      "id": 301
+    },
+    {
+      "question": "There exist efficiently constructible strongly universal hash families (pairwise independent hash functions)...",
+      "options": [
+        "We don't know any efficient construction",
+        "Unconditionally",
+        "Under cryptographic assumptions only",
+        "Under complexity-theoretic assumptions only"
+      ],
+      "correct": 1,
+      "explanation": "Strongly universal, equivalently pairwise independent, hash families have explicit efficient constructions and do not require cryptographic or complexity-theoretic assumptions.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 7,
+      "id": 302
+    },
+    {
+      "question": "The probabilistic method is a way to algorithmically construct objects with the desired property.",
+      "options": [
+        "False",
+        "True"
+      ],
+      "correct": 0,
+      "explanation": "The probabilistic method proves existence by showing a random object has positive probability of being good. By itself it is not necessarily an efficient construction algorithm.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 8,
+      "id": 303
+    },
+    {
+      "question": "Computers can easily generate true, independent random bits.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "Ordinary deterministic computers generate pseudorandom bits from seeds. True independent randomness requires a physical entropy source and is not something deterministic computation can simply produce.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 9,
+      "id": 304
+    },
+    {
+      "question": "A PNRG is an algorithm/function to generate ____ amounts of ____ randomness based on small ____ random seeds.",
+      "options": [
+        "smaller / good enough / true",
+        "larger / true / good enough",
+        "larger / good enough / truly",
+        "smaller / true / good enough"
+      ],
+      "correct": 2,
+      "explanation": "A pseudorandom generator expands a small truly random seed into a larger amount of randomness that is good enough for the target application or analysis.",
+      "course": "COMP5270",
+      "week": "Week 04",
+      "topic": "Derandomisation",
+      "sourceQuestion": 10,
+      "id": 305
+    },
+    {
       "question": "Min-Cut is NP-Hard.",
       "options": [
         "False",
@@ -4370,6 +4516,7 @@ window.QUIZ_DATA = {
       "Week 01",
       "Week 02",
       "Week 03",
+      "Week 04",
       "Week 05",
       "Week 06",
       "Week 07",
