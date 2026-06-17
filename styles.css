@@ -859,6 +859,36 @@ body.drawer-open .fab-stack {
     overflow-wrap: anywhere;
 }
 
+.knowledge-location {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-items: start;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
+}
+
+.knowledge-label {
+    color: var(--primary-light);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.knowledge-text {
+    color: var(--text);
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+.explanation-body {
+    white-space: pre-line;
+}
+
 .question-text .katex-display,
 .explanation-text .katex-display,
 .option-btn .text .katex-display {
@@ -1362,6 +1392,10 @@ body.drawer-open .fab-stack {
     }
     .question-text { font-size: 1.1rem; }
     .explanation-inline { padding: 14px; }
+    .knowledge-location {
+        grid-template-columns: 1fr;
+        gap: 3px;
+    }
     .final-score { font-size: 2.5rem; }
     .counter-chip { max-width: 55%; }
 }

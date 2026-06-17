@@ -45,6 +45,47 @@ function setMath(el, str) {
     }
 }
 
+function extractEmbeddedKnowledgeLocation(str) {
+    return (str || '').match(/\n知识点：(.+)$/)?.[1]?.trim() || '';
+}
+
+function cleanExplanationText(str) {
+    return (str || '').replace(/\n知识点：.+$/, '').trim();
+}
+
+function getKnowledgeLocation(q) {
+    if (!q) return '';
+    if (q.knowledgeLocation) return q.knowledgeLocation;
+    const embedded = extractEmbeddedKnowledgeLocation(q.explanation);
+    if (embedded) return embedded;
+    return '';
+}
+
+function renderExplanation(q) {
+    const el = $('explanationText');
+    if (!el) return;
+    el.innerHTML = '';
+
+    const location = getKnowledgeLocation(q);
+    if (location) {
+        const row = document.createElement('div');
+        row.className = 'knowledge-location';
+        const label = document.createElement('span');
+        label.className = 'knowledge-label';
+        label.textContent = '知识点位置';
+        const text = document.createElement('span');
+        text.className = 'knowledge-text';
+        setMath(text, location);
+        row.append(label, text);
+        el.appendChild(row);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'explanation-body';
+    setMath(body, cleanExplanationText(q.explanation));
+    el.appendChild(body);
+}
+
 function getCourses() {
     return window.QUIZ_DATA?.courses || [...new Set((window.QUIZ_DATA?.questions || []).map(q => q.course).filter(Boolean))];
 }
@@ -520,7 +561,7 @@ function showInlineExplanation(isCorrect, q) {
     const badge = $('resultBadge');
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
-    setMath($('explanationText'), q.explanation);
+    renderExplanation(q);
     if (isJumpOpen()) buildJumpGrid();
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
@@ -542,7 +583,7 @@ function revealAnswer() {
     const badge = $('resultBadge');
     badge.className = 'result-badge revealed';
     badge.textContent = '👁 Answer revealed · not scored';
-    setMath($('explanationText'), q.explanation);
+    renderExplanation(q);
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
