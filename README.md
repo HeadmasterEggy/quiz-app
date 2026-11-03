@@ -52,7 +52,7 @@ A browser-based quiz app for USYD course revision.
 - **Keyboard shortcuts** — A/B/C/D to select, Enter to advance, ←/→ to move
 - **Wrong answer retry** — redo only the questions you missed in the current run
 - **Mistakes book** — per-question right/wrong history kept on this device; filter to *Unseen* or *Mistakes* only (no half-finished runs are saved)
-- **Exam mode** — timed run where answers stay hidden until you submit, then review every question
+- **Exam mode** — answers stay hidden until you submit, then review every question
 - **Results by topic** — weakest topics from the knowledge locations; tap any question number to review it
 - **Semester grouping** — current semester's courses first, last course/week remembered
 - **Unofficial-key tag** — questions whose answers have no official source are flagged

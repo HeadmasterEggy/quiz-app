@@ -23,9 +23,6 @@ let questionStats = {};
 let poolFilter = 'all';            // 'all' | 'unseen' | 'mistakes'
 let examMode = false;
 let examSubmitted = false;
-let examStartedAt = 0;
-let examElapsedMs = 0;
-let examTimerId = null;
 let resultsShown = false;
 
 const $ = id => document.getElementById(id);
@@ -138,15 +135,6 @@ function topicOf(q) {
     // Exam-sourced locations start with "Practice Exam 1 Q3" etc.; the topic follows.
     if (/exam|quiz/i.test(parts[0]) && parts[1]) return parts[1];
     return parts[0];
-}
-
-function formatDuration(ms) {
-    const total = Math.max(0, Math.floor(ms / 1000));
-    const h = Math.floor(total / 3600);
-    const m = Math.floor((total % 3600) / 60);
-    const sec = total % 60;
-    const pad = n => String(n).padStart(2, '0');
-    return h ? `${h}:${pad(m)}:${pad(sec)}` : `${pad(m)}:${pad(sec)}`;
 }
 
 function renderQuestionTags(q) {
@@ -343,9 +331,10 @@ function applyTheme(theme) {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', dark ? '#0f172a' : '#eef2ff');
     const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
-    [$('themeToggleBtn'), $('fabThemeBtn')].forEach(btn => {
+    [$('themeToggleBtn')].forEach(btn => {
         if (!btn) return;
-        btn.textContent = dark ? '☀️' : '🌙';
+        const icon = btn.querySelector('.tool-icon') || btn;
+        icon.textContent = dark ? '☀️' : '🌙';
         btn.title = label;
         btn.setAttribute('aria-label', label);
     });
@@ -423,12 +412,9 @@ function beginRun(items, retry) {
     questions = items;
     current = 0; answers.length = 0; isRetryMode = retry;
     resultsShown = false; examSubmitted = false;
-    stopExamTimer();
-    examElapsedMs = 0;
     hide('resultsCard'); hide('backResultsBtn');
     if (!questions.length) { showEmptyState(); return; }
     hide('emptyCard');
-    if (examMode) startExamTimer();
     updateExamBar();
     showQuestion();
 }
@@ -450,20 +436,6 @@ function showEmptyState() {
 }
 
 // ── Exam mode ──
-function startExamTimer() {
-    stopExamTimer();
-    examStartedAt = Date.now() - examElapsedMs;
-    examTimerId = setInterval(updateExamBar, 1000);
-}
-
-function stopExamTimer() {
-    if (examTimerId) {
-        clearInterval(examTimerId);
-        examTimerId = null;
-        examElapsedMs = Date.now() - examStartedAt;
-    }
-}
-
 function examInProgress() { return examMode && !examSubmitted; }
 
 function updateExamBar() {
@@ -471,8 +443,6 @@ function updateExamBar() {
     if (!bar) return;
     if (!examMode || !questions.length) { bar.classList.add('hidden'); return; }
     bar.classList.remove('hidden');
-    const elapsed = examTimerId ? Date.now() - examStartedAt : examElapsedMs;
-    $('examTimer').textContent = `⏱ ${formatDuration(elapsed)}`;
     const done = answers.filter(Boolean).length;
     $('examAnswered').textContent = examSubmitted ? 'Submitted' : `${done}/${questions.length} answered`;
     $('examSubmitBtn').classList.toggle('hidden', examSubmitted);
@@ -482,7 +452,7 @@ function toggleExamMode() {
     examMode = !examMode;
     const btn = $('examToggleBtn');
     btn.setAttribute('aria-pressed', examMode ? 'true' : 'false');
-    btn.title = examMode ? 'Exam mode on: answers are revealed after you submit' : 'Exam mode: timed, answers revealed only after you submit';
+    btn.title = examMode ? 'Exam mode on: answers are revealed after you submit' : 'Exam mode: answers revealed only after you submit';
     btn.blur(); // keep A/B/C/D and Enter shortcuts working right after toggling
     startFresh(currentCourseFilter, currentWeekFilter);
 }
@@ -492,7 +462,6 @@ function submitExam() {
     const unanswered = questions.length - answers.filter(Boolean).length;
     if (unanswered && !window.confirm(`${unanswered} question${unanswered !== 1 ? 's are' : ' is'} unanswered. Submit anyway?`)) return;
     examSubmitted = true;
-    stopExamTimer();
     answers.forEach(a => { if (a) recordAttempt(a.question, a.correct); });
     buildPoolControls();
     updateExamBar();
@@ -661,7 +630,7 @@ function buildWeekFilter() {
 function updateShuffleButton() {
     const scope = getShuffleScopeLabel();
     const label = shuffleEnabled ? `Shuffle on (questions & options): ${scope}` : `Shuffle off: ${scope}`;
-    [$('shuffleToggleBtn'), $('fabShuffleBtn')].forEach(btn => {
+    [$('shuffleToggleBtn')].forEach(btn => {
         if (!btn) return;
         btn.setAttribute('aria-pressed', shuffleEnabled ? 'true' : 'false');
         btn.title = label;
@@ -976,9 +945,6 @@ function showResults() {
 
     resultsShown = true;
     hide('backResultsBtn');
-    if (examMode && examSubmitted) {
-        $('scoreBreakdown').textContent += ` · ⏱ ${formatDuration(examElapsedMs)}`;
-    }
 
     const review = $('answersReview'); review.innerHTML = '';
     for (let i = 0; i < total; i++) {
@@ -1071,7 +1037,6 @@ function isDrawerOpen() {
 
 function openDrawer() {
     drawerOpenedAt = Date.now();
-    closeFab();
     $('headerControls').classList.add('open');
     show('drawerBackdrop');
     $('menuBtn').setAttribute('aria-expanded', 'true');
@@ -1088,31 +1053,6 @@ function closeDrawer() {
 function toggleDrawer() {
     if (isDrawerOpen()) closeDrawer();
     else openDrawer();
-}
-
-// ── Floating quick actions (mobile) ──
-function isFabOpen() {
-    const el = $('fabStack');
-    return el ? el.classList.contains('open') : false;
-}
-
-function openFab() {
-    $('fabStack').classList.add('open');
-    $('fabMainBtn').textContent = '✕';
-    $('fabMainBtn').setAttribute('aria-expanded', 'true');
-}
-
-function closeFab() {
-    const stack = $('fabStack');
-    if (!stack || !stack.classList.contains('open')) return;
-    stack.classList.remove('open');
-    $('fabMainBtn').textContent = '⋮';
-    $('fabMainBtn').setAttribute('aria-expanded', 'false');
-}
-
-function toggleFab() {
-    if (isFabOpen()) closeFab();
-    else openFab();
 }
 
 // ── Jump-to-question panel ──
@@ -1198,17 +1138,10 @@ $('backResultsBtn').onclick = () => { showResults(); window.scrollTo({ top: 0, b
 $('mistakesBtn').onclick = () => selectPool('mistakes');
 $('resultsClearBtn').onclick = clearStats;
 $('emptyAllBtn').onclick = () => selectPool('all');
-$('fabMainBtn').onclick = toggleFab;
-$('fabShuffleBtn').onclick = () => { closeFab(); toggleShuffle(); };
-$('fabThemeBtn').onclick = toggleTheme;
-$('fabRestartBtn').onclick = () => { closeFab(); restart(); };
 
 document.addEventListener('click', (e) => {
     if (isJumpOpen() && !e.target.closest('#jumpPanel') && !e.target.closest('#questionCounter')) {
         closeJumpPanel();
-    }
-    if (isFabOpen() && !e.target.closest('#fabStack')) {
-        closeFab();
     }
 });
 var themeBtn = $('themeToggleBtn');
@@ -1218,7 +1151,6 @@ else console.warn('themeToggleBtn not found in DOM');
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         if (isDrawerOpen()) { closeDrawer(); return; }
-        if (isFabOpen()) { closeFab(); return; }
         if (isJumpOpen()) { closeJumpPanel(); return; }
     }
     if (isInteractiveTarget(e.target)) return;
@@ -1255,22 +1187,8 @@ function initApp() {
     currentCourseFilter = course; currentWeekFilter = week;
     buildCourseFilter(); buildWeekFilter(); buildFilterChips(); buildPoolControls();
     loadQuestions(course, week);
-    initFabAutoHide();
 }
 
-// Mobile: tuck the floating button away while scrolling down so it never covers an option.
-function initFabAutoHide() {
-    let lastY = window.scrollY;
-    window.addEventListener('scroll', () => {
-        const y = window.scrollY;
-        const stack = $('fabStack');
-        if (!stack || isFabOpen()) { lastY = y; return; }
-        const nearBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 24;
-        stack.classList.toggle('fab-tucked', y > lastY + 4 && !nearBottom);
-        if (y < lastY - 4 || nearBottom) stack.classList.remove('fab-tucked');
-        lastY = y;
-    }, { passive: true });
-}
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {

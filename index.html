@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css?v=14">
+    <link rel="stylesheet" href="styles.css?v=15">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -47,15 +47,16 @@
                     <div class="chip-section-label">Week / Exam</div>
                     <div class="chip-list" id="weekChips"></div>
                 </div>
+                <div class="chip-section-label tool-section-label">Settings</div>
                 <div class="tool-controls">
-                    <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false">🔀</button>
-                    <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
-                    <button id="headerRestartBtn" class="icon-btn" title="Restart" aria-label="Restart quiz">↻</button>
+                    <button id="shuffleToggleBtn" class="icon-btn toggle-btn" title="Shuffle off" aria-label="Shuffle off" aria-pressed="false"><span class="tool-icon">🔀</span><span class="tool-label">Shuffle</span></button>
+                    <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme"><span class="tool-icon">🌙</span><span class="tool-label">Theme</span></button>
+                    <button id="headerRestartBtn" class="icon-btn" title="Restart" aria-label="Restart quiz"><span class="tool-icon">↻</span><span class="tool-label">Restart</span></button>
                 </div>
             </div>
             <div class="practice-row" id="practiceRow">
                 <div class="pool-seg" id="poolSeg" role="radiogroup" aria-label="Which questions to practise"></div>
-                <button id="examToggleBtn" class="exam-toggle" aria-pressed="false" title="Exam mode: timed, answers revealed only after you submit">📝 Exam</button>
+                <button id="examToggleBtn" class="exam-toggle" aria-pressed="false" title="Exam mode: answers revealed only after you submit"><span class="exam-icon">📝</span><span class="exam-label"> Exam</span></button>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -69,7 +70,6 @@
 
         <div class="exam-bar hidden" id="examBar" role="status">
             <span class="exam-bar-label">📝 Exam</span>
-            <span class="exam-timer" id="examTimer">00:00</span>
             <span class="exam-answered" id="examAnswered">0/0 answered</span>
             <button class="exam-submit-btn" id="examSubmitBtn">Submit</button>
         </div>
@@ -124,27 +124,9 @@
         </div>
     </div>
 
-    <div class="fab-stack" id="fabStack">
-        <div class="fab-actions" id="fabActions">
-            <div class="fab-row">
-                <span class="fab-label">Shuffle</span>
-                <button class="fab-mini" id="fabShuffleBtn" title="Shuffle" aria-label="Toggle shuffle" aria-pressed="false">🔀</button>
-            </div>
-            <div class="fab-row">
-                <span class="fab-label">Theme</span>
-                <button class="fab-mini" id="fabThemeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">🌙</button>
-            </div>
-            <div class="fab-row">
-                <span class="fab-label">Restart</span>
-                <button class="fab-mini" id="fabRestartBtn" title="Restart" aria-label="Restart quiz">↻</button>
-            </div>
-        </div>
-        <button class="fab-main" id="fabMainBtn" aria-expanded="false" aria-label="Quick actions">⋮</button>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script src="data/questions.js?v=15"></script>
-    <script src="app.js?v=14"></script>
+    <script src="app.js?v=15"></script>
 </body>
 </html>

@@ -214,11 +214,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Floating quick-actions (mobile): shuffle / theme / restart */
-.fab-stack {
-    display: none;
-}
-
 @keyframes backdropIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -226,10 +221,6 @@ body {
 
 body.drawer-open {
     overflow: hidden;
-}
-
-body.drawer-open .fab-stack {
-    visibility: hidden;
 }
 
 .filter-controls {
@@ -654,7 +645,7 @@ body.drawer-open .fab-stack {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip, .header-controls, .drawer-backdrop, .fab-actions, .fab-main, .fab-mini, .fab-row {
+    .quiz-card, .results-card, .loading-card, .option-btn, .next-btn, .restart-btn, .retry-wrong-btn, .progress-fill, .spinner, .q-fade, .jump-panel, .jump-chip, .header-controls, .drawer-backdrop {
         animation: none !important;
         transition: none !important;
     }
@@ -1249,9 +1240,8 @@ body.drawer-open .fab-stack {
         flex: 0 0 40px;
     }
 
-    /* In drawer mode: chips replace the native selects, FAB replaces the tool row */
-    .filter-controls,
-    .tool-controls {
+    /* In drawer mode: chips replace the native selects */
+    .filter-controls {
         display: none;
     }
 
@@ -1265,111 +1255,6 @@ body.drawer-open .fab-stack {
 
     .jump-grid {
         overscroll-behavior: contain;
-    }
-
-    .fab-stack {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 12px;
-        position: fixed;
-        right: max(14px, env(safe-area-inset-right));
-        bottom: calc(max(16px, env(safe-area-inset-bottom)) + 64px);
-        z-index: 45;
-    }
-
-    .fab-main {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
-        color: #fff;
-        font-size: 1.4rem;
-        font-weight: 700;
-        line-height: 1;
-        cursor: pointer;
-        touch-action: manipulation;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 16px var(--glow-primary), 0 2px 8px rgba(0, 0, 0, 0.25);
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
-    }
-
-    .fab-stack.open .fab-main {
-        transform: rotate(90deg);
-    }
-
-    .fab-main:active {
-        transform: scale(0.92);
-    }
-
-    .fab-actions {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
-    }
-
-    .fab-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        opacity: 0;
-        transform: translateY(10px) scale(0.95);
-        pointer-events: none;
-        transition: opacity 0.18s ease, transform 0.18s ease;
-    }
-
-    .fab-stack.open .fab-row {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-    }
-
-    .fab-stack.open .fab-row:nth-last-child(1) { transition-delay: 0s; }
-    .fab-stack.open .fab-row:nth-last-child(2) { transition-delay: 0.05s; }
-    .fab-stack.open .fab-row:nth-last-child(3) { transition-delay: 0.1s; }
-
-    .fab-label {
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: var(--card);
-        border: 1px solid var(--border);
-        color: var(--text);
-        font-size: 0.78rem;
-        font-weight: 600;
-        white-space: nowrap;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
-    }
-
-    .fab-mini {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 1px solid var(--border);
-        background: var(--card);
-        color: var(--text);
-        font-size: 1rem;
-        line-height: 1;
-        cursor: pointer;
-        touch-action: manipulation;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.26);
-        transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .fab-mini:active {
-        transform: scale(0.9);
-    }
-
-    .fab-mini[aria-pressed="true"] {
-        border-color: var(--primary);
-        background: rgba(99, 102, 241, 0.3);
-        box-shadow: 0 3px 12px var(--glow-primary);
     }
 }
 
@@ -1751,16 +1636,6 @@ button.answer-dot {
 }
 
 @media (max-width: 600px) {
-    /* Room under the last card so the floating button never has to cover content */
-    .container { padding-bottom: 72px; }
-
-    .fab-stack { transition: transform 0.25s ease, opacity 0.25s ease; }
-    .fab-stack.fab-tucked {
-        transform: translateY(140%);
-        opacity: 0;
-        pointer-events: none;
-    }
-
     /* Let the course · week chip use a full line instead of being cut off */
     .question-counter { flex-wrap: wrap; row-gap: 4px; }
     .counter-chip { max-width: 100%; }
@@ -1772,7 +1647,7 @@ button.answer-dot {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fab-stack, .pool-btn, .exam-toggle { transition: none !important; }
+    .pool-btn, .exam-toggle { transition: none !important; }
 }
 
 .next-btn.exam-next { margin-top: 16px; }
@@ -1803,4 +1678,40 @@ button.answer-dot {
 @media (max-width: 600px) {
     /* The wrapped course chip already signals the jump panel; a lone caret line wastes space */
     .question-counter .counter-caret { display: none; }
+}
+
+/* Tools live in the drawer on mobile (the floating button was removed) */
+.tool-label { display: none; }
+
+@media (max-width: 600px) {
+    .tool-section-label { margin-top: 4px; }
+    .header-controls .tool-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .header-controls .tool-controls .icon-btn {
+        width: 100%;
+        height: 46px;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 0 14px;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .header-controls .tool-label { display: inline; }
+
+    /* One line: pool filter + icon-only exam toggle */
+    .practice-row { flex-wrap: nowrap; }
+    .exam-toggle .exam-label { display: none; }
+    .exam-toggle {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 50%;
+        font-size: 1rem;
+    }
 }
