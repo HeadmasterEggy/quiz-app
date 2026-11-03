@@ -49,7 +49,8 @@ A browser-based quiz app for USYD course revision.
 - **Course and week filters** — study one course or topic at a time
 - **Shuffle mode** — randomize the current quiz without saving state
 - **Inline explanations** — answer feedback shown below the question
-- **Keyboard shortcuts** — A/B/C/D to select, Enter to advance, ←/→ to move
+- **Keyboard shortcuts** — A/B/C/D to select, Enter to advance, ←/→ to move, S to show the answer (hints shown on desktop)
+- **Wide-screen layout** — on screens ≥1100px: always-visible question navigator with this run's accuracy, explanation pinned beside the question
 - **Wrong answer retry** — redo only the questions you missed in the current run
 - **Mistakes book** — per-question right/wrong history kept on this device; filter to *Unseen* or *Mistakes* only (no half-finished runs are saved)
 - **Exam mode** — answers stay hidden until you submit, then review every question
