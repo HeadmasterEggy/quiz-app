@@ -6403,6 +6403,1010 @@
       ]
     },
     {
+      "question": "A router sends a packet of L = 12,000 bits onto a link with transmission rate R = 100 Mbps. What is the transmission delay, in seconds?",
+      "options": [
+        "1.20E-4",
+        "1.20E-3",
+        "1.20E-5",
+        "1.20E-7"
+      ],
+      "correct": 0,
+      "explanation": "Transmission delay = L/R = 12,000 / 10^8 = 1.20×10^-4 s.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: transmission delay L/R · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "传输时延 = 包长 / 链路速率 = 12000 bit ÷ 10⁸ bit/s = 1.2×10⁻⁴ s。注意 Mbps 是 10⁶ bit/s。",
+      "optionNotes": [
+        "12,000 / 10^8 = 1.20×10^-4 s.",
+        "Off by 10×: this would be a 10 Mbps link.",
+        "Off by 10×: this would be a 1 Gbps link.",
+        "This treats 100 Mbps as 10^11 bit/s."
+      ],
+      "steps": [
+        "$d_{trans} = L/R$",
+        "$= 12000 / (100\\times10^6) = 1.2\\times10^{-4}\\text{ s}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 389
+    },
+    {
+      "question": "On the same 100 Mbps link, with every packet 12,000 bits long, what is the most packets per second the link can carry (rounded down)?",
+      "options": [
+        "8333",
+        "833",
+        "83333",
+        "120"
+      ],
+      "correct": 0,
+      "explanation": "Packets per second = R/L = 10^8 / 12,000 ≈ 8333.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: transmission delay L/R · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "每秒最多发 R/L 个包 = 10⁸ / 12000 ≈ 8333 个，也就是 1 ÷ 传输时延。",
+      "optionNotes": [
+        "10^8 / 12,000 ≈ 8333.",
+        "This would be a 10 Mbps link.",
+        "This would be a 1 Gbps link.",
+        "120 is L/R in microseconds, not a packet rate."
+      ],
+      "steps": [
+        "$\\text{pkts/s} = R/L = 1/d_{trans}$",
+        "$= 10^8 / 12000 \\approx 8333$"
+      ],
+      "unofficialAnswer": true,
+      "id": 390
+    },
+    {
+      "question": "A packet of 10,000 bits crosses three links in series (source → router → router → destination). Every link is 10 Mbps with a 2 ms propagation delay. Routers are store-and-forward; ignore queuing and processing. What is the end-to-end delay?",
+      "options": [
+        "9 ms",
+        "7 ms",
+        "6 ms",
+        "3 ms"
+      ],
+      "correct": 0,
+      "explanation": "Each link adds its own transmission delay L/R = 1 ms plus 2 ms propagation, because a store-and-forward router must receive the whole packet before sending it on. 3 × (1 + 2) = 9 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: end-to-end store-and-forward · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "存储转发：每一跳都要把整个包重新发一遍，所以每条链路都有 1 ms 传输 + 2 ms 传播，3 条链路共 9 ms。",
+      "optionNotes": [
+        "3 × (1 ms + 2 ms) = 9 ms.",
+        "Counts the transmission delay only once (1 + 3×2); that would be cut-through, not store-and-forward.",
+        "Propagation only; forgets the transmission delay.",
+        "Transmission only; forgets propagation."
+      ],
+      "steps": [
+        "$d_{trans} = L/R = 10^4/10^7 = 1\\text{ ms}$",
+        "Per link: $d_{trans} + d_{prop} = 1 + 2 = 3\\text{ ms}$",
+        "$N = 3$ links: $3 \\times 3 = 9\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 391
+    },
+    {
+      "question": "A packet arrives at a router's output queue. Three packets are already waiting, and a fourth is exactly half-way through transmission. All packets are 1500 bytes and the link is 12 Mbps. How long does the arriving packet wait before its own transmission starts?",
+      "options": [
+        "3.5 ms",
+        "4.0 ms",
+        "3.0 ms",
+        "4.5 ms"
+      ],
+      "correct": 0,
+      "explanation": "Each packet takes 1500×8 / 12×10^6 = 1 ms to transmit. The arriving packet waits for the remaining half packet (0.5 ms) plus the three queued ones (3 ms): 3.5 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: queuing delay · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "排队时延 = 正在发的包剩下的一半 (0.5 ms) + 前面排队的 3 个包 (3 ms) = 3.5 ms。别忘了字节要乘 8。",
+      "optionNotes": [
+        "0.5 ms remaining + 3 × 1 ms = 3.5 ms.",
+        "Counts the half-sent packet as a full one.",
+        "Ignores the packet currently being transmitted.",
+        "Also counts the arriving packet's own transmission, which is not queuing delay."
+      ],
+      "steps": [
+        "$d_{trans} = 1500\\times8 / 12\\times10^6 = 1\\text{ ms}$",
+        "Remaining part of current packet: $0.5\\text{ ms}$",
+        "Queued packets: $3 \\times 1 = 3\\text{ ms}$",
+        "Queuing delay $= 3.5\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 392
+    },
+    {
+      "question": "Packets of 1500 bytes arrive at a 10 Mbps link at an average rate of 500 packets per second. What is the traffic intensity La/R?",
+      "options": [
+        "0.6",
+        "1.67",
+        "6",
+        "0.06"
+      ],
+      "correct": 0,
+      "explanation": "La/R = 12,000 × 500 / 10^7 = 0.6. Because it is below 1 the queue stays bounded on average, but delay grows sharply as it approaches 1.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: traffic intensity La/R · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "流量强度 La/R = 12000×500 / 10⁷ = 0.6 < 1，队列不会无限增长；越接近 1 排队时延越大。",
+      "optionNotes": [
+        "12,000 × 500 / 10^7 = 0.6.",
+        "This is R/(La), the inverse.",
+        "Forgets one factor of 10 in 10 Mbps.",
+        "Off by 10×: as if the link were 100 Mbps."
+      ],
+      "steps": [
+        "$L = 1500 \\times 8 = 12000$ bits",
+        "$La = 12000 \\times 500 = 6\\times10^6$ bit/s",
+        "$La/R = 6\\times10^6 / 10^7 = 0.6$"
+      ],
+      "unofficialAnswer": true,
+      "id": 393
+    },
+    {
+      "question": "A server sends a 4 MB file to a client over a path of three links with rates 5 Mbps, 2 Mbps and 10 Mbps. Ignoring all delays except the bottleneck, roughly how long does the transfer take? (1 MB = 10^6 bytes)",
+      "options": [
+        "16 s",
+        "6.4 s",
+        "3.2 s",
+        "1.9 s"
+      ],
+      "correct": 0,
+      "explanation": "End-to-end throughput is the minimum link rate, 2 Mbps. 4 MB = 32 Mb, so 32 / 2 = 16 s.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Throughput: bottleneck link · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "端到端吞吐量 = 最慢那条链路 = 2 Mbps；4 MB = 32 Mb，32/2 = 16 s。",
+      "optionNotes": [
+        "Bottleneck 2 Mbps: 32 Mb / 2 Mbps = 16 s.",
+        "Uses the first link (5 Mbps), which is not the bottleneck.",
+        "Uses the fastest link (10 Mbps).",
+        "Adds the rates together (17 Mbps); throughput is a minimum, not a sum."
+      ],
+      "steps": [
+        "$F = 4\\text{ MB} = 32\\text{ Mb}$",
+        "$R_{e2e} = \\min(5, 2, 10) = 2\\text{ Mbps}$",
+        "$T = F / R_{e2e} = 16\\text{ s}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 394
+    },
+    {
+      "question": "A 10 Mbps link is shared by users who each need 500 kbps while active and are active only 10% of the time. With circuit switching (a reserved 500 kbps per user), how many users can the link support?",
+      "options": [
+        "20",
+        "200",
+        "2",
+        "10"
+      ],
+      "correct": 0,
+      "explanation": "Circuit switching reserves the peak rate for every user whether active or not: 10 Mbps / 500 kbps = 20 users. Packet switching could admit more, because users are rarely active at the same time.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Packet vs circuit switching · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "电路交换按峰值预留带宽：10 Mbps / 500 kbps = 20 人，与活跃比例无关；分组交换利用统计复用可以容纳更多人。",
+      "optionNotes": [
+        "10,000 / 500 = 20.",
+        "Divides by the average rate (50 kbps); that is the packet-switching intuition, not circuit switching.",
+        "Mixes up kbps and Mbps.",
+        "Uses the 10% activity as a user count."
+      ],
+      "steps": [
+        "Circuit switching reserves peak rate per user",
+        "$N = 10\\text{ Mbps} / 500\\text{ kbps} = 20$"
+      ],
+      "unofficialAnswer": true,
+      "id": 395
+    },
+    {
+      "question": "A 100 Mbps link is 6000 km long with propagation speed 2×10^8 m/s. What is its bandwidth-delay product (the number of bits 'in flight' on the link)?",
+      "options": [
+        "3.00E+6",
+        "3.00E+5",
+        "3.00E+7",
+        "3.00E+4"
+      ],
+      "correct": 0,
+      "explanation": "d_prop = 6×10^6 / 2×10^8 = 0.03 s. R × d_prop = 10^8 × 0.03 = 3×10^6 bits.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Delay: bandwidth-delay product · K&R interactive problems",
+      "lectureWeek": "Week 02",
+      "explanationZh": "带宽时延积 = R × 传播时延 = 10⁸ × 0.03 s = 3×10⁶ bit，表示链路上同时“在路上”的比特数。",
+      "optionNotes": [
+        "10^8 × 0.03 s = 3×10^6 bits.",
+        "Uses 3 ms of propagation (km taken as 600 km).",
+        "Uses 0.3 s of propagation.",
+        "Off by 100×."
+      ],
+      "steps": [
+        "$d_{prop} = 6\\times10^6 / 2\\times10^8 = 0.03\\text{ s}$",
+        "$R \\cdot d_{prop} = 10^8 \\times 0.03 = 3\\times10^6$ bits"
+      ],
+      "unofficialAnswer": true,
+      "id": 396
+    },
+    {
+      "question": "A web page has a base HTML file and 5 small referenced images (transmission time negligible). RTT to the server is 20 ms. With non-persistent HTTP and no parallel connections, how long until all objects are received?",
+      "options": [
+        "240 ms",
+        "140 ms",
+        "80 ms",
+        "60 ms"
+      ],
+      "correct": 0,
+      "explanation": "Non-persistent HTTP needs 2 RTT per object (TCP handshake + request/response). 6 objects × 2 RTT = 12 RTT = 240 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / HTTP: non-persistent vs persistent · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "非持久 HTTP 每个对象都要 2 RTT（建连 + 请求响应），6 个对象串行 = 12 RTT = 240 ms。",
+      "optionNotes": [
+        "6 × 2 RTT = 12 × 20 = 240 ms.",
+        "Persistent without pipelining: 2 RTT + 5 × 1 RTT = 7 RTT.",
+        "Non-persistent with 5 parallel connections: 2 RTT + 2 RTT = 4 RTT.",
+        "Persistent with pipelining: 2 RTT + 1 RTT = 3 RTT."
+      ],
+      "steps": [
+        "Base page: $2\\,RTT$ (handshake + GET)",
+        "Each image also needs its own connection: $2\\,RTT$",
+        "$6 \\times 2\\,RTT = 12 \\times 20 = 240\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 397
+    },
+    {
+      "question": "Same page (base file + 5 small images, RTT 20 ms), but now HTTP is persistent with pipelining: all 5 image requests go out back-to-back on the open connection. How long until all objects are received?",
+      "options": [
+        "60 ms",
+        "80 ms",
+        "140 ms",
+        "40 ms"
+      ],
+      "correct": 0,
+      "explanation": "2 RTT for the handshake and the base file, then one more RTT for all pipelined image requests: 3 RTT = 60 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / HTTP: non-persistent vs persistent · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "持久 + 流水线：2 RTT 拿到 base 文件，之后 5 个请求一起发，再 1 RTT 全部回来，共 3 RTT = 60 ms。",
+      "optionNotes": [
+        "2 RTT + 1 RTT = 3 × 20 = 60 ms.",
+        "That is non-persistent with 5 parallel connections (4 RTT).",
+        "That is persistent without pipelining (7 RTT).",
+        "Skips the TCP handshake."
+      ],
+      "steps": [
+        "Handshake + base file: $2\\,RTT$",
+        "All 5 requests pipelined: $+1\\,RTT$",
+        "$3 \\times 20 = 60\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 398
+    },
+    {
+      "question": "A host's DNS cache is empty. Resolving a hostname visits three DNS servers one after another with RTTs of 5 ms, 15 ms and 30 ms. The web server's RTT is 40 ms, the page has no embedded objects, and HTTP is non-persistent. How long from the click until the page is received?",
+      "options": [
+        "130 ms",
+        "90 ms",
+        "170 ms",
+        "80 ms"
+      ],
+      "correct": 0,
+      "explanation": "DNS: 5 + 15 + 30 = 50 ms. Then 2 RTT to the web server (TCP setup + GET) = 80 ms. Total 130 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / DNS and HTTP delays · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "先做 DNS：5+15+30 = 50 ms；再 TCP 握手 + HTTP 请求各 1 个 RTT：2×40 = 80 ms；合计 130 ms。",
+      "optionNotes": [
+        "50 ms DNS + 2 × 40 ms = 130 ms.",
+        "Only one RTT to the web server; TCP setup is missing.",
+        "Three RTTs to the web server.",
+        "Forgets the DNS lookup."
+      ],
+      "steps": [
+        "$T_{DNS} = 5 + 15 + 30 = 50\\text{ ms}$",
+        "$T_{HTTP} = 2\\,RTT_0 = 80\\text{ ms}$",
+        "Total $= 130\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 399
+    },
+    {
+      "question": "A browser has a cached copy of an object and sends a conditional GET with an If-Modified-Since header. The object has not changed on the server. What does the server reply?",
+      "options": [
+        "304 Not Modified, with no object body",
+        "200 OK, with the object body",
+        "301 Moved Permanently",
+        "404 Not Found"
+      ],
+      "correct": 0,
+      "explanation": "A conditional GET lets the server answer 304 Not Modified without resending the object, so the browser uses its cached copy.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / HTTP: caching and conditional GET · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "条件 GET 带 If-Modified-Since；对象没改过就回 304 Not Modified，不带正文，浏览器直接用缓存。",
+      "optionNotes": [
+        "The cached copy is still valid, so no body is sent.",
+        "200 would resend the object; that is what caching avoids.",
+        "301 is for an object that moved to a new URL.",
+        "404 means the object does not exist."
+      ],
+      "steps": [
+        "Request has If-Modified-Since: <date>",
+        "Not modified since then → 304 Not Modified, empty body"
+      ],
+      "unofficialAnswer": true,
+      "id": 400
+    },
+    {
+      "question": "Several websites share one IP address on the same web server. Which HTTP/1.1 request header lets the server tell which site a GET is for?",
+      "options": [
+        "Host",
+        "User-Agent",
+        "Connection",
+        "Accept-Language"
+      ],
+      "correct": 0,
+      "explanation": "The Host header carries the hostname from the URL, so one server (one IP) can serve many sites.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / HTTP: request message format · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "Host 头写的是 URL 里的主机名，一个 IP 上的多个网站靠它区分（虚拟主机）。",
+      "optionNotes": [
+        "Host names the site requested.",
+        "User-Agent identifies the browser.",
+        "Connection controls keep-alive/close.",
+        "Accept-Language asks for a language version of the same page."
+      ],
+      "steps": [
+        "GET /index.html HTTP/1.1",
+        "Host: www.example.com ← selects the site"
+      ],
+      "unofficialAnswer": true,
+      "id": 401
+    },
+    {
+      "question": "Alice's mail server needs to deliver her message to Bob's mail server. Which protocol does it use for that hop?",
+      "options": [
+        "SMTP",
+        "IMAP",
+        "POP3",
+        "DNS"
+      ],
+      "correct": 0,
+      "explanation": "Mail servers push mail to each other with SMTP. IMAP/POP3 are for Bob to pull mail from his own server; DNS (MX record) only finds Bob's server.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W3 Applications / Email: SMTP · K&R interactive problems",
+      "lectureWeek": "Week 03",
+      "explanationZh": "服务器之间投递邮件用 SMTP（推）；IMAP/POP3 是收件人从自己服务器拉取；DNS 只是用 MX 记录找到对方服务器。",
+      "optionNotes": [
+        "SMTP pushes mail between servers.",
+        "IMAP is for reading mail from your own server.",
+        "POP3 is also a retrieval protocol.",
+        "DNS finds the server (MX record) but does not carry the mail."
+      ],
+      "steps": [
+        "Alice's agent → her server: SMTP",
+        "Her server → Bob's server: SMTP",
+        "Bob's server → Bob's agent: IMAP/POP3/HTTP"
+      ],
+      "unofficialAnswer": true,
+      "id": 402
+    },
+    {
+      "question": "A host asks its local DNS server for a name the local server has not cached. The local server then queries the root, a TLD server and the authoritative server iteratively. Counting every query and every reply, how many DNS messages are exchanged in total?",
+      "options": [
+        "8",
+        "6",
+        "4",
+        "10"
+      ],
+      "correct": 0,
+      "explanation": "Host↔local (2) plus local↔root, local↔TLD, local↔authoritative (2 each): 2 + 6 = 8 messages.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W4 DNS & P2P / DNS: iterative vs recursive queries · K&R interactive problems",
+      "lectureWeek": "Week 04",
+      "explanationZh": "主机↔本地 DNS 一问一答 2 条；本地 DNS 依次问根、TLD、权威服务器，各一问一答共 6 条；合计 8 条。",
+      "optionNotes": [
+        "2 + 3 × 2 = 8.",
+        "Forgets the host ↔ local DNS exchange.",
+        "Counts only the queries, not the replies.",
+        "Adds a server that is not contacted."
+      ],
+      "steps": [
+        "Host → local, local → host: 2",
+        "Root, TLD, authoritative: $3 \\times 2 = 6$",
+        "Total $= 8$"
+      ],
+      "unofficialAnswer": true,
+      "id": 403
+    },
+    {
+      "question": "Which DNS resource record type maps an alias hostname to its canonical hostname?",
+      "options": [
+        "CNAME",
+        "A",
+        "NS",
+        "MX"
+      ],
+      "correct": 0,
+      "explanation": "CNAME gives the canonical name for an alias. A maps a name to an IPv4 address, NS names the authoritative server for a domain, MX names the mail server.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W4 DNS & P2P / DNS: resource records · K&R interactive problems",
+      "lectureWeek": "Week 04",
+      "explanationZh": "CNAME：别名 → 规范名；A：主机名 → IPv4；NS：域 → 权威服务器；MX：域 → 邮件服务器。",
+      "optionNotes": [
+        "CNAME is alias → canonical name.",
+        "A is hostname → IPv4 address.",
+        "NS is domain → authoritative name server.",
+        "MX is domain → mail server."
+      ],
+      "steps": [
+        "(alias, canonical, CNAME, TTL)"
+      ],
+      "unofficialAnswer": true,
+      "id": 404
+    },
+    {
+      "question": "A 1 Gbit file goes to N = 10 peers. The server upload rate is 20 Mbps, every peer downloads at 10 Mbps and uploads at 1 Mbps. What is the minimum distribution time with client-server distribution?",
+      "options": [
+        "500 s",
+        "333 s",
+        "100 s",
+        "50 s"
+      ],
+      "correct": 0,
+      "explanation": "D_cs = max(NF/u_s, F/d_min) = max(10×10^9 / 2×10^7, 10^9 / 10^7) = max(500, 100) = 500 s.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W4 DNS & P2P / P2P: client-server vs P2P distribution time · K&R interactive problems",
+      "lectureWeek": "Week 04",
+      "explanationZh": "客户端-服务器：服务器要上传 N 份，NF/u_s = 500 s；最慢的下载 F/d_min = 100 s；取较大者 500 s。",
+      "optionNotes": [
+        "max(500, 100) = 500 s.",
+        "That is the P2P bound for the same numbers.",
+        "This is only F/d_min, the download bound.",
+        "This is F/u_s, one copy from the server."
+      ],
+      "steps": [
+        "$D_{cs} = \\max(NF/u_s,\\ F/d_{min})$",
+        "$NF/u_s = 10^{10}/(2\\times10^7) = 500$",
+        "$F/d_{min} = 10^9/10^7 = 100$",
+        "$D_{cs} = 500\\text{ s}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 405
+    },
+    {
+      "question": "Same file and peers (F = 1 Gbit, N = 10, u_s = 20 Mbps, d = 10 Mbps, each peer uploads 1 Mbps). What is the minimum distribution time with P2P distribution?",
+      "options": [
+        "333 s",
+        "500 s",
+        "100 s",
+        "50 s"
+      ],
+      "correct": 0,
+      "explanation": "D_p2p = max(F/u_s, F/d_min, NF/(u_s + Σu_i)) = max(50, 100, 10^10 / 3×10^7) = max(50, 100, 333.3) ≈ 333 s.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W4 DNS & P2P / P2P: client-server vs P2P distribution time · K&R interactive problems",
+      "lectureWeek": "Week 04",
+      "explanationZh": "P2P 下界取三项最大：F/u_s = 50，F/d_min = 100，NF/(u_s+Nu) = 10¹⁰/3×10⁷ ≈ 333；所以约 333 s，比 C/S 快。",
+      "optionNotes": [
+        "max(50, 100, 333.3) ≈ 333 s.",
+        "That is the client-server time.",
+        "Only the download bound.",
+        "Only the server's single upload."
+      ],
+      "steps": [
+        "$D_{P2P} = \\max(F/u_s,\\ F/d_{min},\\ NF/(u_s+\\sum u_i))$",
+        "$F/u_s = 50$, $F/d_{min} = 100$",
+        "$NF/(u_s+Nu) = 10^{10}/(3\\times10^7) \\approx 333$",
+        "$D_{P2P} \\approx 333\\text{ s}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 406
+    },
+    {
+      "question": "Compute the Internet checksum of the three 16-bit words 0x4A3C, 0x9B71 and 0x2208.",
+      "options": [
+        "0xF849",
+        "0x07B6",
+        "0xF84A",
+        "0x07B5"
+      ],
+      "correct": 0,
+      "explanation": "Add with end-around carry: 0x4A3C + 0x9B71 = 0xE5AD; 0xE5AD + 0x2208 = 0x107B5, wrap the carry → 0x07B6. The checksum is the one's complement: 0xF849.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / UDP: Internet checksum · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "16 位反码求和：溢出的进位要加回最低位（0x107B5 → 0x07B6），最后取反得到校验和 0xF849。",
+      "optionNotes": [
+        "~0x07B6 = 0xF849.",
+        "This is the wrapped sum before taking the complement.",
+        "Complement of the sum without adding back the carry.",
+        "Sum with the carry dropped and no complement."
+      ],
+      "steps": [
+        "$0x4A3C + 0x9B71 = 0xE5AD$",
+        "$0xE5AD + 0x2208 = 0x107B5$",
+        "Wrap carry: $0x07B5 + 1 = 0x07B6$",
+        "One's complement: $\\sim 0x07B6 = 0xF849$"
+      ],
+      "unofficialAnswer": true,
+      "id": 407
+    },
+    {
+      "question": "In rdt2.2 (no NAKs), the receiver is waiting for sequence number 1 and receives a corrupted packet. What does it send?",
+      "options": [
+        "ACK 0 (a duplicate ACK for the last good packet)",
+        "ACK 1",
+        "NAK",
+        "Nothing; it waits for a timeout"
+      ],
+      "correct": 0,
+      "explanation": "rdt2.2 replaces NAKs with a duplicate ACK for the last correctly received packet (seq 0). Seeing ACK 0 again tells the sender packet 1 must be resent.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / Reliable data transfer: rdt2.2 · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "rdt2.2 没有 NAK：收到坏包就重发上一个正确包的 ACK（ACK 0），发送方看到重复 ACK 就重传 1 号包。",
+      "optionNotes": [
+        "A duplicate ACK 0 acts as the NAK.",
+        "ACK 1 would wrongly confirm the corrupted packet.",
+        "rdt2.2 has no NAK message.",
+        "rdt2.2 has no timer; that arrives in rdt3.0."
+      ],
+      "steps": [
+        "Expecting seq 1, got corrupt data",
+        "Resend ACK for last good packet: ACK 0",
+        "Sender sees duplicate ACK 0 → retransmit pkt 1"
+      ],
+      "unofficialAnswer": true,
+      "id": 408
+    },
+    {
+      "question": "In rdt3.0, the sender's timer for packet 0 expires too early, so it retransmits packet 0 although the receiver already got it and is now waiting for packet 1. What does the receiver do with the second copy of packet 0?",
+      "options": [
+        "Discards it and sends ACK 0 again",
+        "Delivers it to the application again",
+        "Sends ACK 1",
+        "Discards it silently"
+      ],
+      "correct": 0,
+      "explanation": "The sequence number shows it is a duplicate, so the receiver does not deliver it, but it re-ACKs packet 0 in case the first ACK was lost.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / Reliable data transfer: rdt3.0 · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "序号说明这是重复包：不交付给上层，但要重发 ACK 0（以防之前的 ACK 丢了），否则发送方会一直重传。",
+      "optionNotes": [
+        "Duplicate: not delivered, but re-ACKed.",
+        "Delivering it twice is exactly what sequence numbers prevent.",
+        "ACK 1 would acknowledge a packet not yet received.",
+        "Staying silent could leave the sender retransmitting forever if the first ACK was lost."
+      ],
+      "steps": [
+        "Receiver expects seq 1, gets seq 0 → duplicate",
+        "Do not deliver",
+        "Send ACK 0"
+      ],
+      "unofficialAnswer": true,
+      "id": 409
+    },
+    {
+      "question": "A stop-and-wait sender sends 8000-bit packets over a 1 Gbps link with RTT = 30 ms. What is the sender utilisation (fraction of time it is actually sending)?",
+      "options": [
+        "2.67E-4",
+        "2.67E-2",
+        "8.00E-6",
+        "0.5"
+      ],
+      "correct": 0,
+      "explanation": "d_trans = 8000 / 10^9 = 8 µs. U = d_trans / (RTT + d_trans) = 0.008 ms / 30.008 ms ≈ 2.67×10^-4.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / Reliable data transfer: stop-and-wait utilisation · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "停等协议每个 RTT 只能发一个包：U = (L/R)/(RTT + L/R) ≈ 8 µs / 30 ms ≈ 2.67×10⁻⁴，所以需要流水线。",
+      "optionNotes": [
+        "8 µs / 30.008 ms ≈ 2.67×10^-4.",
+        "That is a pipeline of 100 packets per RTT.",
+        "That is L/R in seconds, not a fraction.",
+        "Utilisation is nowhere near half with such a long RTT."
+      ],
+      "steps": [
+        "$d_{trans} = L/R = 8\\,\\mu s$",
+        "$U = d_{trans}/(RTT + d_{trans})$",
+        "$= 0.008/30.008 \\approx 2.67\\times10^{-4}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 410
+    },
+    {
+      "question": "Two clients on different hosts both use source port 5000 to send UDP datagrams to a server's port 53. How many server sockets receive these datagrams?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "A UDP socket is identified only by destination IP and port, so both clients' datagrams go to the same server socket.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / Multiplexing: UDP demultiplexing · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "UDP 套接字只按 (目的 IP, 目的端口) 区分，所以两个客户端的数据报都进同一个服务器套接字。",
+      "optionNotes": [
+        "UDP demuxes on (dest IP, dest port) only.",
+        "Two would be TCP's answer (one connection socket per client).",
+        "There is no third socket here.",
+        "UDP has no listening socket plus per-client sockets."
+      ],
+      "steps": [
+        "UDP socket key: (dest IP, dest port)",
+        "Both datagrams: (server IP, 53) → 1 socket"
+      ],
+      "unofficialAnswer": true,
+      "id": 411
+    },
+    {
+      "question": "A web server on port 80 has three open TCP connections: two from host A (source ports 6001 and 6002) and one from host B (source port 6001). Not counting the listening socket, how many connection sockets does the server use?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "A TCP socket is identified by the 4-tuple (src IP, src port, dst IP, dst port). All three tuples differ, so there are three connection sockets.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W5 Transport / Multiplexing: TCP demultiplexing · K&R interactive problems",
+      "lectureWeek": "Week 05",
+      "explanationZh": "TCP 按四元组 (源IP, 源端口, 目的IP, 目的端口) 区分连接；三个四元组都不同（B 的 6001 和 A 的 6001 源 IP 不同），所以 3 个连接套接字。",
+      "optionNotes": [
+        "Three distinct 4-tuples.",
+        "Counts hosts, not connections.",
+        "That is UDP-style demux on the destination only.",
+        "Counts the listening socket too."
+      ],
+      "steps": [
+        "(A, 6001, S, 80), (A, 6002, S, 80), (B, 6001, S, 80)",
+        "3 distinct 4-tuples → 3 connection sockets"
+      ],
+      "unofficialAnswer": true,
+      "id": 412
+    },
+    {
+      "question": "TCP has EstimatedRTT = 100 ms when a new SampleRTT of 140 ms arrives (α = 0.125). After the update DevRTT is 15 ms. What is the new TimeoutInterval?",
+      "options": [
+        "165 ms",
+        "105 ms",
+        "145 ms",
+        "160 ms"
+      ],
+      "correct": 0,
+      "explanation": "EstimatedRTT = 0.875×100 + 0.125×140 = 105 ms. TimeoutInterval = EstimatedRTT + 4×DevRTT = 105 + 60 = 165 ms.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / RTT estimation and timeout · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "先更新 EstimatedRTT = 0.875×100 + 0.125×140 = 105 ms，再加 4 倍 DevRTT：105 + 60 = 165 ms。",
+      "optionNotes": [
+        "105 + 4 × 15 = 165 ms.",
+        "EstimatedRTT alone, no safety margin.",
+        "Old EstimatedRTT with 3 × DevRTT; the rule is the new estimate + 4 × DevRTT.",
+        "Uses the old EstimatedRTT: 100 + 60."
+      ],
+      "steps": [
+        "$EstRTT = (1-\\alpha)\\cdot100 + \\alpha\\cdot140 = 105$",
+        "$Timeout = EstRTT + 4\\cdot DevRTT$",
+        "$= 105 + 60 = 165\\text{ ms}$"
+      ],
+      "unofficialAnswer": true,
+      "id": 413
+    },
+    {
+      "question": "Host A sends three TCP segments back-to-back: seq 200 (100 bytes), seq 300 (120 bytes) and seq 420 (80 bytes). The second segment is lost. What acknowledgement number does B send when the third segment arrives?",
+      "options": [
+        "300",
+        "500",
+        "420",
+        "200"
+      ],
+      "correct": 0,
+      "explanation": "TCP ACKs are cumulative: B still needs byte 300, so it repeats ACK 300 (a duplicate ACK) even though bytes 420–499 arrived.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / Sequence and ACK numbers with segment loss · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "TCP 累计确认：ACK 号 = 下一个期望的字节。第二段丢了，B 仍在等 300，所以收到第三段时回的还是 ACK 300（重复 ACK）。",
+      "optionNotes": [
+        "Still waiting for byte 300.",
+        "500 is the next byte after the third segment; it would mean nothing is missing.",
+        "420 is the third segment's own sequence number.",
+        "200 was already received and acknowledged."
+      ],
+      "steps": [
+        "Seg 1 arrives → ACK 300",
+        "Seg 2 (seq 300) lost",
+        "Seg 3 (seq 420) arrives out of order → ACK 300 again"
+      ],
+      "unofficialAnswer": true,
+      "id": 414
+    },
+    {
+      "question": "A TCP connection starts in slow start with cwnd = 1 MSS and ssthresh = 16 MSS. No loss occurs. What is cwnd after 6 RTTs?",
+      "options": [
+        "18 MSS",
+        "64 MSS",
+        "32 MSS",
+        "17 MSS"
+      ],
+      "correct": 0,
+      "explanation": "Slow start doubles each RTT: 1 → 2 → 4 → 8 → 16 (4 RTTs). At ssthresh it switches to congestion avoidance (+1 MSS per RTT): 17, 18.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / Congestion control: slow start and congestion avoidance · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "慢启动每 RTT 翻倍：1→2→4→8→16 用了 4 个 RTT；到达 ssthresh 后改为拥塞避免每 RTT +1：第 5、6 个 RTT 后为 17、18。",
+      "optionNotes": [
+        "16 after 4 RTTs, then +1, +1 = 18.",
+        "Keeps doubling past ssthresh.",
+        "Doubles once past ssthresh.",
+        "Off by one RTT."
+      ],
+      "steps": [
+        "RTT 1–4: $1\\to2\\to4\\to8\\to16$",
+        "cwnd = ssthresh → congestion avoidance",
+        "RTT 5–6: $17 \\to 18$"
+      ],
+      "unofficialAnswer": true,
+      "id": 415
+    },
+    {
+      "question": "TCP Reno has cwnd = 16 MSS when a timeout occurs. What are ssthresh and cwnd right afterwards?",
+      "options": [
+        "ssthresh = 8, cwnd = 1",
+        "ssthresh = 8, cwnd = 11",
+        "ssthresh = 16, cwnd = 1",
+        "ssthresh = 8, cwnd = 8"
+      ],
+      "correct": 0,
+      "explanation": "On a timeout both Tahoe and Reno set ssthresh = cwnd/2 = 8 and restart slow start at cwnd = 1 MSS. The 'halve and add 3' fast-recovery rule is for triple duplicate ACKs.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / Congestion control: reaction to loss · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "超时：ssthresh = cwnd/2 = 8，cwnd 回到 1 MSS 重新慢启动。三个重复 ACK 才是 Reno 的快速恢复（cwnd = 8 + 3 = 11）。",
+      "optionNotes": [
+        "Timeout → ssthresh = cwnd/2, cwnd = 1.",
+        "That is Reno's response to a triple duplicate ACK.",
+        "ssthresh should be halved.",
+        "Halving cwnd without resetting is not what a timeout does."
+      ],
+      "steps": [
+        "$ssthresh = cwnd/2 = 8$",
+        "Timeout → $cwnd = 1$ MSS, slow start again"
+      ],
+      "unofficialAnswer": true,
+      "id": 416
+    },
+    {
+      "question": "Host A sends two TCP segments: seq 0 (500 bytes) and seq 500 (500 bytes). B receives both. B's ACK 500 is lost, but its ACK 1000 reaches A before A's timer for the first segment expires. What does A retransmit?",
+      "options": [
+        "Nothing",
+        "The first segment only",
+        "Both segments",
+        "The second segment only"
+      ],
+      "correct": 0,
+      "explanation": "ACK 1000 is cumulative: it confirms every byte up to 999, including the first segment, so the lost ACK 500 does no harm.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / Retransmissions with ACK loss · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "累计确认：ACK 1000 表示 0–999 都收到了，第一段自然也被确认，丢的 ACK 500 无所谓，不用重传。",
+      "optionNotes": [
+        "Cumulative ACK 1000 covers both segments.",
+        "ACK 1000 already covers the first segment.",
+        "Nothing is missing at B.",
+        "The second segment is exactly what ACK 1000 confirms."
+      ],
+      "steps": [
+        "ACK 500 lost",
+        "ACK 1000 arrives before timeout",
+        "Cumulative: bytes 0–999 confirmed → no retransmission"
+      ],
+      "unofficialAnswer": true,
+      "id": 417
+    },
+    {
+      "question": "When does a TCP sender perform fast retransmit of a segment?",
+      "options": [
+        "After receiving 3 duplicate ACKs for it",
+        "After receiving a single duplicate ACK",
+        "Only when the retransmission timer expires",
+        "When the receiver window drops to zero"
+      ],
+      "correct": 0,
+      "explanation": "Three duplicate ACKs strongly suggest that one segment was lost while later ones arrived, so TCP resends it without waiting for the timeout.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W6 TCP / Fast retransmit · K&R interactive problems",
+      "lectureWeek": "Week 06",
+      "explanationZh": "收到 3 个重复 ACK 就认为那个段丢了，不等超时立刻重传；一个重复 ACK 可能只是乱序。",
+      "optionNotes": [
+        "Three duplicate ACKs trigger fast retransmit.",
+        "One duplicate ACK can be simple reordering.",
+        "That is ordinary timeout retransmission, not fast retransmit.",
+        "A zero window is flow control, not loss."
+      ],
+      "steps": [
+        "Dup ACK × 3 → resend the missing segment immediately"
+      ],
+      "unofficialAnswer": true,
+      "id": 418
+    },
+    {
+      "question": "An OpenFlow switch has two flow-table entries that both match an incoming packet: priority 10 → forward(port 2) and priority 50 → drop. What happens to the packet?",
+      "options": [
+        "It is dropped",
+        "It is forwarded to port 2",
+        "It is sent to the controller",
+        "It is both forwarded and dropped"
+      ],
+      "correct": 0,
+      "explanation": "When several entries match, the one with the highest priority wins. Priority 50 beats 10, so the drop action is applied.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W9 SDN / OpenFlow: match-action flow tables · K&R interactive problems",
+      "lectureWeek": "Week 09",
+      "explanationZh": "多条规则同时匹配时取优先级最高的那条：50 > 10，执行 drop。",
+      "optionNotes": [
+        "Highest priority (50) wins.",
+        "Priority 10 loses to 50.",
+        "Packets go to the controller only on a table miss (or an explicit action).",
+        "Only one entry's actions are applied."
+      ],
+      "steps": [
+        "Matches: prio 10 (forward 2), prio 50 (drop)",
+        "Pick highest priority → drop"
+      ],
+      "unofficialAnswer": true,
+      "id": 419
+    },
+    {
+      "question": "A CDMA sender uses the code (1, −1, 1, −1). In one bit slot the receiver gets the chips (−1, 1, −1, 1). What data value does it decode?",
+      "options": [
+        "−1",
+        "1",
+        "0",
+        "4"
+      ],
+      "correct": 0,
+      "explanation": "Decode = (1/M) Σ Z_m·c_m = (−1 −1 −1 −1)/4 = −1. The sender sent the bit encoded as −1 (bit 0).",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W10 Wireless / CDMA encoding and decoding · K&R interactive problems",
+      "lectureWeek": "Week 10",
+      "explanationZh": "CDMA 解码：接收码片与自己的码逐位相乘再求和除以 M：(−1−1−1−1)/4 = −1。",
+      "optionNotes": [
+        "(−1−1−1−1)/4 = −1.",
+        "Sign error: chips are the exact negation of the code.",
+        "0 would mean no signal from this sender.",
+        "Forgot to divide by M = 4 (and the sign)."
+      ],
+      "steps": [
+        "$d = \\frac{1}{M}\\sum_m Z_m c_m$",
+        "$= (−1\\cdot1 + 1\\cdot(−1) + (−1)\\cdot1 + 1\\cdot(−1))/4$",
+        "$= −4/4 = −1$"
+      ],
+      "unofficialAnswer": true,
+      "id": 420
+    },
+    {
+      "question": "In slotted ALOHA, N = 4 nodes each transmit in a slot with probability p = 0.2. What is the probability that one particular node succeeds in a given slot?",
+      "options": [
+        "0.1024",
+        "0.4096",
+        "0.2",
+        "0.0016"
+      ],
+      "correct": 0,
+      "explanation": "That node must transmit (p) while the other three stay silent ((1−p)^3): 0.2 × 0.8^3 = 0.1024.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W1 Introduction & Game Theory / Collisions: slotted ALOHA · K&R interactive problems",
+      "lectureWeek": "Week 01",
+      "explanationZh": "指定节点成功 = 它发 (p) 且其余 3 个都不发 ((1−p)³)：0.2 × 0.512 = 0.1024。任一节点成功再乘 N = 0.4096。",
+      "optionNotes": [
+        "p(1−p)^{N−1} = 0.2 × 0.512.",
+        "That is the probability that *any* node succeeds (N times larger).",
+        "Only that it transmits, ignoring collisions.",
+        "p^4: everyone transmits, which is a collision."
+      ],
+      "steps": [
+        "$P = p(1-p)^{N-1}$",
+        "$= 0.2 \\times 0.8^3 = 0.1024$"
+      ],
+      "unofficialAnswer": true,
+      "id": 421
+    },
+    {
+      "question": "In 4G LTE, a user's IP datagrams travel between the base station (eNodeB) and the packet data network gateway (P-GW) through the serving gateway. How are they carried?",
+      "options": [
+        "Encapsulated in GTP tunnels",
+        "Routed natively by their destination IP",
+        "Inside IPsec ESP only",
+        "As 802.11 frames"
+      ],
+      "correct": 0,
+      "explanation": "LTE tunnels user traffic with GTP (GPRS Tunnelling Protocol) from eNodeB to S-GW and S-GW to P-GW, so the mobile keeps its IP address while moving between base stations.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W12 5G, Mobility & QUIC / 4G tunnelling · K&R interactive problems",
+      "lectureWeek": "Week 12",
+      "explanationZh": "4G 中用户数据在 eNodeB↔S-GW↔P-GW 之间用 GTP 隧道封装；移动时只改隧道端点，手机 IP 地址不变。",
+      "optionNotes": [
+        "GTP-U tunnels carry the user plane.",
+        "Native routing would break when the mobile moves.",
+        "IPsec may protect links but is not the mobility tunnel.",
+        "802.11 is WiFi, not the LTE core."
+      ],
+      "steps": [
+        "eNodeB ⇄ S-GW: GTP tunnel",
+        "S-GW ⇄ P-GW: GTP tunnel",
+        "Handover only moves the eNodeB-side tunnel endpoint"
+      ],
+      "unofficialAnswer": true,
+      "id": 422
+    },
+    {
+      "question": "During a 4G handover from a source base station to a target base station, which tunnel endpoint does the network change so traffic follows the phone?",
+      "options": [
+        "The serving gateway's tunnel endpoint moves from the source to the target base station",
+        "The phone gets a new IP address from the P-GW",
+        "The home subscriber server (HSS) re-routes every packet",
+        "The P-GW tunnels directly to the phone"
+      ],
+      "correct": 0,
+      "explanation": "The MME tells the S-GW to switch its downlink GTP tunnel from the source to the target eNodeB; the phone's IP address and the S-GW–P-GW tunnel stay the same.",
+      "week": "Textbook Practice (Kurose & Ross)",
+      "course": "COMP5416",
+      "knowledgeLocation": "W12 5G, Mobility & QUIC / 4G handover · K&R interactive problems",
+      "lectureWeek": "Week 12",
+      "explanationZh": "切换时 MME 让 S-GW 把下行 GTP 隧道终点从源基站换到目标基站；手机 IP 和 S-GW↔P-GW 隧道都不变。",
+      "optionNotes": [
+        "Only the S-GW ↔ eNodeB tunnel is re-pointed.",
+        "The IP address is kept; that is the point of tunnelling.",
+        "The HSS stores subscriber data; it does not forward traffic.",
+        "The P-GW tunnels to the S-GW, not to the phone."
+      ],
+      "steps": [
+        "Source eNodeB prepares target",
+        "MME → S-GW: switch downlink tunnel to target eNodeB",
+        "S-GW ⇄ P-GW tunnel unchanged"
+      ],
+      "unofficialAnswer": true,
+      "id": 423
+    },
+    {
       "question": "You roll a 6-sided die, and then tell me which of the 6 faces was the result. How much information have you given me? (NB: “die” is the singular of “dice”.)",
       "options": [
         "0.77 bits",
@@ -6952,6 +7956,7 @@
     "Practice Exam 1",
     "Practice Exam 2",
     "Week 07 Midterm Quiz",
+    "Textbook Practice (Kurose & Ross)",
     "Sample Exam"
   ],
   "weeksByCourse": {
@@ -6988,7 +7993,8 @@
       "Practice Exam 2"
     ],
     "COMP5416": [
-      "Week 07 Midterm Quiz"
+      "Week 07 Midterm Quiz",
+      "Textbook Practice (Kurose & Ross)"
     ],
     "CSYS5030": [
       "Sample Exam"
