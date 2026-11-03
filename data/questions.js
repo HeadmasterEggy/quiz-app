@@ -7264,34 +7264,6 @@ window.QUIZ_DATA = {
       "id": 418
     },
     {
-      "question": "An OpenFlow switch has two flow-table entries that both match an incoming packet: priority 10 → forward(port 2) and priority 50 → drop. What happens to the packet?",
-      "options": [
-        "It is dropped",
-        "It is forwarded to port 2",
-        "It is sent to the controller",
-        "It is both forwarded and dropped"
-      ],
-      "correct": 0,
-      "explanation": "When several entries match, the one with the highest priority wins. Priority 50 beats 10, so the drop action is applied.",
-      "week": "Textbook Practice (Kurose & Ross)",
-      "course": "COMP5416",
-      "knowledgeLocation": "W9 SDN / OpenFlow: match-action flow tables · K&R interactive problems",
-      "lectureWeek": "Week 09",
-      "explanationZh": "多条规则同时匹配时取优先级最高的那条：50 > 10，执行 drop。",
-      "optionNotes": [
-        "Highest priority (50) wins.",
-        "Priority 10 loses to 50.",
-        "Packets go to the controller only on a table miss (or an explicit action).",
-        "Only one entry's actions are applied."
-      ],
-      "steps": [
-        "Matches: prio 10 (forward 2), prio 50 (drop)",
-        "Pick highest priority → drop"
-      ],
-      "unofficialAnswer": true,
-      "id": 419
-    },
-    {
       "question": "A CDMA sender uses the code (1, −1, 1, −1). In one bit slot the receiver gets the chips (−1, 1, −1, 1). What data value does it decode?",
       "options": [
         "−1",

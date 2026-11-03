@@ -37,12 +37,12 @@ A browser-based quiz app for USYD course revision.
 | COMP5318 total | 60 |
 | Practice Exam 1 (official key) | 30 |
 | Practice Exam 2 (official key) | 30 |
-| COMP5416 total | 38 |
+| COMP5416 total | 37 |
 | Week 07 Midterm Quiz (official feedback) | 3 |
-| Textbook Practice (Kurose & Ross problem types, unofficial answers) | 35 |
+| Textbook Practice (Kurose & Ross problem types, unofficial answers) | 34 |
 | CSYS5030 total | 20 |
 | Sample Exam (unofficial answers) | 20 |
-| **Total** | **412** |
+| **Total** | **411** |
 
 ## ✨ Features
 
