@@ -371,8 +371,21 @@ function withShuffledOptions(q) {
     };
 }
 
+// Calculation questions with a `generator` get fresh numbers from data/generators.js on every run.
+// Stats stay keyed by the question id, so the mistakes book tracks the question type.
+function withGeneratedNumbers(q) {
+    const gen = q.generator && window.QUIZ_GENERATORS?.[q.generator];
+    if (!gen) return q;
+    // A few random draws can't produce four distinct options; try again, then keep the static numbers.
+    for (let i = 0; i < 5; i++) {
+        try { return { ...q, ...gen() }; } catch { /* draw again */ }
+    }
+    return q;
+}
+
 function orderQuestions(items, course) {
-    if (!shuffleEnabled) return [...items];
+    items = items.map(withGeneratedNumbers);
+    if (!shuffleEnabled) return items;
     const arranged = course === 'all' ? groupedShuffleByCourse(items) : shuffled(items);
     return arranged.map(withShuffledOptions);
 }
