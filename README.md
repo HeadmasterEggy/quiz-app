@@ -60,6 +60,7 @@ A browser-based quiz app for USYD course revision.
 - **Richer explanations** — "why your pick is wrong" callout, 中文要点, step-by-step working (KaTeX), option-by-option notes, and a 📖 link to the matching weekly notes on qiao1.top
 - **Fresh numbers** — COMP5416 textbook-practice calculation questions are regenerated every run (`data/generators.js`), with distractors built from common mistakes
 - **Unofficial-key tag** — questions whose answers have no official source are flagged
+- **中/EN translation** — every question stem and option has a Chinese translation; switch between 中英对照, English only and 中文 only with the 中/EN button or the L key
 - **Dark theme** — easy on the eyes
 
 ## 🚀 Run Locally

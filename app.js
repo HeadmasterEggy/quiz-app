@@ -24,6 +24,10 @@ let poolFilter = 'all';            // 'all' | 'unseen' | 'mistakes'
 let examMode = false;
 let examSubmitted = false;
 let resultsShown = false;
+const LANG_KEY = 'quiz_lang_v1';
+const LANG_MODES = ['both', 'en', 'zh'];   // 中英对照 · English only · 中文 only
+const LANG_LABELS = { both: '中/EN', en: 'EN', zh: '中' };
+let langMode = 'both';
 
 const $ = id => document.getElementById(id);
 const show = id => $(id).classList.remove('hidden');
@@ -53,6 +57,52 @@ function setMath(el, str) {
             });
         } catch (e) { /* leave plain text on render error */ }
     }
+}
+
+// Show English, Chinese, or both (Chinese underneath, muted) depending on the language mode.
+function setBilingual(el, en, zh) {
+    if (!el) return;
+    const hasZh = zh && zh !== en;
+    if (!hasZh || langMode === 'en') { setMath(el, en); return; }
+    if (langMode === 'zh') { setMath(el, zh); return; }
+    el.textContent = '';
+    const top = document.createElement('span');
+    top.className = 'bi-en';
+    const sub = document.createElement('span');
+    sub.className = 'bi-zh';
+    sub.lang = 'zh';
+    el.append(top, sub);
+    setMath(top, en);
+    setMath(sub, zh);
+}
+
+function initLang() {
+    try { const v = localStorage.getItem(LANG_KEY); if (LANG_MODES.includes(v)) langMode = v; } catch { /* ignore */ }
+    updateLangButton();
+}
+
+function updateLangButton() {
+    const btn = $('langToggleBtn');
+    if (!btn) return;
+    const names = { both: '中英对照 Chinese + English', en: 'English only', zh: '只看中文 Chinese only' };
+    btn.querySelector('.tool-icon').textContent = LANG_LABELS[langMode];
+    btn.title = `Language: ${names[langMode]} (L to switch)`;
+    btn.setAttribute('aria-label', btn.title);
+}
+
+function cycleLang() {
+    langMode = LANG_MODES[(LANG_MODES.indexOf(langMode) + 1) % LANG_MODES.length];
+    try { localStorage.setItem(LANG_KEY, langMode); } catch { /* ignore */ }
+    updateLangButton();
+    rerenderTexts();
+}
+
+// Re-render the question and option texts in place, keeping the answer state.
+function rerenderTexts() {
+    const q = questions[current];
+    if (!q || $('quizCard').classList.contains('hidden')) return;
+    setBilingual($('questionText'), q.question, q.questionZh);
+    document.querySelectorAll('#options .option-btn .text').forEach((el, i) => setBilingual(el, q.options[i], q.optionsZh?.[i]));
 }
 
 function extractEmbeddedKnowledgeLocation(str) {
@@ -367,6 +417,7 @@ function withShuffledOptions(q) {
         ...q,
         options: order.map(i => q.options[i]),
         optionNotes: Array.isArray(q.optionNotes) ? order.map(i => q.optionNotes[i]) : q.optionNotes,
+        optionsZh: Array.isArray(q.optionsZh) ? order.map(i => q.optionsZh[i]) : q.optionsZh,
         correct: Array.isArray(q.correct) ? q.correct.map(remap) : remap(q.correct)
     };
 }
@@ -770,7 +821,7 @@ function renderOptions() {
         label.textContent = key;
         const text = document.createElement('span');
         text.className = 'text';
-        setMath(text, opt);
+        setBilingual(text, opt, q.optionsZh?.[i]);
         btn.append(label, text);
         if (maq) btn.setAttribute('aria-pressed', 'false');
         btn.onclick = () => maq ? handleMAQClick(i, btn) : handleAnswer(i, btn);
@@ -819,7 +870,7 @@ function showQuestion() {
     counter.appendChild(caret);
     $('progressFill').style.width = `${(current / questions.length) * 100}%`;
     const questionText = $('questionText');
-    setMath(questionText, q.question);
+    setBilingual(questionText, q.question, q.questionZh);
     questionText.classList.remove('q-fade');
     void questionText.offsetWidth;
     questionText.classList.add('q-fade');
@@ -1266,6 +1317,7 @@ $('headerRestartBtn').onclick = () => { closeDrawer(); restart(); };
 $('retryWrongBtn').onclick = retryWrongAnswers;
 $('maqCheckBtn').onclick = checkMAQ;
 $('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
+$('langToggleBtn').onclick = () => { cycleLang(); $('langToggleBtn').blur(); };
 $('questionCounter').onclick = toggleJumpPanel;
 $('menuBtn').onclick = toggleDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
@@ -1302,6 +1354,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); navPrev(); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); navNext(); return; }
 
+    if ((e.key === 'l' || e.key === 'L') && !e.metaKey && !e.ctrlKey && !e.altKey) { cycleLang(); return; }
     if ((e.key === 's' || e.key === 'S') && !e.metaKey && !e.ctrlKey && !e.altKey) {
         if (!$('quizCard').classList.contains('hidden') && !$('revealBtn').classList.contains('hidden')) revealAnswer();
         return;
@@ -1321,7 +1374,7 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 function initApp() {
-    initTheme(); clearLegacyQuizMemory(); initShuffle();
+    initTheme(); clearLegacyQuizMemory(); initShuffle(); initLang();
     questionStats = loadStats();
     // Reopen the last course/week/pool, else the first course of the current semester.
     const last = loadLastFilter();
