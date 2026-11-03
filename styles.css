@@ -2188,3 +2188,17 @@ body::before { display: none; }
 }
 .quiz-card > .next-btn { margin-top: 14px; }
 .explanation-text > :last-child, .option-notes { margin-bottom: 0; }
+
+/* ── Bilingual text (中/EN) ── */
+.bi-en, .bi-zh { display: block; }
+.bi-zh {
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.9em;
+    line-height: 1.55;
+}
+.question-text .bi-zh { margin-top: 8px; font-weight: 500; }
+.option-btn.correct .bi-zh, .option-btn.wrong .bi-zh, .option-btn.selected .bi-zh { color: inherit; opacity: 0.75; }
+.icon-btn.lang-btn { width: auto; min-width: 40px; padding: 0 10px; }
+.icon-btn.lang-btn .tool-icon { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }

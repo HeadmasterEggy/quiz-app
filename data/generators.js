@@ -1,7 +1,7 @@
 // Fresh numbers for calculation questions. A question with `"generator": "<name>"` in
 // questions.json is rebuilt by QUIZ_GENERATORS[name]() at the start of every run; the
 // static fields in questions.json are the fallback if a generator is missing or throws.
-// Each generator returns { question, options, correct, optionNotes, explanation, explanationZh, steps }.
+// Each generator returns { question, questionZh, options, correct, optionNotes, explanation, explanationZh, steps }.
 (function () {
     const rand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
     const pick = arr => arr[Math.floor(Math.random() * arr.length)];
@@ -20,7 +20,7 @@
     const minus = x => String(x).replace('-', '−');
 
     // The first three distractors that differ from the answer and from each other are kept.
-    function build({ question, answer, answerNote, wrong, explanation, zh, steps }) {
+    function build({ question, questionZh, answer, answerNote, wrong, explanation, zh, steps }) {
         const opts = [[answer, answerNote]];
         for (const [v, n] of wrong) {
             if (opts.length === 4) break;
@@ -30,6 +30,8 @@
         const order = shuffle(opts);
         return {
             question,
+            questionZh,
+            optionsZh: undefined,
             options: order.map(o => o[0]),
             optionNotes: order.map(o => o[1]),
             correct: order.findIndex(o => o[0] === answer),
@@ -46,6 +48,7 @@
         const L = rand(4, 20) * 1000, Rm = pick([10, 100, 1000]), d = L / (Rm * 1e6);
         return build({
             question: `A router sends a packet of L = ${L.toLocaleString('en')} bits onto a link with transmission rate R = ${Rm} Mbps. What is the transmission delay, in seconds?`,
+            questionZh: `路由器把一个 L = ${L.toLocaleString('en')} bit 的包发送到传输速率 R = ${Rm} Mbps 的链路上。传输时延是多少秒？`,
             answer: sci(d), answerNote: `${L} / ${Rm}×10^6 = ${sci(d)} s.`,
             wrong: [
                 [sci(d * 10), `Off by 10×: as if the link were ${Rm / 10} Mbps.`],
@@ -63,6 +66,7 @@
         const L = rand(4, 20) * 1000, Rm = pick([10, 100, 1000]), n = Math.floor(Rm * 1e6 / L);
         return build({
             question: `A ${Rm} Mbps link carries packets that are all ${L.toLocaleString('en')} bits long. What is the most packets per second the link can carry (rounded down)?`,
+            questionZh: `一条 ${Rm} Mbps 的链路传输的包长度都是 ${L.toLocaleString('en')} bit。这条链路每秒最多能传多少个包（向下取整）？`,
             answer: String(n), answerNote: `${Rm}×10^6 / ${L} ≈ ${n}.`,
             wrong: [
                 [String(Math.floor(n / 10)), 'This would be a link 10× slower.'],
@@ -82,6 +86,7 @@
         const ms = x => `${num(x)} ms`;
         return build({
             question: `A packet of ${L.toLocaleString('en')} bits crosses ${N} links in series (${N - 1} store-and-forward router${N > 2 ? 's' : ''} in between). Every link is ${Rm} Mbps with a ${p} ms propagation delay. Ignore queuing and processing. What is the end-to-end delay?`,
+            questionZh: `一个 ${L.toLocaleString('en')} bit 的包依次经过 ${N} 段串联链路（中间有 ${N - 1} 台存储转发路由器）。每段链路都是 ${Rm} Mbps，传播时延 ${p} ms。忽略排队和处理时延。端到端时延是多少？`,
             answer: ms(total), answerNote: `${N} × (${num(t)} + ${p}) = ${ms(total)}.`,
             wrong: [
                 [ms(t + N * p), 'Counts the transmission delay only once; store-and-forward retransmits on every link.'],
@@ -103,6 +108,7 @@
         const ms = x => `${num(x, 3)} ms`;
         return build({
             question: `A packet arrives at a router's output queue. ${k} packet${k > 1 ? 's are' : ' is'} already waiting, and another packet has ${done * 100}% of its bits already transmitted. All packets are ${Lb} bytes and the link is ${Rm} Mbps. How long does the arriving packet wait before its own transmission starts?`,
+            questionZh: `一个包到达路由器的输出队列。队列里已有 ${k} 个包在等待，另有一个包已经发出了 ${done * 100}% 的比特。所有包都是 ${Lb} 字节，链路速率 ${Rm} Mbps。这个新到的包要等多久才开始自己的传输？`,
             answer: ms(ans), answerNote: `${num(1 - done)} × ${num(t, 3)} + ${k} × ${num(t, 3)} = ${ms(ans)}.`,
             wrong: [
                 [ms((k + 1) * t), 'Counts the partly sent packet as a full one.'],
@@ -125,6 +131,7 @@
             : 'Below 1 the queue stays bounded on average, but delay grows sharply as it approaches 1.';
         return build({
             question: `Packets of ${Lb} bytes arrive at a ${Rm} Mbps link at an average rate of ${a} packets per second. What is the traffic intensity La/R?`,
+            questionZh: `${Lb} 字节的包以平均每秒 ${a} 个的速率到达一条 ${Rm} Mbps 的链路。流量强度 La/R 是多少？`,
             answer: num(rho, 3), answerNote: `${Lb * 8} × ${a} / ${Rm}×10^6 = ${num(rho, 3)}.`,
             wrong: [
                 [num(1 / rho, 3), 'This is R/(La), the inverse.'],
@@ -144,6 +151,7 @@
         const s = x => `${num(x)} s`;
         return build({
             question: `A server sends a ${F} MB file to a client over a path of three links with rates ${rates[0]} Mbps, ${rates[1]} Mbps and ${rates[2]} Mbps. Ignoring all delays except the bottleneck, roughly how long does the transfer take? (1 MB = 10^6 bytes)`,
+            questionZh: `服务器通过一条三段链路的路径向客户端发送一个 ${F} MB 的文件，三段链路速率分别为 ${rates[0]} Mbps、${rates[1]} Mbps 和 ${rates[2]} Mbps。除瓶颈外忽略所有时延，传输大约需要多久？（1 MB = 10^6 字节）`,
             answer: s(F * 8 / min), answerNote: `Bottleneck ${min} Mbps: ${F * 8} Mb / ${min} Mbps = ${s(F * 8 / min)}.`,
             wrong: [
                 [s(F * 8 / max), 'Uses the fastest link, which is not the bottleneck.'],
@@ -164,6 +172,7 @@
         const N = link * 1000 / user;
         return build({
             question: `A ${link} Mbps link is shared by users who each need ${user} kbps while active and are active only ${pct}% of the time. With circuit switching (a reserved ${user} kbps per user), how many users can the link support?`,
+            questionZh: `一条 ${link} Mbps 的链路由多个用户共享，每个用户活跃时需要 ${user} kbps，且只有 ${pct}% 的时间处于活跃状态。采用电路交换（每个用户预留 ${user} kbps）时，这条链路能支持多少个用户？`,
             answer: num(N), answerNote: `${link * 1000} / ${user} = ${num(N)}.`,
             wrong: [
                 [num(N * 100 / pct), 'Divides by the average rate; that is the packet-switching intuition, not circuit switching.'],
@@ -182,6 +191,7 @@
         const prop = km * 1e3 / 2e8, bdp = Rm * 1e6 * prop;
         return build({
             question: `A ${Rm} Mbps link is ${km} km long with propagation speed 2×10^8 m/s. What is its bandwidth-delay product (the number of bits 'in flight' on the link)?`,
+            questionZh: `一条 ${Rm} Mbps 的链路长 ${km} km，传播速度 2×10^8 m/s。它的带宽时延积（链路上"在途"的比特数）是多少？`,
             answer: sci(bdp), answerNote: `${Rm}×10^6 × ${num(prop * 1000, 3)} ms = ${sci(bdp)} bits.`,
             wrong: [
                 [sci(bdp * 10), 'Off by 10×.'],
@@ -200,6 +210,7 @@
         const n = rand(2, 10), rtt = rand(1, 10) * 5, ms = x => `${x} ms`;
         return build({
             question: `A web page has a base HTML file and ${n} small referenced images (transmission time negligible). RTT to the server is ${rtt} ms. With non-persistent HTTP and no parallel connections, how long until all objects are received?`,
+            questionZh: `一个网页包含一个基础 HTML 文件和 ${n} 张引用的小图片（传输时间可忽略）。到服务器的 RTT 为 ${rtt} ms。使用非持久 HTTP 且不开并行连接，收到所有对象需要多久？`,
             answer: ms(2 * (n + 1) * rtt), answerNote: `${n + 1} × 2 RTT = ${2 * (n + 1)} × ${rtt} = ${ms(2 * (n + 1) * rtt)}.`,
             wrong: [
                 [ms((2 + n) * rtt), `Persistent without pipelining: 2 RTT + ${n} × 1 RTT.`],
@@ -219,6 +230,7 @@
         const n = rand(2, 10), rtt = rand(1, 10) * 5, ms = x => `${x} ms`;
         return build({
             question: `A web page has a base HTML file and ${n} small images; RTT is ${rtt} ms. HTTP is persistent with pipelining: all ${n} image requests go out back-to-back on the open connection. How long until all objects are received?`,
+            questionZh: `一个网页包含一个基础 HTML 文件和 ${n} 张小图片；RTT 为 ${rtt} ms。HTTP 为带流水线的持久连接：${n} 个图片请求在已打开的连接上背靠背发出。收到所有对象需要多久？`,
             answer: ms(3 * rtt), answerNote: `2 RTT + 1 RTT = 3 × ${rtt} = ${ms(3 * rtt)}.`,
             wrong: [
                 [ms(4 * rtt), 'That is non-persistent with parallel connections (4 RTT).'],
@@ -237,6 +249,7 @@
         const dns = d[0] + d[1] + d[2], ms = x => `${x} ms`;
         return build({
             question: `A host's DNS cache is empty. Resolving a hostname visits three DNS servers one after another with RTTs of ${d[0]} ms, ${d[1]} ms and ${d[2]} ms. The web server's RTT is ${r0} ms, the page has no embedded objects, and HTTP is non-persistent. How long from the click until the page is received?`,
+            questionZh: `主机的 DNS 缓存为空。解析一个主机名要依次访问三台 DNS 服务器，RTT 分别为 ${d[0]} ms、${d[1]} ms 和 ${d[2]} ms。Web 服务器的 RTT 为 ${r0} ms，页面没有嵌入对象，HTTP 为非持久连接。从点击到收到页面需要多久？`,
             answer: ms(dns + 2 * r0), answerNote: `${dns} ms DNS + 2 × ${r0} ms = ${ms(dns + 2 * r0)}.`,
             wrong: [
                 [ms(dns + r0), 'Only one RTT to the web server; TCP setup is missing.'],
@@ -256,6 +269,7 @@
         const k = chain.length, total = 2 + 2 * k;
         return build({
             question: `A host asks its local DNS server for a name the local server has not cached. The local server then queries the ${chain.slice(0, -1).join(', ')} and ${chain[k - 1]} servers iteratively. Counting every query and every reply, how many DNS messages are exchanged in total?`,
+            questionZh: `主机向本地 DNS 服务器查询一个本地服务器没有缓存的名字。本地服务器随后以迭代方式依次查询 ${chain.map(c => ({ root: '根', TLD: '顶级域（TLD）', intermediate: '中间', authoritative: '权威' }[c])).join('、')} 服务器。把每个查询和每个回复都算上，总共交换多少条 DNS 消息？`,
             answer: String(total), answerNote: `2 + ${k} × 2 = ${total}.`,
             wrong: [
                 [String(2 * k), 'Forgets the host ↔ local DNS exchange.'],
@@ -275,6 +289,7 @@
             F, N, us, d, u,
             cs: Math.max(N * F / us, F / d),
             p2p: Math.max(F / us, F / d, N * F / (us + N * u)),
+            textZh: `一个 ${num(F / 1000)} Gbit 的文件要分发给 N = ${N} 个对等方。服务器上传速率为 ${us} Mbps，每个对等方下载速率为 ${d} Mbps、上传速率为 ${u} Mbps。`,
             text: `A ${num(F / 1000)} Gbit file goes to N = ${N} peers. The server upload rate is ${us} Mbps, every peer downloads at ${d} Mbps and uploads at ${u} Mbps.`
         };
     }
@@ -283,6 +298,7 @@
         const p = p2pParams(), s = x => `${num(x, 1)} s`;
         return build({
             question: `${p.text} What is the minimum distribution time with client-server distribution?`,
+            questionZh: `${p.textZh} 采用客户端-服务器分发时，最短分发时间是多少？`,
             answer: s(p.cs), answerNote: `max(${num(p.N * p.F / p.us, 1)}, ${num(p.F / p.d, 1)}) = ${s(p.cs)}.`,
             wrong: [
                 [s(p.p2p), 'That is the P2P bound for the same numbers.'],
@@ -301,6 +317,7 @@
         const p = p2pParams(), s = x => `${num(x, 1)} s`, agg = p.N * p.F / (p.us + p.N * p.u);
         return build({
             question: `${p.text} What is the minimum distribution time with P2P distribution?`,
+            questionZh: `${p.textZh} 采用 P2P 分发时，最短分发时间是多少？`,
             answer: s(p.p2p), answerNote: `max(${num(p.F / p.us, 1)}, ${num(p.F / p.d, 1)}, ${num(agg, 1)}) = ${s(p.p2p)}.`,
             wrong: [
                 [s(p.cs), 'That is the client-server time.'],
@@ -334,6 +351,7 @@
         const ck = ~s & 0xFFFF;
         return build({
             question: `Compute the Internet checksum of the three 16-bit words ${words.map(hex).join(', ')}.`,
+            questionZh: `计算三个 16 位字 ${words.map(hex).join(', ')} 的因特网校验和。`,
             answer: hex(ck), answerNote: `~${hex(s)} = ${hex(ck)}.`,
             wrong: [
                 [hex(s), 'This is the wrapped sum before taking the complement.'],
@@ -354,6 +372,7 @@
         const dt = Lb * 8 / (Rm * 1e6), U = dt / (rtt / 1000 + dt);
         return build({
             question: `A stop-and-wait sender sends ${Lb}-byte packets over a ${Rm} Mbps link with RTT = ${rtt} ms. What is the sender utilisation (fraction of time it is actually sending)?`,
+            questionZh: `一个停等协议发送方在 ${Rm} Mbps、RTT = ${rtt} ms 的链路上发送 ${Lb} 字节的包。发送方利用率（实际在发送的时间占比）是多少？`,
             answer: sci(U), answerNote: `${sci(dt)} / (${rtt}×10^-3 + ${sci(dt)}) = ${sci(U)}.`,
             wrong: [
                 [sci(U * 100), 'As if 100 packets were pipelined per RTT.'],
@@ -375,6 +394,7 @@
         const dev = rand(1, 6) * 5, est2 = 0.875 * est + 0.125 * sample, to = est2 + 4 * dev, ms = x => `${num(x)} ms`;
         return build({
             question: `TCP has EstimatedRTT = ${est} ms when a new SampleRTT of ${sample} ms arrives (α = 0.125). After the update DevRTT is ${dev} ms. What is the new TimeoutInterval?`,
+            questionZh: `TCP 当前 EstimatedRTT = ${est} ms，此时新到一个 SampleRTT = ${sample} ms（α = 0.125）。更新后 DevRTT 为 ${dev} ms。新的 TimeoutInterval 是多少？`,
             answer: ms(to), answerNote: `${num(est2)} + 4 × ${dev} = ${ms(to)}.`,
             wrong: [
                 [ms(est2), 'EstimatedRTT alone, no safety margin.'],
@@ -393,6 +413,7 @@
         const s2 = s1 + l1, s3 = s2 + l2, end = s3 + l3;
         return build({
             question: `Host A sends three TCP segments back-to-back: seq ${s1} (${l1} bytes), seq ${s2} (${l2} bytes) and seq ${s3} (${l3} bytes). The second segment is lost. What acknowledgement number does B send when the third segment arrives?`,
+            questionZh: `主机 A 背靠背发送三个 TCP 报文段：seq ${s1}（${l1} 字节）、seq ${s2}（${l2} 字节）和 seq ${s3}（${l3} 字节）。第二个报文段丢失。第三个报文段到达时，B 发送的确认号是多少？`,
             answer: String(s2), answerNote: `Still waiting for byte ${s2}.`,
             wrong: [
                 [String(end), `${end} is the next byte after the third segment; it would mean nothing is missing.`],
@@ -414,6 +435,7 @@
         const m = x => `${x} MSS`;
         return build({
             question: `A TCP connection starts in slow start with cwnd = 1 MSS and ssthresh = ${ss} MSS. No loss occurs. What is cwnd after ${n} RTTs?`,
+            questionZh: `一个 TCP 连接从慢启动开始，cwnd = 1 MSS，ssthresh = ${ss} MSS。没有丢包。${n} 个 RTT 之后 cwnd 是多少？`,
             answer: m(cw), answerNote: `${ss} after ${ssRtts} RTTs, then +1 per RTT: ${cw}.`,
             wrong: [
                 [m(2 ** n), 'Keeps doubling past ssthresh.'],
@@ -431,6 +453,7 @@
         const cw = rand(4, 20) * 2, h = cw / 2;
         return build({
             question: `TCP Reno has cwnd = ${cw} MSS when a timeout occurs. What are ssthresh and cwnd right afterwards?`,
+            questionZh: `TCP Reno 在 cwnd = ${cw} MSS 时发生超时。紧接着 ssthresh 和 cwnd 分别是多少？`,
             answer: `ssthresh = ${h}, cwnd = 1`, answerNote: 'Timeout → ssthresh = cwnd/2, cwnd = 1.',
             wrong: [
                 [`ssthresh = ${h}, cwnd = ${h + 3}`, "That is Reno's response to a triple duplicate ACK."],
@@ -450,6 +473,7 @@
         const fmt = v => v.map(minus).join(', ');
         return build({
             question: `A CDMA sender uses the code (${fmt(code)}). In one bit slot the receiver gets the chips (${fmt(rx)}). What data value does it decode?`,
+            questionZh: `一个 CDMA 发送方使用码片序列 (${fmt(code)})。在某个比特时隙中，接收方收到码片 (${fmt(rx)})。它解码出的数据值是多少？`,
             answer: minus(bit), answerNote: `Σ Z·c / M = ${minus(bit * M)}/${M} = ${minus(bit)}.`,
             wrong: [
                 [minus(-bit), 'Sign error.'],
@@ -467,6 +491,7 @@
         const N = rand(3, 8), p = pick([0.1, 0.2, 0.25, 0.3]), ans = p * (1 - p) ** (N - 1), f = x => num(x, 4);
         return build({
             question: `In slotted ALOHA, N = ${N} nodes each transmit in a slot with probability p = ${p}. What is the probability that one particular node succeeds in a given slot?`,
+            questionZh: `在时隙 ALOHA 中，N = ${N} 个节点各自以概率 p = ${p} 在一个时隙中发送。某个特定节点在给定时隙中成功发送的概率是多少？`,
             answer: f(ans), answerNote: `${p} × ${1 - p}^${N - 1} = ${f(ans)}.`,
             wrong: [
                 [f(N * ans), 'That is the probability that *any* node succeeds (N times larger).'],
