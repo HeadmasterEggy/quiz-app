@@ -49,8 +49,15 @@ A browser-based quiz app for USYD course revision.
 - **Course and week filters** — study one course or topic at a time
 - **Shuffle mode** — randomize the current quiz without saving state
 - **Inline explanations** — answer feedback shown below the question
-- **Keyboard shortcuts** — A/B/C/D to select, Enter to advance
+- **Keyboard shortcuts** — A/B/C/D to select, Enter to advance, ←/→ to move, S to show the answer (hints shown on desktop)
+- **Wide-screen layout** — on screens ≥1100px: always-visible question navigator with this run's accuracy, explanation pinned beside the question
 - **Wrong answer retry** — redo only the questions you missed in the current run
+- **Mistakes book** — per-question right/wrong history kept on this device; filter to *Unseen* or *Mistakes* only (no half-finished runs are saved)
+- **Exam mode** — answers stay hidden until you submit, then review every question
+- **Results by topic** — weakest topics from the knowledge locations; tap any question number to review it
+- **Semester grouping** — current semester's courses first, last course/week remembered
+- **Richer explanations** — "why your pick is wrong" callout, 中文要点, step-by-step working (KaTeX), option-by-option notes, and a 📖 link to the matching weekly notes on qiao1.top
+- **Unofficial-key tag** — questions whose answers have no official source are flagged
 - **Dark theme** — easy on the eyes
 
 ## 🚀 Run Locally
