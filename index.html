@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css?v=13">
+    <link rel="stylesheet" href="styles.css?v=14">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -53,6 +53,10 @@
                     <button id="headerRestartBtn" class="icon-btn" title="Restart" aria-label="Restart quiz">↻</button>
                 </div>
             </div>
+            <div class="practice-row" id="practiceRow">
+                <div class="pool-seg" id="poolSeg" role="radiogroup" aria-label="Which questions to practise"></div>
+                <button id="examToggleBtn" class="exam-toggle" aria-pressed="false" title="Exam mode: timed, answers revealed only after you submit">📝 Exam</button>
+            </div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
@@ -61,6 +65,13 @@
                 <button class="question-counter" id="questionCounter" aria-expanded="false" aria-controls="jumpPanel" title="Jump to a specific question">Ready</button>
                 <button id="nextNavBtn" class="nav-btn" title="Next question" aria-label="Next question" disabled>›</button>
             </div>
+        </div>
+
+        <div class="exam-bar hidden" id="examBar" role="status">
+            <span class="exam-bar-label">📝 Exam</span>
+            <span class="exam-timer" id="examTimer">00:00</span>
+            <span class="exam-answered" id="examAnswered">0/0 answered</span>
+            <button class="exam-submit-btn" id="examSubmitBtn">Submit</button>
         </div>
 
         <div class="jump-panel hidden" id="jumpPanel" role="dialog" aria-label="Jump to question">
@@ -73,7 +84,14 @@
             <p>Loading questions...</p>
         </div>
 
+        <div class="empty-card hidden" id="emptyCard">
+            <div class="empty-emoji" id="emptyEmoji">🎉</div>
+            <p class="empty-text" id="emptyText"></p>
+            <button class="empty-btn" id="emptyAllBtn">Practise all questions</button>
+        </div>
+
         <div class="quiz-card hidden" id="quizCard">
+            <div class="q-tags" id="qTags"></div>
             <div class="question-text" id="questionText"></div>
             <div class="maq-hint hidden" id="maqHint">Pick <strong>2</strong> answers</div>
             <div class="options" id="options"></div>
@@ -84,6 +102,7 @@
                 <div class="explanation-text" id="explanationText"></div>
             </div>
             <button class="next-btn hidden" id="nextBtn">Next →</button>
+            <button class="back-results-btn hidden" id="backResultsBtn">🏁 Back to results</button>
         </div>
 
         <div class="results-card hidden" id="resultsCard">
@@ -93,11 +112,15 @@
             <div class="score-percentage" id="scorePercentage"></div>
             <div class="score-breakdown" id="scoreBreakdown"></div>
             <div class="score-message" id="scoreMessage"></div>
+            <div class="review-hint">Tap a number to review that question</div>
             <div class="answers-review" id="answersReview"></div>
+            <div class="topic-summary hidden" id="topicSummary"></div>
             <div class="results-actions">
                 <button class="restart-btn" id="restartBtn">↻ Restart</button>
                 <button class="retry-wrong-btn hidden" id="retryWrongBtn">🔄 Retry Wrong Answers</button>
+                <button class="mistakes-btn hidden" id="mistakesBtn">📕 Mistakes book</button>
             </div>
+            <button class="results-clear-btn hidden" id="resultsClearBtn" title="Forget which questions you got right or wrong on this device">Clear answer history</button>
         </div>
     </div>
 
@@ -121,7 +144,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="data/questions.js?v=14"></script>
-    <script src="app.js?v=13"></script>
+    <script src="data/questions.js?v=15"></script>
+    <script src="app.js?v=14"></script>
 </body>
 </html>

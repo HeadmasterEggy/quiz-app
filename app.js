@@ -15,6 +15,19 @@ let shuffleEnabled = false;
 let isRetryMode = false;
 let explanationTimeout = null;
 
+// Per-question history (mistakes book). Only right/wrong counts per question id are
+// kept; an in-progress run is never saved or resumed.
+const STATS_KEY = 'quiz_question_stats_v1';
+const LAST_FILTER_KEY = 'quiz_last_filter_v1';
+let questionStats = {};
+let poolFilter = 'all';            // 'all' | 'unseen' | 'mistakes'
+let examMode = false;
+let examSubmitted = false;
+let examStartedAt = 0;
+let examElapsedMs = 0;
+let examTimerId = null;
+let resultsShown = false;
+
 const $ = id => document.getElementById(id);
 const show = id => $(id).classList.remove('hidden');
 const hide = id => $(id).classList.add('hidden');
@@ -61,6 +74,102 @@ function getKnowledgeLocation(q) {
     return '';
 }
 
+// ── Question history (mistakes book) ──
+function loadStats() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(STATS_KEY) || '{}');
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch { return {}; }
+}
+
+function saveStats() {
+    try { localStorage.setItem(STATS_KEY, JSON.stringify(questionStats)); } catch { /* ignore */ }
+}
+
+function getStat(q) {
+    return q && q.id != null ? questionStats[String(q.id)] : undefined;
+}
+
+function recordAttempt(q, ok) {
+    if (!q || q.id == null) return;
+    const key = String(q.id);
+    const s = questionStats[key] || { c: 0, w: 0 };
+    if (ok) s.c++; else s.w++;
+    s.last = ok ? 1 : 0;
+    s.t = Date.now();
+    questionStats[key] = s;
+    saveStats();
+}
+
+function isMistake(q) { const s = getStat(q); return !!s && s.last === 0; }
+function isUnseen(q) { return !getStat(q); }
+
+function matchesPool(q, pool) {
+    if (pool === 'unseen') return isUnseen(q);
+    if (pool === 'mistakes') return isMistake(q);
+    return true;
+}
+
+function clearStats() {
+    if (!window.confirm('Clear your answer history and mistakes book on this device?')) return;
+    questionStats = {};
+    saveStats();
+    if (poolFilter !== 'all') poolFilter = 'all';
+    saveLastFilter();
+    buildPoolControls();
+    startFresh(currentCourseFilter, currentWeekFilter);
+}
+
+function saveLastFilter() {
+    try {
+        localStorage.setItem(LAST_FILTER_KEY, JSON.stringify({ course: currentCourseFilter, week: currentWeekFilter, pool: poolFilter }));
+    } catch { /* ignore */ }
+}
+
+function loadLastFilter() {
+    try { return JSON.parse(localStorage.getItem(LAST_FILTER_KEY) || 'null'); } catch { return null; }
+}
+
+// Short topic name used to group results, taken from the knowledge location.
+function topicOf(q) {
+    if (q.topic) return q.topic;
+    const parts = getKnowledgeLocation(q).split(' / ').map(p => p.trim()).filter(Boolean);
+    if (!parts.length) return q.week || 'Other';
+    // Exam-sourced locations start with "Practice Exam 1 Q3" etc.; the topic follows.
+    if (/exam|quiz/i.test(parts[0]) && parts[1]) return parts[1];
+    return parts[0];
+}
+
+function formatDuration(ms) {
+    const total = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const sec = total % 60;
+    const pad = n => String(n).padStart(2, '0');
+    return h ? `${h}:${pad(m)}:${pad(sec)}` : `${pad(m)}:${pad(sec)}`;
+}
+
+function renderQuestionTags(q) {
+    const el = $('qTags');
+    if (!el) return;
+    el.innerHTML = '';
+    if (q.unofficialAnswer) {
+        const tag = document.createElement('span');
+        tag.className = 'q-tag q-tag-warn';
+        tag.textContent = '⚠ Unofficial answer key';
+        tag.title = 'No official answers were released for this paper. The key was worked out independently, so double-check it.';
+        el.appendChild(tag);
+    }
+    const s = getStat(q);
+    if (s && !(examMode && !examSubmitted)) {
+        const tag = document.createElement('span');
+        tag.className = 'q-tag ' + (s.last === 0 ? 'q-tag-miss' : 'q-tag-seen');
+        tag.textContent = s.last === 0 ? `📕 Missed last time · ✓${s.c} ✗${s.w}` : `Seen · ✓${s.c} ✗${s.w}`;
+        el.appendChild(tag);
+    }
+    el.classList.toggle('hidden', !el.childElementCount);
+}
+
 function renderExplanation(q) {
     const el = $('explanationText');
     if (!el) return;
@@ -80,14 +189,52 @@ function renderExplanation(q) {
         el.appendChild(row);
     }
 
+    if (q.unofficialAnswer) {
+        const warn = document.createElement('div');
+        warn.className = 'unofficial-note';
+        warn.textContent = '⚠ Unofficial answer: no official key was released for this paper. Double-check before relying on it.';
+        el.appendChild(warn);
+    }
+
     const body = document.createElement('div');
     body.className = 'explanation-body';
     setMath(body, cleanExplanationText(q.explanation));
     el.appendChild(body);
 }
 
-function getCourses() {
+function getRawCourses() {
     return window.QUIZ_DATA?.courses || [...new Set((window.QUIZ_DATA?.questions || []).map(q => q.course).filter(Boolean))];
+}
+
+function getCurrentSemester() { return window.QUIZ_DATA?.currentSemester || ''; }
+
+// Courses grouped by semester, current semester first, then newest to oldest.
+function getSemesterGroups() {
+    const semesters = window.QUIZ_DATA?.courseSemesters || {};
+    const groups = new Map();
+    getRawCourses().forEach(course => {
+        const sem = semesters[course] || '';
+        if (!groups.has(sem)) groups.set(sem, []);
+        groups.get(sem).push(course);
+    });
+    const current = getCurrentSemester();
+    return [...groups.entries()]
+        .sort(([a], [b]) => (b === current) - (a === current) || (a === '') - (b === '') || b.localeCompare(a))
+        .map(([semester, courses]) => ({ semester, courses, isCurrent: !!semester && semester === current }));
+}
+
+function getCourses() {
+    return getSemesterGroups().flatMap(g => g.courses);
+}
+
+function semesterLabel(group) {
+    if (!group.semester) return 'Other';
+    return group.isCurrent ? `${group.semester} · this semester` : group.semester;
+}
+
+function getDefaultCourse() {
+    const group = getSemesterGroups().find(g => g.isCurrent);
+    return group?.courses[0] || 'all';
 }
 
 function getWeeksForCourse(course) {
@@ -95,12 +242,15 @@ function getWeeksForCourse(course) {
     return window.QUIZ_DATA?.weeksByCourse?.[course] || [...new Set((window.QUIZ_DATA?.questions || []).filter(q => q.course === course).map(q => q.week).filter(Boolean))];
 }
 
-function getFilteredQuestions(course, week) {
-    return allQuestions.filter(q => {
+function getFilteredQuestions(course, week, pool = poolFilter) {
+    const items = (allQuestions.length ? allQuestions : (window.QUIZ_DATA?.questions || [])).filter(q => {
         const matchesCourse = course === 'all' || q.course === course;
         const matchesWeek = week === 'all' || q.week === week;
-        return matchesCourse && matchesWeek;
+        return matchesCourse && matchesWeek && matchesPool(q, pool);
     });
+    if (course !== 'all') return items;
+    const order = getCourses();
+    return [...items].sort((a, b) => order.indexOf(a.course) - order.indexOf(b.course));
 }
 
 function shuffled(items) {
@@ -247,7 +397,7 @@ function clearLegacyQuizMemory() {
 function loadQuestions(course = 'all', week = 'all') {
     currentCourseFilter = course;
     currentWeekFilter = week;
-    hide('quizCard'); hide('resultsCard');
+    hide('quizCard'); hide('resultsCard'); hide('emptyCard');
     show('loadingCard');
 
     if (!window.QUIZ_DATA || !window.QUIZ_DATA.questions) {
@@ -263,23 +413,107 @@ function startFresh(course = 'all', week = 'all') {
     currentCourseFilter = course;
     currentWeekFilter = week;
     const filtered = getFilteredQuestions(course, week);
-    questions = orderQuestions(filtered, course);
-    current = 0; answers.length = 0; isRetryMode = false;
     updateShuffleButton();
     hide('loadingCard');
+    beginRun(orderQuestions(filtered, course), false);
+}
+
+// Start a run over the given questions (a fresh quiz or a retry of wrong answers).
+function beginRun(items, retry) {
+    questions = items;
+    current = 0; answers.length = 0; isRetryMode = retry;
+    resultsShown = false; examSubmitted = false;
+    stopExamTimer();
+    examElapsedMs = 0;
+    hide('resultsCard'); hide('backResultsBtn');
+    if (!questions.length) { showEmptyState(); return; }
+    hide('emptyCard');
+    if (examMode) startExamTimer();
+    updateExamBar();
     showQuestion();
+}
+
+function showEmptyState() {
+    hide('quizCard'); hide('resultsCard'); hide('examBar');
+    const where = currentCourseFilter === 'all' ? 'all courses'
+        : currentWeekFilter === 'all' ? currentCourseFilter : `${currentCourseFilter} · ${currentWeekFilter}`;
+    const msg = poolFilter === 'mistakes' ? [`🎉`, `No mistakes to review in ${where}.`]
+        : poolFilter === 'unseen' ? [`✅`, `You have answered every question in ${where} at least once.`]
+        : [`📭`, `No questions in ${where}.`];
+    $('emptyEmoji').textContent = msg[0];
+    $('emptyText').textContent = msg[1];
+    $('emptyAllBtn').classList.toggle('hidden', poolFilter === 'all');
+    $('questionCounter').textContent = 'No questions';
+    $('progressFill').style.width = '0%';
+    show('emptyCard');
+    updateNavButtons();
+}
+
+// ── Exam mode ──
+function startExamTimer() {
+    stopExamTimer();
+    examStartedAt = Date.now() - examElapsedMs;
+    examTimerId = setInterval(updateExamBar, 1000);
+}
+
+function stopExamTimer() {
+    if (examTimerId) {
+        clearInterval(examTimerId);
+        examTimerId = null;
+        examElapsedMs = Date.now() - examStartedAt;
+    }
+}
+
+function examInProgress() { return examMode && !examSubmitted; }
+
+function updateExamBar() {
+    const bar = $('examBar');
+    if (!bar) return;
+    if (!examMode || !questions.length) { bar.classList.add('hidden'); return; }
+    bar.classList.remove('hidden');
+    const elapsed = examTimerId ? Date.now() - examStartedAt : examElapsedMs;
+    $('examTimer').textContent = `⏱ ${formatDuration(elapsed)}`;
+    const done = answers.filter(Boolean).length;
+    $('examAnswered').textContent = examSubmitted ? 'Submitted' : `${done}/${questions.length} answered`;
+    $('examSubmitBtn').classList.toggle('hidden', examSubmitted);
+}
+
+function toggleExamMode() {
+    examMode = !examMode;
+    const btn = $('examToggleBtn');
+    btn.setAttribute('aria-pressed', examMode ? 'true' : 'false');
+    btn.title = examMode ? 'Exam mode on: answers are revealed after you submit' : 'Exam mode: timed, answers revealed only after you submit';
+    btn.blur(); // keep A/B/C/D and Enter shortcuts working right after toggling
+    startFresh(currentCourseFilter, currentWeekFilter);
+}
+
+function submitExam() {
+    if (!examInProgress()) return;
+    const unanswered = questions.length - answers.filter(Boolean).length;
+    if (unanswered && !window.confirm(`${unanswered} question${unanswered !== 1 ? 's are' : ' is'} unanswered. Submit anyway?`)) return;
+    examSubmitted = true;
+    stopExamTimer();
+    answers.forEach(a => { if (a) recordAttempt(a.question, a.correct); });
+    buildPoolControls();
+    updateExamBar();
+    showResults();
 }
 
 function buildCourseFilter() {
     const sel = $('courseFilter');
     if (!sel) return;
     sel.innerHTML = '<option value="all">All Courses</option>';
-    getCourses().forEach(course => {
-        const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === course).length;
-        const option = document.createElement('option');
-        option.value = course;
-        option.textContent = `${course} (${count} Qs)`;
-        sel.appendChild(option);
+    getSemesterGroups().forEach(group => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = semesterLabel(group);
+        group.courses.forEach(course => {
+            const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === course).length;
+            const option = document.createElement('option');
+            option.value = course;
+            option.textContent = `${course} (${count} Qs)`;
+            optgroup.appendChild(option);
+        });
+        sel.appendChild(optgroup);
     });
     sel.value = currentCourseFilter;
     sel.onchange = () => selectCourse(sel.value);
@@ -297,6 +531,8 @@ function selectCourse(course) {
     buildFilterChips();
     if (course === 'all') closeDrawer();
     loadQuestions(course, 'all');
+    buildPoolControls();
+    saveLastFilter();
 }
 
 function selectWeek(week) {
@@ -306,6 +542,51 @@ function selectWeek(week) {
     buildFilterChips();
     closeDrawer();
     loadQuestions(currentCourseFilter, week);
+    buildPoolControls();
+    saveLastFilter();
+}
+
+function selectPool(pool) {
+    poolFilter = pool;
+    buildPoolControls();
+    saveLastFilter();
+    startFresh(currentCourseFilter, currentWeekFilter);
+}
+
+// Segmented All / Unseen / Mistakes control, counted within the current course & week.
+function buildPoolControls() {
+    const seg = $('poolSeg');
+    if (!seg) return;
+    seg.innerHTML = '';
+    const base = getFilteredQuestions(currentCourseFilter, currentWeekFilter, 'all');
+    const pools = [
+        ['all', 'All', base.length],
+        ['unseen', 'Unseen', base.filter(isUnseen).length],
+        ['mistakes', '📕 Mistakes', base.filter(isMistake).length]
+    ];
+    pools.forEach(([value, label, count]) => {
+        const btn = document.createElement('button');
+        btn.className = 'pool-btn' + (poolFilter === value ? ' active' : '');
+        btn.setAttribute('role', 'radio');
+        btn.setAttribute('aria-checked', poolFilter === value ? 'true' : 'false');
+        btn.textContent = label;
+        const n = document.createElement('span');
+        n.className = 'pool-count';
+        n.textContent = count;
+        btn.appendChild(n);
+        btn.onclick = () => selectPool(value);
+        seg.appendChild(btn);
+    });
+    if (Object.keys(questionStats).length) {
+        const clear = document.createElement('button');
+        clear.className = 'pool-clear';
+        clear.textContent = 'Clear history';
+        clear.title = 'Forget which questions you got right or wrong on this device';
+        clear.onclick = clearStats;
+        seg.appendChild(clear);
+    }
+    const resultsClear = $('resultsClearBtn');
+    if (resultsClear) resultsClear.classList.toggle('hidden', !Object.keys(questionStats).length);
 }
 
 function buildFilterChips() {
@@ -330,12 +611,18 @@ function buildFilterChips() {
 
     courseList.innerHTML = '';
     courseList.appendChild(makeChip('All Courses', allQs.length, currentCourseFilter === 'all', () => selectCourse('all')));
-    getCourses().forEach(course => {
-        const count = allQs.filter(q => q.course === course).length;
-        const chip = makeChip(course, count, currentCourseFilter === course, () => selectCourse(course));
-        const fullTitle = window.QUIZ_DATA?.courseTitles?.[course];
-        if (fullTitle) chip.title = fullTitle;
-        courseList.appendChild(chip);
+    getSemesterGroups().forEach(group => {
+        const label = document.createElement('div');
+        label.className = 'chip-group-label' + (group.isCurrent ? ' current' : '');
+        label.textContent = semesterLabel(group);
+        courseList.appendChild(label);
+        group.courses.forEach(course => {
+            const count = allQs.filter(q => q.course === course).length;
+            const chip = makeChip(course, count, currentCourseFilter === course, () => selectCourse(course));
+            const fullTitle = window.QUIZ_DATA?.courseTitles?.[course];
+            if (fullTitle) chip.title = fullTitle;
+            courseList.appendChild(chip);
+        });
     });
 
     weekList.innerHTML = '';
@@ -456,10 +743,29 @@ function showQuestion() {
     questionText.classList.remove('q-fade');
     void questionText.offsetWidth;
     questionText.classList.add('q-fade');
+    renderQuestionTags(q);
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
-    show('revealBtn');
-    show('quizCard'); hide('resultsCard');
+    $('nextBtn').classList.remove('exam-next');
+    show('quizCard'); hide('resultsCard'); hide('emptyCard');
+    $('backResultsBtn').classList.toggle('hidden', !resultsShown);
+    const a = answers[current];
+    if (examInProgress()) {
+        hide('revealBtn');
+        if (a) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            if (Array.isArray(a.selected)) {
+                selectedMAQ = [...a.selected];
+                selectedMAQ.forEach(i => { allBtns[i]?.classList.add('selected'); allBtns[i]?.setAttribute('aria-pressed', 'true'); });
+                updateMaqHint();
+            } else allBtns[a.selected]?.classList.add('selected');
+        }
+        showExamNext();
+    } else if (a || (examMode && examSubmitted)) {
+        renderReview(q, a);
+    } else {
+        show('revealBtn');
+    }
     updateNavButtons();
 }
 
@@ -495,6 +801,8 @@ function navNext() {
         current++;
         showQuestion();
         scrollQuizIntoView();
+    } else if (examInProgress()) {
+        submitExam();
     } else {
         showResults();
     }
@@ -506,16 +814,65 @@ function scrollQuizIntoView() {
 
 // ── MCQ ──
 function handleAnswer(index, btn) {
-    if (answered) return; answered = true;
     const q = questions[current];
+    if (examInProgress()) {
+        // Exam mode: just record the choice; it can be changed until submit.
+        answers[current] = { question: q, selected: index, correct: index === q.correct };
+        document.querySelectorAll('.option-btn').forEach((b, i) => b.classList.toggle('selected', i === index));
+        hapticFeedback(8);
+        updateExamBar();
+        showExamNext();
+        return;
+    }
+    if (answered) return; answered = true;
     const allBtns = document.querySelectorAll('.option-btn');
     const isCorrect = index === q.correct;
     allBtns.forEach(b => b.classList.add('disabled'));
     btn.classList.add(isCorrect ? 'correct' : 'wrong');
     if (!isCorrect) allBtns[q.correct]?.classList.add('correct');
     hapticFeedback(isCorrect ? 12 : [10, 60, 18]);
-    answers[current] = { question: q, correct: isCorrect };
+    answers[current] = { question: q, selected: index, correct: isCorrect };
+    recordAttempt(q, isCorrect);
+    buildPoolControls();
     explanationTimeout = setTimeout(showInlineExplanation, 400, isCorrect, q);
+}
+
+function showExamNext() {
+    const next = $('nextBtn');
+    next.disabled = false;
+    next.textContent = current < questions.length - 1 ? 'Next →' : 'Submit exam 🏁';
+    next.classList.add('exam-next');
+    show('nextBtn');
+}
+
+function maqIsCorrect(q, selected) {
+    const a = [...selected].sort((x, y) => x - y);
+    const b = [...q.correct].sort((x, y) => x - y);
+    return a.length === b.length && a.every((v, i) => v === b[i]);
+}
+
+// Show an already-answered (or, after an exam, unanswered) question as a locked review.
+function renderReview(q, a) {
+    answered = true;
+    const allBtns = document.querySelectorAll('.option-btn');
+    const correctIdx = isMAQ(q) ? q.correct : [q.correct];
+    const selected = a ? (Array.isArray(a.selected) ? a.selected : (a.selected != null ? [a.selected] : [])) : [];
+    allBtns.forEach(b => b.classList.add('disabled'));
+    correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
+    selected.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
+    hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
+    const badge = $('resultBadge');
+    if (a) {
+        badge.className = 'result-badge ' + (a.correct ? 'correct' : 'wrong');
+        badge.textContent = a.correct ? '✓ Correct!' : '✗ Wrong';
+    } else {
+        badge.className = 'result-badge revealed';
+        badge.textContent = '— Not answered';
+    }
+    renderExplanation(q);
+    show('explanationInline'); show('nextBtn');
+    $('nextBtn').disabled = false;
+    $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
 }
 
 // ── MAQ ──
@@ -533,6 +890,14 @@ function handleMAQClick(index, btn) {
         hapticFeedback(8);
     }
     updateMaqHint();
+    if (examInProgress()) {
+        const q = questions[current];
+        if (selectedMAQ.length === maxSelect) answers[current] = { question: q, selected: [...selectedMAQ], correct: maqIsCorrect(q, selectedMAQ) };
+        else delete answers[current];
+        updateExamBar();
+        showExamNext();
+        return;
+    }
     if (selectedMAQ.length === maxSelect) {
         show('maqCheckBtn');
         // On compact viewports the check button is sticky-pinned, so it is already visible
@@ -546,14 +911,14 @@ function checkMAQ() {
     if (answered || selectedMAQ.length !== maxSelect) return; answered = true;
     const correctIdx = q.correct;
     const allBtns = document.querySelectorAll('.option-btn');
-    const sortedSel = [...selectedMAQ].sort((a, b) => a - b);
-    const sortedCorrect = [...correctIdx].sort((a, b) => a - b);
-    const ok = sortedSel.length === sortedCorrect.length && sortedSel.every((val, i) => val === sortedCorrect[i]);
+    const ok = maqIsCorrect(q, selectedMAQ);
     allBtns.forEach(b => b.classList.add('disabled'));
     correctIdx.forEach(i => allBtns[i]?.classList.add('correct'));
     selectedMAQ.forEach(i => { if (!correctIdx.includes(i)) allBtns[i]?.classList.add('wrong'); });
     hapticFeedback(ok ? 12 : [10, 60, 18]);
-    answers[current] = { question: q, correct: ok };
+    answers[current] = { question: q, selected: [...selectedMAQ], correct: ok };
+    recordAttempt(q, ok);
+    buildPoolControls();
     explanationTimeout = setTimeout(showInlineExplanation, 400, ok, q);
 }
 
@@ -597,6 +962,7 @@ function showResults() {
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
     $('questionCounter').textContent = `Done · ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
+    $('jumpResultsBtn').textContent = '🏁 View Results';
     const total = questions.length;
     const correct = answers.filter(a => a && a.correct).length;
     const answeredCount = answers.filter(Boolean).length;
@@ -608,10 +974,17 @@ function showResults() {
     $('scoreBreakdown').textContent = `${correct} ✓ · ${wrong} ✗` + (skipped ? ` · ${skipped} skipped` : '');
     $('scoreMessage').textContent = pct === 100 ? 'Perfect! 🎉' : pct >= 80 ? 'Great job! 👏' : pct >= 60 ? 'Good effort! 💪' : 'Keep practicing! 📚';
 
+    resultsShown = true;
+    hide('backResultsBtn');
+    if (examMode && examSubmitted) {
+        $('scoreBreakdown').textContent += ` · ⏱ ${formatDuration(examElapsedMs)}`;
+    }
+
     const review = $('answersReview'); review.innerHTML = '';
     for (let i = 0; i < total; i++) {
         const a = answers[i];
-        const dot = document.createElement('span');
+        const dot = document.createElement('button');
+        dot.onclick = () => jumpToQuestion(i);
         dot.className = 'answer-dot ' + (a ? (a.correct ? 'dot-correct' : 'dot-wrong') : 'dot-skipped');
         dot.textContent = i + 1;
         dot.title = a
@@ -619,6 +992,15 @@ function showResults() {
             : `Q${i + 1}: skipped`;
         review.appendChild(dot);
     }
+
+    renderTopicSummary();
+
+    const mistakesInScope = getFilteredQuestions(currentCourseFilter, currentWeekFilter, 'mistakes').length;
+    const mistakesBtn = $('mistakesBtn');
+    if (mistakesInScope && poolFilter !== 'mistakes') {
+        mistakesBtn.textContent = `📕 Mistakes book (${mistakesInScope})`;
+        show('mistakesBtn');
+    } else hide('mistakesBtn');
 
     const wrongCount = wrong;
     if (wrongCount > 0 && !isRetryMode) {
@@ -629,12 +1011,54 @@ function showResults() {
     updateNavButtons();
 }
 
+// Topics with the most wrong answers in this run, from each question's knowledge location.
+function renderTopicSummary() {
+    const box = $('topicSummary');
+    box.innerHTML = '';
+    const byTopic = new Map();
+    answers.forEach(a => {
+        if (!a) return;
+        const q = a.question;
+        const name = (currentCourseFilter === 'all' ? `${q.course} · ` : '') + topicOf(q);
+        const t = byTopic.get(name) || { n: 0, wrong: 0 };
+        t.n++; if (!a.correct) t.wrong++;
+        byTopic.set(name, t);
+    });
+    const weak = [...byTopic.entries()].filter(([, t]) => t.wrong > 0)
+        .sort(([, a], [, b]) => b.wrong - a.wrong || (b.wrong / b.n) - (a.wrong / a.n));
+    if (!byTopic.size) { box.classList.add('hidden'); return; }
+    const title = document.createElement('div');
+    title.className = 'topic-title';
+    title.textContent = weak.length ? 'Topics to review' : 'No weak topics in this run 🎉';
+    box.appendChild(title);
+    weak.slice(0, 8).forEach(([name, t]) => {
+        const row = document.createElement('div');
+        row.className = 'topic-row';
+        const label = document.createElement('span');
+        label.className = 'topic-name';
+        setMath(label, name);
+        const stat = document.createElement('span');
+        stat.className = 'topic-stat';
+        stat.textContent = `✗ ${t.wrong} / ${t.n}`;
+        const bar = document.createElement('span');
+        bar.className = 'topic-bar';
+        bar.style.setProperty('--miss', `${Math.round((t.wrong / t.n) * 100)}%`);
+        row.append(label, stat, bar);
+        box.appendChild(row);
+    });
+    if (weak.length > 8) {
+        const more = document.createElement('div');
+        more.className = 'topic-more';
+        more.textContent = `+${weak.length - 8} more topics with mistakes`;
+        box.appendChild(more);
+    }
+    box.classList.remove('hidden');
+}
+
 function retryWrongAnswers() {
     const wrongQs = answers.filter(a => a && !a.correct).map(a => a.question);
     if (!wrongQs.length) return;
-    questions = orderQuestions(wrongQs, currentCourseFilter);
-    current = 0; answers.length = 0; isRetryMode = true;
-    showQuestion();
+    beginRun(orderQuestions(wrongQs, currentCourseFilter), true);
 }
 
 // ── Settings drawer (mobile) ──
@@ -704,11 +1128,11 @@ function buildJumpGrid() {
         const chip = document.createElement('button');
         chip.className = 'jump-chip';
         const a = answers[i];
-        if (a) chip.classList.add(a.correct ? 'answered-correct' : 'answered-wrong');
+        if (a) chip.classList.add(examInProgress() ? 'answered-pending' : (a.correct ? 'answered-correct' : 'answered-wrong'));
         if (i === current) chip.classList.add('current');
         chip.textContent = i + 1;
         const sourceParts = [q.course, q.week].filter(Boolean);
-        chip.title = `Q${i + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + (a ? (a.correct ? ' · ✓' : ' · ✗') : '');
+        chip.title = `Q${i + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + (a ? (examInProgress() ? ' · answered' : (a.correct ? ' · ✓' : ' · ✗')) : '');
         chip.onclick = () => jumpToQuestion(i);
         grid.appendChild(chip);
     });
@@ -716,6 +1140,7 @@ function buildJumpGrid() {
 
 function openJumpPanel() {
     buildJumpGrid();
+    $('jumpResultsBtn').textContent = examInProgress() ? '🏁 Submit exam' : '🏁 View Results';
     show('jumpPanel');
     $('questionCounter').setAttribute('aria-expanded', 'true');
     const cur = document.querySelector('.jump-chip.current');
@@ -747,6 +1172,7 @@ function restart() {
 // ── Event bindings ──
 $('nextBtn').onclick = () => {
     if ($('nextBtn').disabled) return;
+    if (examInProgress() && current >= questions.length - 1) { submitExam(); return; }
     $('nextBtn').disabled = true;
     current++;
     if (current < questions.length) { showQuestion(); scrollQuizIntoView(); }
@@ -765,7 +1191,13 @@ $('drawerBackdrop').onclick = () => { if (Date.now() - drawerOpenedAt > 350) clo
 $('prevNavBtn').onclick = navPrev;
 $('nextNavBtn').onclick = navNext;
 $('revealBtn').onclick = revealAnswer;
-$('jumpResultsBtn').onclick = () => { closeJumpPanel(); showResults(); };
+$('jumpResultsBtn').onclick = () => { closeJumpPanel(); if (examInProgress()) submitExam(); else showResults(); };
+$('examToggleBtn').onclick = toggleExamMode;
+$('examSubmitBtn').onclick = submitExam;
+$('backResultsBtn').onclick = () => { showResults(); window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }); };
+$('mistakesBtn').onclick = () => selectPool('mistakes');
+$('resultsClearBtn').onclick = clearStats;
+$('emptyAllBtn').onclick = () => selectPool('all');
 $('fabMainBtn').onclick = toggleFab;
 $('fabShuffleBtn').onclick = () => { closeFab(); toggleShuffle(); };
 $('fabThemeBtn').onclick = toggleTheme;
@@ -802,7 +1234,7 @@ document.addEventListener('keydown', (e) => {
         }
     }
     if (e.key === 'Enter') {
-        if (answered && !$('nextBtn').classList.contains('hidden')) $('nextBtn').click();
+        if ((answered || examInProgress()) && !$('nextBtn').classList.contains('hidden')) $('nextBtn').click();
         else if (!$('resultsCard').classList.contains('hidden')) $('restartBtn').click();
     }
 });
@@ -810,8 +1242,34 @@ document.addEventListener('keydown', (e) => {
 // ── Init ──
 function initApp() {
     initTheme(); clearLegacyQuizMemory(); initShuffle();
-    buildCourseFilter(); buildWeekFilter(); buildFilterChips();
-    loadQuestions('all', 'all');
+    questionStats = loadStats();
+    // Reopen the last course/week/pool, else the first course of the current semester.
+    const last = loadLastFilter();
+    const courses = getCourses();
+    let course = getDefaultCourse(), week = 'all';
+    if (last && (last.course === 'all' || courses.includes(last.course))) {
+        course = last.course;
+        if (course !== 'all' && getWeeksForCourse(course).includes(last.week)) week = last.week;
+        if (['all', 'unseen', 'mistakes'].includes(last.pool)) poolFilter = last.pool;
+    }
+    currentCourseFilter = course; currentWeekFilter = week;
+    buildCourseFilter(); buildWeekFilter(); buildFilterChips(); buildPoolControls();
+    loadQuestions(course, week);
+    initFabAutoHide();
+}
+
+// Mobile: tuck the floating button away while scrolling down so it never covers an option.
+function initFabAutoHide() {
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        const stack = $('fabStack');
+        if (!stack || isFabOpen()) { lastY = y; return; }
+        const nearBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 24;
+        stack.classList.toggle('fab-tucked', y > lastY + 4 && !nearBottom);
+        if (y < lastY - 4 || nearBottom) stack.classList.remove('fab-tucked');
+        lastY = y;
+    }, { passive: true });
 }
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);

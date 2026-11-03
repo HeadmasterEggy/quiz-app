@@ -1483,3 +1483,324 @@ body.drawer-open .fab-stack {
         height: 32px;
     }
 }
+
+/* ── Practice row: All / Unseen / Mistakes + exam mode ── */
+.practice-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.pool-seg {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    box-shadow: var(--card-shadow);
+}
+
+.pool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.pool-btn .pool-count {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.18);
+}
+
+.pool-btn.active {
+    background: var(--primary);
+    color: #fff;
+}
+
+.pool-btn.active .pool-count { background: rgba(255, 255, 255, 0.25); }
+
+@media (hover: hover) {
+    .pool-btn:not(.active):hover { color: var(--primary-light); }
+    .exam-toggle:hover, .pool-clear:hover { border-color: var(--primary); color: var(--primary-light); }
+}
+
+.pool-btn:focus-visible, .exam-toggle:focus-visible, .pool-clear:focus-visible, .answer-dot:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+.pool-clear {
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+}
+
+.exam-toggle {
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.exam-toggle[aria-pressed="true"] {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.16);
+    color: #d97706;
+}
+
+/* ── Exam bar ── */
+.exam-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.1);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.exam-bar-label { color: #d97706; }
+.exam-timer { font-variant-numeric: tabular-nums; }
+.exam-answered { color: var(--text-muted); font-weight: 500; flex: 1; }
+
+.exam-submit-btn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #f59e0b;
+    color: #1f1300;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* ── Question tags ── */
+.q-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.q-tag {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.q-tag-warn {
+    border-color: rgba(245, 158, 11, 0.5);
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
+    cursor: help;
+}
+
+.q-tag-miss {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+.unofficial-note {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #d97706;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ── Empty state ── */
+.empty-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 28px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+}
+
+.empty-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+.empty-text { color: var(--text); margin-bottom: 18px; line-height: 1.5; }
+
+.empty-btn, .back-results-btn, .mistakes-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    min-height: 48px;
+}
+
+.empty-btn { width: auto; padding: 12px 22px; border-color: var(--primary); color: var(--primary-light); }
+.back-results-btn { margin-top: 10px; }
+
+.mistakes-btn {
+    border-color: rgba(239, 68, 68, 0.35);
+    color: var(--error);
+}
+
+/* ── Results: clickable dots + topic summary ── */
+.review-hint {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin: 4px 0 10px;
+}
+
+button.answer-dot {
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.topic-summary {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+}
+
+.topic-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.topic-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 10px;
+    align-items: baseline;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
+
+.topic-name { min-width: 0; overflow-wrap: anywhere; }
+.topic-stat { color: var(--error); font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
+
+.topic-bar {
+    grid-column: 1 / -1;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--error) var(--miss), var(--border) var(--miss));
+    opacity: 0.75;
+}
+
+.topic-more { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ── Semester groups in the course picker ── */
+.chip-group-label {
+    flex-basis: 100%;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+.chip-group-label.current { color: var(--primary-light); }
+
+.jump-chip.answered-pending {
+    border-color: #f59e0b;
+    color: #d97706;
+}
+
+@media (max-width: 600px) {
+    /* Room under the last card so the floating button never has to cover content */
+    .container { padding-bottom: 72px; }
+
+    .fab-stack { transition: transform 0.25s ease, opacity 0.25s ease; }
+    .fab-stack.fab-tucked {
+        transform: translateY(140%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Let the course · week chip use a full line instead of being cut off */
+    .question-counter { flex-wrap: wrap; row-gap: 4px; }
+    .counter-chip { max-width: 100%; }
+
+    .practice-row { margin-bottom: 12px; }
+    .pool-btn { padding: 6px 10px; }
+    .exam-toggle { padding: 8px 12px; }
+    .exam-bar { gap: 8px; padding: 9px 12px; font-size: 0.82rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fab-stack, .pool-btn, .exam-toggle { transition: none !important; }
+}
+
+.next-btn.exam-next { margin-top: 16px; }
+
+.results-clear-btn {
+    display: block;
+    margin: 14px auto 0;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.78rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.pool-btn, .exam-toggle { white-space: nowrap; }
+
+@media (max-width: 600px) {
+    .pool-clear { display: none; }
+    .practice-row { gap: 6px; }
+    .pool-seg { gap: 2px; padding: 3px; }
+    .pool-btn { padding: 6px 8px; font-size: 0.78rem; gap: 4px; }
+    .pool-btn .pool-count { padding: 1px 5px; }
+    .exam-toggle { padding: 8px 10px; font-size: 0.78rem; }
+}
+
+@media (max-width: 600px) {
+    /* The wrapped course chip already signals the jump panel; a lone caret line wastes space */
+    .question-counter .counter-caret { display: none; }
+}

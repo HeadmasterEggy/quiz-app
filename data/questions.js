@@ -13,6 +13,14 @@ window.QUIZ_DATA = {
     "COMP5416": "COMP5416 Advanced Network Technologies",
     "CSYS5030": "CSYS5030 Information Theory and Self-Organisation"
   },
+  "courseSemesters": {
+    "COMP5318": "2026 S2",
+    "COMP5416": "2026 S2",
+    "CSYS5030": "2026 S2",
+    "INFO5995": "2026 S1",
+    "COMP5270": "2026 S1"
+  },
+  "currentSemester": "2026 S2",
   "questions": [
     {
       "question": "Rice's theorem says that no automatic tool can perfectly decide every non-trivial semantic property of every possible program. What is the most practical lesson for security analysis?",
@@ -5614,11 +5622,12 @@ window.QUIZ_DATA = {
         "There is not enough information to say"
       ],
       "correct": 1,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Assuming a fair die, each face has p = 1/6, so the information content is h = −log₂(1/6) = log₂ 6 ≈ 2.58 bits (equal to H for a uniform variable). If the die were biased you would need its distribution, but the standard intended reading is a fair die.",
+      "explanation": "Assuming a fair die, each face has p = 1/6, so the information content is h = −log₂(1/6) = log₂ 6 ≈ 2.58 bits (equal to H for a uniform variable). If the die were biased you would need its distribution, but the standard intended reading is a fair die.",
       "id": 369,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q1 / Shannon information content"
+      "knowledgeLocation": "Sample Exam Q1 / Shannon information content",
+      "unofficialAnswer": true
     },
     {
       "question": "______________ is to Entropy as Pointwise Mutual Information is to Mutual Information.",
@@ -5629,11 +5638,12 @@ window.QUIZ_DATA = {
         "Transfer Entropy"
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Entropy is the average of the Shannon information content h(x) = −log₂ p(x), just as MI is the average of the pointwise (local) MI i(x;y).",
+      "explanation": "Entropy is the average of the Shannon information content h(x) = −log₂ p(x), just as MI is the average of the pointwise (local) MI i(x;y).",
       "id": 370,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q2 / Local vs average measures"
+      "knowledgeLocation": "Sample Exam Q2 / Local vs average measures",
+      "unofficialAnswer": true
     },
     {
       "question": "______________ are to bits as centimetres are to inches.",
@@ -5644,11 +5654,12 @@ window.QUIZ_DATA = {
         "shannons"
       ],
       "correct": 0,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Nats (log base e) and bits (log base 2) are two units for the same quantity, like cm and inches. A 'shannon' is just another name for a bit, so it is not the analogous pair.",
+      "explanation": "Nats (log base e) and bits (log base 2) are two units for the same quantity, like cm and inches. A 'shannon' is just another name for a bit, so it is not the analogous pair.",
       "id": 371,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q3 / Units of information"
+      "knowledgeLocation": "Sample Exam Q3 / Units of information",
+      "unofficialAnswer": true
     },
     {
       "question": "A random variable $X$ takes values 0 and 1, where $p(x=1) = 0.125$. Which of the following is correct?",
@@ -5659,11 +5670,12 @@ window.QUIZ_DATA = {
         "$h(x=1) = 3.00$ bits"
       ],
       "correct": 3,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). h(x=1) = −log₂ 0.125 = −log₂ 2⁻³ = 3 bits.",
+      "explanation": "h(x=1) = −log₂ 0.125 = −log₂ 2⁻³ = 3 bits.",
       "id": 372,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q4 / Shannon information content"
+      "knowledgeLocation": "Sample Exam Q4 / Shannon information content",
+      "unofficialAnswer": true
     },
     {
       "question": "A random variable $X$ has $p(0)=0.1$, $p(1)=0.25$, $p(2)=0.4$, $p(3)=0.25$. Which of the following is the correct Shannon entropy?",
@@ -5674,11 +5686,12 @@ window.QUIZ_DATA = {
         "$H(X) = 1.86$ bits"
       ],
       "correct": 3,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H = 0.1·log₂10 + 2·0.25·log₂4 + 0.4·log₂2.5 ≈ 0.332 + 1.000 + 0.529 ≈ 1.86 bits.",
+      "explanation": "H = 0.1·log₂10 + 2·0.25·log₂4 + 0.4·log₂2.5 ≈ 0.332 + 1.000 + 0.529 ≈ 1.86 bits.",
       "id": 373,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q5 / Shannon entropy calculation"
+      "knowledgeLocation": "Sample Exam Q5 / Shannon entropy calculation",
+      "unofficialAnswer": true
     },
     {
       "question": "A random variable $X$ has alphabet $\\{0,1,2,3\\}$. I know only that $p(x=1) = 0.5$. What am I able to conclude?",
@@ -5689,11 +5702,12 @@ window.QUIZ_DATA = {
         "I can’t determine any of the above without knowing the precise probabilities for the other symbols."
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). h(x=1) = −log₂ 0.5 = 1 bit. By the grouping (chain) rule, H(X) = H(binary: x=1 vs x≠1) + 0.5·H(X | x≠1) ≥ H(0.5) = 1 bit. So both hold.",
+      "explanation": "h(x=1) = −log₂ 0.5 = 1 bit. By the grouping (chain) rule, H(X) = H(binary: x=1 vs x≠1) + 0.5·H(X | x≠1) ≥ H(0.5) = 1 bit. So both hold.",
       "id": 374,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q6 / Entropy bounds"
+      "knowledgeLocation": "Sample Exam Q6 / Entropy bounds",
+      "unofficialAnswer": true
     },
     {
       "question": "$X$ has $p(0)=0.7$, $p(1)=p(2)=p(3)=0.1$. $Y$ has $p(0)=0.7$, $p(1)=0.3$. Which of the following is correct?",
@@ -5704,11 +5718,12 @@ window.QUIZ_DATA = {
         "$I(X;Y) > 0$ bits"
       ],
       "correct": 0,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H(X) ≈ 0.7·0.515 + 3·0.1·3.32 ≈ 1.36 bits > H(Y) ≈ 0.88 bits. h(x=0) = h(y=0) = −log₂0.7 (equal, not greater). I(X;Y) cannot be determined without the joint distribution.",
+      "explanation": "H(X) ≈ 0.7·0.515 + 3·0.1·3.32 ≈ 1.36 bits > H(Y) ≈ 0.88 bits. h(x=0) = h(y=0) = −log₂0.7 (equal, not greater). I(X;Y) cannot be determined without the joint distribution.",
       "id": 375,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q7 / Comparing entropies"
+      "knowledgeLocation": "Sample Exam Q7 / Comparing entropies",
+      "unofficialAnswer": true
     },
     {
       "question": "For two random variables $X, Y$, if we find that $H(X|Y) = 0$ bits then which statement is always true?",
@@ -5719,11 +5734,12 @@ window.QUIZ_DATA = {
         "$X$ and $Y$ must provide synergistic information about another variable $Z$"
       ],
       "correct": 1,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H(X|Y) = 0 means X is a deterministic function of Y. (H(Y) ≥ H(X) follows, but not strictly 'more'; and if H(X) = 0 then I(X;Y) = 0, so C is not always true.)",
+      "explanation": "H(X|Y) = 0 means X is a deterministic function of Y. (H(Y) ≥ H(X) follows, but not strictly 'more'; and if H(X) = 0 then I(X;Y) = 0, so C is not always true.)",
       "id": 376,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q8 / Conditional entropy"
+      "knowledgeLocation": "Sample Exam Q8 / Conditional entropy",
+      "unofficialAnswer": true
     },
     {
       "question": "Suppose $Y$ and $Z$ are two sensors measuring the true temperature $X$, and both sensors are nearly perfect copies of $X$. Which of the following best describes the information provided by $Y$ and $Z$ about $X$?",
@@ -5734,11 +5750,12 @@ window.QUIZ_DATA = {
         "$Y$ and $Z$ must provide independent information about $X$"
       ],
       "correct": 0,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Each sensor alone already tells you (almost) everything about X, so the information they carry overlaps: it is redundant. Joint information can never be less than either alone.",
+      "explanation": "Each sensor alone already tells you (almost) everything about X, so the information they carry overlaps: it is redundant. Joint information can never be less than either alone.",
       "id": 377,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q9 / Redundancy vs synergy"
+      "knowledgeLocation": "Sample Exam Q9 / Redundancy vs synergy",
+      "unofficialAnswer": true
     },
     {
       "question": "In Guess Who? I try to identify my opponent’s character out of 24 possibilities using Yes/No questions. I have narrowed it down to 16 equally likely possibilities. If I could optimally design my further questions, what does information theory say is the lower bound on the average number of further questions needed?",
@@ -5750,11 +5767,12 @@ window.QUIZ_DATA = {
         "Information theory is not relevant to this"
       ],
       "correct": 3,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Remaining uncertainty H = log₂16 = 4 bits; each yes/no answer gives at most 1 bit, so at least 4 questions on average.",
+      "explanation": "Remaining uncertainty H = log₂16 = 4 bits; each yes/no answer gives at most 1 bit, so at least 4 questions on average.",
       "id": 378,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q10 / Entropy as a lower bound on yes/no questions"
+      "knowledgeLocation": "Sample Exam Q10 / Entropy as a lower bound on yes/no questions",
+      "unofficialAnswer": true
     },
     {
       "question": "Given the joint table $p(x=0,y=0)=0.5$, $p(x=0,y=1)=0.1$, $p(x=1,y=0)=0.1$, $p(x=1,y=1)=0.3$, which of the following would be an example of misinformation?",
@@ -5765,11 +5783,12 @@ window.QUIZ_DATA = {
         "None of these situations"
       ],
       "correct": 1,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Misinformation = negative local MI i(x;y) = log₂[p(y|x)/p(y)]. p(y=1) = 0.4 and p(y=1|x=0) = 0.1/0.6 ≈ 0.167 < 0.4, so i(x=0;y=1) < 0. The other two cases give p(y|x) > p(y), i.e. positive.",
+      "explanation": "Misinformation = negative local MI i(x;y) = log₂[p(y|x)/p(y)]. p(y=1) = 0.4 and p(y=1|x=0) = 0.1/0.6 ≈ 0.167 < 0.4, so i(x=0;y=1) < 0. The other two cases give p(y|x) > p(y), i.e. positive.",
       "id": 379,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q11 / Misinformation (negative pointwise MI)"
+      "knowledgeLocation": "Sample Exam Q11 / Misinformation (negative pointwise MI)",
+      "unofficialAnswer": true
     },
     {
       "question": "In a Venn diagram for discrete $X$ and $Y$, the circle for $X$ has area $H(X)$ and the circle for $Y$ has area $H(Y)$; $\\alpha$ is the part of $X$ only, $\\beta$ the overlap and $\\gamma$ the part of $Y$ only. How much entropy is represented by the total area $\\alpha+\\beta+\\gamma$?",
@@ -5781,11 +5800,12 @@ window.QUIZ_DATA = {
         "Both B and C"
       ],
       "correct": 4,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). The union of both circles is the joint entropy H(X,Y) = H(X|Y) + I(X;Y) + H(Y|X) = H(X) + H(Y) − I(X;Y).",
+      "explanation": "The union of both circles is the joint entropy H(X,Y) = H(X|Y) + I(X;Y) + H(Y|X) = H(X) + H(Y) − I(X;Y).",
       "id": 380,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q12 / Information Venn diagram"
+      "knowledgeLocation": "Sample Exam Q12 / Information Venn diagram",
+      "unofficialAnswer": true
     },
     {
       "question": "A researcher uses JIDT to compute $I(X;Y)$ for 1200 samples of two continuous variables with two estimators. Gaussian: 0.0010 nats (null 0.0006 ± 0.0008, p = 0.28 from 100 surrogates). Kraskov (KSG) alg. 2: 0.1347 nats (null 0.0015 ± 0.0211, p = 0.00 from 100 surrogates). What conclusion should the researcher draw?",
@@ -5797,11 +5817,12 @@ window.QUIZ_DATA = {
         "The difference between the estimators suggests an error in the code"
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). The Gaussian (linear) estimator is not significant (p = 0.28) while KSG, which captures non-linear dependence, is highly significant (p = 0.00). So a non-linear but no linear relationship is detected.",
+      "explanation": "The Gaussian (linear) estimator is not significant (p = 0.28) while KSG, which captures non-linear dependence, is highly significant (p = 0.00). So a non-linear but no linear relationship is detected.",
       "id": 381,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q13 / Gaussian vs KSG estimators"
+      "knowledgeLocation": "Sample Exam Q13 / Gaussian vs KSG estimators",
+      "unofficialAnswer": true
     },
     {
       "question": "Which of the following is an advantage of using the box-kernel estimator for mutual information over the Kraskov (KSG) estimator?",
@@ -5813,11 +5834,12 @@ window.QUIZ_DATA = {
         "None of the above"
       ],
       "correct": 4,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). KSG can also detect non-linear relationships, supports surrogate significance testing and handles multivariate variables, so none of these is an advantage of the kernel estimator over KSG (KSG is generally the preferred, less biased estimator).",
+      "explanation": "KSG can also detect non-linear relationships, supports surrogate significance testing and handles multivariate variables, so none of these is an advantage of the kernel estimator over KSG (KSG is generally the preferred, less biased estimator).",
       "id": 382,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q14 / Box-kernel vs KSG estimator"
+      "knowledgeLocation": "Sample Exam Q14 / Box-kernel vs KSG estimator",
+      "unofficialAnswer": true
     },
     {
       "question": "Time series $X_t$ is discrete with period 4, repeating 0-0-1-1 (0,0,1,1,0,0,1,1,…). What value should the embedding length $k$ be set to, at minimum, to capture all of the past influence when measuring active information storage?",
@@ -5828,11 +5850,12 @@ window.QUIZ_DATA = {
         "4"
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). With k = 1, a past value of 0 can be followed by 0 or 1, so it is ambiguous. With k = 2 the pairs 00→1, 01→1, 11→0, 10→0 determine the next value exactly, so k = 2 is the minimum.",
+      "explanation": "With k = 1, a past value of 0 can be followed by 0 or 1, so it is ambiguous. With k = 2 the pairs 00→1, 01→1, 11→0, 10→0 determine the next value exactly, so k = 2 is the minimum.",
       "id": 383,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q15 / AIS embedding length"
+      "knowledgeLocation": "Sample Exam Q15 / AIS embedding length",
+      "unofficialAnswer": true
     },
     {
       "question": "Which statement best describes a key advantage of transfer entropy over mutual information when analysing time series?",
@@ -5843,11 +5866,12 @@ window.QUIZ_DATA = {
         "Transfer entropy can only be applied to continuous-valued variables in addition to discrete-valued variables."
       ],
       "correct": 1,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). TE conditions on the target's own past, so it is directional and measures predictive information transfer to the target's state transition. Average TE is non-negative and usually needs more samples than MI.",
+      "explanation": "TE conditions on the target's own past, so it is directional and measures predictive information transfer to the target's state transition. Average TE is non-negative and usually needs more samples than MI.",
       "id": 384,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q16 / Transfer entropy vs MI"
+      "knowledgeLocation": "Sample Exam Q16 / Transfer entropy vs MI",
+      "unofficialAnswer": true
     },
     {
       "question": "Two time series $Y_t$ and $X_t$: label $C$ marks $y_n$, label $B$ marks the block $\\{x_{n-1}, x_n\\}$ and label $A$ marks $x_{n+1}$. Which is the transfer entropy from $Y$ to $X$, with source and target embedding lengths 1 and 2 respectively?",
@@ -5859,11 +5883,12 @@ window.QUIZ_DATA = {
         "$I(B;A)$"
       ],
       "correct": 0,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). T_{Y→X} = I(Y_n ; X_{n+1} | X_n^{(k=2)}) = I(source past ; target next | target past) = I(C; A | B). I(A;B) would be the AIS of X.",
+      "explanation": "T_{Y→X} = I(Y_n ; X_{n+1} | X_n^{(k=2)}) = I(source past ; target next | target past) = I(C; A | B). I(A;B) would be the AIS of X.",
       "id": 385,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q17 / Transfer entropy definition"
+      "knowledgeLocation": "Sample Exam Q17 / Transfer entropy definition",
+      "unofficialAnswer": true
     },
     {
       "question": "Before measuring AIS with the KSG estimator, a researcher plots the autocorrelation function of the series: the autocorrelation starts near 1 at lag 1 and decays slowly, staying above the significance threshold up to about lag 15. Which statement is most correct about what the researcher can conclude for measuring AIS?",
@@ -5874,11 +5899,12 @@ window.QUIZ_DATA = {
         "Neither A nor B"
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Strong autocorrelation over many lags means nearby samples are not independent, so a Theiler window (dynamic correlation exclusion) should be used with KSG. It also shows strong dependence of the next value on the past, so a significant AIS is expected.",
+      "explanation": "Strong autocorrelation over many lags means nearby samples are not independent, so a Theiler window (dynamic correlation exclusion) should be used with KSG. It also shows strong dependence of the next value on the past, so a significant AIS is expected.",
       "id": 386,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q18 / AIS and autocorrelation"
+      "knowledgeLocation": "Sample Exam Q18 / AIS and autocorrelation",
+      "unofficialAnswer": true
     },
     {
       "question": "A researcher has time series for $X$, $Y$ and $Z$ and wants to understand the statistical dependence of $X$ on $Y$. Should they measure the pairwise transfer entropy $T_{Y\\to X}$ or the conditional transfer entropy $T_{Y\\to X|Z}$?",
@@ -5889,11 +5915,12 @@ window.QUIZ_DATA = {
         "Neither measure is useful since they do not directly assess causal effect"
       ],
       "correct": 2,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Conditioning removes redundancy with Z but adds synergy with Z, while pairwise TE includes redundancy but misses synergy. Neither is 'more correct'; together they give the fuller picture.",
+      "explanation": "Conditioning removes redundancy with Z but adds synergy with Z, while pairwise TE includes redundancy but misses synergy. Neither is 'more correct'; together they give the fuller picture.",
       "id": 387,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q19 / Pairwise vs conditional TE"
+      "knowledgeLocation": "Sample Exam Q19 / Pairwise vs conditional TE",
+      "unofficialAnswer": true
     },
     {
       "question": "Define the concept of effective network inference from multivariate time series (each variable is a node in the network):",
@@ -5904,11 +5931,12 @@ window.QUIZ_DATA = {
         "Constructing directed networks to provide a minimal, multivariate model which can replicate and explain the time-series updates of each node"
       ],
       "correct": 3,
-      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). A = functional network, B = structural/causal network, C = pairwise directed functional network. Effective networks are the minimal directed multivariate model explaining each node's dynamics.",
+      "explanation": "A = functional network, B = structural/causal network, C = pairwise directed functional network. Effective networks are the minimal directed multivariate model explaining each node's dynamics.",
       "id": 388,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q20 / Effective network inference"
+      "knowledgeLocation": "Sample Exam Q20 / Effective network inference",
+      "unofficialAnswer": true
     }
   ],
   "weeks": [
