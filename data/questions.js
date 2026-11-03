@@ -1,11 +1,17 @@
 window.QUIZ_DATA = {
   "courses": [
     "INFO5995",
-    "COMP5270"
+    "COMP5270",
+    "COMP5318",
+    "COMP5416",
+    "CSYS5030"
   ],
   "courseTitles": {
     "INFO5995": "INFO5995 Introduction to Cybersecurity",
-    "COMP5270": "COMP5270 Randomised and Advanced Algorithms"
+    "COMP5270": "COMP5270 Randomised and Advanced Algorithms",
+    "COMP5318": "COMP5318 Machine Learning and Data Mining",
+    "COMP5416": "COMP5416 Advanced Network Technologies",
+    "CSYS5030": "CSYS5030 Information Theory and Self-Organisation"
   },
   "questions": [
     {
@@ -4654,6 +4660,1255 @@ window.QUIZ_DATA = {
       "topic": "Learning from Experts",
       "sourceQuestion": 10,
       "id": 289
+    },
+    {
+      "question": "A property service uses past sales with known prices to predict the sale price of a new home. Which learning task is this?",
+      "options": [
+        "Supervised regression.",
+        "Supervised classification.",
+        "Reinforcement learning.",
+        "Unsupervised clustering."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. The target is a known numeric price. Learning from labelled examples to predict a continuous target is supervised regression.",
+      "id": 306,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q1 / Learning tasks"
+    },
+    {
+      "question": "A k-NN pipeline uses a standard scaler. When evaluating the pipeline on a held-out test set, how should the scaling parameters be obtained?",
+      "options": [
+        "Estimate them from the combined training and test sets.",
+        "Standardise each test example separately using its own feature values.",
+        "Estimate means and standard deviations from the training set, then apply them to both sets.",
+        "Estimate them from the test set, then apply them to the training set."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Preprocessing must be fitted using training data only. Test-set statistics would leak information into model development.",
+      "id": 307,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q2 / k-NN preprocessing"
+    },
+    {
+      "question": "The three selected neighbours have (class, distance) pairs (Red, 2), (Blue, 3) and (Blue, 4). What do unweighted voting and inverse-square weighted voting (vote_c = Σ_{i∈N_c} 1/d_i²) predict, respectively?",
+      "options": [
+        "Unweighted Blue; weighted Red.",
+        "Both Blue.",
+        "Unweighted Red; weighted Blue.",
+        "Both Red."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Unweighted votes are Red = 1 and Blue = 2. Weighted votes are Red = 1/4 = 0.25 and Blue = 1/9 + 1/16 ≈ 0.174, so the weighted prediction is Red.",
+      "id": 308,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q3 / Weighted k-NN"
+    },
+    {
+      "question": "While growing a PRISM rule for class Yes, the current rule covers both Yes and No examples. What is the purpose of adding a further condition?",
+      "options": [
+        "Make the rule cover every training example.",
+        "Restrict the covered set to improve its purity for class Yes.",
+        "Force the rule to include every available attribute.",
+        "Turn each Yes example into a separate output class."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. A conjunction adds a restriction. PRISM seeks a rule whose covered examples are pure for the target class; adding conditions can remove covered negatives.",
+      "id": 309,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q4 / PRISM"
+    },
+    {
+      "question": "A regression model has one unusually large residual. Which change would reduce the relative influence of that residual on the reported loss?",
+      "options": [
+        "Use MSE instead of MAE.",
+        "Square the residuals twice before averaging.",
+        "Report the largest squared residual as the loss.",
+        "Use MAE instead of MSE."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. MAE grows linearly with residual magnitude, whereas MSE grows quadratically. The outlier therefore has less relative influence under MAE.",
+      "id": 310,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q5 / Regression losses"
+    },
+    {
+      "question": "Two otherwise comparable linear models are fitted. One uses an L1 penalty and gives several coefficients exactly equal to zero. What property does this illustrate?",
+      "options": [
+        "L1 regularisation requires all features to remain in the fitted model.",
+        "L1 regularisation always improves test accuracy.",
+        "L1 regularisation can produce sparse coefficient vectors.",
+        "L1 regularisation removes the need for choosing a penalty strength."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. The L1 penalty can set coefficients exactly to zero. Its strength still needs to be selected, and better test performance is not guaranteed.",
+      "id": 311,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q6 / Regularisation"
+    },
+    {
+      "question": "For a simple least-squares fit, the mean of x is 3, the mean of y is 7, Sxy = 10 and Sxx = 5. What are the intercept and the prediction at x = 5?",
+      "options": [
+        "Intercept 1; prediction 9.",
+        "Intercept 7; prediction 17.",
+        "Intercept 1; prediction 11.",
+        "Intercept 2; prediction 12."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. The slope is 10/5 = 2. The intercept is 7 - 2×3 = 1. At x = 5, the prediction is 1 + 2×5 = 11.",
+      "id": 312,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q7 / Least squares"
+    },
+    {
+      "question": "A binary feature combination never occurs with class No in a small training sample. Without smoothing, one estimated likelihood is zero. What problem can Laplace smoothing address?",
+      "options": [
+        "The classifier otherwise cannot accept categorical features.",
+        "A single unseen feature value otherwise makes the product likelihood zero for that class.",
+        "The class priors must otherwise sum to more than one.",
+        "Smoothing otherwise has to delete every correlated feature."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Naive Bayes multiplies feature likelihoods. A zero factor makes the class score zero; smoothing supplies nonzero estimates for unseen categorical values.",
+      "id": 313,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q8 / Naive Bayes"
+    },
+    {
+      "question": "A team wants to choose the maximum depth of a decision tree while retaining an independent estimate of final performance. Which procedure is appropriate?",
+      "options": [
+        "Choose the depth that maximises test accuracy, and report that same accuracy.",
+        "Use the deepest tree because training accuracy is the final performance estimate.",
+        "Merge test labels into the training set before selecting depth.",
+        "Tune depth on validation data or training-set cross-validation, then evaluate once on the reserved test set."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Validation or training-set cross-validation supports model selection. An untouched test set is used once to estimate the selected model’s performance.",
+      "id": 314,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q9 / Evaluation"
+    },
+    {
+      "question": "A binary classifier has TP = 12, FP = 4, FN = 8 and TN = 26. What are positive-class precision and recall?",
+      "options": [
+        "Precision 0.75; recall 0.60.",
+        "Precision 0.24; recall 0.76.",
+        "Precision 0.60; recall 0.75.",
+        "Precision 0.75; recall 0.68."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Precision = 12/(12+4) = 0.75. Recall = 12/(12+8) = 0.60. True negatives do not enter these two positive-class measures.",
+      "id": 315,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q10 / Classification metrics"
+    },
+    {
+      "question": "Two candidate splits are applied to the same decision-tree parent node. Split X has lower size-weighted child entropy than split Y. What follows?",
+      "options": [
+        "Split X has higher information gain.",
+        "The two splits must have equal information gain.",
+        "Split Y has higher information gain.",
+        "The parent entropy must be zero."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Information gain subtracts weighted child entropy from a fixed parent entropy. A smaller subtracted quantity gives a larger gain.",
+      "id": 316,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q11 / Decision trees"
+    },
+    {
+      "question": "What is the defining training-data operation used in bagging?",
+      "options": [
+        "Use the test set as an additional bootstrap training sample.",
+        "Fit base learners on bootstrap samples drawn with replacement.",
+        "Partition the features once and assign exactly one feature to each learner.",
+        "Fit each learner only on the examples misclassified by the previous learner."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Bagging trains base learners on bootstrap samples of the training observations. Sampling with replacement creates varied datasets.",
+      "id": 317,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q12 / Bagging"
+    },
+    {
+      "question": "Under squared-error loss, a later regression tree is trained to correct what the current ensemble has not explained. What are the appropriate training targets for this later tree?",
+      "options": [
+        "Current ensemble predictions minus the observed targets.",
+        "The current ensemble predictions themselves.",
+        "Observed targets minus the current ensemble predictions.",
+        "The original targets without accounting for current predictions."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. For squared-error gradient boosting, the residual target is observed value minus current prediction, so the learner aims to correct the remaining error.",
+      "id": 318,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q13 / Gradient boosting"
+    },
+    {
+      "question": "A hard-margin SVM uses support planes wᵀx + b = +1 and wᵀx + b = -1, with w = (3, 4). What is the full distance between the planes?",
+      "options": [
+        "0.20.",
+        "2.50.",
+        "5.00.",
+        "0.40."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. The norm is √(3²+4²) = 5. The full margin width is 2/5 = 0.40; 1/5 is the distance from the decision plane to one support plane.",
+      "id": 319,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q14 / SVM margin"
+    },
+    {
+      "question": "Why can a kernel SVM operate without explicitly storing each transformed feature vector?",
+      "options": [
+        "Every nonlinear kernel creates a linear boundary in the original input space.",
+        "The kernel replaces the class labels with distances.",
+        "The kernel removes all dependence on training observations.",
+        "Its optimisation and predictions can use inner products supplied by the kernel."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. A kernel computes the inner product of implicit feature mappings. The SVM can use these values without forming the mapped vectors explicitly.",
+      "id": 320,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q15 / Kernel methods"
+    },
+    {
+      "question": "PCA is applied to two measurements recorded in very different units. Why might scaling the measurements before PCA change the first component?",
+      "options": [
+        "PCA uses class labels to choose which unit should dominate.",
+        "PCA is driven by variance, and changing units changes relative feature variances.",
+        "Scaling converts PCA from an unsupervised method into a supervised method.",
+        "PCA always gives the same direction under arbitrary feature rescaling."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Feature-wise rescaling changes the covariance structure. A large numerical scale can dominate a covariance-based PCA unless scaling is handled deliberately.",
+      "id": 321,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q16 / PCA"
+    },
+    {
+      "question": "There are exactly four principal components with variances 9, 5, 4 and 2, in descending order. What is the smallest number of leading components needed to retain at least 85% of total variance? Here d = 4; include all four variances in the denominator.",
+      "options": [
+        "Three components, retaining 90%.",
+        "Four components, retaining 100%.",
+        "Three components, retaining 85%.",
+        "Two components, retaining 70%."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Total variance is 20. Two components retain 14/20 = 70%, whereas three retain 18/20 = 90%. Three is therefore the smallest qualifying number.",
+      "id": 322,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q17 / PCA retained variance"
+    },
+    {
+      "question": "A ReLU unit has a negative pre-activation. What is its output?",
+      "options": [
+        "One.",
+        "The unchanged negative pre-activation.",
+        "A probability strictly between zero and one.",
+        "Zero."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. ReLU(u) = max(0,u), so negative pre-activations produce zero. ReLU does not itself return a probability.",
+      "id": 323,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q18 / Neural activations"
+    },
+    {
+      "question": "A perceptron has w = (0.4, -0.2), b = 0.1 and learning rate 0.2. For x = (2, 1), the supplied actual output is a = 1 and target is t = 0. What are the updated weights and bias?",
+      "options": [
+        "w = (0.0, -0.4); b = 0.1.",
+        "w = (0.8, 0.0); b = 0.3.",
+        "w = (0.0, -0.4); b = -0.1.",
+        "w = (0.4, -0.2); b = -0.1."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. The correction is η(t-a) = -0.2. Thus wnew = (0.4,-0.2) - 0.2(2,1) = (0,-0.4), and bnew = 0.1 - 0.2 = -0.1.",
+      "id": 324,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q19 / Perceptron update"
+    },
+    {
+      "question": "A learned convolutional filter detects the same edge pattern at many image locations. Which design feature enables this with a small number of parameters?",
+      "options": [
+        "Discarding the spatial arrangement before convolution.",
+        "Sharing the filter weights across spatial locations.",
+        "Using an independent parameter vector for every pixel location.",
+        "Fixing every convolution weight to the same constant."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Weight sharing reuses one detector across the image. Each spatial position does not need its own independently learned filter.",
+      "id": 325,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q20 / CNNs"
+    },
+    {
+      "question": "In a simple recurrent neural network, what carries information from an earlier time step into the next one?",
+      "options": [
+        "The recurrent hidden state.",
+        "A distinct set of unshared recurrent weights for every sequence position.",
+        "A new independent label for each hidden unit.",
+        "A separate test set at every time step."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. The hidden state is updated using the current input and previous hidden state. Recurrent weights are shared across time.",
+      "id": 326,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q21 / RNNs"
+    },
+    {
+      "question": "A convolutional layer has four 3 × 3 filters and receives two input channels. Each filter spans both input channels and has one bias. How many trainable parameters are there? (Parameters = F_out × (3 × 3 × C_in + 1).)",
+      "options": [
+        "72.",
+        "22.",
+        "76.",
+        "40."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Each filter has 3×3×2 = 18 weights and one bias, giving 19 parameters. Four filters give 4×19 = 76.",
+      "id": 327,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q22 / CNN parameters"
+    },
+    {
+      "question": "During standard dropout training, why are different subsets of hidden activations temporarily disabled across updates?",
+      "options": [
+        "To permanently delete every unit disabled at least once.",
+        "To make all hidden units produce exactly the same feature.",
+        "To replace supervised targets with random labels.",
+        "To reduce reliance on particular hidden-unit combinations and help limit overfitting."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Dropout discourages co-adaptation by training with changing subsets of units. It is a regularisation technique; units are not permanently deleted.",
+      "id": 328,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q23 / Dropout"
+    },
+    {
+      "question": "A cluster contains several points and K-means uses squared Euclidean distance. Which representative minimises the sum of squared distances within that fixed cluster?",
+      "options": [
+        "The coordinate-wise maximum.",
+        "The coordinate-wise mean of its points.",
+        "The most distant observed point.",
+        "Any randomly selected point, with the same objective value."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. For fixed assignments and squared Euclidean loss, the arithmetic mean minimises the within-cluster sum of squared distances.",
+      "id": 329,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q24 / K-means"
+    },
+    {
+      "question": "At observation x, a two-component GMM has π₁ = 0.3, π₂ = 0.7, f₁(x) = 0.4 and f₂(x) = 0.2. What is the posterior membership probability for component 1?",
+      "options": [
+        "Approximately 0.462.",
+        "0.120.",
+        "0.300.",
+        "Approximately 0.538."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. The component scores are 0.3×0.4 = 0.12 and 0.7×0.2 = 0.14. Normalising gives 0.12/(0.12+0.14) ≈ 0.462.",
+      "id": 330,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q25 / GMM membership"
+    },
+    {
+      "question": "For a fixed HMM and an observed sequence, which task is solved by the Viterbi algorithm?",
+      "options": [
+        "Find the most probable complete hidden-state path.",
+        "Sum probabilities over all possible observation alphabets.",
+        "Calculate a posterior mixture weight without using transitions.",
+        "Estimate the number of observed features by PCA."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Viterbi performs decoding: dynamic programming finds the single most probable hidden-state sequence for the observations and model.",
+      "id": 331,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q26 / HMM tasks"
+    },
+    {
+      "question": "A two-state Markov chain starts in A. Its transitions are P(A|A) = 0.6, P(B|A) = 0.4, P(A|B) = 0.3 and P(B|B) = 0.7. What is the probability of being in B after exactly two transitions?",
+      "options": [
+        "0.48.",
+        "0.52.",
+        "0.24.",
+        "0.28."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. The two routes are A→A→B and A→B→B, with probabilities 0.6×0.4 and 0.4×0.7. Their sum is 0.24 + 0.28 = 0.52.",
+      "id": 332,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q27 / Markov chains"
+    },
+    {
+      "question": "A DQN trains on randomly sampled stored transitions rather than only the newest consecutive transitions. What does this sampling primarily help reduce?",
+      "options": [
+        "All approximation error, regardless of network capacity.",
+        "The number of actions permitted by the environment.",
+        "The need for a reward signal from the environment.",
+        "Temporal correlation between training examples used in successive updates."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Random minibatches from a replay buffer break up the strong correlations present in consecutive environment interactions and also reuse past experience.",
+      "id": 333,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q28 / Experience replay"
+    },
+    {
+      "question": "A DQN holds the target-network parameters fixed for several online-network updates. What is the main intended benefit?",
+      "options": [
+        "Force every action to be chosen with equal probability.",
+        "Remove rewards from the Q-learning target.",
+        "Make the bootstrap targets more stable during those updates.",
+        "Stop the online network from learning at all."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. A fixed target network slows changes to the values used for bootstrapping. The online network still updates, and exploration is a separate issue.",
+      "id": 334,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q29 / Target networks"
+    },
+    {
+      "question": "For a non-terminal transition, Q_old(s,a) = 1, α = 0.5, reward r = 2, γ = 0.8 and max_a′ Q(s′,a′) = 5. What is the updated Q-learning value?",
+      "options": [
+        "2.50.",
+        "3.50.",
+        "6.00.",
+        "4.00."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. The target is 2 + 0.8×5 = 6. The update is 1 + 0.5(6-1) = 3.5.",
+      "id": 335,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 1 Q30 / Q-learning"
+    },
+    {
+      "question": "An analyst groups unlabelled customer records by similarities in their purchasing features. Which task best describes this?",
+      "options": [
+        "Reinforcement learning.",
+        "Supervised classification.",
+        "Supervised regression.",
+        "Unsupervised clustering."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. There is no supplied target label. The objective is to discover groups from the input features.",
+      "id": 336,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q1 / Learning tasks"
+    },
+    {
+      "question": "A standard k-NN classifier stores its training observations. Which statement about prediction is most appropriate?",
+      "options": [
+        "Training removes the need to store any examples or index.",
+        "Prediction may require many distance calculations because the stored observations are consulted.",
+        "Increasing the training set always reduces prediction cost.",
+        "Prediction uses only one fitted intercept and slope."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. k-NN is an instance-based method. Prediction searches stored examples, so its cost can be substantial; indexing methods can help.",
+      "id": 337,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q2 / k-NN complexity"
+    },
+    {
+      "question": "For x = (1, 4) and y = (4, 0), what are their Manhattan and Euclidean distances, respectively?",
+      "options": [
+        "7 and 25.",
+        "25 and 7.",
+        "5 and 7.",
+        "7 and 5."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Absolute coordinate differences are 3 and 4. Manhattan distance is 3+4 = 7, and Euclidean distance is √(3²+4²) = 5.",
+      "id": 338,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q3 / Distance measures"
+    },
+    {
+      "question": "A 1R classifier is fitted using several candidate categorical attributes. What distinguishes its final model?",
+      "options": [
+        "It combines all attributes into a deep decision tree.",
+        "It uses one selected attribute to form a set of simple prediction rules.",
+        "It predicts a separate class for every distinct full feature vector.",
+        "It requires exactly one training observation per class."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. 1R evaluates simple rules based on individual attributes and selects one attribute’s rule set, rather than building conjunctions across many attributes.",
+      "id": 339,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q4 / 1R"
+    },
+    {
+      "question": "A logistic-regression model returns 0.83 for an observation. Under a threshold of 0.5, what is the appropriate interpretation?",
+      "options": [
+        "It predicts the positive class and estimates its probability as 0.83.",
+        "It predicts the negative class because the probability is below one.",
+        "It predicts a numeric target of exactly 0.83 using ordinary least squares.",
+        "It guarantees the observation is positive."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. The output is an estimated probability for the positive class. Because 0.83 exceeds 0.5, the assigned label is positive; this is not a guarantee of correctness.",
+      "id": 340,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q5 / Logistic regression"
+    },
+    {
+      "question": "In ridge regression, the penalty strength is increased while the input features and training data stay fixed. What is the direct effect on the optimisation objective?",
+      "options": [
+        "The training set automatically receives additional examples.",
+        "Validation labels are added to the training loss.",
+        "Large coefficient magnitudes receive a stronger penalty.",
+        "The intercept must become equal to the number of features."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Ridge adds a scaled sum of squared coefficients to the loss. Increasing that scale strengthens the pressure toward smaller coefficients.",
+      "id": 341,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q6 / Ridge regularisation"
+    },
+    {
+      "question": "For three observations, the true targets are (2, 4, 8) and the predictions are (1, 6, 7). What are MAE and MSE, respectively?",
+      "options": [
+        "MAE = 0; MSE = 0.",
+        "MAE = 4/3; MSE = 2.",
+        "MAE = 4; MSE = 6.",
+        "MAE = 2; MSE = 4/3."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Residuals are (1,-2,1). The absolute-error sum is 4 and squared-error sum is 6, giving MAE = 4/3 and MSE = 2.",
+      "id": 342,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q7 / Regression error"
+    },
+    {
+      "question": "Which factorisation is assumed by Naive Bayes when scoring an observation with multiple input features?",
+      "options": [
+        "The input features must have equal numeric values.",
+        "The class posterior is identical to the class prior for every observation.",
+        "The features must be independent of the class itself.",
+        "The feature likelihoods multiply conditional on the class."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Naive Bayes assumes conditional independence of features given the class, so the joint class-conditional likelihood is written as a product.",
+      "id": 343,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q8 / Naive Bayes assumption"
+    },
+    {
+      "question": "During five-fold cross-validation for choosing hyperparameters, where should a standard scaler be fitted for a particular fold?",
+      "options": [
+        "On all five folds together before any split.",
+        "Only on that fold’s validation portion.",
+        "On the reserved final test set.",
+        "Only on that fold’s training portion, before transforming its validation portion."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. Each fold must reproduce the full training procedure without using its validation data to fit preprocessing. A pipeline keeps this separation clear.",
+      "id": 344,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q9 / Cross-validation"
+    },
+    {
+      "question": "For the positive class, TP = 18, FN = 6 and FP = 12. What are recall and F1, respectively?",
+      "options": [
+        "Recall 0.60; F1 approximately 0.667.",
+        "Recall 0.75; F1 0.750.",
+        "Recall 0.75; F1 approximately 0.667.",
+        "Recall 0.60; F1 0.750."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Recall = 18/24 = 0.75. F1 = 2×18/(36+12+6) = 36/54 = 2/3 ≈ 0.667.",
+      "id": 345,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q10 / Classification metrics"
+    },
+    {
+      "question": "A tree path goes to the Yes leaf only when Colour = green and Size = small. Which rule expresses that path?",
+      "options": [
+        "If Colour = green AND Size = small, predict Yes.",
+        "If Size = small, predict Yes regardless of Colour.",
+        "If Colour is not green AND Size = small, predict Yes.",
+        "If Colour = green OR Size = small, predict Yes."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. All tests along one root-to-leaf path must be satisfied, so they form a conjunction. An OR would incorrectly include observations outside the path.",
+      "id": 346,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q11 / Decision-tree rules"
+    },
+    {
+      "question": "A random forest uses bootstrap samples. What additional randomisation commonly helps reduce similarity between its trees?",
+      "options": [
+        "Search a random subset of candidate features at each split.",
+        "Restrict every tree to a single identical feature chosen once for the whole forest.",
+        "Choose the final prediction using the training labels of the test observations.",
+        "Give all trees identical fixed splits."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Random feature subsets at each split reduce the tendency for the same strong predictors to dominate every tree.",
+      "id": 347,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q12 / Random forests"
+    },
+    {
+      "question": "After a weak classifier is trained in AdaBoost, how are the relative example weights adjusted for the next stage?",
+      "options": [
+        "Only correctly classified examples remain eligible for training.",
+        "All example weights are permanently set to zero.",
+        "Misclassified examples gain influence relative to correctly classified examples.",
+        "Weights are determined by input magnitude without reference to errors."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. AdaBoost increases relative emphasis on mistakes, encouraging the next learner to address observations the current ensemble finds difficult.",
+      "id": 348,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q13 / AdaBoost"
+    },
+    {
+      "question": "For x = (1, 2) and y = (3, 1), calculate K(x,y) for the kernel K(x,y) = (xᵀy + 2)².",
+      "options": [
+        "29.",
+        "7.",
+        "49.",
+        "25."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. The dot product is 1×3 + 2×1 = 5. Therefore K = (5+2)² = 49.",
+      "id": 349,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q14 / SVM kernels"
+    },
+    {
+      "question": "A soft-margin SVM uses a larger value of C, with the same training data and kernel. What changes in the objective?",
+      "options": [
+        "The kernel degree automatically increases.",
+        "Margin violations are penalised more strongly relative to the preference for a wide margin.",
+        "Margin violations are no longer allowed under any circumstances.",
+        "The training data are standardised automatically."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. C controls the trade-off between margin size and violation penalties. A larger finite C increases the penalty but does not generally prohibit all violations.",
+      "id": 350,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q15 / Soft-margin SVM"
+    },
+    {
+      "question": "A student says that PCA simply chooses a subset of the original feature columns. What is the most accurate correction?",
+      "options": [
+        "PCA deletes observations while preserving every original coordinate.",
+        "Each component must equal one original feature without scaling.",
+        "Principal components generally define new coordinates formed from linear combinations of the features.",
+        "PCA uses the supplied class labels to rank original columns."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. PCA performs a linear change of coordinates. Dimensionality reduction then retains selected directions in that transformed coordinate system.",
+      "id": 351,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q16 / PCA coordinates"
+    },
+    {
+      "question": "A dataset has exactly three principal components, with variances 12, 6 and 2. What is the smallest number of leading components that retain at least 90% of the total variance? Here d = 3; the denominator includes all three component variances.",
+      "options": [
+        "Two components, retaining 80%.",
+        "One component, retaining 60%.",
+        "Three components, retaining 100%.",
+        "Two components, retaining 90%."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. The total is 20. One component retains 12/20 = 60%; two retain 18/20 = 90%, which meets the threshold exactly.",
+      "id": 352,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q17 / PCA retained variance"
+    },
+    {
+      "question": "Why can minibatch gradient descent have noisier updates than full-batch gradient descent?",
+      "options": [
+        "It guarantees larger generalisation error on every possible dataset.",
+        "Each update estimates the gradient using only a subset of training examples.",
+        "It has no objective function to minimise.",
+        "It changes the labels randomly before every update."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. A minibatch gradient varies with the sampled examples. Full-batch descent uses the gradient averaged over the complete training set.",
+      "id": 353,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q18 / Gradient methods"
+    },
+    {
+      "question": "At w = (0.5, -1.0), the loss gradient is (3, -2). A gradient-descent step uses learning rate 0.1. What is the new w?",
+      "options": [
+        "(0.8, -1.2).",
+        "(0.2, -0.8).",
+        "(0.2, -1.2).",
+        "(-2.5, 1.0)."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. Subtract 0.1 times the gradient: (0.5,-1) - (0.3,-0.2) = (0.2,-0.8).",
+      "id": 354,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q19 / Gradient descent"
+    },
+    {
+      "question": "For standard 2 × 2 max pooling, what value is passed on from each pooling window?",
+      "options": [
+        "The smallest activation in the complete image.",
+        "A newly learned bias independent of the input.",
+        "The largest activation in that window.",
+        "The sum of all learned convolution weights."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Max pooling selects the maximum within each spatial window. The standard pooling operation itself has no trainable weights.",
+      "id": 355,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q20 / CNN pooling"
+    },
+    {
+      "question": "Which property motivates the use of LSTMs rather than a simple RNN for some long-sequence tasks?",
+      "options": [
+        "LSTMs require a different unshared recurrent matrix at every time step.",
+        "LSTMs make the ordering of all inputs irrelevant.",
+        "LSTMs eliminate the need to train any weights.",
+        "Gated state updates can help retain information and support gradient flow over longer intervals."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. LSTM gates regulate what is stored, retained and exposed. They can help with long-range dependencies, although they do not guarantee perfect memory.",
+      "id": 356,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q21 / LSTM motivation"
+    },
+    {
+      "question": "An 18 × 18 input passes through a 3 × 3 convolution with stride 1 and no padding, then 2 × 2 max pooling with stride 2 and no padding. What is the final spatial size? (Output size = (n + 2p − f)/s + 1, applied at both stages.)",
+      "options": [
+        "8 × 8.",
+        "9 × 9.",
+        "7 × 7.",
+        "16 × 16."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. The convolution gives (18-3)/1 + 1 = 16 per dimension. Pooling gives (16-2)/2 + 1 = 8 per dimension.",
+      "id": 357,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q22 / CNN output size"
+    },
+    {
+      "question": "A network was trained using dropout. Which statement about standard inference is appropriate?",
+      "options": [
+        "Use all units, with scaling handled consistently with the dropout training convention.",
+        "Continue disabling units without accounting for the training convention.",
+        "Delete every unit that was ever dropped during training.",
+        "Reset all weights to their initial random values."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Standard inference uses the full network. With inverted dropout, scaling is already applied during training; under the original convention, it is applied at inference.",
+      "id": 358,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q23 / Dropout at inference"
+    },
+    {
+      "question": "An analyst wants a probability of membership in each component, rather than only one hard cluster assignment. Which model directly supplies this?",
+      "options": [
+        "A single fixed cut of a dendrogram.",
+        "A Gaussian mixture model.",
+        "A nearest-centroid label without probability normalisation.",
+        "Standard K-means assignments."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. A GMM estimates posterior responsibilities for its components. Standard K-means and dendrogram cuts return hard assignments.",
+      "id": 359,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q24 / GMM versus K-means"
+    },
+    {
+      "question": "Clusters A = {0, 2} and B = {6, 8} contain one-dimensional points. With absolute point-to-point distance, what are single-link and average-link distances?",
+      "options": [
+        "Single-link 4; average-link 8.",
+        "Single-link 4; average-link 6.",
+        "Single-link 8; average-link 6.",
+        "Single-link 6; average-link 4."
+      ],
+      "correct": 1,
+      "explanation": "Official answer: B. The four cross-cluster distances are 6, 8, 4 and 6. Their minimum is 4, and their mean is 24/4 = 6.",
+      "id": 360,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q25 / Hierarchical linkage"
+    },
+    {
+      "question": "An HMM’s transition and emission parameters are unknown and must be estimated from observed sequences. Which task is this?",
+      "options": [
+        "Decoding with a fixed model using Viterbi.",
+        "Evaluation with fixed parameters using the Forward algorithm.",
+        "Model learning, for example using an EM procedure.",
+        "Dimensionality reduction using principal components."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. Learning estimates model parameters. Evaluation calculates sequence likelihood under a fixed model; decoding finds a hidden-state path.",
+      "id": 361,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q26 / HMM learning"
+    },
+    {
+      "question": "At time 1, V₁(A) = 0.3 and V₁(B) = 0.2. Transitions into B are P(B|A) = 0.4 and P(B|B) = 0.7. The next observation has emission probability 0.5 in B. What is the Viterbi score V₂(B) = max_j V₁(j)·a_jB · e_B(o₂)?",
+      "options": [
+        "0.070.",
+        "0.130.",
+        "0.060.",
+        "0.140."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Candidate predecessor scores are 0.3×0.4 = 0.12 and 0.2×0.7 = 0.14. Viterbi takes the maximum, then multiplies by 0.5: 0.070.",
+      "id": 362,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q27 / Viterbi update"
+    },
+    {
+      "question": "In an RL return, the discount factor is reduced while rewards and transitions stay the same. What is the direct effect?",
+      "options": [
+        "Later rewards receive less weight relative to immediate rewards.",
+        "Every possible action acquires the same value.",
+        "The environment becomes deterministic.",
+        "Observed immediate rewards change their numerical values."
+      ],
+      "correct": 0,
+      "explanation": "Official answer: A. Discounting changes the weighting of future rewards in the return, not the environment’s rewards or transition probabilities.",
+      "id": 363,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q28 / Discounting"
+    },
+    {
+      "question": "Why can a deep Q-network be preferable to a Q-table for image-based states?",
+      "options": [
+        "It stores one independent table row for every possible image.",
+        "It guarantees exact optimal values before any training.",
+        "It removes the need for observations from the environment.",
+        "A shared parameterised function can approximate values over a very large input space."
+      ],
+      "correct": 3,
+      "explanation": "Official answer: D. A DQN uses shared network parameters to estimate state-action values. This avoids explicitly storing a separate value for every possible image.",
+      "id": 364,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q29 / Value function approximation"
+    },
+    {
+      "question": "An action has two outcomes. With probability 0.4, it gives reward 2 and reaches a state of optimal value 6. Otherwise it gives reward 0 and reaches a state of optimal value 2. For γ = 0.5, what is the expected backed-up action value?",
+      "options": [
+        "3.00.",
+        "1.40.",
+        "2.60.",
+        "5.00."
+      ],
+      "correct": 2,
+      "explanation": "Official answer: C. The backed-up values are 2+0.5×6 = 5 and 0+0.5×2 = 1. Their expectation is 0.4×5 + 0.6×1 = 2.6.",
+      "id": 365,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "Practice Exam 2 Q30 / Expected action value"
+    },
+    {
+      "question": "Consider a path of three links: Link 1 (transmission rate 1000 Mbps, length 3 km), Link 2 (10 Mbps, 1000 km) and Link 3 (100 Mbps, 1 km). A packet is 16000 bits long and the propagation speed on each link is $3\\times10^8$ m/s. What is the propagation delay, in seconds, of Link 1?",
+      "options": [
+        "1.00E-3",
+        "1.00E-4",
+        "1.00E-5",
+        "1.00E-6"
+      ],
+      "correct": 2,
+      "explanation": "Official answer: 1.00E-5. Propagation delay = d/s = (3 km × 1000) / (3×10^8 m/s) = 1.00×10^-5 s. Packet length and transmission rate do not affect propagation delay.",
+      "id": 366,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W7 midterm quiz / Delay: propagation delay d/s"
+    },
+    {
+      "question": "Four servers are connected to four clients over four three-hop paths. The four pairs share a common middle hop with transmission capacity R = 300 Mbps. Each server-to-shared-link link has capacity $R_S$ = 10 Mbps, and each shared-link-to-client link has capacity $R_C$ = 90 Mbps. Assuming the servers send at the maximum possible rate, what is the link utilisation of each client link ($R_C$)? Answer as a decimal.",
+      "options": [
+        "0.011",
+        "0.11",
+        "1.1",
+        "11"
+      ],
+      "correct": 1,
+      "explanation": "Official answer: 0.11. Each flow's bottleneck is min(R_S, R/4, R_C) = min(10, 75, 90) = 10 Mbps, so client-link utilisation = R_bottleneck / R_C = 10/90 ≈ 0.11.",
+      "id": 367,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W7 midterm quiz / Throughput: bottleneck link and utilisation"
+    },
+    {
+      "question": "Two users share a wireless channel and choose, in each slot, whether to transmit or stay silent. Payoffs are symmetric: if only one user transmits, that user gets +16 and the other gets 0; if both transmit (collision), each gets −8; if neither transmits, both get 0. Let $p_1$ (resp. $p_2$) be the probability that user 1 (resp. user 2) transmits. Given $p_2$, the optimal $p_1$ is $p_1 = 1$ if $p_2$ is…",
+      "options": [
+        "< 2/3",
+        "= 2/3",
+        "> 2/3"
+      ],
+      "correct": 0,
+      "explanation": "Official answer (after re-marking): < 2/3. User 1's expected payoff from transmitting is 16(1 − p₂) − 8p₂ = 16 − 24p₂; staying silent gives 0. Transmitting is strictly better when 16 − 24p₂ > 0, i.e. p₂ < 2/3 (at p₂ = 2/3 user 1 is indifferent, which is why '= 2/3' was also accepted in the quiz).",
+      "id": 368,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W7 midterm quiz / Collisions: random access as a game, best response"
+    },
+    {
+      "question": "You roll a 6-sided die, and then tell me which of the 6 faces was the result. How much information have you given me? (NB: “die” is the singular of “dice”.)",
+      "options": [
+        "0.77 bits",
+        "2.58 bits",
+        "2 bits",
+        "There is not enough information to say"
+      ],
+      "correct": 1,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Assuming a fair die, each face has p = 1/6, so the information content is h = −log₂(1/6) = log₂ 6 ≈ 2.58 bits (equal to H for a uniform variable). If the die were biased you would need its distribution, but the standard intended reading is a fair die.",
+      "id": 369,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q1 / Shannon information content"
+    },
+    {
+      "question": "______________ is to Entropy as Pointwise Mutual Information is to Mutual Information.",
+      "options": [
+        "Conditional Entropy",
+        "Redundancy",
+        "Shannon Information Content",
+        "Transfer Entropy"
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Entropy is the average of the Shannon information content h(x) = −log₂ p(x), just as MI is the average of the pointwise (local) MI i(x;y).",
+      "id": 370,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q2 / Local vs average measures"
+    },
+    {
+      "question": "______________ are to bits as centimetres are to inches.",
+      "options": [
+        "nats",
+        "redundancies",
+        "entropies",
+        "shannons"
+      ],
+      "correct": 0,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Nats (log base e) and bits (log base 2) are two units for the same quantity, like cm and inches. A 'shannon' is just another name for a bit, so it is not the analogous pair.",
+      "id": 371,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q3 / Units of information"
+    },
+    {
+      "question": "A random variable $X$ takes values 0 and 1, where $p(x=1) = 0.125$. Which of the following is correct?",
+      "options": [
+        "$h(x=1) = 0.125$ bits",
+        "$h(x=1) = 1.00$ bit",
+        "$h(x=1) = 0.90$ bits",
+        "$h(x=1) = 3.00$ bits"
+      ],
+      "correct": 3,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). h(x=1) = −log₂ 0.125 = −log₂ 2⁻³ = 3 bits.",
+      "id": 372,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q4 / Shannon information content"
+    },
+    {
+      "question": "A random variable $X$ has $p(0)=0.1$, $p(1)=0.25$, $p(2)=0.4$, $p(3)=0.25$. Which of the following is the correct Shannon entropy?",
+      "options": [
+        "$H(X) = 0.56$ bits",
+        "$H(X) = 0.40$ bits",
+        "$H(X) = 2.00$ bits",
+        "$H(X) = 1.86$ bits"
+      ],
+      "correct": 3,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H = 0.1·log₂10 + 2·0.25·log₂4 + 0.4·log₂2.5 ≈ 0.332 + 1.000 + 0.529 ≈ 1.86 bits.",
+      "id": 373,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q5 / Shannon entropy calculation"
+    },
+    {
+      "question": "A random variable $X$ has alphabet $\\{0,1,2,3\\}$. I know only that $p(x=1) = 0.5$. What am I able to conclude?",
+      "options": [
+        "$H(X) \\ge 1$ bit",
+        "$h(x=1) = 1$ bit",
+        "Both $H(X) \\ge 1$ bit and $h(x=1) = 1$ bit",
+        "I can’t determine any of the above without knowing the precise probabilities for the other symbols."
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). h(x=1) = −log₂ 0.5 = 1 bit. By the grouping (chain) rule, H(X) = H(binary: x=1 vs x≠1) + 0.5·H(X | x≠1) ≥ H(0.5) = 1 bit. So both hold.",
+      "id": 374,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q6 / Entropy bounds"
+    },
+    {
+      "question": "$X$ has $p(0)=0.7$, $p(1)=p(2)=p(3)=0.1$. $Y$ has $p(0)=0.7$, $p(1)=0.3$. Which of the following is correct?",
+      "options": [
+        "$H(X) > H(Y)$",
+        "$h(x=0) > h(y=0)$",
+        "$H(X) > H(Y)$ and $h(x=0) > h(y=0)$",
+        "$I(X;Y) > 0$ bits"
+      ],
+      "correct": 0,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H(X) ≈ 0.7·0.515 + 3·0.1·3.32 ≈ 1.36 bits > H(Y) ≈ 0.88 bits. h(x=0) = h(y=0) = −log₂0.7 (equal, not greater). I(X;Y) cannot be determined without the joint distribution.",
+      "id": 375,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q7 / Comparing entropies"
+    },
+    {
+      "question": "For two random variables $X, Y$, if we find that $H(X|Y) = 0$ bits then which statement is always true?",
+      "options": [
+        "There is more entropy in $Y$ than $X$",
+        "If you tell me the sample of $Y$ then there is no uncertainty left about $X$",
+        "$X$ and $Y$ have non-zero mutual information",
+        "$X$ and $Y$ must provide synergistic information about another variable $Z$"
+      ],
+      "correct": 1,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). H(X|Y) = 0 means X is a deterministic function of Y. (H(Y) ≥ H(X) follows, but not strictly 'more'; and if H(X) = 0 then I(X;Y) = 0, so C is not always true.)",
+      "id": 376,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q8 / Conditional entropy"
+    },
+    {
+      "question": "Suppose $Y$ and $Z$ are two sensors measuring the true temperature $X$, and both sensors are nearly perfect copies of $X$. Which of the following best describes the information provided by $Y$ and $Z$ about $X$?",
+      "options": [
+        "Most of the information is redundant.",
+        "Most of the information is synergistic.",
+        "The joint variable $(Y,Z)$ provides less information than either $Y$ or $Z$ alone",
+        "$Y$ and $Z$ must provide independent information about $X$"
+      ],
+      "correct": 0,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Each sensor alone already tells you (almost) everything about X, so the information they carry overlaps: it is redundant. Joint information can never be less than either alone.",
+      "id": 377,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q9 / Redundancy vs synergy"
+    },
+    {
+      "question": "In Guess Who? I try to identify my opponent’s character out of 24 possibilities using Yes/No questions. I have narrowed it down to 16 equally likely possibilities. If I could optimally design my further questions, what does information theory say is the lower bound on the average number of further questions needed?",
+      "options": [
+        "2",
+        "6",
+        "3",
+        "4",
+        "Information theory is not relevant to this"
+      ],
+      "correct": 3,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Remaining uncertainty H = log₂16 = 4 bits; each yes/no answer gives at most 1 bit, so at least 4 questions on average.",
+      "id": 378,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q10 / Entropy as a lower bound on yes/no questions"
+    },
+    {
+      "question": "Given the joint table $p(x=0,y=0)=0.5$, $p(x=0,y=1)=0.1$, $p(x=1,y=0)=0.1$, $p(x=1,y=1)=0.3$, which of the following would be an example of misinformation?",
+      "options": [
+        "Observing $x=0$ is misinformative about $y$ when observing $y=0$",
+        "Observing $x=0$ is misinformative about $y$ when observing $y=1$",
+        "Observing $x=1$ is misinformative about $y$ when observing $y=1$",
+        "None of these situations"
+      ],
+      "correct": 1,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Misinformation = negative local MI i(x;y) = log₂[p(y|x)/p(y)]. p(y=1) = 0.4 and p(y=1|x=0) = 0.1/0.6 ≈ 0.167 < 0.4, so i(x=0;y=1) < 0. The other two cases give p(y|x) > p(y), i.e. positive.",
+      "id": 379,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q11 / Misinformation (negative pointwise MI)"
+    },
+    {
+      "question": "In a Venn diagram for discrete $X$ and $Y$, the circle for $X$ has area $H(X)$ and the circle for $Y$ has area $H(Y)$; $\\alpha$ is the part of $X$ only, $\\beta$ the overlap and $\\gamma$ the part of $Y$ only. How much entropy is represented by the total area $\\alpha+\\beta+\\gamma$?",
+      "options": [
+        "$I(X;Y)$",
+        "$H(X,Y)$",
+        "$H(X) + H(Y) - I(X;Y)$",
+        "Both A and B",
+        "Both B and C"
+      ],
+      "correct": 4,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). The union of both circles is the joint entropy H(X,Y) = H(X|Y) + I(X;Y) + H(Y|X) = H(X) + H(Y) − I(X;Y).",
+      "id": 380,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q12 / Information Venn diagram"
+    },
+    {
+      "question": "A researcher uses JIDT to compute $I(X;Y)$ for 1200 samples of two continuous variables with two estimators. Gaussian: 0.0010 nats (null 0.0006 ± 0.0008, p = 0.28 from 100 surrogates). Kraskov (KSG) alg. 2: 0.1347 nats (null 0.0015 ± 0.0211, p = 0.00 from 100 surrogates). What conclusion should the researcher draw?",
+      "options": [
+        "There is no relationship detectable between $X$ and $Y$ in this data set",
+        "There is a linear but no non-linear relationship detectable between $X$ and $Y$",
+        "There is a non-linear but no linear relationship detectable between $X$ and $Y$",
+        "Not enough surrogates were used to draw a satisfactory conclusion",
+        "The difference between the estimators suggests an error in the code"
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). The Gaussian (linear) estimator is not significant (p = 0.28) while KSG, which captures non-linear dependence, is highly significant (p = 0.00). So a non-linear but no linear relationship is detected.",
+      "id": 381,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q13 / Gaussian vs KSG estimators"
+    },
+    {
+      "question": "Which of the following is an advantage of using the box-kernel estimator for mutual information over the Kraskov (KSG) estimator?",
+      "options": [
+        "It can detect non-linear relationships",
+        "You can measure the statistical significance of the result",
+        "It can handle multi-dimensional variables",
+        "All of the above",
+        "None of the above"
+      ],
+      "correct": 4,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). KSG can also detect non-linear relationships, supports surrogate significance testing and handles multivariate variables, so none of these is an advantage of the kernel estimator over KSG (KSG is generally the preferred, less biased estimator).",
+      "id": 382,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q14 / Box-kernel vs KSG estimator"
+    },
+    {
+      "question": "Time series $X_t$ is discrete with period 4, repeating 0-0-1-1 (0,0,1,1,0,0,1,1,…). What value should the embedding length $k$ be set to, at minimum, to capture all of the past influence when measuring active information storage?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "4"
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). With k = 1, a past value of 0 can be followed by 0 or 1, so it is ambiguous. With k = 2 the pairs 00→1, 01→1, 11→0, 10→0 determine the next value exactly, so k = 2 is the minimum.",
+      "id": 383,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q15 / AIS embedding length"
+    },
+    {
+      "question": "Which statement best describes a key advantage of transfer entropy over mutual information when analysing time series?",
+      "options": [
+        "Transfer entropy can be negative while mutual information cannot.",
+        "Transfer entropy can identify directed predictive influence of the past of one process on the state transition of another.",
+        "Transfer entropy requires fewer samples to estimate than mutual information.",
+        "Transfer entropy can only be applied to continuous-valued variables in addition to discrete-valued variables."
+      ],
+      "correct": 1,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). TE conditions on the target's own past, so it is directional and measures predictive information transfer to the target's state transition. Average TE is non-negative and usually needs more samples than MI.",
+      "id": 384,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q16 / Transfer entropy vs MI"
+    },
+    {
+      "question": "Two time series $Y_t$ and $X_t$: label $C$ marks $y_n$, label $B$ marks the block $\\{x_{n-1}, x_n\\}$ and label $A$ marks $x_{n+1}$. Which is the transfer entropy from $Y$ to $X$, with source and target embedding lengths 1 and 2 respectively?",
+      "options": [
+        "$I(C;A|B)$",
+        "$I(A;B)$",
+        "$H(A|B,C)$",
+        "$I(B;A|C)$",
+        "$I(B;A)$"
+      ],
+      "correct": 0,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). T_{Y→X} = I(Y_n ; X_{n+1} | X_n^{(k=2)}) = I(source past ; target next | target past) = I(C; A | B). I(A;B) would be the AIS of X.",
+      "id": 385,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q17 / Transfer entropy definition"
+    },
+    {
+      "question": "Before measuring AIS with the KSG estimator, a researcher plots the autocorrelation function of the series: the autocorrelation starts near 1 at lag 1 and decays slowly, staying above the significance threshold up to about lag 15. Which statement is most correct about what the researcher can conclude for measuring AIS?",
+      "options": [
+        "Dynamic correlation exclusion should be used",
+        "The researcher should expect to measure a statistically significant AIS",
+        "Both A and B",
+        "Neither A nor B"
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Strong autocorrelation over many lags means nearby samples are not independent, so a Theiler window (dynamic correlation exclusion) should be used with KSG. It also shows strong dependence of the next value on the past, so a significant AIS is expected.",
+      "id": 386,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q18 / AIS and autocorrelation"
+    },
+    {
+      "question": "A researcher has time series for $X$, $Y$ and $Z$ and wants to understand the statistical dependence of $X$ on $Y$. Should they measure the pairwise transfer entropy $T_{Y\\to X}$ or the conditional transfer entropy $T_{Y\\to X|Z}$?",
+      "options": [
+        "$T_{Y\\to X|Z}$ is more correct since it removes redundancies in comparison to the pairwise $T_{Y\\to X}$",
+        "$T_{Y\\to X}$ is more correct since it will not include higher-order synergies with $Z$ in comparison to $T_{Y\\to X|Z}$",
+        "Both measures are useful to build a complete understanding of the statistical dependence of $X$ on $Y$.",
+        "Neither measure is useful since they do not directly assess causal effect"
+      ],
+      "correct": 2,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). Conditioning removes redundancy with Z but adds synergy with Z, while pairwise TE includes redundancy but misses synergy. Neither is 'more correct'; together they give the fuller picture.",
+      "id": 387,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q19 / Pairwise vs conditional TE"
+    },
+    {
+      "question": "Define the concept of effective network inference from multivariate time series (each variable is a node in the network):",
+      "options": [
+        "Constructing undirected networks to represent pairwise statistical relationships between nodes",
+        "Constructing directed networks to represent the physical, directed (causal) connections between nodes",
+        "Constructing directed networks to represent pairwise statistical relationships between nodes",
+        "Constructing directed networks to provide a minimal, multivariate model which can replicate and explain the time-series updates of each node"
+      ],
+      "correct": 3,
+      "explanation": "Unofficial answer (no official key released; worked out by Claude, double-check before relying on it). A = functional network, B = structural/causal network, C = pairwise directed functional network. Effective networks are the minimal directed multivariate model explaining each node's dynamics.",
+      "id": 388,
+      "week": "Sample Exam",
+      "course": "CSYS5030",
+      "knowledgeLocation": "Sample Exam Q20 / Effective network inference"
     }
   ],
   "weeks": [
@@ -4669,7 +5924,11 @@ window.QUIZ_DATA = {
     "Week 11",
     "Week 12",
     "Mock Exam 2",
-    "Mock Exam 1"
+    "Mock Exam 1",
+    "Practice Exam 1",
+    "Practice Exam 2",
+    "Week 07 Midterm Quiz",
+    "Sample Exam"
   ],
   "weeksByCourse": {
     "INFO5995": [
@@ -4699,6 +5958,16 @@ window.QUIZ_DATA = {
       "Week 10",
       "Week 11",
       "Week 12"
+    ],
+    "COMP5318": [
+      "Practice Exam 1",
+      "Practice Exam 2"
+    ],
+    "COMP5416": [
+      "Week 07 Midterm Quiz"
+    ],
+    "CSYS5030": [
+      "Sample Exam"
     ]
   }
 }

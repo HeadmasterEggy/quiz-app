@@ -34,7 +34,14 @@ A browser-based quiz app for USYD course revision.
 | Week 10 – Linear programming & randomized rounding | 10 |
 | Week 11 – Distribution learning & testing | 10 |
 | Week 12 – Learning from experts | 10 |
-| **Total** | **295** |
+| COMP5318 total | 60 |
+| Practice Exam 1 (official key) | 30 |
+| Practice Exam 2 (official key) | 30 |
+| COMP5416 total | 3 |
+| Week 07 Midterm Quiz (official feedback) | 3 |
+| CSYS5030 total | 20 |
+| Sample Exam (unofficial answers) | 20 |
+| **Total** | **377** |
 
 ## ✨ Features
 
