@@ -55,6 +55,7 @@ A browser-based quiz app for USYD course revision.
 - **Exam mode** — answers stay hidden until you submit, then review every question
 - **Results by topic** — weakest topics from the knowledge locations; tap any question number to review it
 - **Semester grouping** — current semester's courses first, last course/week remembered
+- **Richer explanations** — "why your pick is wrong" callout, 中文要点, step-by-step working (KaTeX), option-by-option notes, and a 📖 link to the matching weekly notes on qiao1.top
 - **Unofficial-key tag** — questions whose answers have no official source are flagged
 - **Dark theme** — easy on the eyes
 

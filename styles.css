@@ -1715,3 +1715,107 @@ button.answer-dot {
         font-size: 1rem;
     }
 }
+
+/* ── Richer explanations ── */
+.knowledge-location { flex-wrap: wrap; }
+
+.notes-link {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--primary);
+    color: var(--primary-light);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+@media (hover: hover) {
+    .notes-link:hover { background: rgba(99, 102, 241, 0.12); }
+}
+
+.why-wrong {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.07);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.why-wrong strong { white-space: nowrap; }
+.why-wrong div:first-child strong { color: var(--error); }
+.why-wrong div:last-child strong { color: var(--success); }
+
+.explanation-zh {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.zh-tag {
+    flex: 0 0 auto;
+    padding: 1px 8px;
+    border-radius: 6px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.explanation-steps {
+    margin: 0 0 12px 1.4em;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+.explanation-steps li::marker { color: var(--primary-light); font-weight: 700; }
+
+.option-notes {
+    margin-top: 12px;
+    border-top: 1px dashed var(--border);
+    padding-top: 10px;
+    font-size: 0.88rem;
+}
+
+.option-notes summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 6px;
+}
+
+.option-note {
+    display: grid;
+    grid-template-columns: 2.6em 1fr;
+    gap: 6px;
+    padding: 5px 0;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.option-note-letter { font-weight: 700; }
+.option-note.is-correct .option-note-letter { color: var(--success); }
+.option-note.is-wrong .option-note-letter { color: var(--error); }
+.option-note.is-chosen { color: var(--text); }
+
+.tool-section-label { display: none; }
+.notes-link { grid-column: 2; justify-self: start; margin-left: 0; }
+
+@media (max-width: 600px) {
+    .tool-section-label { display: block; }
+}

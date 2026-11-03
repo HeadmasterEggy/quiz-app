@@ -158,13 +158,23 @@ function renderQuestionTags(q) {
     el.classList.toggle('hidden', !el.childElementCount);
 }
 
-function renderExplanation(q) {
+function getNotesUrl(q) {
+    const links = window.QUIZ_DATA?.notesLinks?.[q.course];
+    return links && q.lectureWeek ? links[q.lectureWeek] || '' : '';
+}
+
+// `selected` is the chosen option index (or array for multi-answer); null when the answer was only revealed.
+function renderExplanation(q, selected = null) {
     const el = $('explanationText');
     if (!el) return;
     el.innerHTML = '';
+    const correctIdx = isMAQ(q) ? q.correct : [q.correct];
+    const chosen = selected == null ? [] : (Array.isArray(selected) ? selected : [selected]);
+    const notes = Array.isArray(q.optionNotes) ? q.optionNotes : null;
 
     const location = getKnowledgeLocation(q);
-    if (location) {
+    const notesUrl = getNotesUrl(q);
+    if (location || notesUrl) {
         const row = document.createElement('div');
         row.className = 'knowledge-location';
         const label = document.createElement('span');
@@ -172,8 +182,18 @@ function renderExplanation(q) {
         label.textContent = '知识点位置';
         const text = document.createElement('span');
         text.className = 'knowledge-text';
-        setMath(text, location);
+        setMath(text, location || q.lectureWeek || '');
         row.append(label, text);
+        if (notesUrl) {
+            const link = document.createElement('a');
+            link.className = 'notes-link';
+            link.href = notesUrl;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.textContent = '📖 复习笔记';
+            link.title = `Open the ${q.course} ${q.lectureWeek} notes on the blog`;
+            row.appendChild(link);
+        }
         el.appendChild(row);
     }
 
@@ -184,10 +204,78 @@ function renderExplanation(q) {
         el.appendChild(warn);
     }
 
+    // Why the option you picked is wrong, before anything else
+    const wrongPicks = chosen.filter(i => !correctIdx.includes(i));
+    if (notes && wrongPicks.length) {
+        const box = document.createElement('div');
+        box.className = 'why-wrong';
+        wrongPicks.forEach(i => {
+            const line = document.createElement('div');
+            const head = document.createElement('strong');
+            head.textContent = `✗ You chose ${OPTION_SHORTCUTS[i]}: `;
+            const body = document.createElement('span');
+            setMath(body, notes[i] || '');
+            line.append(head, body);
+            box.appendChild(line);
+        });
+        const right = document.createElement('div');
+        const head = document.createElement('strong');
+        head.textContent = `✓ ${correctIdx.map(i => OPTION_SHORTCUTS[i]).join(', ')}: `;
+        const body = document.createElement('span');
+        setMath(body, correctIdx.map(i => notes[i]).filter(Boolean).join(' '));
+        right.append(head, body);
+        box.appendChild(right);
+        el.appendChild(box);
+    }
+
+    if (q.explanationZh) {
+        const zh = document.createElement('div');
+        zh.className = 'explanation-zh';
+        const tag = document.createElement('span');
+        tag.className = 'zh-tag';
+        tag.textContent = '要点';
+        const text = document.createElement('span');
+        setMath(text, q.explanationZh);
+        zh.append(tag, text);
+        el.appendChild(zh);
+    }
+
+    if (Array.isArray(q.steps) && q.steps.length) {
+        const ol = document.createElement('ol');
+        ol.className = 'explanation-steps';
+        q.steps.forEach(step => {
+            const li = document.createElement('li');
+            setMath(li, step);
+            ol.appendChild(li);
+        });
+        el.appendChild(ol);
+    }
+
     const body = document.createElement('div');
     body.className = 'explanation-body';
     setMath(body, cleanExplanationText(q.explanation));
     el.appendChild(body);
+
+    if (notes) {
+        const details = document.createElement('details');
+        details.className = 'option-notes';
+        const summary = document.createElement('summary');
+        summary.textContent = '逐项分析';
+        details.appendChild(summary);
+        q.options.forEach((opt, i) => {
+            const row = document.createElement('div');
+            const ok = correctIdx.includes(i);
+            row.className = 'option-note ' + (ok ? 'is-correct' : 'is-wrong') + (chosen.includes(i) ? ' is-chosen' : '');
+            const letter = document.createElement('span');
+            letter.className = 'option-note-letter';
+            letter.textContent = `${ok ? '✓' : '✗'} ${OPTION_SHORTCUTS[i]}`;
+            const text = document.createElement('span');
+            setMath(text, notes[i] || '');
+            row.append(letter, text);
+            details.appendChild(row);
+        });
+        el.appendChild(details);
+    }
 }
 
 function getRawCourses() {
@@ -270,11 +358,14 @@ function groupedShuffleByCourse(items) {
 // Return a copy of the question with its options reordered and `correct` remapped,
 // so the original data in QUIZ_DATA is never mutated.
 function withShuffledOptions(q) {
+    // Options like "Both A and B" refer to positions, so those questions keep their order.
+    if (q.fixedOptions) return q;
     const order = shuffled(q.options.map((_, i) => i));
     const remap = i => order.indexOf(i);
     return {
         ...q,
         options: order.map(i => q.options[i]),
+        optionNotes: Array.isArray(q.optionNotes) ? order.map(i => q.optionNotes[i]) : q.optionNotes,
         correct: Array.isArray(q.correct) ? q.correct.map(remap) : remap(q.correct)
     };
 }
@@ -838,7 +929,7 @@ function renderReview(q, a) {
         badge.className = 'result-badge revealed';
         badge.textContent = '— Not answered';
     }
-    renderExplanation(q);
+    renderExplanation(q, a ? a.selected : null);
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
     $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
@@ -895,7 +986,7 @@ function showInlineExplanation(isCorrect, q) {
     const badge = $('resultBadge');
     badge.className = 'result-badge ' + (isCorrect ? 'correct' : 'wrong');
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
-    renderExplanation(q);
+    renderExplanation(q, answers[current]?.selected ?? null);
     if (isJumpOpen()) buildJumpGrid();
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
@@ -917,7 +1008,7 @@ function revealAnswer() {
     const badge = $('resultBadge');
     badge.className = 'result-badge revealed';
     badge.textContent = '👁 Answer revealed · not scored';
-    renderExplanation(q);
+    renderExplanation(q, null);
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;

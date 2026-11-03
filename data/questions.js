@@ -21,6 +21,65 @@ window.QUIZ_DATA = {
     "COMP5270": "2026 S1"
   },
   "currentSemester": "2026 S2",
+  "notesLinks": {
+    "COMP5318": {
+      "Week 01": "https://qiao1.top/posts/comp5318-week01-introduction.html",
+      "Week 02": "https://qiao1.top/posts/comp5318-week02-preprocessing-knn.html",
+      "Week 03": "https://qiao1.top/posts/comp5318-week03-linear-logistic-regression.html",
+      "Week 04": "https://qiao1.top/posts/comp5318-week04-naive-bayes-evaluation.html",
+      "Week 05": "https://qiao1.top/posts/comp5318-week05-decision-trees-ensembles.html",
+      "Week 06": "https://qiao1.top/posts/comp5318-week06-svm-pca.html",
+      "Week 07": "https://qiao1.top/posts/comp5318-week07-neural-networks-backpropagation.html",
+      "Week 08": "https://qiao1.top/posts/comp5318-week08-cnn-rnn-lstm.html",
+      "Week 09": "https://qiao1.top/posts/comp5318-week09-clustering-kmeans-gmm-hierarchical.html",
+      "Week 10": "https://qiao1.top/posts/comp5318-week10-transformers.html",
+      "Week 11": "https://qiao1.top/posts/comp5318-week11-markov-models-hmm.html",
+      "Week 12": "https://qiao1.top/posts/comp5318-week12-reinforcement-learning.html"
+    },
+    "COMP5416": {
+      "Week 01": "https://qiao1.top/posts/comp5416-week01-introduction.html",
+      "Week 02": "https://qiao1.top/posts/comp5416-week02-performance.html",
+      "Week 03": "https://qiao1.top/posts/comp5416-week03-applications.html",
+      "Week 04": "https://qiao1.top/posts/comp5416-week04-dns-p2p.html",
+      "Week 05": "https://qiao1.top/posts/comp5416-week05-transport.html",
+      "Week 06": "https://qiao1.top/posts/comp5416-week06-tcp.html",
+      "Week 07": "https://qiao1.top/posts/comp5416-week07-socket-lab.html",
+      "Week 08": "https://qiao1.top/posts/comp5416-week08-multimedia.html",
+      "Week 09": "https://qiao1.top/posts/comp5416-week09-sdn-p4.html",
+      "Week 10": "https://qiao1.top/posts/comp5416-week10-sip-qos-wireless.html",
+      "Week 11": "https://qiao1.top/posts/comp5416-week11-wifi-mobility.html",
+      "Week 12": "https://qiao1.top/posts/comp5416-week12-5g-mobility-quic.html"
+    },
+    "CSYS5030": {
+      "Week 01": "https://qiao1.top/posts/csys5030-week01-uncertainty-entropy-1.html",
+      "Week 02": "https://qiao1.top/posts/csys5030-week02-uncertainty-entropy-2.html",
+      "Week 03": "https://qiao1.top/posts/csys5030-week03-mutual-information.html",
+      "Week 04": "https://qiao1.top/posts/csys5030-week04-conditional-mutual-information.html",
+      "Week 05": "https://qiao1.top/posts/csys5030-week05-jidt-software.html",
+      "Week 06": "https://qiao1.top/posts/csys5030-week06-information-theoretic-estimators.html",
+      "Week 07": "https://qiao1.top/posts/csys5030-week07-statistical-significance.html",
+      "Week 08": "https://qiao1.top/posts/csys5030-week08-self-organisation.html",
+      "Week 09": "https://qiao1.top/posts/csys5030-week09-information-processing.html",
+      "Week 10": "https://qiao1.top/posts/csys5030-week10-information-storage.html",
+      "Week 11": "https://qiao1.top/posts/csys5030-week11-transfer-entropy.html",
+      "Week 12": "https://qiao1.top/posts/csys5030-week12-effective-network-inference.html",
+      "Week 13": "https://qiao1.top/posts/csys5030-week13-wrap-up-exam-review.html"
+    },
+    "COMP5270": {
+      "Week 01": "https://qiao1.top/posts/ad2b7e04.html",
+      "Week 02": "https://qiao1.top/posts/b7f2c9a1.html",
+      "Week 03": "https://qiao1.top/posts/week3-balls-in-bins.html",
+      "Week 04": "https://qiao1.top/posts/comp5270-week4-derandomisation.html",
+      "Week 05": "https://qiao1.top/posts/comp5270-week5-graph-algorithms.html",
+      "Week 06": "https://qiao1.top/posts/comp5270-week6-hashing-and-friends.html",
+      "Week 07": "https://qiao1.top/posts/comp5270-week7-nearest-neighbours-dimensionality-reduction.html",
+      "Week 08": "https://qiao1.top/posts/comp5270-week8-streaming-sketching-i.html",
+      "Week 09": "https://qiao1.top/posts/comp5270-week9-streaming-sketching-ii.html",
+      "Week 10": "https://qiao1.top/posts/comp5270-week10-lp-randomised-rounding.html",
+      "Week 11": "https://qiao1.top/posts/comp5270-week11-learning-testing-distributions.html",
+      "Week 12": "https://qiao1.top/posts/comp5270-week12-learning-from-experts.html"
+    }
+  },
   "questions": [
     {
       "question": "Rice's theorem says that no automatic tool can perfectly decide every non-trivial semantic property of every possible program. What is the most practical lesson for security analysis?",
@@ -2887,7 +2946,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 1,
-      "id": 180
+      "id": 180,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "The $\\Omega(n \\log n)$ worst-case lower bound for comparison-based sorting algorithms doesn't apply to randomised algorithms.",
@@ -2901,7 +2961,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 2,
-      "id": 181
+      "id": 181,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "What type of randomised algorithm is Randomised QuickSort?",
@@ -2917,7 +2978,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 3,
-      "id": 182
+      "id": 182,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "If a random variable has a well-defined variance and expectation, then",
@@ -2933,7 +2995,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 4,
-      "id": 183
+      "id": 183,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "(Pick the best bound that applies) The expected number of comparisons by Randomised QuickSort is at most",
@@ -2949,7 +3012,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 5,
-      "id": 184
+      "id": 184,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "For a given input $x$, a randomised algorithm A always gives different answers when given different random strings.",
@@ -2963,7 +3027,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 6,
-      "id": 185
+      "id": 185,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "We have a much faster polynomial-time randomised algorithm than the best known deterministic algorithm for:",
@@ -2979,7 +3044,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 7,
-      "id": 186
+      "id": 186,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "Suppose I am given a randomised algorithm A which, given as input an integer $n$, outputs a random (not necessarily uniformly random) English sentence of exactly $n$ words. If I run the algorithm twice with input $n$ with the same random bits, will I get the same sentence?",
@@ -2994,7 +3060,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 8,
-      "id": 187
+      "id": 187,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "What is a possible limitation to keep in mind when using randomised algorithms?",
@@ -3010,7 +3077,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 9,
-      "id": 188
+      "id": 188,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "If the expected running time of an algorithm (on any input of size n) is $O(1)$, then the worst-case running time of that algorithm is always $O(1)$.",
@@ -3024,7 +3092,8 @@ window.QUIZ_DATA = {
       "week": "Week 01",
       "topic": "随机变量与期望基础",
       "sourceQuestion": 10,
-      "id": 189
+      "id": 189,
+      "lectureWeek": "Week 01"
     },
     {
       "question": "The union bound states that, for events $E_1, \\ldots, E_k$, the probability of $\\bigcup_{i=1}^{k} E_i$ is equal to the sum of probabilities $\\sum_{i=1}^{k} \\Pr[E_i]$.",
@@ -3039,7 +3108,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 1,
-      "id": 190
+      "id": 190,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "Markov's inequality applies to every random variable which has a well-defined expectation.",
@@ -3054,7 +3124,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 2,
-      "id": 191
+      "id": 191,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "It is always possible to convert a Las Vegas algorithm to a Monte Carlo one with similar runtime (but now worst-case).",
@@ -3068,7 +3139,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 3,
-      "id": 192
+      "id": 192,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "It is always possible to convert a Monte Carlo algorithm to a Las Vegas one with similar runtime (but now expected).",
@@ -3083,7 +3155,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 4,
-      "id": 193
+      "id": 193,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "Chebyshev's inequality, when it applies, is always stronger than Markov's inequality.",
@@ -3097,7 +3170,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 5,
-      "id": 194
+      "id": 194,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "If there is a Monte Carlo algorithm for a decision problem, with success probability 51%, then there is a Monte Carlo algorithm for this problem with similar runtime (up to constant factors) with success probability 99.999%.",
@@ -3111,7 +3185,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 6,
-      "id": 195
+      "id": 195,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "The Randomised Median algorithm seen in class can be converted into a Las Vegas algorithm running in expected linear time.",
@@ -3125,7 +3200,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 7,
-      "id": 196
+      "id": 196,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "The Chernoff bound and Hoeffding's inequality both give concentration bounds where the error decreases with the distance from the expectation...",
@@ -3140,7 +3216,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 8,
-      "id": 197
+      "id": 197,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "A Monte Carlo algorithm whose output can be efficiently checked for correctness can be transformed into a Las Vegas algorithm with similar running time.",
@@ -3154,7 +3231,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 9,
-      "id": 198
+      "id": 198,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "Concentration inequalities are only used to analyse the running time of algorithms.",
@@ -3168,7 +3246,8 @@ window.QUIZ_DATA = {
       "week": "Week 02",
       "topic": "集中不等式与算法类型",
       "sourceQuestion": 10,
-      "id": 199
+      "id": 199,
+      "lectureWeek": "Week 02"
     },
     {
       "question": "The variance of a sum of $n$ random variables is always the sum of their $n$ variances.",
@@ -3182,7 +3261,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 1,
-      "id": 200
+      "id": 200,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "The expected number of collisions when throwing $m$ balls into $n$ bins uniformly at random with replacement grows as",
@@ -3198,7 +3278,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 2,
-      "id": 201
+      "id": 201,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "When throwing $n$ balls into $n$ bins, the expected load of each bin is",
@@ -3214,7 +3295,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 3,
-      "id": 202
+      "id": 202,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "When throwing $\\sqrt{n}$ balls into $n$ bins, the probability to see at least a collision is",
@@ -3230,7 +3312,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 4,
-      "id": 203
+      "id": 203,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "When throwing $n$ balls into $n$ bins, the expected maximum load among all bins is",
@@ -3246,7 +3329,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 5,
-      "id": 204
+      "id": 204,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "The expected number of balls needed to hit every single of $n$ bins at least once (when throwing balls uniformly at random) is",
@@ -3262,7 +3346,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 6,
-      "id": 205
+      "id": 205,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "A Binomial random variable with parameters $n$ and $1/n$ (i.e., Bin($n,1/n$)) behaves roughly like a random variable with...",
@@ -3277,7 +3362,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 7,
-      "id": 206
+      "id": 206,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "The probability that two balls thrown uniformly and independently into $n$ bins both fall in the same bin is...",
@@ -3293,7 +3379,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 8,
-      "id": 207
+      "id": 207,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "If two random variables $X$ and $Y$ are negatively correlated, then we have",
@@ -3309,7 +3396,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 9,
-      "id": 208
+      "id": 208,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "The \"power of two choices\" is...",
@@ -3324,7 +3412,8 @@ window.QUIZ_DATA = {
       "week": "Week 03",
       "topic": "球入箱与哈希",
       "sourceQuestion": 10,
-      "id": 209
+      "id": 209,
+      "lectureWeek": "Week 03"
     },
     {
       "question": "We know how to convert every randomised algorithm into a deterministic algorithm with similar running time and guarantees.",
@@ -3339,7 +3428,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 1,
-      "id": 296
+      "id": 296,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "If a (Monte-Carlo) randomised algorithm for a decision problem runs in time $O(n)$ and uses $R=O(1)$ random bits, it can be converted into a deterministic algorithm running in time $O(n)$.",
@@ -3353,7 +3443,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 2,
-      "id": 297
+      "id": 297,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "A PNRG outputs truly uniform random bits.",
@@ -3367,7 +3458,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 3,
-      "id": 298
+      "id": 298,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "The method of conditional expectations consists in replacing random choices by making instead a greedy choice at each stage.",
@@ -3381,7 +3473,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 4,
-      "id": 299
+      "id": 299,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "If a randomised algorithm uses $R$ uniformly random bits but its analysis only relies on pairwise independence, then it can be implemented with $R'$ uniformly random bits, where $R'$ is...",
@@ -3396,7 +3489,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 5,
-      "id": 300
+      "id": 300,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "We know how to derandomise the algorithm for Max-CUT seen in class to solve deterministically the Max-CUT problem in $O(mn)$ time.",
@@ -3410,7 +3504,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 6,
-      "id": 301
+      "id": 301,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "There exist efficiently constructible strongly universal hash families (pairwise independent hash functions)...",
@@ -3426,7 +3521,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 7,
-      "id": 302
+      "id": 302,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "The probabilistic method is a way to algorithmically construct objects with the desired property.",
@@ -3440,7 +3536,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 8,
-      "id": 303
+      "id": 303,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "Computers can easily generate true, independent random bits.",
@@ -3454,7 +3551,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 9,
-      "id": 304
+      "id": 304,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "A PNRG is an algorithm/function to generate ____ amounts of ____ randomness based on small ____ random seeds.",
@@ -3470,7 +3568,8 @@ window.QUIZ_DATA = {
       "week": "Week 04",
       "topic": "Derandomisation",
       "sourceQuestion": 10,
-      "id": 305
+      "id": 305,
+      "lectureWeek": "Week 04"
     },
     {
       "question": "Min-Cut is NP-Hard.",
@@ -3484,7 +3583,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 1,
-      "id": 210
+      "id": 210,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "Min-Cut can be solved using $k$ calls to a Max-Flow algorithm, where $k$ is equal to...",
@@ -3499,7 +3599,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 2,
-      "id": 211
+      "id": 211,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "If $C$ is a minimum cut, then Karger's algorithm returns it with probability at least...",
@@ -3514,7 +3615,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 3,
-      "id": 212
+      "id": 212,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "If $C$ is a minimum cut, then Karger-Stein's algorithm returns it with probability at least...",
@@ -3529,7 +3631,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 4,
-      "id": 213
+      "id": 213,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "To achieve constant probability of success, Karger's algorithm runs in time (pick the best that holds):",
@@ -3545,7 +3648,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 5,
-      "id": 214
+      "id": 214,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "The key idea behind Karger's algorithm is that if $(A,B)$ is a minimum cut, it is ____ likely to be killed than other cuts because it has ____ edges.",
@@ -3560,7 +3664,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 6,
-      "id": 215
+      "id": 215,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "Every undirected graph on $n$ vertices has ___ many distinct cuts.",
@@ -3576,7 +3681,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 7,
-      "id": 216
+      "id": 216,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "The idea behind the Karger-Stein algorithm is that Karger's algorithm makes ____ progress in ___ iterations.",
@@ -3592,7 +3698,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 8,
-      "id": 217
+      "id": 217,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "The analysis of Karger's algorithm can be used to immediately show an upper bound on the number of maximum cuts in an undirected graphs.",
@@ -3606,7 +3713,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 9,
-      "id": 218
+      "id": 218,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "Karger's algorithm can be modified to work on weighted undirected graphs.",
@@ -3620,7 +3728,8 @@ window.QUIZ_DATA = {
       "week": "Week 05",
       "topic": "Min-Cut 与 Karger 算法",
       "sourceQuestion": 10,
-      "id": 219
+      "id": 219,
+      "lectureWeek": "Week 05"
     },
     {
       "question": "(Properly designed) hash tables allow for lookups, insertions, and deletions in a data structure, all in...",
@@ -3634,7 +3743,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 1,
-      "id": 220
+      "id": 220,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "Compared to the array-based solution to implement a dictionary, a hash table is...",
@@ -3649,7 +3759,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 2,
-      "id": 221
+      "id": 221,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "To store a truly random hash function from a universe of size $m$ to a space of size $m'$, we would need ____ bits.",
@@ -3665,7 +3776,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 3,
-      "id": 222
+      "id": 222,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "By using a good family of hash functions, we can store $n$ elements in a hash table of space complexity $O(n)$ without any hash collisions (with high probability).",
@@ -3679,7 +3791,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 4,
-      "id": 223
+      "id": 223,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "By using a good family of hash functions, we can store $n$ elements in a hash table of space complexity $O(n^2)$ without any hash collisions (with high probability).",
@@ -3693,7 +3806,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 5,
-      "id": 224
+      "id": 224,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "Assess the following two statements:\n- By using linear probing to handle collisions in our hash table, we can achieve load factor greater than 1.\n- By using separate chaining to handle collisions in our hash table, we can achieve load factor greater than 1.",
@@ -3709,7 +3823,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 6,
-      "id": 225
+      "id": 225,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "[Pick the best answer] When handling collisions with linear probing, insertions, lookups, and deletions have expected time complexity depending on the load factor as:",
@@ -3725,7 +3840,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 7,
-      "id": 226
+      "id": 226,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "(Properly implemented) cuckoo hashing gives lookups in _____ constant time, deletions in _____ constant time, and insertions in _____ constant time.",
@@ -3741,7 +3857,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 8,
-      "id": 227
+      "id": 227,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "Bloom filters are _____ space-efficient than hash tables, but have a small probability of __________ error during lookups.",
@@ -3757,7 +3874,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 9,
-      "id": 228
+      "id": 228,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "Bloom filters have both insertions and lookups in _____ (pick the most accurate answer)",
@@ -3771,7 +3889,8 @@ window.QUIZ_DATA = {
       "week": "Week 06",
       "topic": "哈希表",
       "sourceQuestion": 10,
-      "id": 229
+      "id": 229,
+      "lectureWeek": "Week 06"
     },
     {
       "question": "We know how to solve the (exact) Nearest Neighbour question over a $d$-dimensional space with query time ____ and space ____.",
@@ -3787,7 +3906,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 1,
-      "id": 230
+      "id": 230,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "Typically, for this type of applications we care about large dimension $d$ and large dataset $n$, where $d$ is _____ $n$",
@@ -3803,7 +3923,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 2,
-      "id": 231
+      "id": 231,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "Suppose the number of points $n$ is huge: exponential in the dimension $d$. The known algorithms for the (exact) Nearest Neighbour problem have query time or space complexity that scales ____ with the dimension $d$.",
@@ -3818,7 +3939,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 3,
-      "id": 232
+      "id": 232,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Approximate Nearest Neighbour problem relaxes the Nearest Neighbour problem by...",
@@ -3833,7 +3955,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 4,
-      "id": 233
+      "id": 233,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Johnson-Linderstrauss Lemma allows us to preserve exactly the Euclidean distances between $n$ points, but on a much smaller space of dimension only $O(\\log n)$.",
@@ -3847,7 +3970,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 5,
-      "id": 234
+      "id": 234,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Johnson-Linderstrauss Lemma allows us to preserve approximately the Euclidean distances between $n$ points, but on a much smaller space of dimension only $O(\\log d)$.",
@@ -3861,7 +3985,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 6,
-      "id": 235
+      "id": 235,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Johnson-Linderstrauss Lemma allows us to preserve approximately the Euclidean distances between $n$ points, but on a much smaller space of dimension only $O(\\log n)$.",
@@ -3875,7 +4000,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 7,
-      "id": 236
+      "id": 236,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Johnson-Linderstrauss Lemma allows us to preserve approximately the Hamming distances between $n$ points, but on a much smaller space of dimension only $O(\\log n)$.",
@@ -3889,7 +4015,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 8,
-      "id": 237
+      "id": 237,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "Locality-Sensitive Hashing uses a type of hash functions which makes collisions more likely when hashing elements close to each other.",
@@ -3903,7 +4030,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 9,
-      "id": 238
+      "id": 238,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "Using LSH, one can solve the ANN question in Hamming and Euclidean space with expected query time _____ in the number of points $n$, and space _____ in $n$.",
@@ -3919,7 +4047,8 @@ window.QUIZ_DATA = {
       "week": "Week 07",
       "topic": "近似最近邻 (ANN)",
       "sourceQuestion": 10,
-      "id": 239
+      "id": 239,
+      "lectureWeek": "Week 07"
     },
     {
       "question": "The Misra-Gries algorithm allows us to solve the MAJORITY problem in one pass, using space $O(\\log m + \\log n)$.",
@@ -3933,7 +4062,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 1,
-      "id": 240
+      "id": 240,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "In the standard streaming streaming setting, the input comes one element at a time, in _________ order.",
@@ -3949,7 +4079,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 2,
-      "id": 241
+      "id": 241,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "Most streaming problems can be solved exactly by a randomised algorithm using space $o(\\min(m,n))$.",
@@ -3963,7 +4094,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 3,
-      "id": 242
+      "id": 242,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The Misra-Gries algorithm is ________.",
@@ -3977,7 +4109,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 4,
-      "id": 243
+      "id": 243,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The Morris Counter algorithm provides an approximate count of the number of non-zero elements in a stream of length $m$ using space:",
@@ -3993,7 +4126,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 5,
-      "id": 244
+      "id": 244,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The \"vanilla\" version of the Morris Counter gives an estimate of $m$ which has variance ____",
@@ -4009,7 +4143,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 6,
-      "id": 245
+      "id": 245,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The \"vanilla\" Tidemark (AMS) algorithm gives a ____ approximation for the Distinct Elements problem using space $O(\\log n)$. [Select the best that applies]",
@@ -4024,7 +4159,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 7,
-      "id": 246
+      "id": 246,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The \"vanilla\" BJKST algorithm gives a ____ approximation for the Distinct Elements problem using space $O(\\log n + (\\log\\log n + \\log(1/\\varepsilon))/\\varepsilon^2)$. [Select the best that applies]",
@@ -4039,7 +4175,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 8,
-      "id": 247
+      "id": 247,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The Morris Counter can be made to provide an $(1+\\varepsilon)$-factor approximation to the number of non-zero elements in a stream using the ____________.",
@@ -4055,7 +4192,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 9,
-      "id": 248
+      "id": 248,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "The Tidemark algorithm solves the MAJORITY problem in two passes.",
@@ -4069,7 +4207,8 @@ window.QUIZ_DATA = {
       "week": "Week 08",
       "topic": "数据流算法",
       "sourceQuestion": 10,
-      "id": 249
+      "id": 249,
+      "lectureWeek": "Week 08"
     },
     {
       "question": "A sketching algorithm is a streaming algorithm which allows you to _____ results from ____ streams.",
@@ -4085,7 +4224,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 1,
-      "id": 250
+      "id": 250,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "The Misra-Gries algorithm can be seen as a sketching algorithm.",
@@ -4099,7 +4239,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 2,
-      "id": 251
+      "id": 251,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "The Misra-Gries algorithm can be seen as a linear sketching algorithm.",
@@ -4113,7 +4254,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 3,
-      "id": 252
+      "id": 252,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "A linear sketch is a subset of sketches where the \"combine\" operation is _______.",
@@ -4129,7 +4271,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 4,
-      "id": 253
+      "id": 253,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "The CountMin and CountMinSketch both give _______ for the _______ problem [Select the most accurate answer].",
@@ -4145,7 +4288,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 5,
-      "id": 254
+      "id": 254,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "CountMinSketch is _______ than the Misra-Gries algorithm, and uses _____ space.",
@@ -4161,7 +4305,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 6,
-      "id": 255
+      "id": 255,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "CountSketch and CountMinSketch provide qualitatively _______ guarantees for the quality of their output.",
@@ -4176,7 +4321,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 7,
-      "id": 256
+      "id": 256,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "CountSketch works only in the \"cash register\" model, where updates can only be positive.",
@@ -4190,7 +4336,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 8,
-      "id": 257
+      "id": 257,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "CountMinSketch can be generalised to the general \"turnstile\" model, where updates can be positive or negative and no assumptions are made on the sequence of updates.",
@@ -4204,7 +4351,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 9,
-      "id": 258
+      "id": 258,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "In the cash register model, CountMinSketch provides an _____ of the true frequencies.",
@@ -4219,7 +4367,8 @@ window.QUIZ_DATA = {
       "week": "Week 09",
       "topic": "Sketching",
       "sourceQuestion": 10,
-      "id": 259
+      "id": 259,
+      "lectureWeek": "Week 09"
     },
     {
       "question": "Linear Programming is concerned with maximising (or minimising) a ________ function subject to ________ constraints.",
@@ -4235,7 +4384,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 1,
-      "id": 260
+      "id": 260,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "We have efficient (polynomial-time in the number of variables, constraints, and representation of the problem) algorithms to solve linear programs (LPs).",
@@ -4249,7 +4399,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 2,
-      "id": 261
+      "id": 261,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "An Integer Linear Program (ILP) is like an LP, but the objective function is integer-valued.",
@@ -4263,7 +4414,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 3,
-      "id": 262
+      "id": 262,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "We have efficient (polynomial-time in the number of variables, constraints, and representation of the problem) algorithms to solve integer linear programs (ILPs).",
@@ -4277,7 +4429,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 4,
-      "id": 263
+      "id": 263,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "Every problem which can be solved in polynomial time can be phrased as an LP.",
@@ -4291,7 +4444,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 5,
-      "id": 264
+      "id": 264,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "Only NP-Hard problems can be formulated as ILPs.",
@@ -4305,7 +4459,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 6,
-      "id": 265
+      "id": 265,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "The optimal solution to the LP relaxation of an ILP typically are not solutions to the original ILP.",
@@ -4319,7 +4474,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 7,
-      "id": 266
+      "id": 266,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "Randomised rounding is the general idea to take the optimal solution of an ___ and round its value to integers to get a valid solution to the original ___ while being able to relate its value to that of the ___.",
@@ -4335,7 +4491,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 8,
-      "id": 267
+      "id": 267,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "The LP relaxation + randomised rounding algorithm for Max-SAT seen in class gives a ____-factor approximation (in expectation).",
@@ -4351,7 +4508,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 9,
-      "id": 268
+      "id": 268,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "The LP relaxation + randomised rounding algorithm for Min-CUT seen in class gives a ____-factor approximation (in expectation).",
@@ -4367,7 +4525,8 @@ window.QUIZ_DATA = {
       "week": "Week 10",
       "topic": "线性规划与随机舍入",
       "sourceQuestion": 10,
-      "id": 269
+      "id": 269,
+      "lectureWeek": "Week 10"
     },
     {
       "question": "In learning and testing distributions, we typically assume the probability distribution $p$ we get i.i.d. samples from is over a _______ domain.",
@@ -4382,7 +4541,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 1,
-      "id": 270
+      "id": 270,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "The total variation (TV) distance corresponds to the $\\ell_1$ distance between the probability mass functions.",
@@ -4396,7 +4556,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 2,
-      "id": 271
+      "id": 271,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Total variation distance is ________ and ________.",
@@ -4412,7 +4573,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 3,
-      "id": 272
+      "id": 272,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "The Data Processing Inequality states that \"applying the same function to two random variables $X,Y$ cannot ________ their statistical distance.\"",
@@ -4427,7 +4589,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 4,
-      "id": 273
+      "id": 273,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Learning the bias of an unknown coin to an additive $\\varepsilon$ with probability .99 takes ______ independent coin tosses.",
@@ -4443,7 +4606,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 5,
-      "id": 274
+      "id": 274,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Testing with probability .99 whether an unknown coin is fair or has bias $1/2+\\varepsilon$ takes ____ independent coin tosses.",
@@ -4459,7 +4623,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 6,
-      "id": 275
+      "id": 275,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Testing with probability .99 whether an unknown coin has bias at most $\\varepsilon$ or at least $2\\varepsilon$ takes ____ independent coin tosses.",
@@ -4475,7 +4640,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 7,
-      "id": 276
+      "id": 276,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Learning an unknown probability distribution $p$ (over a known domain of size $k$) to total variation distance $\\varepsilon$ with probability .99 takes _______ independent samples.",
@@ -4491,7 +4657,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 8,
-      "id": 277
+      "id": 277,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Testing whether an unknown probability distribution $p$ (over a known domain $\\mathcal{X}$ of size $k$) is the uniform distribution $u_{\\mathcal{X}}$ over $\\mathcal{X}$ vs. at total variation distance at least 1/100 from $u_{\\mathcal{X}}$, with probability .99, takes ______ independent samples.",
@@ -4507,7 +4674,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 9,
-      "id": 278
+      "id": 278,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "Among all probability distributions over a given domain $\\mathcal{X}$, the uniform distribution over $\\mathcal{X}$ _________ the collision probability.",
@@ -4521,7 +4689,8 @@ window.QUIZ_DATA = {
       "week": "Week 11",
       "topic": "分布学习与测试",
       "sourceQuestion": 10,
-      "id": 279
+      "id": 279,
+      "lectureWeek": "Week 11"
     },
     {
       "question": "In the \"learning from experts\" setting seen in class, we assume that the $n$ experts are independent.",
@@ -4535,7 +4704,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 1,
-      "id": 280
+      "id": 280,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "There is a deterministic algorithm which achieves total error $O(\\sqrt{T})$, regardless of $n$.",
@@ -4549,7 +4719,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 2,
-      "id": 281
+      "id": 281,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "The Consistent Expert algorithm is _______ and achieves total error ___, independent of $T$, as long as some expert makes no mistake.",
@@ -4565,7 +4736,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 3,
-      "id": 282
+      "id": 282,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "The Halving algorithm is _______ and achieves total error ___, independent of $T$, as long as some expert makes no mistake.",
@@ -4581,7 +4753,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 4,
-      "id": 283
+      "id": 283,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "No deterministic algorithm can always achieve total error $o(T)$.",
@@ -4595,7 +4768,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 5,
-      "id": 284
+      "id": 284,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "Letting $C^*$ denote the error (in hindsight) of the best expert, there is a deterministic algorithm which can always achieve total error at most $1.01C^* + O(\\log n)$.",
@@ -4609,7 +4783,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 6,
-      "id": 285
+      "id": 285,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "Letting $C^*$ denote the error (in hindsight) of the best expert, there is a randomised algorithm which can always achieve total expected error at most $1.01C^* + O(\\log n)$.",
@@ -4623,7 +4798,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 7,
-      "id": 286
+      "id": 286,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "The MWU algorithm is a generalisation of the ______ algorithm.",
@@ -4638,7 +4814,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 8,
-      "id": 287
+      "id": 287,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "Randomisation allows to get a better total worst-case error than what is possible deterministically.",
@@ -4652,7 +4829,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 9,
-      "id": 288
+      "id": 288,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "The MWU algorithm retrieves the Halving algorithm as $\\beta$ gets close to ___.",
@@ -4667,7 +4845,8 @@ window.QUIZ_DATA = {
       "week": "Week 12",
       "topic": "Learning from Experts",
       "sourceQuestion": 10,
-      "id": 289
+      "id": 289,
+      "lectureWeek": "Week 12"
     },
     {
       "question": "A property service uses past sales with known prices to predict the sale price of a new home. Which learning task is this?",
@@ -4678,11 +4857,19 @@ window.QUIZ_DATA = {
         "Unsupervised clustering."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. The target is a known numeric price. Learning from labelled examples to predict a continuous target is supervised regression.",
+      "explanation": "The target is a known numeric price. Learning from labelled examples to predict a continuous target is supervised regression.",
       "id": 306,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q1 / Learning tasks"
+      "knowledgeLocation": "W1 Introduction / Learning tasks · Practice Exam 1 Q1",
+      "lectureWeek": "Week 01",
+      "explanationZh": "有标签（已知房价）且预测的是连续数值 → 监督学习中的回归。",
+      "optionNotes": [
+        "Labelled examples with a continuous numeric target: supervised regression.",
+        "Classification predicts a discrete class label; price is a continuous number.",
+        "RL learns from rewards through interaction, not from labelled past sales.",
+        "Clustering has no target label; here the prices are known."
+      ]
     },
     {
       "question": "A k-NN pipeline uses a standard scaler. When evaluating the pipeline on a held-out test set, how should the scaling parameters be obtained?",
@@ -4693,14 +4880,22 @@ window.QUIZ_DATA = {
         "Estimate them from the test set, then apply them to the training set."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Preprocessing must be fitted using training data only. Test-set statistics would leak information into model development.",
+      "explanation": "Preprocessing must be fitted using training data only. Test-set statistics would leak information into model development.",
       "id": 307,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q2 / k-NN preprocessing"
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / k-NN preprocessing · Practice Exam 1 Q2",
+      "lectureWeek": "Week 02",
+      "explanationZh": "标准化参数只能用训练集估计，再同样作用到测试集，否则会数据泄漏。",
+      "optionNotes": [
+        "Using test data to fit the scaler leaks test information into the model.",
+        "Per-example standardisation destroys the shared scale the distances rely on.",
+        "Fit mean/std on training data only, then apply the same transform to both sets.",
+        "Fitting on the test set leaks test information (and is backwards)."
+      ]
     },
     {
-      "question": "The three selected neighbours have (class, distance) pairs (Red, 2), (Blue, 3) and (Blue, 4). What do unweighted voting and inverse-square weighted voting (vote_c = Σ_{i∈N_c} 1/d_i²) predict, respectively?",
+      "question": "The three selected neighbours have (class, distance) pairs (Red, 2), (Blue, 3) and (Blue, 4). What do unweighted voting and inverse-square weighted voting ($\\text{vote}_c = \\sum_{i\\in N_c} 1/d_i^2$) predict, respectively?",
       "options": [
         "Unweighted Blue; weighted Red.",
         "Both Blue.",
@@ -4708,11 +4903,25 @@ window.QUIZ_DATA = {
         "Both Red."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Unweighted votes are Red = 1 and Blue = 2. Weighted votes are Red = 1/4 = 0.25 and Blue = 1/9 + 1/16 ≈ 0.174, so the weighted prediction is Red.",
+      "explanation": "Unweighted votes are Red = 1 and Blue = 2. Weighted votes are Red = 1/4 = 0.25 and Blue = 1/9 + 1/16 ≈ 0.174, so the weighted prediction is Red.",
       "id": 308,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q3 / Weighted k-NN"
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Weighted k-NN · Practice Exam 1 Q3",
+      "lectureWeek": "Week 02",
+      "explanationZh": "不加权时 Blue 2 票 > Red 1 票；按 1/d² 加权时 Red 0.25 > Blue 0.174，结果反转。",
+      "optionNotes": [
+        "Unweighted: Blue wins 2–1. Weighted: Red 0.25 beats Blue 0.174.",
+        "Weighting flips the result because the single Red neighbour is much closer.",
+        "Reversed: the unweighted vote is Blue (two neighbours vs one).",
+        "Unweighted Red is impossible: Blue has two of the three neighbours."
+      ],
+      "steps": [
+        "Unweighted: Red $=1$, Blue $=2$ → Blue",
+        "Weighted Red: $1/2^2 = 0.25$",
+        "Weighted Blue: $1/3^2 + 1/4^2 = 0.111 + 0.0625 \\approx 0.174$",
+        "$0.25 > 0.174$ → weighted prediction Red"
+      ]
     },
     {
       "question": "While growing a PRISM rule for class Yes, the current rule covers both Yes and No examples. What is the purpose of adding a further condition?",
@@ -4723,11 +4932,19 @@ window.QUIZ_DATA = {
         "Turn each Yes example into a separate output class."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. A conjunction adds a restriction. PRISM seeks a rule whose covered examples are pure for the target class; adding conditions can remove covered negatives.",
+      "explanation": "A conjunction adds a restriction. PRISM seeks a rule whose covered examples are pure for the target class; adding conditions can remove covered negatives.",
       "id": 309,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q4 / PRISM"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / PRISM · Practice Exam 1 Q4",
+      "lectureWeek": "Week 05",
+      "explanationZh": "PRISM 每加一个条件都会缩小覆盖范围，目的是让覆盖的样本更纯（只剩 Yes）。",
+      "optionNotes": [
+        "Adding a condition shrinks coverage; it can never make the rule cover more.",
+        "A conjunction restricts the covered set, removing No examples to raise purity.",
+        "PRISM stops once the rule is pure; it does not need every attribute.",
+        "Classes are fixed; PRISM never creates new output classes."
+      ]
     },
     {
       "question": "A regression model has one unusually large residual. Which change would reduce the relative influence of that residual on the reported loss?",
@@ -4738,11 +4955,19 @@ window.QUIZ_DATA = {
         "Use MAE instead of MSE."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. MAE grows linearly with residual magnitude, whereas MSE grows quadratically. The outlier therefore has less relative influence under MAE.",
+      "explanation": "MAE grows linearly with residual magnitude, whereas MSE grows quadratically. The outlier therefore has less relative influence under MAE.",
       "id": 310,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q5 / Regression losses"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Regression losses · Practice Exam 1 Q5",
+      "lectureWeek": "Week 03",
+      "explanationZh": "MSE 对残差平方，大残差被放大；MAE 线性增长，对离群点更不敏感。",
+      "optionNotes": [
+        "Backwards: MSE squares the outlier and increases its influence.",
+        "Squaring again amplifies the large residual even more.",
+        "Using only the largest squared residual makes the outlier dominate completely.",
+        "MAE grows linearly with residual size, so one big residual matters less."
+      ]
     },
     {
       "question": "Two otherwise comparable linear models are fitted. One uses an L1 penalty and gives several coefficients exactly equal to zero. What property does this illustrate?",
@@ -4753,11 +4978,19 @@ window.QUIZ_DATA = {
         "L1 regularisation removes the need for choosing a penalty strength."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. The L1 penalty can set coefficients exactly to zero. Its strength still needs to be selected, and better test performance is not guaranteed.",
+      "explanation": "The L1 penalty can set coefficients exactly to zero. Its strength still needs to be selected, and better test performance is not guaranteed.",
       "id": 311,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q6 / Regularisation"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Regularisation · Practice Exam 1 Q6",
+      "lectureWeek": "Week 03",
+      "explanationZh": "L1（Lasso）能把系数压到恰好 0，得到稀疏模型；但惩罚强度仍需调参。",
+      "optionNotes": [
+        "The opposite: L1 can drop features by zeroing their coefficients.",
+        "Regularisation can help or hurt; it never guarantees better test accuracy.",
+        "L1's corner-shaped penalty makes some coefficients exactly zero: sparsity.",
+        "λ is still a hyperparameter that must be tuned (e.g. by cross-validation)."
+      ]
     },
     {
       "question": "For a simple least-squares fit, the mean of x is 3, the mean of y is 7, Sxy = 10 and Sxx = 5. What are the intercept and the prediction at x = 5?",
@@ -4768,11 +5001,24 @@ window.QUIZ_DATA = {
         "Intercept 2; prediction 12."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. The slope is 10/5 = 2. The intercept is 7 - 2×3 = 1. At x = 5, the prediction is 1 + 2×5 = 11.",
+      "explanation": "The slope is 10/5 = 2. The intercept is 7 - 2×3 = 1. At x = 5, the prediction is 1 + 2×5 = 11.",
       "id": 312,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q7 / Least squares"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Practice Exam 1 Q7",
+      "lectureWeek": "Week 03",
+      "explanationZh": "斜率 = Sxy/Sxx = 2，截距 = ȳ − 斜率·x̄ = 1，x=5 时预测 11。",
+      "optionNotes": [
+        "Intercept 1 is right, but 1 + 2·5 = 11, not 9.",
+        "7 is the mean of y, not the intercept.",
+        "Slope 2, intercept 1, prediction 1 + 2·5 = 11.",
+        "2 is the slope, not the intercept."
+      ],
+      "steps": [
+        "$b_1 = S_{xy}/S_{xx} = 10/5 = 2$",
+        "$b_0 = \\bar y - b_1 \\bar x = 7 - 2\\times 3 = 1$",
+        "$\\hat y(5) = 1 + 2\\times 5 = 11$"
+      ]
     },
     {
       "question": "A binary feature combination never occurs with class No in a small training sample. Without smoothing, one estimated likelihood is zero. What problem can Laplace smoothing address?",
@@ -4783,11 +5029,19 @@ window.QUIZ_DATA = {
         "Smoothing otherwise has to delete every correlated feature."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Naive Bayes multiplies feature likelihoods. A zero factor makes the class score zero; smoothing supplies nonzero estimates for unseen categorical values.",
+      "explanation": "Naive Bayes multiplies feature likelihoods. A zero factor makes the class score zero; smoothing supplies nonzero estimates for unseen categorical values.",
       "id": 313,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q8 / Naive Bayes"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes · Practice Exam 1 Q8",
+      "lectureWeek": "Week 04",
+      "explanationZh": "朴素贝叶斯是似然连乘，一个 0 会让整个类别得分为 0；Laplace 平滑给未见值一个小概率。",
+      "optionNotes": [
+        "Naive Bayes handles categorical features fine without smoothing.",
+        "One zero likelihood zeroes the whole product; smoothing adds pseudo-counts to avoid it.",
+        "Priors always sum to one; smoothing is about likelihoods.",
+        "Smoothing never deletes features."
+      ]
     },
     {
       "question": "A team wants to choose the maximum depth of a decision tree while retaining an independent estimate of final performance. Which procedure is appropriate?",
@@ -4798,11 +5052,19 @@ window.QUIZ_DATA = {
         "Tune depth on validation data or training-set cross-validation, then evaluate once on the reserved test set."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Validation or training-set cross-validation supports model selection. An untouched test set is used once to estimate the selected model’s performance.",
+      "explanation": "Validation or training-set cross-validation supports model selection. An untouched test set is used once to estimate the selected model’s performance.",
       "id": 314,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q9 / Evaluation"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Evaluation · Practice Exam 1 Q9",
+      "lectureWeek": "Week 04",
+      "explanationZh": "调参用验证集或训练集上的交叉验证；测试集只在最后用一次来估计性能。",
+      "optionNotes": [
+        "Tuning on test accuracy then reporting it gives an optimistic, biased estimate.",
+        "Training accuracy overestimates performance, especially for deep trees.",
+        "Mixing test labels into training destroys the independent estimate.",
+        "Tune on validation/CV, then evaluate once on the untouched test set."
+      ]
     },
     {
       "question": "A binary classifier has TP = 12, FP = 4, FN = 8 and TN = 26. What are positive-class precision and recall?",
@@ -4813,11 +5075,24 @@ window.QUIZ_DATA = {
         "Precision 0.75; recall 0.68."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Precision = 12/(12+4) = 0.75. Recall = 12/(12+8) = 0.60. True negatives do not enter these two positive-class measures.",
+      "explanation": "Precision = 12/(12+4) = 0.75. Recall = 12/(12+8) = 0.60. True negatives do not enter these two positive-class measures.",
       "id": 315,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q10 / Classification metrics"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Classification metrics · Practice Exam 1 Q10",
+      "lectureWeek": "Week 04",
+      "explanationZh": "Precision = TP/(TP+FP) = 12/16 = 0.75；Recall = TP/(TP+FN) = 12/20 = 0.60。",
+      "optionNotes": [
+        "Precision 0.75 and recall 0.60.",
+        "Neither value matches TP/(TP+FP) or TP/(TP+FN).",
+        "Swapped: 0.60 is recall and 0.75 is precision.",
+        "Precision is right, but recall is 12/20 = 0.60."
+      ],
+      "steps": [
+        "Precision $= \\dfrac{TP}{TP+FP} = \\dfrac{12}{12+4} = 0.75$",
+        "Recall $= \\dfrac{TP}{TP+FN} = \\dfrac{12}{12+8} = 0.60$",
+        "TN does not appear in either formula"
+      ]
     },
     {
       "question": "Two candidate splits are applied to the same decision-tree parent node. Split X has lower size-weighted child entropy than split Y. What follows?",
@@ -4828,11 +5103,19 @@ window.QUIZ_DATA = {
         "The parent entropy must be zero."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Information gain subtracts weighted child entropy from a fixed parent entropy. A smaller subtracted quantity gives a larger gain.",
+      "explanation": "Information gain subtracts weighted child entropy from a fixed parent entropy. A smaller subtracted quantity gives a larger gain.",
       "id": 316,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q11 / Decision trees"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Decision trees · Practice Exam 1 Q11",
+      "lectureWeek": "Week 05",
+      "explanationZh": "IG = 父节点熵 − 加权子节点熵；父节点熵固定，子节点熵越低，增益越大。",
+      "optionNotes": [
+        "Same parent entropy, smaller subtracted term → larger gain for X.",
+        "Different weighted child entropies give different gains.",
+        "Backwards: Y has the larger child entropy and so the smaller gain.",
+        "Nothing here implies the parent is pure."
+      ]
     },
     {
       "question": "What is the defining training-data operation used in bagging?",
@@ -4843,11 +5126,19 @@ window.QUIZ_DATA = {
         "Fit each learner only on the examples misclassified by the previous learner."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Bagging trains base learners on bootstrap samples of the training observations. Sampling with replacement creates varied datasets.",
+      "explanation": "Bagging trains base learners on bootstrap samples of the training observations. Sampling with replacement creates varied datasets.",
       "id": 317,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q12 / Bagging"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Bagging · Practice Exam 1 Q12",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Bagging = 有放回地自助采样训练集，每个基学习器训练一份。",
+      "optionNotes": [
+        "The test set must never be used for training.",
+        "Bootstrap samples drawn with replacement from the training data.",
+        "That describes splitting features, not bagging.",
+        "Focusing on misclassified examples is boosting."
+      ]
     },
     {
       "question": "Under squared-error loss, a later regression tree is trained to correct what the current ensemble has not explained. What are the appropriate training targets for this later tree?",
@@ -4858,11 +5149,19 @@ window.QUIZ_DATA = {
         "The original targets without accounting for current predictions."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. For squared-error gradient boosting, the residual target is observed value minus current prediction, so the learner aims to correct the remaining error.",
+      "explanation": "For squared-error gradient boosting, the residual target is observed value minus current prediction, so the learner aims to correct the remaining error.",
       "id": 318,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q13 / Gradient boosting"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Gradient boosting · Practice Exam 1 Q13",
+      "lectureWeek": "Week 05",
+      "explanationZh": "平方损失下的梯度提升，下一棵树拟合残差 = 真实值 − 当前预测。",
+      "optionNotes": [
+        "Sign is reversed: the residual is observed minus predicted.",
+        "Fitting the predictions themselves adds no new information.",
+        "Residual y − ŷ is what the next tree should correct.",
+        "Ignoring current predictions means the trees don't build on each other."
+      ]
     },
     {
       "question": "A hard-margin SVM uses support planes wᵀx + b = +1 and wᵀx + b = -1, with w = (3, 4). What is the full distance between the planes?",
@@ -4873,11 +5172,23 @@ window.QUIZ_DATA = {
         "0.40."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. The norm is √(3²+4²) = 5. The full margin width is 2/5 = 0.40; 1/5 is the distance from the decision plane to one support plane.",
+      "explanation": "The norm is √(3²+4²) = 5. The full margin width is 2/5 = 0.40; 1/5 is the distance from the decision plane to one support plane.",
       "id": 319,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q14 / SVM margin"
+      "knowledgeLocation": "W6 SVM & PCA / SVM margin · Practice Exam 1 Q14",
+      "lectureWeek": "Week 06",
+      "explanationZh": "‖w‖ = 5，两个支持平面之间的间隔是 2/‖w‖ = 0.40（1/‖w‖ 只是一半）。",
+      "optionNotes": [
+        "0.20 = 1/‖w‖ is the distance from the decision plane to one support plane.",
+        "2.50 inverts the formula (‖w‖/2).",
+        "5.00 is ‖w‖ itself, not a distance.",
+        "Full margin 2/‖w‖ = 2/5 = 0.40."
+      ],
+      "steps": [
+        "$\\|w\\| = \\sqrt{3^2 + 4^2} = 5$",
+        "Full margin $= 2/\\|w\\| = 2/5 = 0.40$"
+      ]
     },
     {
       "question": "Why can a kernel SVM operate without explicitly storing each transformed feature vector?",
@@ -4888,11 +5199,19 @@ window.QUIZ_DATA = {
         "Its optimisation and predictions can use inner products supplied by the kernel."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. A kernel computes the inner product of implicit feature mappings. The SVM can use these values without forming the mapped vectors explicitly.",
+      "explanation": "A kernel computes the inner product of implicit feature mappings. The SVM can use these values without forming the mapped vectors explicitly.",
       "id": 320,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q15 / Kernel methods"
+      "knowledgeLocation": "W6 SVM & PCA / Kernel methods · Practice Exam 1 Q15",
+      "lectureWeek": "Week 06",
+      "explanationZh": "核技巧：优化和预测只需内积 K(x,z)=φ(x)·φ(z)，不用显式算 φ(x)。",
+      "optionNotes": [
+        "Nonlinear kernels give nonlinear boundaries in the original input space.",
+        "Kernels measure similarity; the labels are unchanged.",
+        "Predictions still depend on the support vectors (training points).",
+        "Only inner products are needed, and the kernel supplies them directly."
+      ]
     },
     {
       "question": "PCA is applied to two measurements recorded in very different units. Why might scaling the measurements before PCA change the first component?",
@@ -4903,11 +5222,19 @@ window.QUIZ_DATA = {
         "PCA always gives the same direction under arbitrary feature rescaling."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Feature-wise rescaling changes the covariance structure. A large numerical scale can dominate a covariance-based PCA unless scaling is handled deliberately.",
+      "explanation": "Feature-wise rescaling changes the covariance structure. A large numerical scale can dominate a covariance-based PCA unless scaling is handled deliberately.",
       "id": 321,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q16 / PCA"
+      "knowledgeLocation": "W6 SVM & PCA / PCA · Practice Exam 1 Q16",
+      "lectureWeek": "Week 06",
+      "explanationZh": "PCA 按方差找方向，换单位会改变各特征方差，从而改变第一主成分。",
+      "optionNotes": [
+        "PCA is unsupervised and never uses labels.",
+        "Changing units rescales variances, which changes the top variance direction.",
+        "Scaling does not make PCA supervised.",
+        "PCA is not scale-invariant; rescaling can change the direction."
+      ]
     },
     {
       "question": "There are exactly four principal components with variances 9, 5, 4 and 2, in descending order. What is the smallest number of leading components needed to retain at least 85% of total variance? Here d = 4; include all four variances in the denominator.",
@@ -4918,11 +5245,24 @@ window.QUIZ_DATA = {
         "Two components, retaining 70%."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Total variance is 20. Two components retain 14/20 = 70%, whereas three retain 18/20 = 90%. Three is therefore the smallest qualifying number.",
+      "explanation": "Total variance is 20. Two components retain 14/20 = 70%, whereas three retain 18/20 = 90%. Three is therefore the smallest qualifying number.",
       "id": 322,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q17 / PCA retained variance"
+      "knowledgeLocation": "W6 SVM & PCA / PCA retained variance · Practice Exam 1 Q17",
+      "lectureWeek": "Week 06",
+      "explanationZh": "总方差 20；前 2 个 70% 不够，前 3 个 90% ≥ 85%，所以最少 3 个。",
+      "optionNotes": [
+        "Three components give 18/20 = 90% ≥ 85%.",
+        "Four works but is not the smallest number.",
+        "Three components retain 90%, not 85%.",
+        "70% is below the 85% threshold."
+      ],
+      "steps": [
+        "Total $= 9+5+4+2 = 20$",
+        "$k=2$: $(9+5)/20 = 70\\% < 85\\%$",
+        "$k=3$: $(9+5+4)/20 = 90\\% \\ge 85\\%$ → 3"
+      ]
     },
     {
       "question": "A ReLU unit has a negative pre-activation. What is its output?",
@@ -4933,11 +5273,19 @@ window.QUIZ_DATA = {
         "Zero."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. ReLU(u) = max(0,u), so negative pre-activations produce zero. ReLU does not itself return a probability.",
+      "explanation": "ReLU(u) = max(0,u), so negative pre-activations produce zero. ReLU does not itself return a probability.",
       "id": 323,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q18 / Neural activations"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Neural activations · Practice Exam 1 Q18",
+      "lectureWeek": "Week 07",
+      "explanationZh": "ReLU(u) = max(0, u)，负输入输出 0。",
+      "optionNotes": [
+        "ReLU never outputs 1 for a negative input.",
+        "That is the identity/linear activation.",
+        "That describes sigmoid, not ReLU.",
+        "max(0, negative) = 0."
+      ]
     },
     {
       "question": "A perceptron has w = (0.4, -0.2), b = 0.1 and learning rate 0.2. For x = (2, 1), the supplied actual output is a = 1 and target is t = 0. What are the updated weights and bias?",
@@ -4948,11 +5296,24 @@ window.QUIZ_DATA = {
         "w = (0.4, -0.2); b = -0.1."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. The correction is η(t-a) = -0.2. Thus wnew = (0.4,-0.2) - 0.2(2,1) = (0,-0.4), and bnew = 0.1 - 0.2 = -0.1.",
+      "explanation": "The correction is η(t-a) = -0.2. Thus wnew = (0.4,-0.2) - 0.2(2,1) = (0,-0.4), and bnew = 0.1 - 0.2 = -0.1.",
       "id": 324,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q19 / Perceptron update"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron update · Practice Exam 1 Q19",
+      "lectureWeek": "Week 07",
+      "explanationZh": "Δ = η(t−a) = −0.2；w ← w + Δ·x = (0, −0.4)，b ← b + Δ = −0.1。",
+      "optionNotes": [
+        "The bias also updates: 0.1 − 0.2 = −0.1.",
+        "Wrong sign: t − a = −1, so the update subtracts.",
+        "w = (0, −0.4), b = −0.1.",
+        "The weights must change too, not just the bias."
+      ],
+      "steps": [
+        "$\\eta(t-a) = 0.2\\,(0-1) = -0.2$",
+        "$w = (0.4, -0.2) - 0.2\\,(2, 1) = (0.0, -0.4)$",
+        "$b = 0.1 - 0.2 = -0.1$"
+      ]
     },
     {
       "question": "A learned convolutional filter detects the same edge pattern at many image locations. Which design feature enables this with a small number of parameters?",
@@ -4963,11 +5324,19 @@ window.QUIZ_DATA = {
         "Fixing every convolution weight to the same constant."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Weight sharing reuses one detector across the image. Each spatial position does not need its own independently learned filter.",
+      "explanation": "Weight sharing reuses one detector across the image. Each spatial position does not need its own independently learned filter.",
       "id": 325,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q20 / CNNs"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNNs · Practice Exam 1 Q20",
+      "lectureWeek": "Week 08",
+      "explanationZh": "卷积核在所有位置共享权重，一个滤波器就能在全图检测同一种边缘，参数很少。",
+      "optionNotes": [
+        "Convolution relies on the spatial arrangement.",
+        "Weight sharing reuses one small filter at every location.",
+        "Per-location parameters is the opposite of weight sharing.",
+        "Weights are learned, not fixed to a constant."
+      ]
     },
     {
       "question": "In a simple recurrent neural network, what carries information from an earlier time step into the next one?",
@@ -4978,11 +5347,19 @@ window.QUIZ_DATA = {
         "A separate test set at every time step."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. The hidden state is updated using the current input and previous hidden state. Recurrent weights are shared across time.",
+      "explanation": "The hidden state is updated using the current input and previous hidden state. Recurrent weights are shared across time.",
       "id": 326,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q21 / RNNs"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / RNNs · Practice Exam 1 Q21",
+      "lectureWeek": "Week 08",
+      "explanationZh": "RNN 的隐藏状态 h_t 由当前输入和 h_{t−1} 更新，把信息带到下一步；权重跨时间共享。",
+      "optionNotes": [
+        "The hidden state carries information from step to step.",
+        "Recurrent weights are shared across time steps.",
+        "Labels are not created per hidden unit.",
+        "Test sets have nothing to do with the recurrence."
+      ]
     },
     {
       "question": "A convolutional layer has four 3 × 3 filters and receives two input channels. Each filter spans both input channels and has one bias. How many trainable parameters are there? (Parameters = F_out × (3 × 3 × C_in + 1).)",
@@ -4993,11 +5370,23 @@ window.QUIZ_DATA = {
         "40."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Each filter has 3×3×2 = 18 weights and one bias, giving 19 parameters. Four filters give 4×19 = 76.",
+      "explanation": "Each filter has 3×3×2 = 18 weights and one bias, giving 19 parameters. Four filters give 4×19 = 76.",
       "id": 327,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q22 / CNN parameters"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN parameters · Practice Exam 1 Q22",
+      "lectureWeek": "Week 08",
+      "explanationZh": "每个滤波器 3×3×2 = 18 个权重 + 1 个偏置 = 19；4 个滤波器共 76。",
+      "optionNotes": [
+        "72 forgets the four biases.",
+        "22 ignores the 3×3 spatial size.",
+        "4 × (3·3·2 + 1) = 76.",
+        "40 = 4 × (3·3 + 1) ignores the 2 input channels."
+      ],
+      "steps": [
+        "Per filter: $3\\times3\\times2 = 18$ weights $+ 1$ bias $= 19$",
+        "Total: $4 \\times 19 = 76$"
+      ]
     },
     {
       "question": "During standard dropout training, why are different subsets of hidden activations temporarily disabled across updates?",
@@ -5008,11 +5397,19 @@ window.QUIZ_DATA = {
         "To reduce reliance on particular hidden-unit combinations and help limit overfitting."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Dropout discourages co-adaptation by training with changing subsets of units. It is a regularisation technique; units are not permanently deleted.",
+      "explanation": "Dropout discourages co-adaptation by training with changing subsets of units. It is a regularisation technique; units are not permanently deleted.",
       "id": 328,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q23 / Dropout"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Dropout · Practice Exam 1 Q23",
+      "lectureWeek": "Week 07",
+      "explanationZh": "Dropout 训练时随机屏蔽神经元，防止共适应、减少过拟合；不会永久删除。",
+      "optionNotes": [
+        "Units are only dropped temporarily for each update.",
+        "Dropout encourages diverse, independent features.",
+        "Targets stay the same.",
+        "Prevents co-adaptation, acting as a regulariser."
+      ]
     },
     {
       "question": "A cluster contains several points and K-means uses squared Euclidean distance. Which representative minimises the sum of squared distances within that fixed cluster?",
@@ -5023,11 +5420,19 @@ window.QUIZ_DATA = {
         "Any randomly selected point, with the same objective value."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. For fixed assignments and squared Euclidean loss, the arithmetic mean minimises the within-cluster sum of squared distances.",
+      "explanation": "For fixed assignments and squared Euclidean loss, the arithmetic mean minimises the within-cluster sum of squared distances.",
       "id": 329,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q24 / K-means"
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 1 Q24",
+      "lectureWeek": "Week 09",
+      "explanationZh": "平方欧氏距离下，使簇内平方距离和最小的点就是均值（质心）。",
+      "optionNotes": [
+        "The maximum is not the minimiser of squared distances.",
+        "The arithmetic mean minimises the sum of squared distances.",
+        "A far point increases the objective.",
+        "Different representatives give different objective values."
+      ]
     },
     {
       "question": "At observation x, a two-component GMM has π₁ = 0.3, π₂ = 0.7, f₁(x) = 0.4 and f₂(x) = 0.2. What is the posterior membership probability for component 1?",
@@ -5038,11 +5443,23 @@ window.QUIZ_DATA = {
         "Approximately 0.538."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. The component scores are 0.3×0.4 = 0.12 and 0.7×0.2 = 0.14. Normalising gives 0.12/(0.12+0.14) ≈ 0.462.",
+      "explanation": "The component scores are 0.3×0.4 = 0.12 and 0.7×0.2 = 0.14. Normalising gives 0.12/(0.12+0.14) ≈ 0.462.",
       "id": 330,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q25 / GMM membership"
+      "knowledgeLocation": "W9 Clustering / GMM membership · Practice Exam 1 Q25",
+      "lectureWeek": "Week 09",
+      "explanationZh": "后验 = π₁f₁ / (π₁f₁ + π₂f₂) = 0.12 / 0.26 ≈ 0.462。",
+      "optionNotes": [
+        "0.12/(0.12 + 0.14) ≈ 0.462.",
+        "0.120 is the unnormalised score π₁f₁(x).",
+        "0.300 is just the prior π₁.",
+        "0.538 is the posterior for component 2."
+      ],
+      "steps": [
+        "$\\pi_1 f_1 = 0.3\\times0.4 = 0.12$, $\\pi_2 f_2 = 0.7\\times0.2 = 0.14$",
+        "$P(1\\mid x) = 0.12/(0.12+0.14) \\approx 0.462$"
+      ]
     },
     {
       "question": "For a fixed HMM and an observed sequence, which task is solved by the Viterbi algorithm?",
@@ -5053,11 +5470,19 @@ window.QUIZ_DATA = {
         "Estimate the number of observed features by PCA."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Viterbi performs decoding: dynamic programming finds the single most probable hidden-state sequence for the observations and model.",
+      "explanation": "Viterbi performs decoding: dynamic programming finds the single most probable hidden-state sequence for the observations and model.",
       "id": 331,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q26 / HMM tasks"
+      "knowledgeLocation": "W11 Markov Models & HMM / HMM tasks · Practice Exam 1 Q26",
+      "lectureWeek": "Week 11",
+      "explanationZh": "Viterbi = 解码：用动态规划找最可能的整条隐状态路径。",
+      "optionNotes": [
+        "Decoding: the single most probable hidden-state path.",
+        "Viterbi works on one observed sequence, not alphabets.",
+        "Mixture weights are a GMM idea; HMMs use transitions.",
+        "PCA is unrelated to HMM inference."
+      ]
     },
     {
       "question": "A two-state Markov chain starts in A. Its transitions are P(A|A) = 0.6, P(B|A) = 0.4, P(A|B) = 0.3 and P(B|B) = 0.7. What is the probability of being in B after exactly two transitions?",
@@ -5068,11 +5493,24 @@ window.QUIZ_DATA = {
         "0.28."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. The two routes are A→A→B and A→B→B, with probabilities 0.6×0.4 and 0.4×0.7. Their sum is 0.24 + 0.28 = 0.52.",
+      "explanation": "The two routes are A→A→B and A→B→B, with probabilities 0.6×0.4 and 0.4×0.7. Their sum is 0.24 + 0.28 = 0.52.",
       "id": 332,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q27 / Markov chains"
+      "knowledgeLocation": "W11 Markov Models & HMM / Markov chains · Practice Exam 1 Q27",
+      "lectureWeek": "Week 11",
+      "explanationZh": "两步到 B 有两条路：A→A→B 0.24 和 A→B→B 0.28，相加 0.52。",
+      "optionNotes": [
+        "0.48 is not a sum of the two-step paths.",
+        "0.6·0.4 + 0.4·0.7 = 0.52.",
+        "0.24 is only the A→A→B path.",
+        "0.28 is only the A→B→B path."
+      ],
+      "steps": [
+        "A→A→B: $0.6\\times0.4 = 0.24$",
+        "A→B→B: $0.4\\times0.7 = 0.28$",
+        "$P = 0.24 + 0.28 = 0.52$"
+      ]
     },
     {
       "question": "A DQN trains on randomly sampled stored transitions rather than only the newest consecutive transitions. What does this sampling primarily help reduce?",
@@ -5083,11 +5521,19 @@ window.QUIZ_DATA = {
         "Temporal correlation between training examples used in successive updates."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Random minibatches from a replay buffer break up the strong correlations present in consecutive environment interactions and also reuse past experience.",
+      "explanation": "Random minibatches from a replay buffer break up the strong correlations present in consecutive environment interactions and also reuse past experience.",
       "id": 333,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q28 / Experience replay"
+      "knowledgeLocation": "W12 Reinforcement Learning / Experience replay · Practice Exam 1 Q28",
+      "lectureWeek": "Week 12",
+      "explanationZh": "经验回放随机采样历史转移，打破连续样本之间的时间相关性，并重复利用经验。",
+      "optionNotes": [
+        "It cannot remove all approximation error.",
+        "The action space is set by the environment.",
+        "Rewards are still required.",
+        "Random replay breaks the correlation between consecutive transitions."
+      ]
     },
     {
       "question": "A DQN holds the target-network parameters fixed for several online-network updates. What is the main intended benefit?",
@@ -5098,14 +5544,22 @@ window.QUIZ_DATA = {
         "Stop the online network from learning at all."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. A fixed target network slows changes to the values used for bootstrapping. The online network still updates, and exploration is a separate issue.",
+      "explanation": "A fixed target network slows changes to the values used for bootstrapping. The online network still updates, and exploration is a separate issue.",
       "id": 334,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q29 / Target networks"
+      "knowledgeLocation": "W12 Reinforcement Learning / Target networks · Practice Exam 1 Q29",
+      "lectureWeek": "Week 12",
+      "explanationZh": "目标网络参数固定一段时间，让自举目标更稳定；在线网络照常更新。",
+      "optionNotes": [
+        "Exploration (e.g. ε-greedy) is separate.",
+        "The reward stays in the target r + γ max Q.",
+        "Fixed targets stabilise the bootstrapped values.",
+        "The online network keeps learning."
+      ]
     },
     {
-      "question": "For a non-terminal transition, Q_old(s,a) = 1, α = 0.5, reward r = 2, γ = 0.8 and max_a′ Q(s′,a′) = 5. What is the updated Q-learning value?",
+      "question": "For a non-terminal transition, $Q_{old}(s,a) = 1$, $\\alpha = 0.5$, reward $r = 2$, $\\gamma = 0.8$ and $\\max_{a'} Q(s',a') = 5$. What is the updated Q-learning value?",
       "options": [
         "2.50.",
         "3.50.",
@@ -5113,11 +5567,23 @@ window.QUIZ_DATA = {
         "4.00."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. The target is 2 + 0.8×5 = 6. The update is 1 + 0.5(6-1) = 3.5.",
+      "explanation": "The target is 2 + 0.8×5 = 6. The update is 1 + 0.5(6-1) = 3.5.",
       "id": 335,
       "week": "Practice Exam 1",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 1 Q30 / Q-learning"
+      "knowledgeLocation": "W12 Reinforcement Learning / Q-learning · Practice Exam 1 Q30",
+      "lectureWeek": "Week 12",
+      "explanationZh": "目标 = r + γ·maxQ' = 6；Q ← 1 + 0.5(6 − 1) = 3.5。",
+      "optionNotes": [
+        "2.50 ignores the discounted future value.",
+        "1 + 0.5(6 − 1) = 3.5.",
+        "6.00 is the target, not the updated value.",
+        "4.00 uses the wrong step or target."
+      ],
+      "steps": [
+        "Target $= r + \\gamma \\max Q(s',a') = 2 + 0.8\\times5 = 6$",
+        "$Q_{new} = Q_{old} + \\alpha(\\text{target} - Q_{old}) = 1 + 0.5(6-1) = 3.5$"
+      ]
     },
     {
       "question": "An analyst groups unlabelled customer records by similarities in their purchasing features. Which task best describes this?",
@@ -5128,11 +5594,19 @@ window.QUIZ_DATA = {
         "Unsupervised clustering."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. There is no supplied target label. The objective is to discover groups from the input features.",
+      "explanation": "There is no supplied target label. The objective is to discover groups from the input features.",
       "id": 336,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q1 / Learning tasks"
+      "knowledgeLocation": "W1 Introduction / Learning tasks · Practice Exam 2 Q1",
+      "lectureWeek": "Week 01",
+      "explanationZh": "没有标签、按相似度分组 → 无监督聚类。",
+      "optionNotes": [
+        "There are no rewards or actions here.",
+        "Classification needs class labels, and the records are unlabelled.",
+        "Regression needs a numeric target.",
+        "Grouping unlabelled records by similarity is clustering."
+      ]
     },
     {
       "question": "A standard k-NN classifier stores its training observations. Which statement about prediction is most appropriate?",
@@ -5143,11 +5617,19 @@ window.QUIZ_DATA = {
         "Prediction uses only one fitted intercept and slope."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. k-NN is an instance-based method. Prediction searches stored examples, so its cost can be substantial; indexing methods can help.",
+      "explanation": "k-NN is an instance-based method. Prediction searches stored examples, so its cost can be substantial; indexing methods can help.",
       "id": 337,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q2 / k-NN complexity"
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / k-NN complexity · Practice Exam 2 Q2",
+      "lectureWeek": "Week 02",
+      "explanationZh": "k-NN 是惰性学习：训练只是存数据，预测时要和存储样本逐一算距离，开销大。",
+      "optionNotes": [
+        "k-NN must keep the training examples, since they are the model.",
+        "Each prediction searches the stored examples, which can be costly.",
+        "More stored data usually makes prediction slower.",
+        "Intercept and slope describe linear regression."
+      ]
     },
     {
       "question": "For x = (1, 4) and y = (4, 0), what are their Manhattan and Euclidean distances, respectively?",
@@ -5158,11 +5640,24 @@ window.QUIZ_DATA = {
         "7 and 5."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Absolute coordinate differences are 3 and 4. Manhattan distance is 3+4 = 7, and Euclidean distance is √(3²+4²) = 5.",
+      "explanation": "Absolute coordinate differences are 3 and 4. Manhattan distance is 3+4 = 7, and Euclidean distance is √(3²+4²) = 5.",
       "id": 338,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q3 / Distance measures"
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Distance measures · Practice Exam 2 Q3",
+      "lectureWeek": "Week 02",
+      "explanationZh": "坐标差 3 和 4：曼哈顿 = 3+4 = 7，欧氏 = √(9+16) = 5。",
+      "optionNotes": [
+        "25 is the squared Euclidean distance.",
+        "Reversed, and 25 is squared.",
+        "Reversed order: Manhattan is 7.",
+        "Manhattan 7, Euclidean 5."
+      ],
+      "steps": [
+        "$|1-4| = 3,\\ |4-0| = 4$",
+        "Manhattan $= 3 + 4 = 7$",
+        "Euclidean $= \\sqrt{3^2+4^2} = 5$"
+      ]
     },
     {
       "question": "A 1R classifier is fitted using several candidate categorical attributes. What distinguishes its final model?",
@@ -5173,11 +5668,19 @@ window.QUIZ_DATA = {
         "It requires exactly one training observation per class."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. 1R evaluates simple rules based on individual attributes and selects one attribute’s rule set, rather than building conjunctions across many attributes.",
+      "explanation": "1R evaluates simple rules based on individual attributes and selects one attribute’s rule set, rather than building conjunctions across many attributes.",
       "id": 339,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q4 / 1R"
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / 1R · Practice Exam 2 Q4",
+      "lectureWeek": "Week 02",
+      "explanationZh": "1R 只挑一个属性，为它的每个取值生成一条规则（取多数类）。",
+      "optionNotes": [
+        "1R builds one-level rules, not a deep tree.",
+        "One attribute, with one rule per attribute value.",
+        "That is memorisation, not 1R.",
+        "1R has no such requirement."
+      ]
     },
     {
       "question": "A logistic-regression model returns 0.83 for an observation. Under a threshold of 0.5, what is the appropriate interpretation?",
@@ -5188,11 +5691,19 @@ window.QUIZ_DATA = {
         "It guarantees the observation is positive."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. The output is an estimated probability for the positive class. Because 0.83 exceeds 0.5, the assigned label is positive; this is not a guarantee of correctness.",
+      "explanation": "The output is an estimated probability for the positive class. Because 0.83 exceeds 0.5, the assigned label is positive; this is not a guarantee of correctness.",
       "id": 340,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q5 / Logistic regression"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression · Practice Exam 2 Q5",
+      "lectureWeek": "Week 03",
+      "explanationZh": "逻辑回归输出的是正类概率 0.83，大于 0.5 就判为正类，但不等于一定正确。",
+      "optionNotes": [
+        "0.83 > 0.5 → positive, with estimated probability 0.83.",
+        "The threshold is 0.5, not 1.",
+        "Logistic regression is a classifier fitted by maximum likelihood, not OLS.",
+        "A probability is not a guarantee."
+      ]
     },
     {
       "question": "In ridge regression, the penalty strength is increased while the input features and training data stay fixed. What is the direct effect on the optimisation objective?",
@@ -5203,11 +5714,19 @@ window.QUIZ_DATA = {
         "The intercept must become equal to the number of features."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Ridge adds a scaled sum of squared coefficients to the loss. Increasing that scale strengthens the pressure toward smaller coefficients.",
+      "explanation": "Ridge adds a scaled sum of squared coefficients to the loss. Increasing that scale strengthens the pressure toward smaller coefficients.",
       "id": 341,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q6 / Ridge regularisation"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Ridge regularisation · Practice Exam 2 Q6",
+      "lectureWeek": "Week 03",
+      "explanationZh": "Ridge 在损失里加 λ·Σw²；λ 越大，对大系数的惩罚越强。",
+      "optionNotes": [
+        "The data does not change.",
+        "Validation data never enters the training loss.",
+        "Larger λ penalises large coefficients more strongly.",
+        "There is no such constraint on the intercept."
+      ]
     },
     {
       "question": "For three observations, the true targets are (2, 4, 8) and the predictions are (1, 6, 7). What are MAE and MSE, respectively?",
@@ -5218,11 +5737,24 @@ window.QUIZ_DATA = {
         "MAE = 2; MSE = 4/3."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Residuals are (1,-2,1). The absolute-error sum is 4 and squared-error sum is 6, giving MAE = 4/3 and MSE = 2.",
+      "explanation": "Residuals are (1,-2,1). The absolute-error sum is 4 and squared-error sum is 6, giving MAE = 4/3 and MSE = 2.",
       "id": 342,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q7 / Regression error"
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Regression error · Practice Exam 2 Q7",
+      "lectureWeek": "Week 03",
+      "explanationZh": "残差 (1, −2, 1)：MAE = 4/3，MSE = 6/3 = 2。",
+      "optionNotes": [
+        "The predictions are not perfect.",
+        "MAE = 4/3 and MSE = 6/3 = 2.",
+        "These are sums; MAE and MSE are means.",
+        "Swapped values."
+      ],
+      "steps": [
+        "Residuals $y-\\hat y = (1, -2, 1)$",
+        "MAE $= (1+2+1)/3 = 4/3$",
+        "MSE $= (1+4+1)/3 = 2$"
+      ]
     },
     {
       "question": "Which factorisation is assumed by Naive Bayes when scoring an observation with multiple input features?",
@@ -5233,11 +5765,19 @@ window.QUIZ_DATA = {
         "The feature likelihoods multiply conditional on the class."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Naive Bayes assumes conditional independence of features given the class, so the joint class-conditional likelihood is written as a product.",
+      "explanation": "Naive Bayes assumes conditional independence of features given the class, so the joint class-conditional likelihood is written as a product.",
       "id": 343,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q8 / Naive Bayes assumption"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes assumption · Practice Exam 2 Q8",
+      "lectureWeek": "Week 04",
+      "explanationZh": "朴素贝叶斯假设：在给定类别的条件下各特征相互独立，所以似然可以连乘。",
+      "optionNotes": [
+        "Feature values can differ freely.",
+        "The posterior is updated by the likelihoods.",
+        "Features must depend on the class, or they would be useless.",
+        "Conditional independence given the class → product of likelihoods."
+      ]
     },
     {
       "question": "During five-fold cross-validation for choosing hyperparameters, where should a standard scaler be fitted for a particular fold?",
@@ -5248,11 +5788,19 @@ window.QUIZ_DATA = {
         "Only on that fold’s training portion, before transforming its validation portion."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. Each fold must reproduce the full training procedure without using its validation data to fit preprocessing. A pipeline keeps this separation clear.",
+      "explanation": "Each fold must reproduce the full training procedure without using its validation data to fit preprocessing. A pipeline keeps this separation clear.",
       "id": 344,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q9 / Cross-validation"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Cross-validation · Practice Exam 2 Q9",
+      "lectureWeek": "Week 04",
+      "explanationZh": "每一折里，scaler 只能在该折的训练部分上 fit，再变换验证部分，避免泄漏。",
+      "optionNotes": [
+        "Fitting on all folds leaks the validation fold.",
+        "Fitting on the validation portion is a leak.",
+        "The test set is reserved for the final evaluation.",
+        "Fit on that fold's training part only, then transform its validation part."
+      ]
     },
     {
       "question": "For the positive class, TP = 18, FN = 6 and FP = 12. What are recall and F1, respectively?",
@@ -5263,11 +5811,24 @@ window.QUIZ_DATA = {
         "Recall 0.60; F1 0.750."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Recall = 18/24 = 0.75. F1 = 2×18/(36+12+6) = 36/54 = 2/3 ≈ 0.667.",
+      "explanation": "Recall = 18/24 = 0.75. F1 = 2×18/(36+12+6) = 36/54 = 2/3 ≈ 0.667.",
       "id": 345,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q10 / Classification metrics"
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Classification metrics · Practice Exam 2 Q10",
+      "lectureWeek": "Week 04",
+      "explanationZh": "Recall = 18/24 = 0.75；Precision = 18/30 = 0.6；F1 = 2PR/(P+R) ≈ 0.667。",
+      "optionNotes": [
+        "0.60 is precision, not recall.",
+        "Recall is right, but F1 ≈ 0.667.",
+        "Recall 0.75 and F1 = 36/54 ≈ 0.667.",
+        "Both values are wrong."
+      ],
+      "steps": [
+        "Recall $= 18/(18+6) = 0.75$",
+        "Precision $= 18/(18+12) = 0.60$",
+        "$F_1 = \\dfrac{2TP}{2TP+FP+FN} = \\dfrac{36}{36+12+6} = \\dfrac{2}{3} \\approx 0.667$"
+      ]
     },
     {
       "question": "A tree path goes to the Yes leaf only when Colour = green and Size = small. Which rule expresses that path?",
@@ -5278,11 +5839,19 @@ window.QUIZ_DATA = {
         "If Colour = green OR Size = small, predict Yes."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. All tests along one root-to-leaf path must be satisfied, so they form a conjunction. An OR would incorrectly include observations outside the path.",
+      "explanation": "All tests along one root-to-leaf path must be satisfied, so they form a conjunction. An OR would incorrectly include observations outside the path.",
       "id": 346,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q11 / Decision-tree rules"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Decision-tree rules · Practice Exam 2 Q11",
+      "lectureWeek": "Week 05",
+      "explanationZh": "从根到叶的一条路径上的所有测试必须同时满足 → 用 AND 连接。",
+      "optionNotes": [
+        "The path tests combine with AND.",
+        "That drops the Colour test.",
+        "The path requires Colour = green.",
+        "OR would include examples that are off the path."
+      ]
     },
     {
       "question": "A random forest uses bootstrap samples. What additional randomisation commonly helps reduce similarity between its trees?",
@@ -5293,11 +5862,19 @@ window.QUIZ_DATA = {
         "Give all trees identical fixed splits."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Random feature subsets at each split reduce the tendency for the same strong predictors to dominate every tree.",
+      "explanation": "Random feature subsets at each split reduce the tendency for the same strong predictors to dominate every tree.",
       "id": 347,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q12 / Random forests"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Random forests · Practice Exam 2 Q12",
+      "lectureWeek": "Week 05",
+      "explanationZh": "随机森林在每次分裂时只随机挑一部分特征来选，降低树之间的相关性。",
+      "optionNotes": [
+        "A random feature subset at each split decorrelates the trees.",
+        "One identical feature would make every tree the same.",
+        "Test labels must never be used.",
+        "Identical trees remove the benefit of an ensemble."
+      ]
     },
     {
       "question": "After a weak classifier is trained in AdaBoost, how are the relative example weights adjusted for the next stage?",
@@ -5308,11 +5885,19 @@ window.QUIZ_DATA = {
         "Weights are determined by input magnitude without reference to errors."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. AdaBoost increases relative emphasis on mistakes, encouraging the next learner to address observations the current ensemble finds difficult.",
+      "explanation": "AdaBoost increases relative emphasis on mistakes, encouraging the next learner to address observations the current ensemble finds difficult.",
       "id": 348,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q13 / AdaBoost"
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / AdaBoost · Practice Exam 2 Q13",
+      "lectureWeek": "Week 05",
+      "explanationZh": "AdaBoost 提高被分错样本的权重，让下一个弱学习器重点处理难样本。",
+      "optionNotes": [
+        "All examples stay in play; only the weights change.",
+        "Weights are renormalised, never all set to zero.",
+        "Misclassified examples gain weight.",
+        "Weights depend on errors, not on input magnitude."
+      ]
     },
     {
       "question": "For x = (1, 2) and y = (3, 1), calculate K(x,y) for the kernel K(x,y) = (xᵀy + 2)².",
@@ -5323,11 +5908,23 @@ window.QUIZ_DATA = {
         "25."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. The dot product is 1×3 + 2×1 = 5. Therefore K = (5+2)² = 49.",
+      "explanation": "The dot product is 1×3 + 2×1 = 5. Therefore K = (5+2)² = 49.",
       "id": 349,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q14 / SVM kernels"
+      "knowledgeLocation": "W6 SVM & PCA / SVM kernels · Practice Exam 2 Q14",
+      "lectureWeek": "Week 06",
+      "explanationZh": "xᵀy = 1·3 + 2·1 = 5，K = (5 + 2)² = 49。",
+      "optionNotes": [
+        "29 is not (xᵀy + 2)².",
+        "7 forgets to square.",
+        "(5 + 2)² = 49.",
+        "25 = 5² forgets the +2."
+      ],
+      "steps": [
+        "$x^\\top y = 1\\cdot3 + 2\\cdot1 = 5$",
+        "$K = (5+2)^2 = 49$"
+      ]
     },
     {
       "question": "A soft-margin SVM uses a larger value of C, with the same training data and kernel. What changes in the objective?",
@@ -5338,11 +5935,19 @@ window.QUIZ_DATA = {
         "The training data are standardised automatically."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. C controls the trade-off between margin size and violation penalties. A larger finite C increases the penalty but does not generally prohibit all violations.",
+      "explanation": "C controls the trade-off between margin size and violation penalties. A larger finite C increases the penalty but does not generally prohibit all violations.",
       "id": 350,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q15 / Soft-margin SVM"
+      "knowledgeLocation": "W6 SVM & PCA / Soft-margin SVM · Practice Exam 2 Q15",
+      "lectureWeek": "Week 06",
+      "explanationZh": "C 越大，对越界（违反间隔）的惩罚越重，间隔往往变窄；但不是完全禁止越界。",
+      "optionNotes": [
+        "C does not change the kernel.",
+        "Larger C penalises margin violations more, relative to margin width.",
+        "Only C → ∞ (hard margin) forbids violations.",
+        "Scaling is a separate preprocessing step."
+      ]
     },
     {
       "question": "A student says that PCA simply chooses a subset of the original feature columns. What is the most accurate correction?",
@@ -5353,11 +5958,19 @@ window.QUIZ_DATA = {
         "PCA uses the supplied class labels to rank original columns."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. PCA performs a linear change of coordinates. Dimensionality reduction then retains selected directions in that transformed coordinate system.",
+      "explanation": "PCA performs a linear change of coordinates. Dimensionality reduction then retains selected directions in that transformed coordinate system.",
       "id": 351,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q16 / PCA coordinates"
+      "knowledgeLocation": "W6 SVM & PCA / PCA coordinates · Practice Exam 2 Q16",
+      "lectureWeek": "Week 06",
+      "explanationZh": "PCA 构造的是原特征的线性组合（新坐标），不是挑选原始列。",
+      "optionNotes": [
+        "PCA keeps all observations.",
+        "Components are generally mixtures of features.",
+        "New coordinates built from linear combinations of the features.",
+        "PCA ignores labels."
+      ]
     },
     {
       "question": "A dataset has exactly three principal components, with variances 12, 6 and 2. What is the smallest number of leading components that retain at least 90% of the total variance? Here d = 3; the denominator includes all three component variances.",
@@ -5368,11 +5981,24 @@ window.QUIZ_DATA = {
         "Two components, retaining 90%."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. The total is 20. One component retains 12/20 = 60%; two retain 18/20 = 90%, which meets the threshold exactly.",
+      "explanation": "The total is 20. One component retains 12/20 = 60%; two retain 18/20 = 90%, which meets the threshold exactly.",
       "id": 352,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q17 / PCA retained variance"
+      "knowledgeLocation": "W6 SVM & PCA / PCA retained variance · Practice Exam 2 Q17",
+      "lectureWeek": "Week 06",
+      "explanationZh": "总方差 20；1 个 60%，2 个 90% 正好达到 90% 阈值。",
+      "optionNotes": [
+        "Two components retain 18/20 = 90%, not 80%.",
+        "60% is below 90%.",
+        "Three works but is not the smallest.",
+        "Two components reach exactly 90%."
+      ],
+      "steps": [
+        "Total $= 12+6+2 = 20$",
+        "$k=1$: $12/20 = 60\\%$",
+        "$k=2$: $18/20 = 90\\% \\ge 90\\%$ → 2"
+      ]
     },
     {
       "question": "Why can minibatch gradient descent have noisier updates than full-batch gradient descent?",
@@ -5383,11 +6009,19 @@ window.QUIZ_DATA = {
         "It changes the labels randomly before every update."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. A minibatch gradient varies with the sampled examples. Full-batch descent uses the gradient averaged over the complete training set.",
+      "explanation": "A minibatch gradient varies with the sampled examples. Full-batch descent uses the gradient averaged over the complete training set.",
       "id": 353,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q18 / Gradient methods"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Gradient methods · Practice Exam 2 Q18",
+      "lectureWeek": "Week 07",
+      "explanationZh": "小批量梯度只用一部分样本估计梯度，随批次变化，所以更新更“嘈杂”。",
+      "optionNotes": [
+        "Noise does not guarantee worse generalisation.",
+        "A subset gives a noisy estimate of the full gradient.",
+        "The objective is the same.",
+        "Labels are never changed."
+      ]
     },
     {
       "question": "At w = (0.5, -1.0), the loss gradient is (3, -2). A gradient-descent step uses learning rate 0.1. What is the new w?",
@@ -5398,11 +6032,23 @@ window.QUIZ_DATA = {
         "(-2.5, 1.0)."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. Subtract 0.1 times the gradient: (0.5,-1) - (0.3,-0.2) = (0.2,-0.8).",
+      "explanation": "Subtract 0.1 times the gradient: (0.5,-1) - (0.3,-0.2) = (0.2,-0.8).",
       "id": 354,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q19 / Gradient descent"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Gradient descent · Practice Exam 2 Q19",
+      "lectureWeek": "Week 07",
+      "explanationZh": "w ← w − η·∇ = (0.5, −1) − 0.1·(3, −2) = (0.2, −0.8)。",
+      "optionNotes": [
+        "That adds the gradient (ascent).",
+        "(0.5 − 0.3, −1 + 0.2) = (0.2, −0.8).",
+        "The second coordinate has the wrong sign.",
+        "That forgets the learning rate."
+      ],
+      "steps": [
+        "$\\eta\\nabla = 0.1\\,(3, -2) = (0.3, -0.2)$",
+        "$w_{new} = (0.5, -1.0) - (0.3, -0.2) = (0.2, -0.8)$"
+      ]
     },
     {
       "question": "For standard 2 × 2 max pooling, what value is passed on from each pooling window?",
@@ -5413,11 +6059,19 @@ window.QUIZ_DATA = {
         "The sum of all learned convolution weights."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Max pooling selects the maximum within each spatial window. The standard pooling operation itself has no trainable weights.",
+      "explanation": "Max pooling selects the maximum within each spatial window. The standard pooling operation itself has no trainable weights.",
       "id": 355,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q20 / CNN pooling"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN pooling · Practice Exam 2 Q20",
+      "lectureWeek": "Week 08",
+      "explanationZh": "最大池化取每个窗口里的最大值，本身没有可训练参数。",
+      "optionNotes": [
+        "Pooling works per window, not over the whole image.",
+        "Max pooling has no learnable parameters.",
+        "The maximum in each window.",
+        "Pooling does not use the conv weights."
+      ]
     },
     {
       "question": "Which property motivates the use of LSTMs rather than a simple RNN for some long-sequence tasks?",
@@ -5428,11 +6082,19 @@ window.QUIZ_DATA = {
         "Gated state updates can help retain information and support gradient flow over longer intervals."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. LSTM gates regulate what is stored, retained and exposed. They can help with long-range dependencies, although they do not guarantee perfect memory.",
+      "explanation": "LSTM gates regulate what is stored, retained and exposed. They can help with long-range dependencies, although they do not guarantee perfect memory.",
       "id": 356,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q21 / LSTM motivation"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / LSTM motivation · Practice Exam 2 Q21",
+      "lectureWeek": "Week 08",
+      "explanationZh": "LSTM 用门控来决定存什么、留什么、输出什么，有助于长程依赖和梯度传播。",
+      "optionNotes": [
+        "LSTM weights are shared across time.",
+        "Order still matters.",
+        "LSTMs are trained.",
+        "Gates help retain information and gradient flow over long ranges."
+      ]
     },
     {
       "question": "An 18 × 18 input passes through a 3 × 3 convolution with stride 1 and no padding, then 2 × 2 max pooling with stride 2 and no padding. What is the final spatial size? (Output size = (n + 2p − f)/s + 1, applied at both stages.)",
@@ -5443,11 +6105,23 @@ window.QUIZ_DATA = {
         "16 × 16."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. The convolution gives (18-3)/1 + 1 = 16 per dimension. Pooling gives (16-2)/2 + 1 = 8 per dimension.",
+      "explanation": "The convolution gives (18-3)/1 + 1 = 16 per dimension. Pooling gives (16-2)/2 + 1 = 8 per dimension.",
       "id": 357,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q22 / CNN output size"
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN output size · Practice Exam 2 Q22",
+      "lectureWeek": "Week 08",
+      "explanationZh": "卷积后 (18−3)/1+1 = 16，池化后 (16−2)/2+1 = 8 → 8×8。",
+      "optionNotes": [
+        "8 × 8.",
+        "9 × 9 skips the conv shrink (18/2).",
+        "7 × 7 is off by one.",
+        "16 × 16 is the size before pooling."
+      ],
+      "steps": [
+        "Conv: $(18 - 3)/1 + 1 = 16$",
+        "Pool: $(16 - 2)/2 + 1 = 8$ → $8\\times8$"
+      ]
     },
     {
       "question": "A network was trained using dropout. Which statement about standard inference is appropriate?",
@@ -5458,11 +6132,19 @@ window.QUIZ_DATA = {
         "Reset all weights to their initial random values."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Standard inference uses the full network. With inverted dropout, scaling is already applied during training; under the original convention, it is applied at inference.",
+      "explanation": "Standard inference uses the full network. With inverted dropout, scaling is already applied during training; under the original convention, it is applied at inference.",
       "id": 358,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q23 / Dropout at inference"
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Dropout at inference · Practice Exam 2 Q23",
+      "lectureWeek": "Week 07",
+      "explanationZh": "推理时用全部神经元，缩放方式与训练时的 dropout 约定一致（inverted dropout 已在训练时缩放）。",
+      "optionNotes": [
+        "All units are used, with scaling consistent with the training convention.",
+        "Dropout is turned off at inference.",
+        "No units are deleted.",
+        "The learned weights are kept."
+      ]
     },
     {
       "question": "An analyst wants a probability of membership in each component, rather than only one hard cluster assignment. Which model directly supplies this?",
@@ -5473,11 +6155,19 @@ window.QUIZ_DATA = {
         "Standard K-means assignments."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. A GMM estimates posterior responsibilities for its components. Standard K-means and dendrogram cuts return hard assignments.",
+      "explanation": "A GMM estimates posterior responsibilities for its components. Standard K-means and dendrogram cuts return hard assignments.",
       "id": 359,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q24 / GMM versus K-means"
+      "knowledgeLocation": "W9 Clustering / GMM versus K-means · Practice Exam 2 Q24",
+      "lectureWeek": "Week 09",
+      "explanationZh": "GMM 给出每个分量的后验概率（软分配）；K-means 和树状图切割是硬分配。",
+      "optionNotes": [
+        "A dendrogram cut gives hard clusters.",
+        "A GMM gives a posterior responsibility for each component.",
+        "Nearest centroid is a hard assignment.",
+        "K-means is a hard assignment."
+      ]
     },
     {
       "question": "Clusters A = {0, 2} and B = {6, 8} contain one-dimensional points. With absolute point-to-point distance, what are single-link and average-link distances?",
@@ -5488,11 +6178,24 @@ window.QUIZ_DATA = {
         "Single-link 6; average-link 4."
       ],
       "correct": 1,
-      "explanation": "Official answer: B. The four cross-cluster distances are 6, 8, 4 and 6. Their minimum is 4, and their mean is 24/4 = 6.",
+      "explanation": "The four cross-cluster distances are 6, 8, 4 and 6. Their minimum is 4, and their mean is 24/4 = 6.",
       "id": 360,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q25 / Hierarchical linkage"
+      "knowledgeLocation": "W9 Clustering / Hierarchical linkage · Practice Exam 2 Q25",
+      "lectureWeek": "Week 09",
+      "explanationZh": "跨簇距离 6、8、4、6：single-link 取最小 4，average-link 取平均 6。",
+      "optionNotes": [
+        "The average is 6, not 8 (8 is complete-link).",
+        "Single-link 4, average 6.",
+        "8 is the maximum (complete-link).",
+        "Swapped."
+      ],
+      "steps": [
+        "Pairs: $|0-6|=6,\\ |0-8|=8,\\ |2-6|=4,\\ |2-8|=6$",
+        "Single-link $= \\min = 4$",
+        "Average-link $= 24/4 = 6$"
+      ]
     },
     {
       "question": "An HMM’s transition and emission parameters are unknown and must be estimated from observed sequences. Which task is this?",
@@ -5503,14 +6206,22 @@ window.QUIZ_DATA = {
         "Dimensionality reduction using principal components."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. Learning estimates model parameters. Evaluation calculates sequence likelihood under a fixed model; decoding finds a hidden-state path.",
+      "explanation": "Learning estimates model parameters. Evaluation calculates sequence likelihood under a fixed model; decoding finds a hidden-state path.",
       "id": 361,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q26 / HMM learning"
+      "knowledgeLocation": "W11 Markov Models & HMM / HMM learning · Practice Exam 2 Q26",
+      "lectureWeek": "Week 11",
+      "explanationZh": "参数未知、要从观测序列里估计 → 学习问题（Baum–Welch / EM）。",
+      "optionNotes": [
+        "Decoding assumes the parameters are known.",
+        "Evaluation assumes the parameters are known.",
+        "Estimating unknown parameters is learning (EM / Baum–Welch).",
+        "Unrelated."
+      ]
     },
     {
-      "question": "At time 1, V₁(A) = 0.3 and V₁(B) = 0.2. Transitions into B are P(B|A) = 0.4 and P(B|B) = 0.7. The next observation has emission probability 0.5 in B. What is the Viterbi score V₂(B) = max_j V₁(j)·a_jB · e_B(o₂)?",
+      "question": "At time 1, V₁(A) = 0.3 and V₁(B) = 0.2. Transitions into B are P(B|A) = 0.4 and P(B|B) = 0.7. The next observation has emission probability 0.5 in B. What is the Viterbi score $V_2(B) = \\max_j V_1(j)\\,a_{jB}\\,e_B(o_2)$?",
       "options": [
         "0.070.",
         "0.130.",
@@ -5518,11 +6229,23 @@ window.QUIZ_DATA = {
         "0.140."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Candidate predecessor scores are 0.3×0.4 = 0.12 and 0.2×0.7 = 0.14. Viterbi takes the maximum, then multiplies by 0.5: 0.070.",
+      "explanation": "Candidate predecessor scores are 0.3×0.4 = 0.12 and 0.2×0.7 = 0.14. Viterbi takes the maximum, then multiplies by 0.5: 0.070.",
       "id": 362,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q27 / Viterbi update"
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi update · Practice Exam 2 Q27",
+      "lectureWeek": "Week 11",
+      "explanationZh": "Viterbi 取最大：max(0.3·0.4, 0.2·0.7) = 0.14，再乘发射概率 0.5 → 0.070。",
+      "optionNotes": [
+        "max(0.12, 0.14) × 0.5 = 0.070.",
+        "0.130 averages instead of taking the max.",
+        "0.060 uses the smaller path.",
+        "0.140 forgets the emission probability."
+      ],
+      "steps": [
+        "From A: $0.3\\times0.4 = 0.12$; from B: $0.2\\times0.7 = 0.14$",
+        "$V_2(B) = \\max(0.12, 0.14)\\times0.5 = 0.070$"
+      ]
     },
     {
       "question": "In an RL return, the discount factor is reduced while rewards and transitions stay the same. What is the direct effect?",
@@ -5533,11 +6256,19 @@ window.QUIZ_DATA = {
         "Observed immediate rewards change their numerical values."
       ],
       "correct": 0,
-      "explanation": "Official answer: A. Discounting changes the weighting of future rewards in the return, not the environment’s rewards or transition probabilities.",
+      "explanation": "Discounting changes the weighting of future rewards in the return, not the environment’s rewards or transition probabilities.",
       "id": 363,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q28 / Discounting"
+      "knowledgeLocation": "W12 Reinforcement Learning / Discounting · Practice Exam 2 Q28",
+      "lectureWeek": "Week 12",
+      "explanationZh": "折扣因子 γ 变小，未来奖励在回报里的权重变小；环境本身不变。",
+      "optionNotes": [
+        "Smaller γ weights future rewards less.",
+        "Action values still differ.",
+        "Discounting does not change the dynamics.",
+        "Rewards themselves are unchanged."
+      ]
     },
     {
       "question": "Why can a deep Q-network be preferable to a Q-table for image-based states?",
@@ -5548,11 +6279,19 @@ window.QUIZ_DATA = {
         "A shared parameterised function can approximate values over a very large input space."
       ],
       "correct": 3,
-      "explanation": "Official answer: D. A DQN uses shared network parameters to estimate state-action values. This avoids explicitly storing a separate value for every possible image.",
+      "explanation": "A DQN uses shared network parameters to estimate state-action values. This avoids explicitly storing a separate value for every possible image.",
       "id": 364,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q29 / Value function approximation"
+      "knowledgeLocation": "W12 Reinforcement Learning / Value function approximation · Practice Exam 2 Q29",
+      "lectureWeek": "Week 12",
+      "explanationZh": "DQN 用一个共享参数的网络近似 Q 值，避免给每张图片存一行表。",
+      "optionNotes": [
+        "That describes a Q-table.",
+        "Training is still needed.",
+        "Observations are still needed.",
+        "A shared function approximator generalises over huge state spaces."
+      ]
     },
     {
       "question": "An action has two outcomes. With probability 0.4, it gives reward 2 and reaches a state of optimal value 6. Otherwise it gives reward 0 and reaches a state of optimal value 2. For γ = 0.5, what is the expected backed-up action value?",
@@ -5563,11 +6302,24 @@ window.QUIZ_DATA = {
         "5.00."
       ],
       "correct": 2,
-      "explanation": "Official answer: C. The backed-up values are 2+0.5×6 = 5 and 0+0.5×2 = 1. Their expectation is 0.4×5 + 0.6×1 = 2.6.",
+      "explanation": "The backed-up values are 2+0.5×6 = 5 and 0+0.5×2 = 1. Their expectation is 0.4×5 + 0.6×1 = 2.6.",
       "id": 365,
       "week": "Practice Exam 2",
       "course": "COMP5318",
-      "knowledgeLocation": "Practice Exam 2 Q30 / Expected action value"
+      "knowledgeLocation": "W12 Reinforcement Learning / Expected action value · Practice Exam 2 Q30",
+      "lectureWeek": "Week 12",
+      "explanationZh": "两个结果：2 + 0.5·6 = 5 和 0 + 0.5·2 = 1；期望 0.4·5 + 0.6·1 = 2.6。",
+      "optionNotes": [
+        "3.00 is not the expectation.",
+        "1.40 forgets the rewards.",
+        "0.4·5 + 0.6·1 = 2.6.",
+        "5.00 is only the first outcome's value."
+      ],
+      "steps": [
+        "Outcome 1: $2 + 0.5\\times6 = 5$",
+        "Outcome 2: $0 + 0.5\\times2 = 1$",
+        "$Q = 0.4\\times5 + 0.6\\times1 = 2.6$"
+      ]
     },
     {
       "question": "Consider a path of three links: Link 1 (transmission rate 1000 Mbps, length 3 km), Link 2 (10 Mbps, 1000 km) and Link 3 (100 Mbps, 1 km). A packet is 16000 bits long and the propagation speed on each link is $3\\times10^8$ m/s. What is the propagation delay, in seconds, of Link 1?",
@@ -5582,7 +6334,20 @@ window.QUIZ_DATA = {
       "id": 366,
       "week": "Week 07 Midterm Quiz",
       "course": "COMP5416",
-      "knowledgeLocation": "W7 midterm quiz / Delay: propagation delay d/s"
+      "knowledgeLocation": "W2 Performance / Delay: propagation delay d/s · W7 Midterm Quiz",
+      "lectureWeek": "Week 02",
+      "explanationZh": "传播时延只取决于距离和传播速度：d/s = 3000 m / 3×10⁸ m/s = 10⁻⁵ s，与包长、速率无关。",
+      "optionNotes": [
+        "10⁻³ s would need 300 km of link.",
+        "10⁻⁴ s would need 30 km.",
+        "3000 m ÷ 3×10⁸ m/s = 1.00×10⁻⁵ s.",
+        "10⁻⁶ s would need 300 m."
+      ],
+      "steps": [
+        "$d = 3\\text{ km} = 3000\\text{ m}$",
+        "$d_{prop} = d/s = 3000 / (3\\times10^8) = 1.0\\times10^{-5}\\text{ s}$",
+        "Packet size and rate only affect transmission delay $L/R$"
+      ]
     },
     {
       "question": "Four servers are connected to four clients over four three-hop paths. The four pairs share a common middle hop with transmission capacity R = 300 Mbps. Each server-to-shared-link link has capacity $R_S$ = 10 Mbps, and each shared-link-to-client link has capacity $R_C$ = 90 Mbps. Assuming the servers send at the maximum possible rate, what is the link utilisation of each client link ($R_C$)? Answer as a decimal.",
@@ -5597,7 +6362,19 @@ window.QUIZ_DATA = {
       "id": 367,
       "week": "Week 07 Midterm Quiz",
       "course": "COMP5416",
-      "knowledgeLocation": "W7 midterm quiz / Throughput: bottleneck link and utilisation"
+      "knowledgeLocation": "W2 Performance / Throughput: bottleneck link and utilisation · W7 Midterm Quiz",
+      "lectureWeek": "Week 02",
+      "explanationZh": "每条流的瓶颈 = min(R_S, R/4, R_C) = min(10, 75, 90) = 10 Mbps；客户端链路利用率 = 10/90 ≈ 0.11。",
+      "optionNotes": [
+        "Off by a factor of 10.",
+        "10/90 ≈ 0.11.",
+        "1.1 would mean the client link is over capacity.",
+        "11 is 100× too large."
+      ],
+      "steps": [
+        "Per-flow rate $= \\min(R_S, R/4, R_C) = \\min(10, 75, 90) = 10$ Mbps",
+        "Client-link utilisation $= 10/90 \\approx 0.11$"
+      ]
     },
     {
       "question": "Two users share a wireless channel and choose, in each slot, whether to transmit or stay silent. Payoffs are symmetric: if only one user transmits, that user gets +16 and the other gets 0; if both transmit (collision), each gets −8; if neither transmits, both get 0. Let $p_1$ (resp. $p_2$) be the probability that user 1 (resp. user 2) transmits. Given $p_2$, the optimal $p_1$ is $p_1 = 1$ if $p_2$ is…",
@@ -5611,7 +6388,19 @@ window.QUIZ_DATA = {
       "id": 368,
       "week": "Week 07 Midterm Quiz",
       "course": "COMP5416",
-      "knowledgeLocation": "W7 midterm quiz / Collisions: random access as a game, best response"
+      "knowledgeLocation": "W1 Introduction & Game Theory / Collisions: random access as a game, best response · W7 Midterm Quiz",
+      "lectureWeek": "Week 01",
+      "explanationZh": "用户 1 发送的期望收益 16(1−p₂) − 8p₂ = 16 − 24p₂ > 0 ⇔ p₂ < 2/3，此时最优 p₁ = 1。",
+      "optionNotes": [
+        "16 − 24p₂ > 0 exactly when p₂ < 2/3.",
+        "At p₂ = 2/3 user 1 is indifferent, so any p₁ is optimal (the quiz accepted it too).",
+        "For p₂ > 2/3 transmitting has negative payoff, so p₁ = 0."
+      ],
+      "steps": [
+        "Transmit: $16(1-p_2) + (-8)p_2 = 16 - 24p_2$",
+        "Silent: $0$",
+        "Transmit is better iff $16 - 24p_2 > 0 \\iff p_2 < 2/3$"
+      ]
     },
     {
       "question": "You roll a 6-sided die, and then tell me which of the 6 faces was the result. How much information have you given me? (NB: “die” is the singular of “dice”.)",
@@ -5626,8 +6415,19 @@ window.QUIZ_DATA = {
       "id": 369,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q1 / Shannon information content",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content · Sample Exam Q1",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "均匀骰子每面概率 1/6，信息量 h = log₂6 ≈ 2.58 bits。",
+      "optionNotes": [
+        "0.77 ≈ log₁₀6, the wrong log base.",
+        "−log₂(1/6) = log₂ 6 ≈ 2.58 bits (fair die).",
+        "2 bits would be 4 equally likely outcomes.",
+        "The standard reading assumes a fair die."
+      ],
+      "steps": [
+        "$h = -\\log_2 p = -\\log_2(1/6) = \\log_2 6 \\approx 2.58$ bits"
+      ]
     },
     {
       "question": "______________ is to Entropy as Pointwise Mutual Information is to Mutual Information.",
@@ -5642,8 +6442,16 @@ window.QUIZ_DATA = {
       "id": 370,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q2 / Local vs average measures",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W2 Uncertainty & Entropy II / Local vs average measures · Sample Exam Q2",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 02",
+      "explanationZh": "熵是信息量 h(x) 的平均；互信息是逐点互信息 i(x;y) 的平均。",
+      "optionNotes": [
+        "Conditional entropy is an average quantity too.",
+        "Redundancy is a PID atom, not a local measure.",
+        "h(x) is the local value whose average is H(X).",
+        "TE is a different average measure."
+      ]
     },
     {
       "question": "______________ are to bits as centimetres are to inches.",
@@ -5658,8 +6466,16 @@ window.QUIZ_DATA = {
       "id": 371,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q3 / Units of information",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Units of information · Sample Exam Q3",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "nats 和 bits 是同一量的不同单位（ln vs log₂），就像厘米和英寸。",
+      "optionNotes": [
+        "Nats (log base e) and bits are units of the same quantity.",
+        "Redundancy is not a unit.",
+        "Entropy is the quantity, not a unit.",
+        "Shannons are bits, so it is the same unit."
+      ]
     },
     {
       "question": "A random variable $X$ takes values 0 and 1, where $p(x=1) = 0.125$. Which of the following is correct?",
@@ -5674,8 +6490,19 @@ window.QUIZ_DATA = {
       "id": 372,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q4 / Shannon information content",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content · Sample Exam Q4",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "h = −log₂0.125 = −log₂2⁻³ = 3 bits。",
+      "optionNotes": [
+        "0.125 is the probability itself.",
+        "1 bit would need p = 0.5.",
+        "0.90 is not −log₂ 0.125.",
+        "−log₂(1/8) = 3 bits."
+      ],
+      "steps": [
+        "$h(x=1) = -\\log_2 0.125 = -\\log_2 2^{-3} = 3$ bits"
+      ]
     },
     {
       "question": "A random variable $X$ has $p(0)=0.1$, $p(1)=0.25$, $p(2)=0.4$, $p(3)=0.25$. Which of the following is the correct Shannon entropy?",
@@ -5690,8 +6517,22 @@ window.QUIZ_DATA = {
       "id": 373,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q5 / Shannon entropy calculation",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon entropy calculation · Sample Exam Q5",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "H = Σ p·log₂(1/p) = 0.332 + 2×0.5 + 0.529 ≈ 1.86 bits。",
+      "optionNotes": [
+        "Too small.",
+        "0.40 is just the largest probability.",
+        "2.00 is the maximum, log₂4, for a uniform distribution.",
+        "≈ 1.86 bits."
+      ],
+      "steps": [
+        "$0.1\\log_2 10 \\approx 0.332$",
+        "$2\\times0.25\\log_2 4 = 1.000$",
+        "$0.4\\log_2 2.5 \\approx 0.529$",
+        "$H \\approx 0.332 + 1.000 + 0.529 = 1.86$ bits"
+      ]
     },
     {
       "question": "A random variable $X$ has alphabet $\\{0,1,2,3\\}$. I know only that $p(x=1) = 0.5$. What am I able to conclude?",
@@ -5706,8 +6547,20 @@ window.QUIZ_DATA = {
       "id": 374,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q6 / Entropy bounds",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W2 Uncertainty & Entropy II / Entropy bounds · Sample Exam Q6",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 02",
+      "explanationZh": "h(x=1) = −log₂0.5 = 1 bit；按分组规则 H(X) ≥ H(0.5, 0.5) = 1 bit，两者都成立。",
+      "optionNotes": [
+        "True, but h(x=1) = 1 bit also holds.",
+        "True, but H(X) ≥ 1 bit also holds.",
+        "Both follow from p(x=1) = 0.5 alone.",
+        "The grouping rule gives the bound without the other probabilities."
+      ],
+      "steps": [
+        "$h(x=1) = -\\log_2 0.5 = 1$ bit",
+        "$H(X) = H_b(0.5) + 0.5\\,H(X\\mid x\\neq1) \\ge H_b(0.5) = 1$ bit"
+      ]
     },
     {
       "question": "$X$ has $p(0)=0.7$, $p(1)=p(2)=p(3)=0.1$. $Y$ has $p(0)=0.7$, $p(1)=0.3$. Which of the following is correct?",
@@ -5722,8 +6575,20 @@ window.QUIZ_DATA = {
       "id": 375,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q7 / Comparing entropies",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Comparing entropies · Sample Exam Q7",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "H(X) ≈ 1.36 > H(Y) ≈ 0.88；h(x=0) = h(y=0)（概率都是 0.7），I(X;Y) 没有联合分布无法判断。",
+      "optionNotes": [
+        "H(X) ≈ 1.36 > H(Y) ≈ 0.88.",
+        "They are equal, since both probabilities are 0.7.",
+        "The second part is false.",
+        "There is no joint distribution, so I(X;Y) can't be determined."
+      ],
+      "steps": [
+        "$H(X) = 0.7\\log_2\\tfrac1{0.7} + 3\\times0.1\\log_2 10 \\approx 0.36 + 1.00 = 1.36$",
+        "$H(Y) = H_b(0.3) \\approx 0.88$"
+      ]
     },
     {
       "question": "For two random variables $X, Y$, if we find that $H(X|Y) = 0$ bits then which statement is always true?",
@@ -5738,8 +6603,16 @@ window.QUIZ_DATA = {
       "id": 376,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q8 / Conditional entropy",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W2 Uncertainty & Entropy II / Conditional entropy · Sample Exam Q8",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 02",
+      "explanationZh": "H(X|Y) = 0 表示 X 是 Y 的确定函数：知道 Y 就完全知道 X。",
+      "optionNotes": [
+        "Only H(Y) ≥ H(X) follows (they can be equal).",
+        "Knowing Y removes all uncertainty about X.",
+        "Fails if H(X) = 0 (then I = 0).",
+        "Nothing about a third variable follows."
+      ]
     },
     {
       "question": "Suppose $Y$ and $Z$ are two sensors measuring the true temperature $X$, and both sensors are nearly perfect copies of $X$. Which of the following best describes the information provided by $Y$ and $Z$ about $X$?",
@@ -5754,8 +6627,16 @@ window.QUIZ_DATA = {
       "id": 377,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q9 / Redundancy vs synergy",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W4 Conditional Mutual Information / Redundancy vs synergy · Sample Exam Q9",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 04",
+      "explanationZh": "两个传感器都几乎复制了 X，单独一个就提供全部信息 → 信息高度冗余。",
+      "optionNotes": [
+        "They share almost the same information: redundant.",
+        "Synergy means you need both together, e.g. XOR.",
+        "Joint information is never less than either alone.",
+        "They are near copies, so not independent."
+      ]
     },
     {
       "question": "In Guess Who? I try to identify my opponent’s character out of 24 possibilities using Yes/No questions. I have narrowed it down to 16 equally likely possibilities. If I could optimally design my further questions, what does information theory say is the lower bound on the average number of further questions needed?",
@@ -5771,8 +6652,21 @@ window.QUIZ_DATA = {
       "id": 378,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q10 / Entropy as a lower bound on yes/no questions",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W1 Uncertainty & Entropy I / Entropy as a lower bound on yes/no questions · Sample Exam Q10",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 01",
+      "explanationZh": "剩余不确定性 log₂16 = 4 bits，每个是/否问题最多 1 bit → 至少 4 个问题。",
+      "optionNotes": [
+        "Too few: 2 questions can split 4 options only.",
+        "6 does not match log₂ 16 (log₂ 24 ≈ 4.6 even before narrowing).",
+        "3 questions split only 8 options.",
+        "log₂ 16 = 4 bits → 4 questions.",
+        "Entropy is exactly the bound here."
+      ],
+      "steps": [
+        "$H = \\log_2 16 = 4$ bits",
+        "Each yes/no answer gives $\\le 1$ bit → $\\ge 4$ questions"
+      ]
     },
     {
       "question": "Given the joint table $p(x=0,y=0)=0.5$, $p(x=0,y=1)=0.1$, $p(x=1,y=0)=0.1$, $p(x=1,y=1)=0.3$, which of the following would be an example of misinformation?",
@@ -5787,8 +6681,21 @@ window.QUIZ_DATA = {
       "id": 379,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q11 / Misinformation (negative pointwise MI)",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W3 Mutual Information / Misinformation (negative pointwise MI) · Sample Exam Q11",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 03",
+      "explanationZh": "逐点互信息 i = log₂ p(y|x)/p(y) 为负即误导信息：p(y=1|x=0) ≈ 0.167 < p(y=1) = 0.4。",
+      "optionNotes": [
+        "p(y=0|x=0) = 0.83 > 0.6, so positive.",
+        "p(y=1|x=0) = 0.167 < 0.4, so negative: misinformative.",
+        "p(y=1|x=1) = 0.75 > 0.4, so positive.",
+        "B is a case."
+      ],
+      "steps": [
+        "$p(x=0) = 0.6,\\ p(y=1) = 0.4$",
+        "$p(y=1\\mid x=0) = 0.1/0.6 \\approx 0.167$",
+        "$i = \\log_2(0.167/0.4) < 0$ → misinformation"
+      ]
     },
     {
       "question": "In a Venn diagram for discrete $X$ and $Y$, the circle for $X$ has area $H(X)$ and the circle for $Y$ has area $H(Y)$; $\\alpha$ is the part of $X$ only, $\\beta$ the overlap and $\\gamma$ the part of $Y$ only. How much entropy is represented by the total area $\\alpha+\\beta+\\gamma$?",
@@ -5804,8 +6711,18 @@ window.QUIZ_DATA = {
       "id": 380,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q12 / Information Venn diagram",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W3 Mutual Information / Information Venn diagram · Sample Exam Q12",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 03",
+      "explanationZh": "两个圆的并集 = 联合熵 H(X,Y) = H(X) + H(Y) − I(X;Y)，所以 B、C 都对。",
+      "optionNotes": [
+        "I(X;Y) is only the overlap β.",
+        "Correct, but C is also correct.",
+        "Correct, but B is also correct.",
+        "A is wrong.",
+        "The union is H(X,Y) = H(X) + H(Y) − I(X;Y)."
+      ],
+      "fixedOptions": true
     },
     {
       "question": "A researcher uses JIDT to compute $I(X;Y)$ for 1200 samples of two continuous variables with two estimators. Gaussian: 0.0010 nats (null 0.0006 ± 0.0008, p = 0.28 from 100 surrogates). Kraskov (KSG) alg. 2: 0.1347 nats (null 0.0015 ± 0.0211, p = 0.00 from 100 surrogates). What conclusion should the researcher draw?",
@@ -5821,8 +6738,17 @@ window.QUIZ_DATA = {
       "id": 381,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q13 / Gaussian vs KSG estimators",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian vs KSG estimators · Sample Exam Q13",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 06",
+      "explanationZh": "高斯估计器（线性）不显著，KSG（可捕捉非线性）高度显著 → 有非线性、无线性关系。",
+      "optionNotes": [
+        "KSG is significant (p = 0).",
+        "Backwards.",
+        "Linear (Gaussian) not significant, non-linear (KSG) significant.",
+        "100 surrogates is enough for these p-values.",
+        "Estimators are expected to differ on non-linear data."
+      ]
     },
     {
       "question": "Which of the following is an advantage of using the box-kernel estimator for mutual information over the Kraskov (KSG) estimator?",
@@ -5838,8 +6764,18 @@ window.QUIZ_DATA = {
       "id": 382,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q14 / Box-kernel vs KSG estimator",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W6 Information-Theoretic Estimators / Box-kernel vs KSG estimator · Sample Exam Q14",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 06",
+      "explanationZh": "KSG 同样能测非线性、做显著性检验、处理多维变量，所以盒核估计器没有这些优势。",
+      "optionNotes": [
+        "KSG also detects non-linear relationships.",
+        "Significance testing works with both.",
+        "KSG also handles multivariate variables.",
+        "None of these are advantages.",
+        "The kernel estimator has no such advantage over KSG."
+      ],
+      "fixedOptions": true
     },
     {
       "question": "Time series $X_t$ is discrete with period 4, repeating 0-0-1-1 (0,0,1,1,0,0,1,1,…). What value should the embedding length $k$ be set to, at minimum, to capture all of the past influence when measuring active information storage?",
@@ -5854,8 +6790,20 @@ window.QUIZ_DATA = {
       "id": 383,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q15 / AIS embedding length",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W10 Active Information Storage / AIS embedding length · Sample Exam Q15",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 10",
+      "explanationZh": "序列 0011 周期 4：k=1 时 0 后面可能是 0 或 1，k=2 时下一位被唯一确定。",
+      "optionNotes": [
+        "k = 0 means no past is used.",
+        "One past value is ambiguous (0→0 and 0→1).",
+        "Two past values determine the next value exactly.",
+        "Sufficient, but not the minimum."
+      ],
+      "steps": [
+        "$k=1$: $0\\to\\{0,1\\}$ (ambiguous)",
+        "$k=2$: $00\\to1,\\ 01\\to1,\\ 11\\to0,\\ 10\\to0$ (deterministic) → $k=2$"
+      ]
     },
     {
       "question": "Which statement best describes a key advantage of transfer entropy over mutual information when analysing time series?",
@@ -5870,8 +6818,16 @@ window.QUIZ_DATA = {
       "id": 384,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q16 / Transfer entropy vs MI",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy vs MI · Sample Exam Q16",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 11",
+      "explanationZh": "TE 以目标自身历史为条件，衡量源过去对目标状态转移的有向预测信息；MI 无方向。",
+      "optionNotes": [
+        "Average TE is non-negative like MI; local values of both can be negative.",
+        "Directed: source past → target's next state, given the target's past.",
+        "TE usually needs more samples.",
+        "TE works for both discrete and continuous data."
+      ]
     },
     {
       "question": "Two time series $Y_t$ and $X_t$: label $C$ marks $y_n$, label $B$ marks the block $\\{x_{n-1}, x_n\\}$ and label $A$ marks $x_{n+1}$. Which is the transfer entropy from $Y$ to $X$, with source and target embedding lengths 1 and 2 respectively?",
@@ -5887,8 +6843,23 @@ window.QUIZ_DATA = {
       "id": 385,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q17 / Transfer entropy definition",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy definition · Sample Exam Q17",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 11",
+      "explanationZh": "T_{Y→X} = I(源过去 ; 目标下一状态 | 目标过去) = I(y_n ; x_{n+1} | x_{n−1}, x_n) = I(C; A | B)。",
+      "optionNotes": [
+        "I(source; target next | target past).",
+        "I(A; B) is X's active information storage.",
+        "That is a conditional entropy.",
+        "The roles of source and target past are swapped.",
+        "That is X's AIS."
+      ],
+      "steps": [
+        "Source past (k=1): $C = y_n$",
+        "Target past (k=2): $B = \\{x_{n-1}, x_n\\}$",
+        "Target next: $A = x_{n+1}$",
+        "$T_{Y\\to X} = I(C; A \\mid B)$"
+      ]
     },
     {
       "question": "Before measuring AIS with the KSG estimator, a researcher plots the autocorrelation function of the series: the autocorrelation starts near 1 at lag 1 and decays slowly, staying above the significance threshold up to about lag 15. Which statement is most correct about what the researcher can conclude for measuring AIS?",
@@ -5903,8 +6874,17 @@ window.QUIZ_DATA = {
       "id": 386,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q18 / AIS and autocorrelation",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W10 Active Information Storage / AIS and autocorrelation · Sample Exam Q18",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 10",
+      "explanationZh": "自相关在很多滞后上显著：样本不独立 → 用动态相关排除（Theiler 窗）；强依赖过去 → AIS 应显著。",
+      "optionNotes": [
+        "True, but B is also true.",
+        "True, but A is also true.",
+        "Use a Theiler window, and expect significant AIS.",
+        "Both hold."
+      ],
+      "fixedOptions": true
     },
     {
       "question": "A researcher has time series for $X$, $Y$ and $Z$ and wants to understand the statistical dependence of $X$ on $Y$. Should they measure the pairwise transfer entropy $T_{Y\\to X}$ or the conditional transfer entropy $T_{Y\\to X|Z}$?",
@@ -5919,8 +6899,16 @@ window.QUIZ_DATA = {
       "id": 387,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q19 / Pairwise vs conditional TE",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W12 Effective Network Inference / Pairwise vs conditional TE · Sample Exam Q19",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 12",
+      "explanationZh": "条件 TE 去掉与 Z 的冗余但会加入协同；成对 TE 包含冗余但漏掉协同。两者互补。",
+      "optionNotes": [
+        "It also adds synergy, so it is not strictly better.",
+        "It also includes redundancy, so it is not strictly better.",
+        "They capture different parts; use both.",
+        "They are still useful for statistical dependence."
+      ]
     },
     {
       "question": "Define the concept of effective network inference from multivariate time series (each variable is a node in the network):",
@@ -5935,8 +6923,16 @@ window.QUIZ_DATA = {
       "id": 388,
       "week": "Sample Exam",
       "course": "CSYS5030",
-      "knowledgeLocation": "Sample Exam Q20 / Effective network inference",
-      "unofficialAnswer": true
+      "knowledgeLocation": "W12 Effective Network Inference / Effective network inference · Sample Exam Q20",
+      "unofficialAnswer": true,
+      "lectureWeek": "Week 12",
+      "explanationZh": "有效网络：构建最小的有向多元模型，能复现并解释每个节点的时间序列更新。",
+      "optionNotes": [
+        "That is an undirected functional network.",
+        "That is the structural (causal) network.",
+        "That is a pairwise directed functional network.",
+        "Minimal multivariate directed model explaining each node's dynamics."
+      ]
     }
   ],
   "weeks": [
