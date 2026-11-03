@@ -259,6 +259,7 @@ function renderExplanation(q, selected = null) {
     if (notes) {
         const details = document.createElement('details');
         details.className = 'option-notes';
+        if (isWideLayout()) details.open = true;
         const summary = document.createElement('summary');
         summary.textContent = '逐项分析';
         details.appendChild(summary);
@@ -390,6 +391,10 @@ function hapticFeedback(pattern) {
     if (prefersReducedMotion()) return;
     try { navigator.vibrate?.(pattern); } catch { /* ignore */ }
 }
+
+// Wide screens get the three-column layout: navigator · question · explanation.
+const WIDE_MQ = window.matchMedia ? window.matchMedia('(min-width: 1100px)') : null;
+function isWideLayout() { return !!(WIDE_MQ && WIDE_MQ.matches); }
 
 function isCompactViewport() {
     return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
@@ -524,6 +529,7 @@ function showEmptyState() {
     $('progressFill').style.width = '0%';
     show('emptyCard');
     updateNavButtons();
+    updateSideNav();
 }
 
 // ── Exam mode ──
@@ -537,6 +543,7 @@ function updateExamBar() {
     const done = answers.filter(Boolean).length;
     $('examAnswered').textContent = examSubmitted ? 'Submitted' : `${done}/${questions.length} answered`;
     $('examSubmitBtn').classList.toggle('hidden', examSubmitted);
+    updateSideNav();
 }
 
 function toggleExamMode() {
@@ -826,7 +833,12 @@ function showQuestion() {
     } else {
         show('revealBtn');
     }
+    $('explPlaceholder').textContent = examInProgress()
+        ? 'Explanations appear after you submit the exam.'
+        : 'Answer to see the explanation here, or press S to show the answer.';
+    $('kbdHints').classList.toggle('exam', examInProgress());
     updateNavButtons();
+    updateSideNav();
 }
 
 function updateNavButtons() {
@@ -988,6 +1000,7 @@ function showInlineExplanation(isCorrect, q) {
     badge.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong';
     renderExplanation(q, answers[current]?.selected ?? null);
     if (isJumpOpen()) buildJumpGrid();
+    updateSideNav();
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
@@ -1066,6 +1079,7 @@ function showResults() {
     } else hide('retryWrongBtn');
 
     updateNavButtons();
+    updateSideNav();
 }
 
 // Topics with the most wrong answers in this run, from each question's knowledge location.
@@ -1152,21 +1166,46 @@ function isJumpOpen() {
     return panel ? !panel.classList.contains('hidden') : false;
 }
 
-function buildJumpGrid() {
-    const grid = $('jumpGrid');
+function buildJumpGrid(grid = $('jumpGrid'), highlightCurrent = true) {
     grid.innerHTML = '';
     questions.forEach((q, i) => {
         const chip = document.createElement('button');
         chip.className = 'jump-chip';
         const a = answers[i];
         if (a) chip.classList.add(examInProgress() ? 'answered-pending' : (a.correct ? 'answered-correct' : 'answered-wrong'));
-        if (i === current) chip.classList.add('current');
+        if (highlightCurrent && i === current) chip.classList.add('current');
         chip.textContent = i + 1;
         const sourceParts = [q.course, q.week].filter(Boolean);
         chip.title = `Q${i + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + (a ? (examInProgress() ? ' · answered' : (a.correct ? ' · ✓' : ' · ✗')) : '');
         chip.onclick = () => jumpToQuestion(i);
         grid.appendChild(chip);
     });
+}
+
+// Always-visible navigator on wide screens: question grid plus this run's score.
+function updateSideNav() {
+    const nav = $('sideNav');
+    if (!nav) return;
+    if (!questions.length) { nav.classList.add('hidden'); return; }
+    nav.classList.remove('hidden');
+    const onResults = !$('resultsCard').classList.contains('hidden');
+    buildJumpGrid($('sideGrid'), !onResults);
+    const done = answers.filter(Boolean);
+    const right = done.filter(a => a.correct).length;
+    const wrong = done.length - right;
+    const stats = $('sideStats');
+    if (examInProgress()) {
+        stats.innerHTML = `<div class="side-title">📝 Exam</div><div class="side-row"><span>Answered</span><strong>${done.length}/${questions.length}</strong></div>`;
+    } else {
+        const acc = done.length ? Math.round(right / done.length * 100) + '%' : '–';
+        stats.innerHTML = `<div class="side-title">This run</div>`
+            + `<div class="side-row"><span>Answered</span><strong>${done.length}/${questions.length}</strong></div>`
+            + `<div class="side-row"><span>Mistakes</span><strong class="${wrong ? 'is-wrong' : ''}">${wrong}</strong></div>`
+            + `<div class="side-row"><span>Accuracy</span><strong>${acc}</strong></div>`;
+    }
+    $('sideResultsBtn').textContent = examInProgress() ? '🏁 Submit exam' : '🏁 View Results';
+    const cur = $('sideGrid').querySelector('.jump-chip.current');
+    if (cur && isWideLayout()) cur.scrollIntoView({ block: 'nearest' });
 }
 
 function openJumpPanel() {
@@ -1223,6 +1262,7 @@ $('prevNavBtn').onclick = navPrev;
 $('nextNavBtn').onclick = navNext;
 $('revealBtn').onclick = revealAnswer;
 $('jumpResultsBtn').onclick = () => { closeJumpPanel(); if (examInProgress()) submitExam(); else showResults(); };
+$('sideResultsBtn').onclick = () => { if (examInProgress()) submitExam(); else showResults(); };
 $('examToggleBtn').onclick = toggleExamMode;
 $('examSubmitBtn').onclick = submitExam;
 $('backResultsBtn').onclick = () => { showResults(); window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }); };
@@ -1249,6 +1289,10 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); navPrev(); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); navNext(); return; }
 
+    if ((e.key === 's' || e.key === 'S') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        if (!$('quizCard').classList.contains('hidden') && !$('revealBtn').classList.contains('hidden')) revealAnswer();
+        return;
+    }
     if (!$('quizCard').classList.contains('hidden')) {
         const idx = OPTION_SHORTCUTS.indexOf(e.key.toUpperCase());
         if (idx >= 0) document.querySelectorAll('.option-btn')[idx]?.click();

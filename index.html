@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css?v=15">
+    <link rel="stylesheet" href="styles.css?v=16">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -68,6 +68,13 @@
             </div>
         </div>
 
+        <aside class="side-nav hidden" id="sideNav" aria-label="Question navigator">
+            <div class="side-stats" id="sideStats"></div>
+            <div class="jump-grid side-grid" id="sideGrid"></div>
+            <div class="side-legend"><span class="lg lg-correct">✓</span> right <span class="lg lg-wrong">✗</span> wrong <span class="lg lg-none"></span> not yet</div>
+            <button class="jump-results-btn" id="sideResultsBtn">🏁 View Results</button>
+        </aside>
+
         <div class="exam-bar hidden" id="examBar" role="status">
             <span class="exam-bar-label">📝 Exam</span>
             <span class="exam-answered" id="examAnswered">0/0 answered</span>
@@ -101,8 +108,10 @@
                 <div class="result-badge" id="resultBadge"></div>
                 <div class="explanation-text" id="explanationText"></div>
             </div>
+            <div class="expl-placeholder" id="explPlaceholder"></div>
             <button class="next-btn hidden" id="nextBtn">Next →</button>
             <button class="back-results-btn hidden" id="backResultsBtn">🏁 Back to results</button>
+            <div class="kbd-hints" id="kbdHints" aria-hidden="true"><span><kbd>A</kbd>–<kbd>D</kbd> choose</span><span><kbd>Enter</kbd> next</span><span><kbd>←</kbd><kbd>→</kbd> move</span><span class="kbd-s"><kbd>S</kbd> show answer</span></div>
         </div>
 
         <div class="results-card hidden" id="resultsCard">
@@ -126,7 +135,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="data/questions.js?v=15"></script>
-    <script src="app.js?v=15"></script>
+    <script src="data/questions.js?v=16"></script>
+    <script src="app.js?v=16"></script>
 </body>
 </html>
