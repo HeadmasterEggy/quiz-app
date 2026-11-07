@@ -728,6 +728,7 @@ function buildPoolControls() {
 }
 
 function buildFilterChips() {
+    updateScopeLabel();
     const courseList = $('courseChips');
     const weekList = $('weekChips');
     if (!courseList || !weekList) return;
@@ -779,9 +780,20 @@ function buildFilterChips() {
     });
 }
 
+// Mobile-only summary of the current course / week; tapping it opens the drawer.
+function updateScopeLabel() {
+    const el = $('scopeText');
+    if (!el) return;
+    const course = currentCourseFilter === 'all' ? 'All courses' : currentCourseFilter;
+    const week = currentWeekFilter === 'all'
+        ? (currentCourseFilter === 'all' ? '' : 'All weeks')
+        : currentWeekFilter;
+    el.textContent = week ? `${course} · ${week}` : course;
+}
+
 function buildWeekFilter() {
     const sel = $('weekFilter');
-    sel.innerHTML = `<option value="all">${currentCourseFilter === 'all' ? 'All Weeks & Exams' : `All ${currentCourseFilter} Weeks & Exams`}</option>`;
+    sel.innerHTML = '<option value="all">All weeks & exams</option>';
     const weeks = getWeeksForCourse(currentCourseFilter);
     weeks.forEach(w => {
         const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === currentCourseFilter && q.week === w).length;
@@ -1326,7 +1338,19 @@ $('maqCheckBtn').onclick = checkMAQ;
 $('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
 $('langToggleBtn').onclick = () => { cycleLang(); $('langToggleBtn').blur(); };
 $('questionCounter').onclick = toggleJumpPanel;
+// Keep the desktop navigator no taller than the question card (or the screen).
+function syncSideNavHeight() {
+    const nav = $('sideNav'), card = $('quizCard');
+    if (!nav || !card) return;
+    if (!isWideLayout() || card.classList.contains('hidden')) { nav.style.removeProperty('--side-max'); return; }
+    const cap = Math.min(window.innerHeight - 32, Math.max(card.offsetHeight, 420));
+    nav.style.setProperty('--side-max', cap + 'px');
+}
+if (window.ResizeObserver && $('quizCard')) new ResizeObserver(syncSideNavHeight).observe($('quizCard'));
+window.addEventListener('resize', syncSideNavHeight);
+
 $('menuBtn').onclick = toggleDrawer;
+if ($('scopeBtn')) $('scopeBtn').onclick = openDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
 // Guard against ghost/duplicate clicks landing on the backdrop right as the drawer opens
 $('drawerBackdrop').onclick = () => { if (Date.now() - drawerOpenedAt > 350) closeDrawer(); };

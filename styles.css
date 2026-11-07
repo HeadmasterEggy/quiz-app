@@ -1904,14 +1904,18 @@ kbd {
     }
     .side-row strong { color: var(--text); }
     .side-row strong.is-wrong { color: var(--error); }
+    /* Never taller than the question card: the number grid scrolls inside */
+    .side-nav:not(.hidden) { max-height: var(--side-max, calc(100svh - 32px)); }
     .side-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 6px;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 5px;
         max-height: none;
         min-height: 0;
         flex: 1 1 auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
     }
-    .side-grid .jump-chip { min-height: 30px; font-size: 0.78rem; border-radius: 7px; }
+    .side-grid .jump-chip { min-height: 28px; font-size: 0.72rem; border-radius: 6px; padding: 0; }
     .side-legend {
         display: flex;
         align-items: center;
@@ -2202,3 +2206,46 @@ body::before { display: none; }
 .option-btn.correct .bi-zh, .option-btn.wrong .bi-zh, .option-btn.selected .bi-zh { color: inherit; opacity: 0.75; }
 .icon-btn.lang-btn { width: auto; min-width: 40px; padding: 0 10px; }
 .icon-btn.lang-btn .tool-icon { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+
+/* ── Current course / week summary (phones only) ── */
+.scope-row { display: none; }
+
+@media (max-width: 600px) {
+    .scope-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: -4px 0 12px;
+    }
+    .scope-btn,
+    .scope-notes {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        touch-action: manipulation;
+        white-space: nowrap;
+    }
+    .scope-btn { min-width: 0; max-width: 64vw; }
+    .scope-label { overflow: hidden; text-overflow: ellipsis; }
+    .scope-caret { color: var(--text-muted); font-size: 0.75rem; }
+    .scope-notes { flex: 0 0 auto; color: var(--text-muted); }
+    .scope-btn:active, .scope-notes:active { transform: scale(0.97); }
+}
+
+/* Knowledge-point link gets a text label on wide screens */
+@media (min-width: 1100px) {
+    #notesLinkBtn { width: auto; padding: 0 12px; gap: 6px; }
+    #notesLinkBtn .tool-label { display: inline; font-size: 0.85rem; font-weight: 600; }
+}

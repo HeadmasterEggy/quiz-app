@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css?v=18">
+    <link rel="stylesheet" href="styles.css?v=20">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -28,6 +28,10 @@
         <div class="quiz-header">
             <button id="menuBtn" class="icon-btn menu-btn" title="Settings" aria-label="Open settings" aria-expanded="false" aria-controls="headerControls">☰</button>
             <h1><span class="h1-emoji">📚</span> <span class="h1-text">Course Quiz</span></h1>
+            <div class="scope-row" id="scopeRow">
+                <button id="scopeBtn" class="scope-btn" aria-controls="headerControls" title="Change course / week"><span class="scope-label" id="scopeText">All courses</span><span class="scope-caret" aria-hidden="true">▾</span></button>
+                <a class="scope-notes" href="notes/index.html" title="Knowledge-point pages">📖 知识点</a>
+            </div>
             <div class="header-controls" id="headerControls">
                 <div class="drawer-header">
                     <span class="drawer-title">📚 Course & Week</span>
@@ -139,6 +143,6 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script src="data/questions.js?v=18"></script>
     <script src="data/generators.js?v=18"></script>
-    <script src="app.js?v=18"></script>
+    <script src="app.js?v=20"></script>
 </body>
 </html>
