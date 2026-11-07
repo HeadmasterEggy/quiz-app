@@ -9,3 +9,4 @@ Thumbs.db
 # Logs / deps (in case tooling is added later)
 node_modules/
 *.log
+__pycache__/
