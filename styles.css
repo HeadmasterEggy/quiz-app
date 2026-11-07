@@ -1904,14 +1904,18 @@ kbd {
     }
     .side-row strong { color: var(--text); }
     .side-row strong.is-wrong { color: var(--error); }
+    /* Never taller than the question card: the number grid scrolls inside */
+    .side-nav:not(.hidden) { max-height: var(--side-max, calc(100svh - 32px)); }
     .side-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 6px;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 5px;
         max-height: none;
         min-height: 0;
         flex: 1 1 auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
     }
-    .side-grid .jump-chip { min-height: 30px; font-size: 0.78rem; border-radius: 7px; }
+    .side-grid .jump-chip { min-height: 28px; font-size: 0.72rem; border-radius: 6px; padding: 0; }
     .side-legend {
         display: flex;
         align-items: center;

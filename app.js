@@ -1338,6 +1338,17 @@ $('maqCheckBtn').onclick = checkMAQ;
 $('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
 $('langToggleBtn').onclick = () => { cycleLang(); $('langToggleBtn').blur(); };
 $('questionCounter').onclick = toggleJumpPanel;
+// Keep the desktop navigator no taller than the question card (or the screen).
+function syncSideNavHeight() {
+    const nav = $('sideNav'), card = $('quizCard');
+    if (!nav || !card) return;
+    if (!isWideLayout() || card.classList.contains('hidden')) { nav.style.removeProperty('--side-max'); return; }
+    const cap = Math.min(window.innerHeight - 32, Math.max(card.offsetHeight, 420));
+    nav.style.setProperty('--side-max', cap + 'px');
+}
+if (window.ResizeObserver && $('quizCard')) new ResizeObserver(syncSideNavHeight).observe($('quizCard'));
+window.addEventListener('resize', syncSideNavHeight);
+
 $('menuBtn').onclick = toggleDrawer;
 if ($('scopeBtn')) $('scopeBtn').onclick = openDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
