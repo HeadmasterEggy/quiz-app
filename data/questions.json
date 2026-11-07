@@ -10574,7 +10574,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Complex systems / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In this course, self-organisation and emergence are described as an increase in order over…",
@@ -10599,7 +10600,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Self-organisation vs emergence",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which property does the Shannon information content $h(x) = -\\log_2 p(x)$ NOT have?",
@@ -10630,7 +10632,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A fair 20-sided die is rolled. You are told only whether the result was a 1. If the result was NOT a 1, how much information content did that answer carry?",
@@ -10659,7 +10662,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / calculation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "The base of the logarithm in $h(x)$ only changes the unit. Which pairing is correct?",
@@ -10684,7 +10688,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Units of information",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A random variable has an alphabet of 8 symbols. What is the largest possible Shannon entropy, and when is it reached?",
@@ -10709,7 +10714,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon entropy / bounds",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In Guess Who? the hair colours are {blonde, black, brown, grey, red}. We add 'blue' to the alphabet, but no character has blue hair. What happens to the entropy of hair colour?",
@@ -10734,7 +10740,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon entropy / zero-probability outcomes",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is a 50/50 yes/no question the best strategy in Guess Who?",
@@ -10759,7 +10766,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Entropy as average surprise / yes-no questions",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement correctly matches each quantity to what it is about?",
@@ -10784,7 +10792,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / sample vs variable",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Four horses win with probabilities 1/2, 1/4, 1/8, 1/8. Using an optimal code, how many bits on average are needed to report the winner?",
@@ -10813,7 +10822,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Entropy as optimal code length / horse race",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For two random variables, when does $H(X,Y) = H(X) + H(Y)$ hold?",
@@ -10838,7 +10848,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Joint entropy / independence",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which identity holds for ANY two discrete random variables?",
@@ -10863,7 +10874,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Chain rule for entropy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about conditional entropy is always true?",
@@ -10888,7 +10900,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Conditional entropy / bounds",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A player cycles strictly scissors → paper → rock → scissors… over many games. Which pair of values is correct?",
@@ -10913,7 +10926,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Conditional entropy / Scissors-Paper-Rock",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "You estimate the entropy of a fair coin from only 10 flips with the plug-in estimator, many times. What do you expect?",
@@ -10938,7 +10952,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Plug-in estimator / finite-sample bias",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$X$ and $Y$ are independent fair bits. What is $H(X,Y)$, and what is the alphabet of the joint variable?",
@@ -10963,7 +10978,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Joint entropy / 'gluing' symbols",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A measurement says a signal carries 2 bits of entropy. What does this number tell you?",
@@ -10988,7 +11004,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Information is not meaning",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Optimal code lengths $\\log_2(1/p)$ are usually not whole numbers. How can a code get closer to the entropy per symbol?",
@@ -11013,7 +11030,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Uncertainty & Entropy II / Block coding",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which is NOT a property of mutual information $I(X;Y)$?",
@@ -11038,7 +11056,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Mutual information / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement is exactly equivalent to $I(X;Y) = 0$?",
@@ -11063,7 +11082,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Mutual information / independence",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is $I(X;X)$?",
@@ -11088,7 +11108,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Mutual information / self-information",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Base rate $p(\\text{rain}) = 0.2$. When the forecast says 'sunny', $p(\\text{rain} \\mid \\text{sunny}) = 0.05$. On a day forecast sunny it rains. What is $i(\\text{rain};\\text{sunny})$?",
@@ -11117,7 +11138,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Pointwise mutual information / weather forecast",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about pointwise mutual information $i(x;y)$ is correct?",
@@ -11142,7 +11164,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Pointwise mutual information / sign",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Symbols really follow distribution $P$, but you design your code for distribution $Q$. Which quantity is the average extra cost in bits per symbol?",
@@ -11167,7 +11190,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Cross-entropy and KL divergence",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which description of $I(X;Y)$ is the 'Bayesian' form the lecturer prefers?",
@@ -11192,7 +11216,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Mutual information / interpretations",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A player throws only rock in game 1, only scissors in game 2 and only paper in game 3. You pool all moves and compute entropy. What do you get, and why?",
@@ -11217,7 +11242,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Mutual Information / Pooling samples / what entropy measures",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$Y$ and $Z$ are independent fair bits and $X = Y \\oplus Z$ (XOR). Which values are correct?",
@@ -11242,7 +11268,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / XOR synergy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$X$, $Y$ and $Z$ are all copies of the same fair random bit. Which values are correct?",
@@ -11267,7 +11294,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / redundancy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A student claims: 'Conditioning on $Z$ can only remove information, so $I(X;Y\\mid Z) \\le I(X;Y)$.' Is this right?",
@@ -11292,7 +11320,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / can it exceed MI?",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which expression equals $I(X; Y, Z)$?",
@@ -11317,7 +11346,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Chain rule for mutual information",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$X \\to Y \\to Z$ is a Markov chain ($Z$ is computed only from $Y$). What follows?",
@@ -11347,7 +11377,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Data processing inequality",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which expression is equivalent to $I(X;Y \\mid Z)$?",
@@ -11372,7 +11403,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / equivalent form",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "You compute $I(\\text{prev};\\text{next})$ from several Scissors-Paper-Rock games, each against a different opponent. How should samples be formed?",
@@ -11397,7 +11429,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Time-series sample pairs",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$I(X;Y \\mid Z) = 0$ means…",
@@ -11422,7 +11455,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / zero",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which expression is NOT well-formed in this course's notation?",
@@ -11447,7 +11481,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / Notation / semicolons and bars",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A pointwise mutual information of exactly 1 bit means that, after seeing $y$, the outcome $x$ became…",
@@ -11472,7 +11507,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / 1 bit = probability ratio of 2",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Among 24 characters: 5 have horns, of whom 3 have eyebrows; 11 characters in total have eyebrows. What is $i(\\text{horns};\\text{eyebrows})$ for a character with both?",
@@ -11501,7 +11537,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / Pointwise MI / Guess Who horns and eyebrows",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the correct order of calls when using a JIDT calculator?",
@@ -11526,7 +11563,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / JIDT usage paradigm",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What input does a JIDT discrete calculator with alphabet size (base) 3 expect?",
@@ -11551,7 +11589,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / JIDT discrete data",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Our home-made estimator counts frequencies and plugs them into the formulas. Which statement about it is correct?",
@@ -11576,7 +11615,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 JIDT Software / Plug-in estimator = MLE",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For a weak relationship estimated from few samples with the plug-in estimator, the typical biases are…",
@@ -11601,7 +11641,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Bias of estimators",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about differential entropy $h(X) = -\\int f(x)\\log f(x)\\,dx$ is correct?",
@@ -11626,7 +11667,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Differential entropy / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is mutual information between continuous variables well defined even though differential entropy depends on scaling?",
@@ -11651,7 +11693,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Continuous MI / scaling",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "$X$ and $Y$ are jointly Gaussian with correlation $\\rho = -0.6$. What is $I(X;Y)$?",
@@ -11680,7 +11723,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian MI from correlation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What does the Gaussian (linear) estimator of MI capture?",
@@ -11705,7 +11749,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian estimator / what it captures",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about the box-kernel estimator is correct?",
@@ -11730,7 +11775,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Kernel estimator / radius",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which features describe the KSG (Kraskov-Stögbauer-Grassberger) estimator?",
@@ -11755,7 +11801,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / KSG estimator",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "With a modest number of samples, the Gaussian estimator gives a significant MI but KSG gives a value near 0. What is the best interpretation?",
@@ -11780,7 +11827,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian vs KSG results",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In JIDT, which estimator reports continuous-data results in bits rather than nats?",
@@ -11805,7 +11853,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 Information-Theoretic Estimators / Units across estimators",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "When testing whether a measured MI is significant, what is the null hypothesis?",
@@ -11830,7 +11879,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Hypothesis testing / null hypothesis",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How is a surrogate sample for testing $I(X;Y)$ on i.i.d. data created, and what does it preserve?",
@@ -11855,7 +11905,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Surrogates",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For autocorrelated time series, which surrogate method is preferred over plain shuffling?",
@@ -11880,7 +11931,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Surrogates for time series",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "To test whether $I(X;Y\\mid Z)$ is significant, what should the surrogates do?",
@@ -11905,7 +11957,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Testing conditional MI",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For which JIDT estimators is an analytic (χ²) null distribution available?",
@@ -11930,7 +11983,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Analytic null distributions",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "You want the plug-in MI between two variables that each have 4 states. By the course heuristic, how many samples do you need at least?",
@@ -11955,7 +12009,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Sample size heuristic",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A measured MI is not statistically significant ($p = 0.3$). What can you conclude?",
@@ -11980,7 +12035,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Interpreting non-significance",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why set JIDT's DYN_CORR_EXCL (Theiler window) when using KSG on autocorrelated time series?",
@@ -12005,7 +12061,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Autocorrelation and the Theiler window",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which quantity is used as a bias-corrected MI estimate?",
@@ -12030,7 +12087,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Statistical Significance / Bias-corrected MI",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which two features characterise self-organisation (Sayama's definition)?",
@@ -12055,7 +12113,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Self-organisation / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is 'one minus single-cell entropy' a poor measure of organisation in a cellular automaton?",
@@ -12080,7 +12139,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Measuring organisation / complement of entropy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Three variables are copies of one fair bit. What is their multi-information $\\sum_i H(X_i) - H(X_1,X_2,X_3)$?",
@@ -12105,7 +12165,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Multi-information",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "'The information that the forecast and the weather hold in common' describes which measure?",
@@ -12130,7 +12191,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Recognising measures from wording",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which phrase refers to a specific value (so needs a pointwise/local measure) rather than a variable?",
@@ -12155,7 +12217,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Variable vs value wording",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "When may samples from different variables be pooled into one estimate?",
@@ -12180,7 +12243,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Pooling samples / homogeneity",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the 2D Ising model, where do long-range correlations (high MI between distant spins) appear?",
@@ -12205,7 +12269,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Ising model / critical temperature",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "When is the local (pointwise) MI $i(x;y)$ undefined for empirical data?",
@@ -12230,7 +12295,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Self-Organisation / Local MI undefined case",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "The three operations of distributed computation map onto information dynamics as…",
@@ -12255,7 +12321,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Computation ↔ information dynamics",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which feature belongs to biological (natural) computation rather than a classical computer, according to Mitchell's comparison?",
@@ -12280,7 +12347,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Biological vs computer computation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What does the entropy rate $H_{\\mu X} = \\lim_{n\\to\\infty} H(X_n \\mid X_1, \\dots, X_{n-1})$ measure?",
@@ -12305,7 +12373,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which pair of entropy rates is correct?",
@@ -12330,7 +12399,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate / special cases",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which identity links entropy, entropy rate and active information storage?",
@@ -12355,7 +12425,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate and storage are complementary",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A binary Markov chain always goes 0 → 1, and from 1 goes to 0 or stays at 1 with probability 0.5 each. What is its entropy rate?",
@@ -12384,7 +12455,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Two-state Markov chain",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In $\\mathbf{X}_n^{(k)}$, which samples are included?",
@@ -12409,7 +12481,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Information Processing & Entropy Rate / Embedding notation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which expression defines active information storage $A_X(k)$?",
@@ -12434,7 +12507,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / Active information storage / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A local AIS value is negative at some time step. What does that indicate?",
@@ -12459,7 +12533,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / Local AIS",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A series repeats 0, 0, 1, 0, 0, 1, … (period 3). What is the smallest $k$ that makes the next value fully predictable from the past?",
@@ -12484,7 +12559,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / Minimum embedding length for periodic series",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How does AIS differ from autocorrelation?",
@@ -12509,7 +12585,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / AIS vs autocorrelation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why not simply choose a very large embedding length $k$ for AIS?",
@@ -12534,7 +12611,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / Choosing k / trade-off",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which JIDT setting asks the calculator to pick $k$ (and $\\tau$) by maximising bias-corrected AIS?",
@@ -12559,7 +12637,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / JIDT auto-embedding",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How does AIS differ from excess entropy (predictive information)?",
@@ -12584,7 +12663,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / AIS vs excess entropy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In elementary CA rule 54, where is local AIS strongly positive and where is it negative?",
@@ -12609,7 +12689,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 Active Information Storage / AIS in cellular automata",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which expression is the transfer entropy from $Y$ to $X$ (target history length $k$, source history length 1)?",
@@ -12634,7 +12715,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why does TE condition on the target's own past instead of using lagged MI $I(Y_n; X_{n+1})$?",
@@ -12659,7 +12741,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy vs lagged MI",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about transfer entropy and causality is correct?",
@@ -12684,7 +12767,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy is not causality",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For the Gaussian estimator, transfer entropy is equivalent to…",
@@ -12709,7 +12793,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Gaussian TE and Granger causality",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the recommended order for setting TE parameters?",
@@ -12734,7 +12819,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / TE parameter selection",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why compute conditional TE $T_{Y\\to X \\mid Z}$ in addition to pairwise TE?",
@@ -12759,7 +12845,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Conditional transfer entropy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the heartbeat example the next value of $d$ is fully determined by $(d_n, s_n)$. Then local TE equals $-\\log_2 p(d_{n+1} \\mid d_n)$. If a 0 → 1 switch has $p(1 \\mid 0) = 0.05$, what is its local TE?",
@@ -12784,7 +12871,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / Heartbeat example / local TE",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a partial information decomposition of the target's next value with sources $M$ (its own past) and $Y$, which is correct?",
@@ -12809,7 +12897,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Transfer Entropy / PID view of AIS and TE",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which description matches an effective network?",
@@ -12834,7 +12923,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Types of networks",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "You test pairwise TE for every ordered pair in a 5-node network at $\\alpha = 0.05$ with Bonferroni correction. What per-test threshold do you use?",
@@ -12863,7 +12953,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Multiple comparisons / Bonferroni",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which is NOT one of the listed problems with pairwise TE network inference?",
@@ -12888,7 +12979,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Problems with pairwise inference",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why not compute TE from each source conditioned on ALL other variables at once?",
@@ -12913,7 +13005,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Conditioning on all other variables",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the correct order of the greedy effective-network algorithm for one target?",
@@ -12938,7 +13031,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Greedy multivariate algorithm",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A researcher wants to know whether $Y$ adds information about $X$'s next value beyond what $Z$ already provides. Which measure fits?",
@@ -12963,7 +13057,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Pairwise vs conditional TE choice",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Effective networks are not causal networks. Why are they still useful?",
@@ -12988,7 +13083,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Effective networks and causality",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the tutorial inferring a network from a CA, which approach came closest to the true neighbour structure?",
@@ -13013,7 +13109,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Effective Network Inference / Tutorial results / CA network inference",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which list gives the five layers of the Internet model used in this course, from top to bottom?",
@@ -13038,7 +13135,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Layered model / five layers",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which layer is responsible for process-to-process delivery, as opposed to host-to-host delivery?",
@@ -13063,7 +13161,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Layered model / responsibilities",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Select ALL protocols that belong to the application layer.",
@@ -13092,7 +13191,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Layered model / protocol placement",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which is NOT one of the three link-layer functions listed in the lecture?",
@@ -13117,7 +13217,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Link layer functions",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What defines a Nash equilibrium?",
@@ -13142,7 +13243,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Nash equilibrium / definition",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the Prisoner's Dilemma (both confess: −5 each; both silent: −1 each; one confesses: 0 and −10), which statement is correct?",
@@ -13167,7 +13269,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Prisoner's dilemma",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Two users share a channel: both transmit → (−5, −5); only one transmits → 10 for the transmitter, 0 for the other; both silent → (0, 0). How many pure-strategy Nash equilibria are there?",
@@ -13192,7 +13295,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Channel game / pure strategies",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the same channel game with mixed strategies, $U_1 = p_1(10 - 15p_2)$. What are the selfish Nash equilibrium probability and the cooperative optimum?",
@@ -13222,7 +13326,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction & Game Theory / Channel game / mixed strategy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A protocol defines which three things?",
@@ -13247,7 +13352,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Protocols / three elements",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A 10 Kbit packet is sent on a 100 Mbps link that is 2000 km long ($s = 2\\times10^8$ m/s). Which pair is correct?",
@@ -13276,7 +13382,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Transmission vs propagation delay",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A caravan of 10 cars travels 100 km between two toll booths at 100 km/h; each booth takes 12 s per car. How long until the whole caravan is lined up before the second booth?",
@@ -13301,7 +13408,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Caravan analogy",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A 1 Gbps link; each user needs 100 Mbps when active and is active 10% of the time. Which statement is correct?",
@@ -13326,7 +13434,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Circuit vs packet switching capacity",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What does store-and-forward mean for a router?",
@@ -13351,7 +13460,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Store-and-forward",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "10 connections share a 5 Mbps backbone link fairly. Each server link is 2 Mbps and each client link is 1 Mbps. What is the throughput per connection?",
@@ -13376,7 +13486,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Throughput / bottleneck",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What happens to queueing delay as traffic intensity $La/R$ approaches 1?",
@@ -13401,7 +13512,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Queueing / traffic intensity",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is fibre-to-the-premises (FTTP) the best NBN option?",
@@ -13426,7 +13538,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / Access networks / fibre",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement correctly contrasts FDM and TDM in circuit switching?",
@@ -13451,7 +13564,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Performance / FDM vs TDM",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A page has a base HTML file and 10 images, all small. Using non-persistent HTTP with no parallel connections, how many RTTs are needed (ignore transmission time)?",
@@ -13476,7 +13590,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Non-persistent HTTP / RTT count",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Same page (1 HTML + 10 small images), persistent HTTP with at most 5 parallel connections. How many RTTs?",
@@ -13506,7 +13621,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Persistent HTTP with parallel limit",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which HTTP methods were added in HTTP/1.1 (not in HTTP/1.0)?",
@@ -13531,7 +13647,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / HTTP methods by version",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A browser requests an object that has moved for good to a new URL. Which status code does the server return?",
@@ -13556,7 +13673,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / HTTP status codes",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about FTP is correct?",
@@ -13581,7 +13699,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / FTP / ports and state",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement correctly contrasts SMTP and HTTP?",
@@ -13606,7 +13725,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Email / SMTP vs HTTP",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which is NOT one of the four components of the cookie mechanism?",
@@ -13631,7 +13751,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Cookies / four components",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "An institution's 1.54 Mbps access link carries 1.5 Mbps of web traffic (utilisation ≈ 99%). A web cache with hit rate 0.4 is installed. What is the new access-link utilisation?",
@@ -13656,7 +13777,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Web caching / institutional example",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which application is loss-tolerant and time-sensitive at the 100 ms scale, yet needs only a few kbps?",
@@ -13681,7 +13803,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Transport needs of applications",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Select ALL correct statements.",
@@ -13709,7 +13832,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Applications (HTTP, FTP, Email) / Web cache roles / SSL placement",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which is NOT a reason DNS is not centralised?",
@@ -13734,7 +13858,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / DNS / why not centralised",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about the local DNS server is correct?",
@@ -13759,7 +13884,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / DNS / local server",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A TLD server tells the local server which name server is authoritative for umass.edu. Which records should it return so the local server can contact it?",
@@ -13784,7 +13910,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / DNS records",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A file of size $F$ is distributed to $N$ peers. Which expression is the P2P lower bound on distribution time?",
@@ -13809,7 +13936,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / P2P vs client-server distribution time",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "With $F/u = 1$ hour, $u_s = 10u$ and large $d_{min}$, what does the P2P distribution time approach as $N \\to \\infty$?",
@@ -13834,7 +13962,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / P2P scalability",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which BitTorrent timing is correct?",
@@ -13859,7 +13988,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / BitTorrent strategies",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A DHT with $n = 4$ has peers 1, 3, 4, 5, 8, 10, 12, 14. Which peers store keys 13 and 15?",
@@ -13884,7 +14014,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / DHT / successor rule",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a TCP server, why are there two kinds of sockets?",
@@ -13909,7 +14040,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / TCP sockets / two sockets",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a recursive DNS query, who bears the burden of name resolution?",
@@ -13934,7 +14066,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 DNS, Sockets & P2P / DNS / iterated vs recursive",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Two clients with different source IPs send to the same server port. Which statement is correct?",
@@ -13959,7 +14092,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Demultiplexing / UDP vs TCP sockets",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Select ALL reasons given for using UDP.",
@@ -13988,7 +14122,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Why UDP",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Two 16-bit words 1110011001100110 and 1101010101010101 are summed for the UDP checksum. What is the checksum?",
@@ -14018,7 +14153,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / UDP checksum",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which mechanism was introduced in rdt3.0 to cope with a channel that can lose packets?",
@@ -14043,7 +14179,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / rdt evolution",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Stop-and-wait on a 1 Gbps link with RTT = 30 ms and 8000-bit packets. What is the sender utilisation?",
@@ -14072,7 +14209,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Stop-and-wait utilisation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "With window $N = 4$, packet 2 is lost while packets 3, 4, 5 arrive. What happens on timeout?",
@@ -14097,7 +14235,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Go-Back-N vs Selective Repeat",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In Selective Repeat, the receiver gets a packet with a sequence number just below its current window (already delivered). What should it do?",
@@ -14122,7 +14261,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Selective Repeat receiver",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement correctly distinguishes the transport and network layers?",
@@ -14147,7 +14287,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Transport Layer & rdt / Transport vs network layer",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Host A sends a segment with sequence number 92 carrying 8 bytes. If it arrives correctly and in order, what ACK number does B send?",
@@ -14172,7 +14313,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / TCP sequence and ACK numbers",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "EstimatedRTT = 100 ms, a new SampleRTT = 140 ms, $\\alpha = 0.125$. What is the new EstimatedRTT?",
@@ -14197,7 +14339,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / RTT estimation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "When does TCP perform fast retransmit?",
@@ -14222,7 +14365,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Fast retransmit",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "On a timeout, which segment(s) does TCP retransmit?",
@@ -14247,7 +14391,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Timeout retransmission",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "cwnd is 16 MSS when loss is detected by 3 duplicate ACKs. Which is correct?",
@@ -14272,7 +14417,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Congestion control / Tahoe vs Reno",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "During slow start, how does cwnd grow?",
@@ -14297,7 +14443,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Slow start",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Ignoring slow start, a TCP connection has $W = 120$ KB at loss and RTT = 100 ms. What is its average throughput?",
@@ -14322,7 +14469,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Average TCP throughput",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement is correct?",
@@ -14347,7 +14495,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Flow control vs congestion control",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is a 2-way handshake not enough for TCP connection setup?",
@@ -14372,7 +14521,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / Handshake",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How can an application get more than its fair share of a bottleneck under TCP?",
@@ -14397,7 +14547,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 TCP / TCP fairness",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What must a UDP client do that a TCP client does not?",
@@ -14422,7 +14573,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Socket Programming Lab / Socket programming / UDP client",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In TCPServer.py, what does connectionSocket, addr = serverSocket.accept() do?",
@@ -14447,7 +14599,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Socket Programming Lab / Socket programming / TCP server",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In video streaming, the average buffer fill rate is $E(x)$ and the playout rate is $r$. What happens if $E(x) < r$?",
@@ -14472,7 +14625,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / Client buffering",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In DASH, where is the 'intelligence' that chooses the bitrate?",
@@ -14497,7 +14651,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / DASH",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How does a CDN usually redirect a client to a nearby content server?",
@@ -14522,7 +14677,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / CDN redirection",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Telephone audio is sampled 8000 times per second with 8 bits per sample. What is the bitrate?",
@@ -14547,7 +14703,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / Audio bitrate",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "With adaptive playout delay, when is the playout delay adjusted?",
@@ -14572,7 +14729,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / VoIP / adaptive playout",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Packets have timestamps 0, 40, 100, 120 ms and sequence numbers 1, 3, 4, 5 (20 ms chunks). Which packet starts a new talk spurt?",
@@ -14597,7 +14755,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / VoIP / detecting a new talk spurt",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about VoIP loss-recovery schemes is correct?",
@@ -14622,7 +14781,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / Loss recovery",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about RTP is correct?",
@@ -14647,7 +14807,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 Multimedia Networking / RTP",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a SIP call through a proxy, which path does the voice (media) traffic take?",
@@ -14672,7 +14833,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / SIP",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "VoIP and HTTP share a 1.5 Mbps link, and a VoIP source starts sending more than it declared. Which QoS principle addresses this?",
@@ -14697,7 +14859,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / QoS principles",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A token bucket has $r = 100$ tokens/s and $b = 20$ tokens, one token per packet. What is the maximum number of packets admitted in any 0.5 s interval?",
@@ -14722,7 +14885,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / Token bucket",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Under WFQ, one of three classes (weights 1, 2, 2) becomes idle. How is its share used?",
@@ -14747,7 +14911,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / Scheduling / WFQ",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A sender with code $c = (1,1,1,-1,1,-1,-1,-1)$ transmits a single bit and the receiver sees $Z = (-1,-1,-1,1,-1,1,1,1)$ (no other senders). What is the decoded bit?",
@@ -14772,7 +14937,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / CDMA decoding",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about wireless links is correct?",
@@ -14797,7 +14963,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / Wireless link characteristics",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which approach offers hard guarantees per flow but is rarely deployed because of its complexity?",
@@ -14822,7 +14989,8 @@
       "week": "Week 10",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / Three approaches to QoS",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why is SIFS shorter than DIFS in 802.11?",
@@ -14847,7 +15015,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / CSMA/CA / SIFS vs DIFS",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In CSMA/CA, what happens to a station's random backoff counter while the channel is busy?",
@@ -14872,7 +15041,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / CSMA/CA / backoff",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which pairing is correct?",
@@ -14897,7 +15067,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / Hidden vs exposed terminals",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which address does the correspondent use with indirect routing?",
@@ -14922,7 +15093,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / Mobility terminology",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Where are the HLR and VLR located in a cellular network?",
@@ -14947,7 +15119,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / HLR and VLR",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a GSM handoff within the same MSC, which statement is correct?",
@@ -14972,7 +15145,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / GSM handoff",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In active scanning, which sequence is correct?",
@@ -14997,7 +15171,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 WiFi, Cellular & Mobility / 802.11 scanning and association",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which 5G core function allocates the UE's IP address and selects its UPF?",
@@ -15022,7 +15197,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / 5G core functions",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What changes during a 5G handover between base stations?",
@@ -15047,7 +15223,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / 5G handover",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about a Bluetooth piconet is correct?",
@@ -15072,7 +15249,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / Bluetooth piconet",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which comparison of GEO and LEO satellites is correct?",
@@ -15097,7 +15275,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / GEO vs LEO satellites",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why does QUIC avoid the head-of-line blocking that HTTP/2 over TCP suffers?",
@@ -15122,7 +15301,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / QUIC / head-of-line blocking",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Select ALL correct statements about QUIC.",
@@ -15150,7 +15330,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / QUIC / connection ID and flow control",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which technology is a low-power wide-area option for IoT devices that must run about 10 years on battery?",
@@ -15175,7 +15356,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / IoT communication needs",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Can two mobile devices in the same foreign network share the foreign agent's care-of address?",
@@ -15200,7 +15382,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 5G, Bluetooth, Satellites & QUIC / Mobile IP / shared COA",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Circuit switching: $N_{cs}$ users each need 20 Mbps on a 150 Mbps link. Packet switching: $N_{ps} = 13$ users each need 20 Mbps when transmitting and transmit 20% of the time. When circuit switching is used, what is the maximum number of users that can be supported?",
@@ -15601,7 +15784,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction / Task types / regression vs classification",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A shop has purchase histories but no labels and wants to discover groups of similar customers. What kind of task is this?",
@@ -15626,7 +15810,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction / Task types / clustering",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A robot learns to walk by trying actions and receiving a reward when it moves forward without falling. What kind of learning is this?",
@@ -15651,7 +15836,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction / Task types / reinforcement learning",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In the six-step data mining process, which step comes directly after 'understand the data'?",
@@ -15676,7 +15862,8 @@
       "week": "Week 01",
       "lectureWeek": "Week 01",
       "knowledgeLocation": "W1 Introduction / Data mining process",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "When using min-max scaling with 10-fold cross-validation, where should the min and max be computed?",
@@ -15701,7 +15888,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Scaling / data leakage",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "On the training set a feature has min 10 and max 60. What is the min-max scaled value of a test example with value 30?",
@@ -15726,7 +15914,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Scaling / calculation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What are the Euclidean and Manhattan distances between (1, 2) and (4, 6)?",
@@ -15751,7 +15940,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Distances",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "x = 1000000000 and y = 0000001001. What are SMC and Jaccard similarity?",
@@ -15776,7 +15966,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Binary similarity / SMC vs Jaccard",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the cosine similarity between (3, 4) and (4, 3)?",
@@ -15801,7 +15992,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Cosine similarity",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For a test point, the 3 nearest neighbours are: class A at distance 1, class B at distance 2, class B at distance 2. Which class do plain 3-NN and 1/d²-weighted 3-NN predict?",
@@ -15830,7 +16022,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / kNN / distance-weighted voting",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about kNN is correct?",
@@ -15855,7 +16048,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / kNN / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Rank feature-selection approaches from fastest to slowest.",
@@ -15880,7 +16074,8 @@
       "week": "Week 02",
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Feature selection / correlation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Fit simple linear regression by least squares to (1, 2), (2, 3), (3, 5). What is the prediction at $x = 4$?",
@@ -15911,7 +16106,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares / calculation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A model's errors on three examples are +1, −2, +3. What are MAE and MSE?",
@@ -15936,7 +16132,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / MAE vs MSE",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about regularised linear regression is correct?",
@@ -15961,7 +16158,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Regularisation / Lasso vs Ridge",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A logistic regression model has $w_0 = -1$, $w_1 = 2$. For $x = 1.3$ (threshold 0.5), what is the output and the predicted class?",
@@ -15990,7 +16188,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression / prediction",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about least-squares linear regression is correct?",
@@ -16015,7 +16214,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares / what is minimised",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why might you train linear regression with gradient descent instead of the normal equation?",
@@ -16040,7 +16240,8 @@
       "week": "Week 03",
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Gradient descent for regression",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Training data: 4 spam and 6 ham emails. P(free | spam) = 3/4, P(free | ham) = 1/6, P(link | spam) = 2/4, P(link | ham) = 3/6. An email contains 'free' and 'link'. What is P(spam | email)?",
@@ -16070,7 +16271,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes / calculation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the 'naive' assumption in Naive Bayes?",
@@ -16095,7 +16297,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes / assumption",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Feature 'outlook' has 3 possible values. In class 'no' (6 examples), 'overcast' never appears. With Laplace smoothing, what is P(overcast | no)?",
@@ -16120,7 +16323,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Laplace smoothing",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A classifier has TP = 40, FP = 10, FN = 20. What are precision, recall and F1?",
@@ -16150,7 +16354,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Precision, recall, F1",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How should hyperparameters (e.g. $k$ in kNN) be chosen?",
@@ -16175,7 +16380,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Evaluation / test set use",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a dataset with 99% negative examples, a model that always predicts 'negative' has 99% accuracy. Why is this misleading?",
@@ -16200,7 +16406,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Imbalanced data",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What does stratified k-fold cross-validation guarantee?",
@@ -16225,7 +16432,8 @@
       "week": "Week 04",
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Stratified cross-validation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A node has 6 positive and 4 negative examples. Splitting on A gives a left child (4+, 0−) and a right child (2+, 4−). What is the information gain?",
@@ -16256,7 +16464,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain / calculation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why can information gain prefer a feature like 'customer ID'?",
@@ -16281,7 +16490,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain bias",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Match the method to its idea: which pairing is correct?",
@@ -16306,7 +16516,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensembles / definitions",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why does bagging usually help unstable learners such as deep decision trees?",
@@ -16331,7 +16542,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Bagging / why it helps",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about decision trees and rule learners is correct?",
@@ -16356,7 +16568,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Decision trees / rules and pruning",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For an ensemble of classifiers to beat its members, which condition matters most?",
@@ -16381,7 +16594,8 @@
       "week": "Week 05",
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensembles / when they help",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A linear SVM has weight vector $\\mathbf w = (3, 4)$. What is the width of the margin?",
@@ -16406,7 +16620,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / SVM margin",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For $K(\\mathbf x, \\mathbf z) = (\\mathbf x \\cdot \\mathbf z + 1)^2$ with $\\mathbf x = (1, 2)$ and $\\mathbf z = (3, 1)$, what is $K$?",
@@ -16431,7 +16646,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Kernels / polynomial",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "For an RBF kernel $K = \\exp(-\\gamma\\lVert\\mathbf x - \\mathbf z\\rVert^2)$ with $\\gamma = 0.5$, $\\mathbf x = (1, 2)$, $\\mathbf z = (3, 1)$, what is $K$?",
@@ -16456,7 +16672,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Kernels / RBF",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why doesn't the kernel trick need to store high-dimensional feature vectors?",
@@ -16481,7 +16698,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Kernel trick",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In a soft-margin SVM, what happens when C is increased?",
@@ -16506,7 +16724,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Soft margin / C",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "PCA eigenvalues are 5, 3, 1, 1. What is the smallest number of components that keeps at least 80% of the variance?",
@@ -16531,7 +16750,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / PCA / cumulative variance",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about PCA is correct?",
@@ -16556,7 +16776,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / PCA / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which training examples determine the SVM decision boundary?",
@@ -16581,7 +16802,8 @@
       "week": "Week 06",
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / SVM / support vectors",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A perceptron has $\\mathbf w = (0.5, -0.5)$, $b = 0$, step activation ($a = 1$ if $n \\ge 0$). For $\\mathbf x = (1, 2)$ with target $t = 1$ and learning rate 1, what are the updated weights and bias?",
@@ -16611,7 +16833,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Perceptron update",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Hidden units: $h_1 = \\text{ReLU}(0.5x_1 - x_2)$, $h_2 = \\text{ReLU}(-x_1 + x_2)$. Output $o = \\sigma(2h_1 - h_2 - 0.5)$. For $\\mathbf x = (1, 0)$, what is $o$ and the class (threshold 0.5)?",
@@ -16641,7 +16864,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Forward pass",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A weight $w = 2.0$ has loss gradient $\\partial L/\\partial w = 0.5$ and learning rate $\\eta = 0.1$. What is $w$ after one gradient-descent step?",
@@ -16666,7 +16890,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Gradient descent step",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A fully connected layer maps 4 inputs to 3 neurons, each with a bias. How many trainable parameters does it have?",
@@ -16691,7 +16916,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Parameter count / dense layer",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement is correct?",
@@ -16716,7 +16942,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Activation functions / ReLU and vanishing gradients",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about dropout is correct?",
@@ -16741,7 +16968,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Dropout",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Why can't a single-layer perceptron learn XOR?",
@@ -16766,7 +16994,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / XOR and the perceptron",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Compared with full-batch gradient descent, why is mini-batch gradient descent noisier?",
@@ -16791,7 +17020,8 @@
       "week": "Week 07",
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Mini-batch gradient descent",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A convolutional layer applies 16 filters of size 3 × 3 to an RGB input (3 channels). How many parameters does it have?",
@@ -16819,7 +17049,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / parameter count",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A 32 × 32 input goes through a 5 × 5 convolution (stride 1, no padding) and then 2 × 2 max pooling with stride 2. What is the output size?",
@@ -16848,7 +17079,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A 7 × 7 input, 3 × 3 filter, padding 1, stride 2. What is the output size?",
@@ -16873,7 +17105,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size with padding",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement is correct?",
@@ -16898,7 +17131,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / weight sharing and pooling",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How does an RNN process a sequence?",
@@ -16923,7 +17157,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / RNN",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the main purpose of the gates and cell state in an LSTM?",
@@ -16948,7 +17183,8 @@
       "week": "Week 08",
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / LSTM",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "1-D points 1, 2, 6, 8, 9 with initial centroids $c_1 = 1$, $c_2 = 9$. After one assignment and update step, what are the centroids?",
@@ -16973,7 +17209,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / k-means / one iteration",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "1-D points 0, 1, 4, 10. Using complete linkage, at what distance does the second merge happen?",
@@ -16998,7 +17235,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / linkage",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Clusters $A = \\{0, 1\\}$ and $B = \\{4, 10\\}$ in 1-D. What is the average-linkage distance between them?",
@@ -17023,7 +17261,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Cluster distance / average linkage",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "A GMM has two components with priors 0.5 and 0.5. For point x the likelihoods are 0.3 (component 1) and 0.1 (component 2). What is component 1's responsibility for x?",
@@ -17048,7 +17287,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / GMM / responsibility",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which statement about k-means is correct?",
@@ -17073,7 +17313,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / k-means / properties",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which merge order does single linkage give for 1-D points 0, 1, 4, 10?",
@@ -17098,7 +17339,8 @@
       "week": "Week 09",
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / single linkage",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Weather Markov chain: P(S→S) = 0.8, P(S→R) = 0.2, P(R→S) = 0.4, P(R→R) = 0.6. Today is sunny. What is the probability that it rains in 2 days?",
@@ -17123,7 +17365,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / n-step probability",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Which algorithm answers 'what is the most likely sequence of hidden states for these observations?'",
@@ -17148,7 +17391,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / HMM / three problems",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "HMM: π(R) = 0.6, π(S) = 0.4; A: R→R 0.7, R→S 0.3, S→R 0.4, S→S 0.6; P(walk|R) = 0.1, P(shop|R) = 0.4, P(walk|S) = 0.6, P(shop|S) = 0.3. What is P(walk, shop)?",
@@ -17179,7 +17423,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / HMM / forward algorithm",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Same HMM and observations (walk, shop). What is the most likely hidden state sequence?",
@@ -17204,7 +17449,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / HMM / Viterbi step",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What does the first-order Markov assumption state?",
@@ -17229,7 +17475,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / Markov assumption",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Same weather chain with initial probability P(S) = 0.5. What is the probability of the sequence S, S, R?",
@@ -17254,7 +17501,8 @@
       "week": "Week 11",
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / sequence probability",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Q(s, a) = 2, reward r = 1, γ = 0.9, max over a′ of Q(s′, a′) = 5, learning rate α = 0.5. What is the new Q(s, a)?",
@@ -17284,7 +17532,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Q-learning update",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "Q(s, a) = 4, the action leads to a terminal state with reward r = 10, γ = 0.9, α = 0.5. What is the new Q(s, a)?",
@@ -17309,7 +17558,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Q-learning / terminal state",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "An action leads with probability 0.7 to reward 2 and a state of value 10, and with probability 0.3 to reward 0 and a state of value 4. With γ = 0.9, what is the expected action value?",
@@ -17339,7 +17589,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Expected action value",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "In DQN, which pairing of technique and purpose is correct?",
@@ -17364,7 +17615,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / DQN / experience replay and target network",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "What is the effect of decreasing the discount factor γ?",
@@ -17389,7 +17641,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Discount factor",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "With an ε-greedy policy and ε = 0.1, what does the agent do?",
@@ -17414,7 +17667,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Exploration vs exploitation",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     },
     {
       "question": "How does reinforcement learning differ from supervised learning?",
@@ -17439,7 +17693,8 @@
       "week": "Week 12",
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / RL vs supervised learning",
-      "source": "kp"
+      "source": "kp",
+      "selfWritten": true
     }
   ],
   "weeks": [

@@ -65,6 +65,8 @@ def main():
                 "knowledgeLocation": kl,
                 "source": "kp",
             })
+            if not label:
+                q["selfWritten"] = True
             next_id += 1
             new.append(q)
             if week not in weeks:
