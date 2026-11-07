@@ -728,6 +728,7 @@ function buildPoolControls() {
 }
 
 function buildFilterChips() {
+    updateScopeLabel();
     const courseList = $('courseChips');
     const weekList = $('weekChips');
     if (!courseList || !weekList) return;
@@ -779,9 +780,20 @@ function buildFilterChips() {
     });
 }
 
+// Mobile-only summary of the current course / week; tapping it opens the drawer.
+function updateScopeLabel() {
+    const el = $('scopeText');
+    if (!el) return;
+    const course = currentCourseFilter === 'all' ? 'All courses' : currentCourseFilter;
+    const week = currentWeekFilter === 'all'
+        ? (currentCourseFilter === 'all' ? '' : 'All weeks')
+        : currentWeekFilter;
+    el.textContent = week ? `${course} · ${week}` : course;
+}
+
 function buildWeekFilter() {
     const sel = $('weekFilter');
-    sel.innerHTML = `<option value="all">${currentCourseFilter === 'all' ? 'All Weeks & Exams' : `All ${currentCourseFilter} Weeks & Exams`}</option>`;
+    sel.innerHTML = '<option value="all">All weeks & exams</option>';
     const weeks = getWeeksForCourse(currentCourseFilter);
     weeks.forEach(w => {
         const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === currentCourseFilter && q.week === w).length;
@@ -1327,6 +1339,7 @@ $('shuffleToggleBtn').onclick = () => { closeDrawer(); toggleShuffle(); };
 $('langToggleBtn').onclick = () => { cycleLang(); $('langToggleBtn').blur(); };
 $('questionCounter').onclick = toggleJumpPanel;
 $('menuBtn').onclick = toggleDrawer;
+if ($('scopeBtn')) $('scopeBtn').onclick = openDrawer;
 $('drawerCloseBtn').onclick = closeDrawer;
 // Guard against ghost/duplicate clicks landing on the backdrop right as the drawer opens
 $('drawerBackdrop').onclick = () => { if (Date.now() - drawerOpenedAt > 350) closeDrawer(); };
