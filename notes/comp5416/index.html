@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 知识点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="../../index.html">← 题库</a>
+  <span>COMP5416</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>COMP5416 知识点与题型</h1>
+<p class="subtitle">每周一页：这一周考什么、每种题型的知识点和解法、陷阱、一道检查题，最后一组混合练习和考前速记。选择题点了就判分，多选题勾完点「提交」。</p>
+
+<div class="box exam">
+  <span class="box-title">期末</span>
+  <p>11 月 20 日 13:00，Carslaw SR354。阅读 5 分钟 + 作答 1 小时，50 分，<strong>全是选择题</strong>（单选和多选），<strong>多选勾错一个会抵消勾对的一个</strong>。可以带科学计算器，闭卷。范围 W1–W12，<strong>W9 的 SDN / P4 客座讲座不考</strong>（W9 只看流媒体 Tutorial）。</p>
+</div>
+
+<ul class="weeks">
+  <li><a href="week01.html"><span class="wk">W01</span><span class="ttl">分层模型与信道竞争的博弈论<span class="sub">哪一层、OSI、纯 / 混合策略纳什均衡</span></span><span class="n">14 题</span></a></li>
+  <li><a href="week02.html"><span class="wk">W02</span><span class="ttl">网络性能：时延、交换、吞吐量<span class="sub">四种时延、存储转发、分组 vs 电路交换、瓶颈</span></span><span class="n">20 题</span></a></li>
+  <li><a href="week03.html"><span class="wk">W03</span><span class="ttl">应用层与 HTTP<span class="sub">数 RTT、状态码、缓存与条件 GET、HTTP/2</span></span><span class="n">18 题</span></a></li>
+  <li><a href="week04.html"><span class="wk">W04</span><span class="ttl">DNS、Socket 与 P2P<span class="sub">迭代 / 递归查询、记录类型、P2P 分发、DHT</span></span><span class="n">19 题</span></a></li>
+  <li><a href="week05.html"><span class="wk">W05</span><span class="ttl">传输层与可靠数据传输<span class="sub">GBN vs SR、利用率、多路分解、校验和、rdt</span></span><span class="n">18 题</span></a></li>
+  <li><a href="week06.html"><span class="wk">W06</span><span class="ttl">TCP：可靠传输、连接管理与拥塞控制<span class="sub">序号、RTT 估计、握手、Reno cwnd 图</span></span><span class="n">20 题</span></a></li>
+  <li><a href="week07.html"><span class="wk">W07</span><span class="ttl">Socket 编程与期中讲评<span class="sub">TCP vs UDP socket、调用对应动作、期中讲评</span></span><span class="n">12 题</span></a></li>
+  <li><a href="week08.html"><span class="wk">W08</span><span class="ttl">多媒体网络<span class="sub">客户端缓冲、DASH、CDN、码率、VoIP、FEC、RTP</span></span><span class="n">20 题</span></a></li>
+  <li><a href="week09.html"><span class="wk">W09</span><span class="ttl">流媒体起播与卡顿（Tutorial）<span class="sub">按块播放、卡顿时长、缓冲填满；SDN 讲座不考</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week10.html"><span class="wk">W10</span><span class="ttl">SIP、QoS 与无线基础<span class="sub">CDMA、WFQ、令牌桶、DiffServ、SIP、隐藏终端</span></span><span class="n">20 题</span></a></li>
+  <li><a href="week11.html"><span class="wk">W11</span><span class="ttl">WiFi、蜂窝网络与移动性<span class="sub">CSMA/CA、RTS / CTS、间接 / 直接路由、Mobile IP</span></span><span class="n">20 题</span></a></li>
+  <li><a href="week12.html"><span class="wk">W12</span><span class="ttl">5G、移动性与 QUIC<span class="sub">QUIC 队头阻塞、5G 核心网、切换、LTE 公平分配</span></span><span class="n">19 题</span></a></li>
+</ul>
+
+<div class="box source">
+  <span class="box-title">怎么用</span>
+  <p>先读一页的知识点，做完那一页的混合练习；第二天再去<a href="../../index.html">题库</a>做同一周的题，隔一天再做一次比连着做两遍记得牢。Sample Exam 的 14 题在题库里单独一组，是官方题；题库里标「自拟题」的是按考点出的。</p>
+  <p>教材：Kurose &amp; Ross, <em>Computer Networking: A Top-Down Approach</em>。每页底部写了对应的章节，也链到博客上的周笔记。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

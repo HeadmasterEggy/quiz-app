@@ -157,3 +157,17 @@ td.c, th.c { text-align: center; }
     .mcq-exp { display: block; }
     body { background: #fff; color: #000; }
 }
+
+/* ---------- course index ---------- */
+.weeks { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 10px; }
+.weeks a {
+    display: grid; grid-template-columns: 52px 1fr auto; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text); text-decoration: none;
+}
+.weeks a:hover { border-color: var(--primary); }
+.weeks .wk { font-weight: 700; color: var(--primary); }
+.weeks .ttl { color: var(--text-strong); font-weight: 600; }
+.weeks .sub { display: block; font-size: 0.85em; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.weeks .n { font-size: 0.8em; color: var(--muted); white-space: nowrap; }
+.weeks li.off { padding: 12px 14px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); font-size: 0.9em; }

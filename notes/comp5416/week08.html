@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W08 多媒体网络</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 08</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W08 多媒体网络</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 第 9 章（第 7 版）/ 讲义 Weeks 7–8。流媒体缓冲是复习课重点；W09 tutorial 的起播与卡顿计算在 <a href="week09.html">W09 页</a>。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 客户端缓冲与下溢</a></td><td class="c"><span class="stars">★★★</span></td><td>E(x) &lt; r 必卡；递推 $Q(t+1)$</td></tr>
+    <tr><td><a href="#t2">2 UDP 流、HTTP 流、DASH</a></td><td class="c"><span class="stars">★★★</span></td><td>DASH 智能在客户端</td></tr>
+    <tr><td><a href="#t3">3 CDN 与 DNS 重定向</a></td><td class="c"><span class="stars">★★</span></td><td>权威 DNS 返回 CDN 的名字</td></tr>
+    <tr><td><a href="#t4">4 码率计算</a></td><td class="c"><span class="stars">★★</span></td><td>采样率 × 比特数；电话 64 kbps</td></tr>
+    <tr><td><a href="#t5">5 VoIP 与播放时延</a></td><td class="c"><span class="stars">★★</span></td><td>$t_i + d_i + Kv_i$；新讲话段看时间戳 + 序号</td></tr>
+    <tr><td><a href="#t6">6 丢包恢复</a></td><td class="c"><span class="stars">★★</span></td><td>XOR FEC、低质量冗余、交织</td></tr>
+    <tr><td><a href="#t7">7 RTP</a></td><td class="c"><span class="stars">★★</span></td><td>UDP 里，不提供 QoS；时间戳每包 +160</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　客户端缓冲与下溢 <span class="stars">★★★</span></h2>
+<p>三类多媒体应用：<strong>流式存储</strong>（YouTube，边下边播，可以比播放更快地传）、<strong>会话式</strong>（Skype，时延容忍度最低）、<strong>直播</strong>。</p>
+<p>服务器按固定节奏发，但网络时延有<strong>抖动（jitter）</strong>；视频一旦开播必须按原节奏连续播。办法：<strong>客户端缓冲 + 播放时延</strong>，先攒一段再播。</p>
+<ul>
+  <li>播放时延太小 → 某块到播放时刻还没到 → <strong>缓冲下溢</strong>（卡顿）。</li>
+  <li>加大播放时延 → 下溢更少，代价是用户等更久才开始看。</li>
+</ul>
+
+<p>$x(t)$ 填充速率（会变），$r$ 播放速率（恒定），$Q(t)$ 缓冲量，$t_p$ 开播时刻：</p>
+<div class="formula">$$Q(t+1) = \begin{cases} Q(t) + x(t), & t \le t_p\ \ \text{（只进不出）}\\ \max[\,Q(t) + x(t) - r,\ 0\,], & t &gt; t_p \end{cases}$$</div>
+<p>$Q(t) + x(t) - r &lt; 0$ 就是下溢。</p>
+
+<div class="box exam">
+  <span class="box-title">必考结论</span>
+  <ul>
+    <li><strong>E(x) &lt; r</strong>：缓冲<strong>迟早被抽空</strong>，视频卡住。</li>
+    <li><strong>E(x) ≥ r</strong>：缓冲不会空，<strong>前提是初始播放时延足够大</strong>，能吸收 x(t) 的波动。</li>
+  </ul>
+</div>
+
+<h3>例题</h3>
+<p>r = 2，Q(0) = 0，x(0..5) = 2, 2, 1, 0, 3, 2。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>Q(1)</th><th>Q(2)</th><th>Q(3)</th><th>Q(4)</th><th>Q(5)</th><th>Q(6)</th></tr>
+  <tr><td>$t_p = 2$</td><td>2</td><td>4</td><td>5</td><td>3</td><td>4</td><td>4</td></tr>
+  <tr><td>$t_p = 0$</td><td>2</td><td>2</td><td>1</td><td><strong>0（下溢）</strong></td><td>1</td><td>1</td></tr>
+</table></div>
+<p>同样的网络，晚开播 2 秒就不卡了。</p>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">r = 2，Q(0) = 0，x(0..3) = 2, 2, 1, 0，$t_p = 0$。哪个时刻第一次出现下溢（$Q(t) + x(t) - r &lt; 0$）？</div>
+  <ol class="mcq-src"><li>t = 1</li><li>t = 2</li><li>t = 3</li><li>不会下溢</li></ol>
+  <div class="mcq-exp">Q(1) = 2，Q(2) = 2 + 2 − 2 = 2，Q(3) = 2 + 1 − 2 = 1；t = 3 时 1 + 0 − 2 &lt; 0。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　UDP 流、HTTP 流、DASH <span class="stars">★★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th></th><th>UDP 流</th><th>HTTP 流</th><th>DASH</th></tr>
+  <tr><td>传输层</td><td>UDP（RTP 封装）</td><td>TCP</td><td>TCP</td></tr>
+  <tr><td>发送速率</td><td>恒定 = 编码速率，不管拥塞</td><td>TCP 能到的最大速率，因拥塞控制和重传而波动</td><td>按客户端选的码率</td></tr>
+  <tr><td>播放时延</td><td><strong>短，2–5 s</strong></td><td>较长</td><td>较长</td></tr>
+  <tr><td>防火墙</td><td><strong>可能被挡</strong></td><td>容易通过</td><td>容易通过</td></tr>
+  <tr><td>谁决定码率</td><td>服务器</td><td>固定</td><td><strong>客户端</strong></td></tr>
+</table></div>
+
+<h3>DASH（Dynamic Adaptive Streaming over HTTP）</h3>
+<ul>
+  <li><strong>服务器</strong>：视频切成<strong>块</strong>，每块用<strong>多种码率</strong>编码；<strong>manifest 文件</strong>列出各版本 URL。</li>
+  <li><strong>客户端</strong>：定期测带宽，查 manifest，<strong>一次请求一块</strong>，选当前带宽撑得住的最高码率；不同时间可以选不同码率。</li>
+  <li>客户端决定三件事：<strong>何时</strong>请求下一块（不让缓冲饿死或溢出）、请求<strong>什么码率</strong>、从<strong>哪里</strong>请求。</li>
+</ul>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于 DASH，正确的是？</div>
+  <ol class="mcq-src"><li>服务器把视频切块，多码率编码</li><li>manifest 给出各个版本的 URL</li><li>由服务器决定发哪个码率</li><li>客户端可在不同时间选不同码率</li></ol>
+  <div class="mcq-exp">DASH 的智能在客户端。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　CDN 与 DNS 重定向 <span class="stars">★★</span></h2>
+<p><strong>一个超大服务器</strong>不可扩展：单点故障、网络拥塞点、到远处用户路径长、同一视频多个副本挤在出口链路。<strong>CDN</strong>：在地理上分布的很多站点放副本，就近服务。</p>
+<h3>DNS 重定向（讲义：Bob 看 netcinema 的视频，内容在 KingCDN）</h3>
+<ol class="steps">
+  <li>视频预先存进 KingCDN；Bob 从网页拿到 URL <code>netcinema.com/6Y7B23V</code>。</li>
+  <li>Bob 的本地 DNS 解析这个名字。</li>
+  <li><strong>netcinema 的权威 DNS 不返回 IP，而是返回一个 KingCDN 的名字</strong>（W04 的 CNAME 思路）。</li>
+  <li>本地 DNS 再问 <strong>KingCDN 的权威 DNS</strong>，它返回<strong>「最好」的 KingCDN 服务器的 IP</strong>。</li>
+  <li>Bob 向那台服务器请求，<strong>HTTP 流式传输</strong>。</li>
+</ol>
+<div class="table-wrap"><table>
+  <tr><th>选节点策略</th><th>做法</th></tr>
+  <tr><td>地理最近</td><td>最简单</td></tr>
+  <tr><td>时延最短 / 跳数最少</td><td>CDN 节点定期 ping 各接入 ISP，结果报给 CDN 的 DNS</td></tr>
+  <tr><td><strong>让客户端自己选</strong></td><td>给客户一份服务器列表，客户 ping 后挑最好的：<strong>讲义里 Netflix 的做法</strong></td></tr>
+</table></div>
+<p><strong>Netflix（讲义 2011 年架构）</strong>：自己只管注册和计费服务器；Amazon 云生成多种编码、上传到 CDN、托管网页；内容放在三家 CDN（Akamai、Limelight、Level-3）。流程：账户 → 选片 → 返回 manifest → DASH 播放。</p>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">CDN 一般怎么把用户引到合适的服务器？</div>
+  <ol class="mcq-src"><li>修改 IP 层的路由表</li><li>权威 DNS 返回 CDN 名字，CDN 的 DNS 返回节点 IP</li><li>用 HTTP 301 永久重定向</li><li>客户端在局域网内广播查询</li></ol>
+  <div class="mcq-exp">内容提供商把解析权交给 CDN，CDN 的 DNS 按请求来源挑节点。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　码率计算 <span class="stars">★★</span></h2>
+<p>音频三步：<strong>采样</strong>（电话 8000 次/秒，音乐 44100 次/秒）→ <strong>量化</strong>（四舍五入到如 256 个值，差值是量化误差）→ <strong>编码</strong>（256 个值要 8 bit）。</p>
+<div class="formula">$$\text{码率} = \text{采样率}\times\text{每样本比特数}\qquad \text{电话 } 8000\times8 = 64\text{ kbps};\ \ \text{音乐 } 44100\times8 = 352.8\text{ kbps}$$</div>
+<p>视频：$8\times3\times480\times640\times24 \approx 177$ Mbps，必须压缩：</p>
+<ul>
+  <li><strong>空间编码</strong>（帧内）：一行 N 个同色像素只发「颜色 + 重复次数」。</li>
+  <li><strong>时间编码</strong>（帧间）：只发和前一帧的差别。</li>
+  <li>MPEG-1（CD-ROM）1.5 Mbps；MPEG-2（DVD）3–6 Mbps；MPEG-4（互联网）&lt; 1 Mbps。分 CBR 和 VBR。</li>
+</ul>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于视频压缩，正确的是？</div>
+  <ol class="mcq-src"><li>空间编码只发颜色和重复次数</li><li>时间编码只发和前一帧的差别</li><li>MPEG-2 用于 DVD，约 3–6 Mbps</li><li>MPEG-4 码率一般高于 MPEG-1</li></ol>
+  <div class="mcq-exp">MPEG-4 &lt; 1 Mbps，MPEG-1 是 1.5 Mbps。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　VoIP 与播放时延 <span class="stars">★★</span></h2>
+<ul>
+  <li>端到端时延：<strong>&lt; 150 ms 好，&gt; 400 ms 差</strong>。</li>
+  <li>讲话段与静默期交替；讲话时 64 kbps，<strong>每 20 ms 一块 = 160 字节</strong>，只在讲话时产生数据。</li>
+  <li>两种丢失：<strong>网络丢失</strong>（路由器缓冲溢出）和<strong>时延丢失</strong>（到得太晚赶不上播放，等于丢了）。丢包容忍 1%–10%，看编码和丢包隐藏。</li>
+</ul>
+
+<h3>固定播放时延 q</h3>
+<p>时间戳 t 的块在 t + q 播放，之后才到的算丢失。<strong>q 大：丢得少、交互差；q 小：交互好、丢得多。</strong></p>
+
+<h3>自适应播放时延</h3>
+<p>估计网络时延，<strong>在每个讲话段开始时调整</strong>，静默期被压缩或拉长：</p>
+<div class="formula">$$d_i = (1-u)\,d_{i-1} + u\,(r_i - t_i)\qquad v_i = (1-u)\,v_{i-1} + u\,|r_i - t_i - d_i|$$
+$$\text{讲话段第一个分组播放时刻} = t_i + d_i + K v_i$$</div>
+<p>$r_i$ 接收时刻，$t_i$ 时间戳，$u$ 如 0.01。$d_i$、$v_i$ <strong>每个分组都更新，但只在讲话段开头用</strong>。和 TCP 的 EstRTT + 4 DevRTT 同一个思路。</p>
+<p>例：$u = 0.01$，$d_{i-1} = 100$，$v_{i-1} = 10$，实测 150（ms）→ $d_i = 100.5$，$v_i = 9.9 + 0.495 = 10.395$；K = 4 时播放时刻 $= t_i + 142.08$ ms。</p>
+
+<div class="box method">
+  <span class="box-title">判断新讲话段</span>
+  <ul>
+    <li>不会丢包：相邻时间戳差 &gt; 20 ms → 新讲话段。</li>
+    <li>可能丢包：<strong>时间戳差 &gt; 20 ms 且序号连续</strong> → 新讲话段；序号跳了说明是丢包。</li>
+  </ul>
+  <p>例：序号 1、3、4、5，时间戳 0、40、100、120。0 → 40 差 40 但序号跳了（丢了 2）；40 → 100 差 60 且序号连续 → 100 是新讲话段第一个。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">可能丢包时，怎么判断一个分组是新讲话段的第一个？</div>
+  <ol class="mcq-src"><li>与上一个时间戳差大于 20 ms</li><li>与上一个分组的序号不连续</li><li>时间戳差大于 20 ms 且序号连续</li><li>时间戳差等于 20 ms 且序号跳了</li></ol>
+  <div class="mcq-exp">只看时间戳会把「丢了一个包」当成「静默」。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t6">题型 6　丢包恢复 <span class="stars">★★</span></h2>
+<p>可容忍时延很小，ACK/NAK 来回一个 RTT 来不及重传，所以用<strong>前向纠错（FEC）</strong>等办法。</p>
+<div class="table-wrap"><table>
+  <tr><th>方案</th><th>做法</th><th>带宽开销</th><th>额外时延</th><th>效果</th></tr>
+  <tr><td><strong>XOR FEC</strong></td><td>每 n 块加 $y = x_1\oplus\cdots\oplus x_n$</td><td>$1/n$</td><td>等一组 n + 1 个</td><td><strong>完全恢复</strong>，一组最多丢 1 个</td></tr>
+  <tr><td><strong>低质量冗余流</strong></td><td>第 n 个分组捎带第 n − 1 块的低质版本（如 64 kbps 主流 + 13 kbps 冗余）</td><td>冗余流码率</td><td>一个分组</td><td><strong>降质</strong>恢复</td></tr>
+  <tr><td><strong>交织</strong></td><td>每块切成小单元（如 4 个 5 ms），每个分组装来自不同块的单元</td><td><strong>0</strong></td><td><strong>较大</strong></td><td><strong>隐藏</strong>：每块只缺一小片</td></tr>
+</table></div>
+<p>XOR 例（n = 3）：$x_1 = 1$，$x_2 = 0$，$x_3$ 丢，$y = 0$ → $1\oplus0\oplus x_3 = 0$ → $x_3 = 1$。n 越大开销越小，但恢复要等更久。交织：不交织丢一个分组 = 丢一整个单词；交织 = 每个单词缺一个音节。</p>
+
+<div class="mcq" data-answer="0,2,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于丢包恢复，正确的是？</div>
+  <ol class="mcq-src"><li>XOR FEC 每 n 块加 1 块，开销 1/n</li><li>XOR FEC 一组丢 2 块也能恢复</li><li>交织无冗余开销但时延更大</li><li>低质量冗余流丢包后降质顶上</li></ol>
+  <div class="mcq-exp">XOR 一组最多丢 1 块。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t7">题型 7　RTP <span class="stars">★★</span></h2>
+<ul>
+  <li>规定承载音视频的分组格式（RFC 3550）：<strong>载荷类型、序号、时间戳</strong>。<strong>跑在端系统上，封装在 UDP 段里</strong>。</li>
+  <li><strong>RTP 不提供 QoS</strong>：没有保证及时交付的机制；中间路由器看不到 RTP 首部，照样尽力而为。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>字段</th><th class="c">位数</th><th>作用</th></tr>
+  <tr><td>payload type</td><td class="c">7</td><td>编码类型；中途换编码靠它告诉接收方（0 = PCM μ-law 64 kbps，3 = GSM 13 kbps）</td></tr>
+  <tr><td>sequence number</td><td class="c">16</td><td>每个分组 +1；发现丢包、恢复顺序</td></tr>
+  <tr><td>timestamp</td><td class="c">32</td><td>分组第一个字节的采样时刻</td></tr>
+  <tr><td>SSRC</td><td class="c">32</td><td>标识流的来源，同一会话里每个流不同</td></tr>
+</table></div>
+<div class="box method">
+  <span class="box-title">时间戳增量</span>
+  <p>音频每个采样周期时间戳 +1。8 kHz → 每 125 μs +1；每块 20 ms = 160 个样本 → <strong>每个分组 +160</strong>。<strong>静默时时钟照样走</strong>。</p>
+  <p>时间戳 X、X + 160、X + 480：中间跳过 2 块。时间戳跳 + 序号也跳 → 丢包；时间戳跳 + 序号连续 → 新讲话段。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">8 kHz 采样、每块 20 ms 的音频，相邻 RTP 分组的时间戳相差多少？</div>
+  <ol class="mcq-src"><li>1</li><li>20</li><li>160</li><li>8000</li></ol>
+  <div class="mcq-exp">20 ms / 125 μs = 160 个样本。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="复习课">
+  <div class="mcq-q">流媒体客户端的播放时延设得太小，最可能出现什么？</div>
+  <ol class="mcq-src"><li>客户端缓冲上溢</li><li>缓冲下溢，播放卡顿</li><li>视频码率自动下降</li><li>网络丢包率上升</li></ol>
+  <div class="mcq-exp">块到了播放时刻还没到就卡。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">采样率 8000 次/秒、每样本 8 比特的语音，码率是？</div>
+  <ol class="mcq-src"><li>8 kbps</li><li>64 kbps</li><li>352.8 kbps</li><li>1.5 Mbps</li></ol>
+  <div class="mcq-exp">$8000\times8$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">平均填充速率 E(x) 小于播放速率 r 时会怎样？</div>
+  <ol class="mcq-src"><li>初始时延够大就不会卡</li><li>缓冲迟早被抽空，视频卡住</li><li>客户端缓冲会溢出</li><li>客户端自动降低播放速率 r</li></ol>
+  <div class="mcq-exp">只有 E(x) ≥ r 时，足够大的初始时延才能防止卡顿。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">和 UDP 流相比，HTTP 流的特点是？</div>
+  <ol class="mcq-src"><li>更容易穿过防火墙</li><li>填充速率因 TCP 机制波动</li><li>播放时延通常更短</li><li>以 TCP 能达到的最大速率发</li></ol>
+  <div class="mcq-exp">HTTP 流播放时延更长。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">讲义里 Netflix 怎么选 CDN 节点？</div>
+  <ol class="mcq-src"><li>选地理上最近的节点</li><li>CDN 的 DNS 根据 ping 结果选</li><li>客户端拿列表 ping 后自己选</li><li>每次随机挑选一个节点</li></ol>
+  <div class="mcq-exp">讲义版本是让客户端自己选。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">64 kbps 语音每 20 ms 产生一块，每块多少字节？</div>
+  <ol class="mcq-src"><li>20</li><li>64</li><li>160</li><li>1280</li></ol>
+  <div class="mcq-exp">8000 B/s × 0.02 s。D 是比特数。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲义">
+  <div class="mcq-q">固定播放时延 q 设得较大，会怎样？</div>
+  <ol class="mcq-src"><li>丢失少，交互差</li><li>丢失多，交互好</li><li>丢失少，交互好</li><li>丢失多，交互差</li></ol>
+  <div class="mcq-exp">等得久，迟到丢失少，但对话不跟手。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">自适应播放时延，u = 0.01，$d_{i-1} = 100$ ms，新分组实测时延 $r_i - t_i = 150$ ms。新的 $d_i$ 是？</div>
+  <ol class="mcq-src"><li>100 ms</li><li>100.5 ms</li><li>125 ms</li><li>150 ms</li></ol>
+  <div class="mcq-exp">$0.99\times100 + 0.01\times150$。</div>
+</div>
+
+<div class="mcq" data-answer="0,2,3" data-src="讲义">
+  <div class="mcq-q">关于自适应播放时延，正确的是？</div>
+  <ol class="mcq-src"><li>每个分组都更新 $d_i$ 和 $v_i$</li><li>每个分组都调整播放时刻</li><li>只在讲话段开始时调整时延</li><li>段首分组在 $t_i + d_i + Kv_i$ 播</li></ol>
+  <div class="mcq-exp">同一讲话段内不调整，按和第一个分组的相对时间播放。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">XOR FEC，n = 3：$x_1 = 1$，$x_2 = 0$，$x_3$ 丢了，冗余块 $y = 0$。$x_3$ 是？</div>
+  <ol class="mcq-src"><li>0</li><li>1</li><li>无法恢复</li><li>需要重传</li></ol>
+  <div class="mcq-exp">$1\oplus0\oplus x_3 = 0$。</div>
+</div>
+
+<div class="mcq" data-answer="0,2,3" data-src="讲义">
+  <div class="mcq-q">关于 RTP，正确的是？</div>
+  <ol class="mcq-src"><li>RTP 分组封装在 UDP 段里</li><li>RTP 保证分组按时交付</li><li>中间路由器看不到 RTP 首部</li><li>中途换编码靠 payload type</li></ol>
+  <div class="mcq-exp">RTP 不提供 QoS。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲义">
+  <div class="mcq-q">RTP 首部里用来区分同一会话中不同流来源的字段是？</div>
+  <ol class="mcq-src"><li>payload type</li><li>sequence number</li><li>timestamp</li><li>SSRC</li></ol>
+  <div class="mcq-exp">SSRC = synchronization source。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">收到的 RTP 分组时间戳跳了一大截，但序号连续，说明什么？</div>
+  <ol class="mcq-src"><li>中间有分组丢失</li><li>静默后新讲话段开始</li><li>发送方换了编码</li><li>发送方的时钟出错</li></ol>
+  <div class="mcq-exp">序号也跳了才是丢包。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>缓冲：时延太小下溢；E(x) &lt; r 必卡；E(x) ≥ r 还要够大的初始时延；会用递推。</li>
+  <li>UDP 流恒速、2–5 s、可能被防火墙挡；HTTP 流 TCP 最大速率、时延长；DASH 切块多码率 + manifest，客户端选。</li>
+  <li>CDN：权威 DNS 返回 CDN 名字，CDN DNS 返回节点 IP；Netflix 让客户端选。</li>
+  <li>码率 = 采样率 × 比特；电话 64 kbps；未压缩视频约 177 Mbps；MPEG-1/2/4 = 1.5 / 3–6 / &lt;1 Mbps。</li>
+  <li>VoIP &lt; 150 ms 好、&gt; 400 ms 差；20 ms 一块 160 B；网络丢失 + 时延丢失。</li>
+  <li>自适应：$t_i + d_i + Kv_i$，只在段首调整；新讲话段 = 时间戳差 &gt; 20 ms 且序号连续。</li>
+  <li>XOR FEC 开销 1/n、一组最多丢 1；低质冗余降质；交织零开销、时延大。</li>
+  <li>RTP 在 UDP 里、不提供 QoS；PT 7 位、序号 16 位、时间戳 32 位、SSRC 32 位；每包 +160。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>最值得读的是 <strong>Kurose &amp; Ross「Multimedia Networking」一章（第 7 版第 9 章）</strong>：流媒体缓冲、DASH、CDN、VoIP 播放时延和 RTP 都在里面，讲义的图大多出自这一章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week08-multimedia.html" target="_blank" rel="noopener">W08 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 08</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

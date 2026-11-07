@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W12 5G、移动性与 QUIC</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 12</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W12 5G、移动性与 QUIC</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 第 8 版第 7 章（5G 架构、移动性、蓝牙、卫星）和第 3 章 QUIC 一节。Sample exam Q2「哪个协议有队头阻塞」在这一周。W12 tutorial 的 LTE 公平分配和转交地址题也在这里。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 QUIC</a></td><td class="c"><span class="stars">★★★</span></td><td>UDP 上；多流无 HOL；Connection ID；新包号重传</td></tr>
+    <tr><td><a href="#t2">2 5G 核心网功能</a></td><td class="c"><span class="stars">★★★</span></td><td>CUPS；UPF 唯一用户面；AMF 接入移动；SMF 会话</td></tr>
+    <tr><td><a href="#t3">3 入网、GTP-U 隧道、5G 切换</a></td><td class="c"><span class="stars">★★</span></td><td>注册 + PDU 会话；切换改隧道端点，IP 不变</td></tr>
+    <tr><td><a href="#t4">4 LTE 公平分配（Tutorial）</a></td><td class="c"><span class="stars">★★</span></td><td>数据量相等 40/17；A ≤ 2× 其他 25/9</td></tr>
+    <tr><td><a href="#t5">5 蓝牙、卫星、IoT</a></td><td class="c"><span class="stars">★★</span></td><td>piconet 1 + 7；跳频；GEO 800 ms vs LEO 30 ms</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　QUIC <span class="stars">★★★</span></h2>
+<p>趋势：<strong>把传输层功能搬到应用层，跑在 UDP 上</strong>。QUIC 是<strong>跑在 UDP 之上的应用层协议</strong>（RFC 9000，2021 年 5 月），HTTP/3 就用它。</p>
+<div class="table-wrap"><table>
+  <tr><th>层</th><th>HTTP/2 over TCP</th><th>HTTP/3</th></tr>
+  <tr><td>应用</td><td>HTTP/2</td><td>精简的 HTTP/2 = HTTP/3</td></tr>
+  <tr><td></td><td><strong>TLS</strong></td><td><strong>QUIC</strong>（加密 + 可靠 + 拥塞控制）</td></tr>
+  <tr><td>传输</td><td><strong>TCP</strong></td><td><strong>UDP</strong></td></tr>
+</table></div>
+<ul>
+  <li><strong>建连</strong>：可靠性、拥塞控制、认证、加密的状态在 <strong>1 个 RTT</strong> 内建好（连过的服务器 <strong>0-RTT</strong>）；TCP + TLS 要两次握手。</li>
+  <li><strong>多流</strong>：一个连接复用多个流，<strong>每个流独立的可靠传输和安全，共用一个拥塞控制</strong>。</li>
+</ul>
+
+<h3>队头阻塞（Sample exam Q2）</h3>
+<p>TCP 只有<strong>一条按序交付的字节流</strong>。中间丢一个段，后面所有字节（哪怕属于别的 HTTP 请求）都要在缓冲区里等它重传。HTTP/2 把多个请求复用在一条 TCP 上，正好放大了问题。<strong>QUIC 每个流单独做可靠传输，一个流丢包只影响这个流。</strong></p>
+<div class="box trap">
+  <span class="box-title">官方答案只认 TCP</span>
+  <p>HTTP/1.1 在应用层也有一种 HOL（W03：小对象排在大对象后面），但题目问的是协议层因丢包重传造成的 HOL。</p>
+</div>
+
+<h3>Connection ID、包号、帧</h3>
+<div class="table-wrap"><table>
+  <tr><th>机制</th><th>要点</th></tr>
+  <tr><td><strong>Connection ID</strong></td><td>TCP 用四元组、UDP 用二元组标识；QUIC 用 Connection ID。<strong>4G 换 Wi-Fi，IP 变了，TCP 断，QUIC 平滑迁移</strong></td></tr>
+  <tr><td><strong>Packet number</strong></td><td><strong>单调递增、永不重复，重传也用新包号</strong> → 没有 TCP 那种 RTT 测量歧义</td></tr>
+  <tr><td>Stream 帧 Offset + Length</td><td>保证流内顺序。<strong>丢包检测（包号）和重组（offset）分开</strong></td></tr>
+  <tr><td>MAX_DATA / MAX_STREAM_DATA</td><td><strong>两层流控</strong>：连接级和流级（带 STREAM 的是流级；讲义 p50 写反了）</td></tr>
+  <tr><td>PING、CONNECTION_CLOSE</td><td>检查对方是否在；连接正在关闭</td></tr>
+</table></div>
+
+<h3>拥塞控制与超时</h3>
+<div class="formula">$$\text{PTO} = smoothed\_rtt + \max(4\cdot rttvar,\ kGranularity) + max\_ack\_delay$$</div>
+<p>比 TCP 的 EstimatedRTT + 4·DevRTT 多两项：<strong>kGranularity（定时器粒度 1 ms，防止超时过短）</strong>和 <strong>max_ack_delay（接收方最多延迟 ACK 多久）</strong>。慢启动、拥塞避免、恢复期减半都和 TCP 类似；<strong>持续拥塞（一段足够长时间内在途分组全丢）→ 回到慢启动</strong>。</p>
+
+<div class="mcq" data-answer="1" data-src="Sample Exam Q2 · 检查一下">
+  <div class="mcq-q">下面哪个协议存在队头阻塞（head-of-line blocking）问题？</div>
+  <ol class="mcq-src"><li>UDP</li><li>TCP</li><li>QUIC</li><li>HTTP</li></ol>
+  <div class="mcq-exp">TCP 一条按序字节流；QUIC 每个流独立。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　5G 核心网功能 <span class="stars">★★★</span></h2>
+<p><strong>RAN</strong>（无线接入网）：设备 <strong>UE</strong> + 无线信道 <strong>NR</strong> + 基站 <strong>gNodeB</strong>，是第一跳，一个运营商控制。<strong>核心网</strong>：一个核心多个 RAN，全 IP，<strong>控制面和用户面分开（CUPS）</strong>，主要是控制面服务。</p>
+<div class="table-wrap"><table>
+  <tr><th>功能</th><th>面</th><th>管什么</th></tr>
+  <tr><td><strong>UPF</strong></td><td><strong>唯一的用户面</strong></td><td>在 UE 和互联网之间中继流量；和基站之间的<strong>隧道</strong>；策略执行、计量、QoS 监管</td></tr>
+  <tr><td><strong>AMF</strong></td><td>控制</td><td><strong>接入和移动</strong>：可达性、移动性管理、接入授权、位置服务</td></tr>
+  <tr><td><strong>SMF</strong></td><td>控制</td><td><strong>会话</strong>：<strong>分配 IP</strong>、<strong>选 UPF</strong>、QoS 控制</td></tr>
+  <tr><td><strong>AUSF</strong></td><td>控制</td><td><strong>认证设备</strong></td></tr>
+  <tr><td><strong>UDM</strong></td><td>控制</td><td><strong>用户身份</strong>，生成认证凭据</td></tr>
+  <tr><td>UDR / UDSF</td><td>控制</td><td>静态签约信息 / 非结构化数据</td></tr>
+</table></div>
+<p>记法：<strong>AMF 接入移动，SMF 会话；AUSF 认证，UDM 身份；UPF 是唯一的用户面。</strong></p>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">5G 核心网中负责给设备分配 IP 地址、选择 UPF 的是？</div>
+  <ol class="mcq-src"><li>AMF</li><li>SMF</li><li>UDM</li><li>UDR</li></ol>
+  <div class="mcq-exp">S = Session。AMF 管接入和移动。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　入网、GTP-U 隧道、5G 切换 <span class="stars">★★</span></h2>
+<h3>接口与隧道</h3>
+<div class="table-wrap"><table>
+  <tr><th>接口</th><th>两端</th></tr>
+  <tr><td>N1 / N2</td><td>UE ↔ AMF / 基站 ↔ AMF</td></tr>
+  <tr><td><strong>N3</strong></td><td><strong>基站 ↔ UPF（用户面隧道）</strong></td></tr>
+  <tr><td>N4</td><td>SMF ↔ UPF</td></tr>
+  <tr><td><strong>N6</strong></td><td><strong>UPF ↔ 互联网</strong></td></tr>
+</table></div>
+<p><strong>GTP-U 隧道</strong>：用户 IP 数据报 / <strong>GTP-U / UDP</strong> / 外层 IP。设备 z、基站 y、UPF x、发送方 w：UPF → 基站一段外层 <strong>x → y</strong>，内层始终 <strong>w → z</strong>。和 Mobile IP 一个思路：<strong>设备移动只改隧道端点，IP 地址 z 不变</strong>。</p>
+
+<h3>入网两阶段</h3>
+<ol class="steps">
+  <li><strong>注册</strong>：设备向网络认证，<strong>网络也向设备认证（双向）</strong>。AMF 起关键作用，经 AUSF 认证、更新 UDM。身份靠 <strong>SIM 卡里和归属网络共享的密钥</strong>。</li>
+  <li><strong>PDU 会话建立</strong>：<strong>分配 IP</strong>，<strong>建到 UPF 的数据面路径</strong>（AMF 找 SMF，SMF 让 UPF 建会话）。</li>
+</ol>
+
+<h3>Wi-Fi 内的移动</h3>
+<p><strong>ESS = 多个 BSS、同一三层子网、同一 SSID</strong>。在 ESS 内换 BSS 只需快速重新认证，<strong>IP 不变</strong>，交换机自学习更新 MAC 所在端口，不需要 Mobile IP。</p>
+
+<h3>5G 切换（七步）</h3>
+<ol class="steps">
+  <li><strong>源基站选目标基站</strong>，发 Handover Request。</li>
+  <li>目标基站<strong>预分配无线时隙</strong>，回 HR ACK。</li>
+  <li>源基站告诉设备新基站的信息，设备可以经新基站发送。</li>
+  <li><strong>源基站把收到的数据报转发给目标基站</strong>（不丢包）。</li>
+  <li>目标基站通知 AMF、SMF；<strong>SMF 让 UPF 把隧道端点改到目标基站</strong>。</li>
+  <li>目标基站确认完成，源基站释放资源。</li>
+  <li>数据经<strong>新隧道</strong>走。</li>
+</ol>
+<p>UPF 发 <strong>end marker</strong> 标记旧隧道最后一个包；<strong>UPF 是固定锚点</strong>（同 W11 锚点 FA、锚点 MSC）。</p>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于 5G 切换，正确的是？</div>
+  <ol class="mcq-src"><li>源基站选目标基站并发请求</li><li>切换中源基站把数据转给目标</li><li>SMF 让 UPF 改隧道端点</li><li>切换后设备换一个新 IP 地址</li></ol>
+  <div class="mcq-exp">设备 IP 不变，变的是隧道端点。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　LTE 下行公平分配（Tutorial） <span class="stars">★★</span></h2>
+<p>A、B、C、D 独占信道时速率 10、5、2.5、1 Mbps，每个时隙每个频率可给任一节点，数据无限。设各分到 $n_i$ 个时隙、共 N 个。</p>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>写出「每个节点数据量」= $R_i n_i$ 之间的约束。</li>
+    <li>全部用 $n_1$ 表示，求和 = N，解出 $n_1$。</li>
+    <li>平均速率 = $\sum R_i n_i / N$。</li>
+  </ol>
+</div>
+<p><strong>数据量完全相等</strong>：$10n_1 = 5n_2 = 2.5n_3 = n_4$ → $n_2 = 2n_1, n_3 = 4n_1, n_4 = 10n_1$，$n_1 = N/17$。</p>
+<div class="formula">$$\bar R = \frac{10\cdot1 + 5\cdot2 + 2.5\cdot4 + 1\cdot10}{17} = \frac{40}{17}\approx 2.35\ \text{Mbps}\qquad\text{速算：}\ \frac{4}{\sum 1/R_i} = \frac{4}{1.7}$$</div>
+<p>每个节点只拿 10/17 ≈ 0.59 Mbps，<strong>最慢的 D 占了 10/17 的时隙</strong>。</p>
+<p><strong>A 最多是其他任一节点的 2 倍</strong>：$10n_1 = 2\cdot5n_2 = 2\cdot2.5n_3 = 2n_4$ → $n_2 = n_1, n_3 = 2n_1, n_4 = 5n_1$，$n_1 = N/9$，$\bar R = 25/9 \approx 2.78$ Mbps。</p>
+<div class="table-wrap"><table>
+  <tr><th>公平要求</th><th class="c">平均速率</th></tr>
+  <tr><td>不要求（全给 A，不公平）</td><td class="c">10 Mbps</td></tr>
+  <tr><td>时隙数相等</td><td class="c">4.625 Mbps</td></tr>
+  <tr><td>A ≤ 2 × 其他</td><td class="c">25/9 ≈ 2.78 Mbps</td></tr>
+  <tr><td>数据量完全相等</td><td class="c">40/17 ≈ 2.35 Mbps</td></tr>
+</table></div>
+<p><strong>公平要求越严，总吞吐越低。</strong></p>
+<div class="box trap">
+  <span class="box-title">Tutorial：两台设备能共用一个转交地址吗？</span>
+  <p><strong>能</strong>，如果 COA 是<strong>外地代理的地址</strong>：外层目的 = COA（共享），外地代理解封装后看<strong>内层目的（各自的永久地址）</strong>区分。设备自己拿的「同址转交地址」不能共享。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial · 检查一下">
+  <div class="mcq-q">同上，数据量完全相等时，D 占了多少比例的时隙？</div>
+  <ol class="mcq-src"><li>1/17</li><li>4/17</li><li>10/17</li><li>1/4</li></ol>
+  <div class="mcq-exp">$n_4 = 10 n_1 = 10N/17$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　蓝牙、卫星、IoT <span class="stars">★★</span></h2>
+<h3>蓝牙</h3>
+<p>无线 ad hoc：没有 AP，设备要从零互相发现、组网，所以协议栈和互联网不同（<strong>没有网络层、传输层</strong>；L2CAP 提供可靠性、流控、分段）。</p>
+<div class="table-wrap"><table>
+  <tr><th>要点</th><th>说明</th></tr>
+  <tr><td>piconet</td><td>直径 &lt; 10 m，<strong>最多 8 个：1 个 central + 最多 7 个 peripheral</strong></td></tr>
+  <tr><td>通信</td><td><strong>只在 central 和 peripheral 之间</strong>，peripheral 之间不能直接通信</td></tr>
+  <tr><td>地址 / 频段</td><td>唯一 <strong>48 位地址</strong>；<strong>2.4 GHz ISM</strong></td></tr>
+  <tr><td>信道</td><td>经典 <strong>79 个</strong>（1 MHz），BLE 40 个（3 广播 + 37 数据）</td></tr>
+  <tr><td>访问</td><td>TDM，<strong>时隙 625 μs</strong>；central <strong>轮询</strong> peripheral</td></tr>
+  <tr><td><strong>跳频</strong></td><td>每个时隙换频率；<strong>减少干扰的影响</strong>：被占的信道只偶尔出现，丢了下个时隙换频率重传</td></tr>
+</table></div>
+<h3>GEO vs LEO</h3>
+<div class="table-wrap"><table>
+  <tr><th></th><th>GEO</th><th>LEO</th></tr>
+  <tr><td>相对地面</td><td><strong>静止</strong></td><td>移动，约 27 000 km/h</td></tr>
+  <tr><td>高度</td><td>约 36 000 km</td><td>550–1200 km</td></tr>
+  <tr><td><strong>RTT</strong></td><td><strong>约 800 ms</strong>（不适合 VoIP）</td><td><strong>约 30 ms</strong></td></tr>
+  <tr><td>覆盖</td><td>单颗大</td><td>单颗小，<strong>要星座</strong>，有星间链路 ISL</td></tr>
+  <tr><td>可见时间</td><td>一直</td><td><strong>5–15 分钟</strong></td></tr>
+</table></div>
+<p>bent pipe：只经过一颗卫星转发；天上的网络：经过多颗卫星，卫星之间要路由。</p>
+<h3>IoT</h3>
+<p>无线必须；几米到几公里；几百 bps 到约 1 Mbps；<strong>能耗：无外部电源工作约 10 年</strong>。短距离 Wi-Fi、BLE、Zigbee；<strong>低功耗广域 LoRaWAN、LTE-M</strong>；传统广域 4G / 5G。</p>
+
+<div class="mcq" data-answer="0,2,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于蓝牙 piconet，正确的是？</div>
+  <ol class="mcq-src"><li>最多 1 个 central 加 7 个 peripheral</li><li>peripheral 之间可以直接通信</li><li>每个设备有唯一的 48 位地址</li><li>工作在 2.4 GHz 的 ISM 频段</li></ol>
+  <div class="mcq-exp">只有 central 和 peripheral 之间通信。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于 QUIC，正确的是？</div>
+  <ol class="mcq-src"><li>跑在 UDP 之上</li><li>每个流有独立的可靠传输</li><li>每个流有独立的拥塞控制</li><li>1 个 RTT 内建好连接状态</li></ol>
+  <div class="mcq-exp">拥塞控制所有流共用。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">5G 核心网里唯一属于用户面的功能是？</div>
+  <ol class="mcq-src"><li>AMF</li><li>SMF</li><li>UPF</li><li>AUSF</li></ol>
+  <div class="mcq-exp">U = User plane。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">LTE 下行，A、B、C、D 独占时速率 10、5、2.5、1 Mbps。A 最多拿到其他任一节点的 2 倍数据，平均速率约为？</div>
+  <ol class="mcq-src"><li>2.35 Mbps</li><li>2.78 Mbps</li><li>4.625 Mbps</li><li>10 Mbps</li></ol>
+  <div class="mcq-exp">$n_1 = N/9$，$25/9$。A 是数据量相等的情况。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">手机从 4G 切到 Wi-Fi，IP 变了。哪种连接能平滑迁移？</div>
+  <ol class="mcq-src"><li>TCP，因为它有序号</li><li>QUIC，靠 Connection ID</li><li>UDP，因为它无连接</li><li>都会断开，要重连</li></ol>
+  <div class="mcq-exp">TCP 的四元组变了就断。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">QUIC 重传丢失的数据时，包号怎么处理？</div>
+  <ol class="mcq-src"><li>沿用原来的包号</li><li>用新的更大的包号</li><li>把包号清零重来</li><li>重传包不带包号</li></ol>
+  <div class="mcq-exp">所以没有 RTT 测量歧义。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="讲义">
+  <div class="mcq-q">QUIC 的超时公式比 TCP 的 EstimatedRTT + 4·DevRTT 多考虑了什么？</div>
+  <ol class="mcq-src"><li>定时器粒度 kGranularity</li><li>最大延迟 ACK max_ack_delay</li><li>链路的带宽大小</li><li>分组的字节大小</li></ol>
+  <div class="mcq-exp">粒度下限防止 rttvar 很小时超时过短。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义">
+  <div class="mcq-q">关于 5G 核心网功能，正确的是？</div>
+  <ol class="mcq-src"><li>AMF 负责移动性和接入授权</li><li>AUSF 负责认证设备</li><li>UDM 管理用户身份</li><li>UPF 负责会话和分配 IP</li></ol>
+  <div class="mcq-exp">D 是 SMF。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">基站和 UPF 之间的用户面隧道用的是？</div>
+  <ol class="mcq-src"><li>IP-in-IP</li><li>GTP-U over UDP/IP</li><li>TCP</li><li>RTP</li></ol>
+  <div class="mcq-exp">N3 接口。IP-in-IP 是 Mobile IP。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于 GEO 和 LEO 卫星，正确的是？</div>
+  <ol class="mcq-src"><li>GEO 相对地面静止</li><li>GEO 的 RTT 约 800 ms</li><li>LEO 单颗覆盖大，不需星座</li><li>LEO 可见时间只有 5–15 分钟</li></ol>
+  <div class="mcq-exp">LEO 低轨覆盖小，要很多颗组成星座。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">两台移动设备在同一访问网络，能否共用一个转交地址？</div>
+  <ol class="mcq-src"><li>不能，转交地址必须唯一</li><li>能，FA 靠内层目的地址区分</li><li>能，FA 靠端口号来区分</li><li>只有在归属网络里才能</li></ol>
+  <div class="mcq-exp">COA 是外地代理地址时。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义">
+  <div class="mcq-q">关于 802.11 的 ESS，正确的是？</div>
+  <ol class="mcq-src"><li>由多个 BSS 组成</li><li>各 BSS 在同一个子网</li><li>各 BSS 的 SSID 相同</li><li>ESS 内移动要用 Mobile IP</li></ol>
+  <div class="mcq-exp">同一子网 IP 不变。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="讲义">
+  <div class="mcq-q">适合低功耗广域 IoT 的技术是？</div>
+  <ol class="mcq-src"><li>LoRaWAN</li><li>LTE-M</li><li>BLE</li><li>Zigbee</li></ol>
+  <div class="mcq-exp">BLE、Zigbee 是短距离。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">QUIC 判定持续拥塞后会？</div>
+  <ol class="mcq-src"><li>把窗口减半</li><li>回到慢启动</li><li>关闭整个连接</li><li>换 Connection ID</li></ol>
+  <div class="mcq-exp">≈ TCP 超时后 cwnd 回到 1。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">两个节点独占时速率 4 Mbps 和 1 Mbps，要求收到的数据量相等，平均速率是？</div>
+  <ol class="mcq-src"><li>2.5 Mbps</li><li>2 Mbps</li><li>1.6 Mbps</li><li>1 Mbps</li></ol>
+  <div class="mcq-exp">$n_2 = 4n_1$，$n_1 = N/5$，$(4 + 4)/5 = 1.6$；速算 $2/(1/4 + 1)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li><strong>有 HOL 的是 TCP</strong>；QUIC 每个流独立可靠，共享拥塞控制。</li>
+  <li>QUIC：应用层、UDP 上、1-RTT / 0-RTT；Connection ID 迁移；包号单调、重传用新号；连接级 + 流级两层流控。</li>
+  <li>PTO = srtt + max(4·rttvar, 1 ms) + max_ack_delay；持续拥塞回慢启动。</li>
+  <li>CUPS；UPF 唯一用户面；AMF 接入移动；SMF 会话、IP、选 UPF；AUSF 认证；UDM 身份。</li>
+  <li>入网：注册（双向认证）+ PDU 会话（分 IP、建路径）；GTP-U / UDP 隧道在 N3。</li>
+  <li>5G 切换：源选目标 → 预分配 → 设备切 → 源转发 → SMF 让 UPF 改隧道 → 释放；IP 不变。</li>
+  <li>LTE：数据相等 40/17 ≈ 2.35，A ≤ 2× 为 25/9 ≈ 2.78；公平越严吞吐越低。</li>
+  <li>蓝牙 1 + 7、48 位、79 信道、625 μs、跳频抗干扰；GEO 800 ms，LEO 30 ms、星座、5–15 分钟。</li>
+  <li>ESS 同子网同 SSID；IoT 低功耗广域 LoRaWAN、LTE-M；COA 可共享（外地代理地址）。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>5G、蓝牙、卫星读 <strong>Kurose &amp; Ross 第 8 版第 7 章</strong>（5G 架构与移动性几节）；QUIC 读<strong>第 3 章 3.8 节</strong>，细节以 <a href="https://www.rfc-editor.org/rfc/rfc9000" target="_blank" rel="noopener">RFC 9000</a> 为准（流控帧的名字照 RFC）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week12-5g-mobility-quic.html" target="_blank" rel="noopener">W12 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 12</a> 和 Sample Exam 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>
