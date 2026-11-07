@@ -10546,2476 +10546,6 @@ window.QUIZ_DATA = {
       ]
     },
     {
-      "question": "Which statement best matches the course definition of a complex system?",
-      "options": [
-        "Many entities whose global behaviour is a non-trivial result of their interactions",
-        "A system controlled centrally so that all parts act together",
-        "Any system that cannot be described by an equation",
-        "A system whose parts each follow very complicated rules"
-      ],
-      "correct": 0,
-      "explanation": "A complex system is a large collection of entities where the system-level behaviour is a non-trivial result of what the individuals do, because of their interactions. Individual parts can be very simple (a neuron), and there is no central controller.",
-      "questionZh": "哪一项最符合课程对复杂系统（complex system）的定义？",
-      "optionsZh": [
-        "大量实体，其整体行为是它们相互作用产生的非平凡结果",
-        "由中心统一控制、各部分一致行动的系统",
-        "任何无法用方程描述的系统",
-        "各组成部分都遵循非常复杂的规则的系统"
-      ],
-      "explanationZh": "复杂系统 = 一大群实体，系统层面的行为是个体因交互而产生的非平凡结果。个体本身可以很简单（如单个神经元），也没有中心控制。",
-      "optionNotes": [
-        "This is the lecture definition.",
-        "Central control is the opposite.",
-        "Not about equations.",
-        "Parts can be very simple, like a neuron."
-      ],
-      "id": 423,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Complex systems / definition",
-      "source": "kp"
-    },
-    {
-      "question": "In this course, self-organisation and emergence are described as an increase in order over…",
-      "options": [
-        "entropy (both), so they are the same idea",
-        "scale (self-organisation) and time (emergence)",
-        "space (both) but measured in different units",
-        "time (self-organisation) and scale (emergence)"
-      ],
-      "correct": 3,
-      "explanation": "Self-organisation = increase in order over time; emergence = increase in order over scale.",
-      "questionZh": "本课中，自组织（self-organisation）和涌现（emergence）分别被描述为秩序随什么增加？",
-      "optionsZh": [
-        "两者都随熵，因此是同一概念",
-        "自组织随尺度，涌现随时间",
-        "两者都随空间，只是单位不同",
-        "自组织随时间，涌现随尺度"
-      ],
-      "explanationZh": "自组织 = 秩序随时间增加；涌现 = 秩序随尺度增加。",
-      "id": 424,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Self-organisation vs emergence",
-      "source": "kp"
-    },
-    {
-      "question": "Which property does the Shannon information content $h(x) = -\\log_2 p(x)$ NOT have?",
-      "options": [
-        "It grows as $p(x)$ gets smaller",
-        "It is 0 when $p(x)=1$",
-        "It is never negative",
-        "It is at most 1 bit"
-      ],
-      "correct": 3,
-      "explanation": "h(x) ≥ 0, h = 0 when p = 1, and h increases as p decreases. It has no upper bound: as p → 0, h → ∞ (you cannot be more surprised than by something you thought impossible).",
-      "questionZh": "Shannon 信息量 $h(x) = -\\log_2 p(x)$ 不具备下列哪条性质？",
-      "optionsZh": [
-        "$p(x)$ 越小它越大",
-        "当 $p(x)=1$ 时为 0",
-        "永远不为负",
-        "最多为 1 比特"
-      ],
-      "explanationZh": "h(x) 非负、p=1 时为 0、p 越小越大；但没有上界，p→0 时 h→∞。",
-      "optionNotes": [
-        "True: rarer means more surprise.",
-        "True: log 1 = 0.",
-        "True: −log p ≥ 0 for p ≤ 1.",
-        "False: h(1/8) = 3 bits, and h → ∞ as p → 0."
-      ],
-      "id": 425,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / properties",
-      "source": "kp"
-    },
-    {
-      "question": "A fair 20-sided die is rolled. You are told only whether the result was a 1. If the result was NOT a 1, how much information content did that answer carry?",
-      "options": [
-        "0.263 bits",
-        "0.074 bits",
-        "4.322 bits",
-        "1.000 bits"
-      ],
-      "correct": 1,
-      "explanation": "The question asked is binary: 'is it a 1?'. p(not 1) = 19/20, so h = log₂(20/19) ≈ 0.074 bits. 4.322 bits would be h(1) = log₂ 20. 0.263 bits is the six-sided case log₂(6/5).",
-      "questionZh": "掷一个公平的 20 面骰子，你只被告知结果是不是 1。如果结果不是 1，这个回答带来的信息量是多少？",
-      "optionsZh": [
-        "0.263 比特",
-        "0.074 比特",
-        "4.322 比特",
-        "1.000 比特"
-      ],
-      "explanationZh": "被问的是二元问题“是不是 1”。p(不是1)=19/20，h=log₂(20/19)≈0.074 bits。4.322 是 h(1)=log₂20；0.263 是六面骰的 log₂(6/5)。",
-      "steps": [
-        "$p(\\text{not }1) = 19/20$",
-        "$h = \\log_2 \\frac{20}{19} \\approx 0.074$ bits"
-      ],
-      "id": 426,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / calculation",
-      "source": "kp"
-    },
-    {
-      "question": "The base of the logarithm in $h(x)$ only changes the unit. Which pairing is correct?",
-      "options": [
-        "base 2 → nats, base e → bits",
-        "base 2 → bits, base e → nats",
-        "base 10 → bits, base 2 → dits",
-        "base e → dits, base 10 → nats"
-      ],
-      "correct": 1,
-      "explanation": "log₂ gives bits, ln gives nats, log₁₀ gives dits (also called hartleys). 1 nat ≈ 1.443 bits. Always write the unit.",
-      "questionZh": "$h(x)$ 中对数的底只改变单位。下列哪组对应正确？",
-      "optionsZh": [
-        "底 2 → nats，底 e → bits",
-        "底 2 → bits，底 e → nats",
-        "底 10 → bits，底 2 → dits",
-        "底 e → dits，底 10 → nats"
-      ],
-      "explanationZh": "log₂ → bits，ln → nats，log₁₀ → dits。1 nat ≈ 1.443 bits。答题必须写单位。",
-      "id": 427,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Units of information",
-      "source": "kp"
-    },
-    {
-      "question": "A random variable has an alphabet of 8 symbols. What is the largest possible Shannon entropy, and when is it reached?",
-      "options": [
-        "3 bits, when one symbol has probability 1",
-        "8 bits, when one symbol has probability 1",
-        "3 bits, when all 8 symbols are equally likely",
-        "1 bit, when two symbols share all the probability"
-      ],
-      "correct": 2,
-      "explanation": "0 ≤ H(X) ≤ log₂|A_X|. The maximum log₂ 8 = 3 bits is reached by the uniform distribution. A deterministic variable (one symbol with p = 1) has H = 0.",
-      "questionZh": "一个随机变量的字母表有 8 个符号。它的 Shannon 熵最大是多少？何时达到？",
-      "optionsZh": [
-        "3 比特，当某个符号概率为 1 时",
-        "8 比特，当某个符号概率为 1 时",
-        "3 比特，当 8 个符号等概率时",
-        "1 比特，当两个符号平分全部概率时"
-      ],
-      "explanationZh": "0 ≤ H ≤ log₂|A|。最大值 log₂8 = 3 bits 在均匀分布时取到；确定性变量 H=0。",
-      "id": 428,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon entropy / bounds",
-      "source": "kp"
-    },
-    {
-      "question": "In Guess Who? the hair colours are {blonde, black, brown, grey, red}. We add 'blue' to the alphabet, but no character has blue hair. What happens to the entropy of hair colour?",
-      "options": [
-        "It does not change, because p log(1/p) → 0 as p → 0",
-        "It decreases, because probability is spread thinner",
-        "It increases, because the alphabet is larger",
-        "It is undefined, because log 0 is undefined"
-      ],
-      "correct": 0,
-      "explanation": "lim_{p→0} p log₂(1/p) = 0, so an outcome that never happens contributes nothing to H. You can add as many zero-probability symbols as you like.",
-      "questionZh": "Guess Who? 中发色为 {金、黑、棕、灰、红}。我们往字母表里加入“蓝色”，但没有角色是蓝发。发色的熵会怎样？",
-      "optionsZh": [
-        "不变，因为 p→0 时 p log(1/p) → 0",
-        "减小，因为概率被摊得更薄",
-        "增大，因为字母表变大了",
-        "无定义，因为 log 0 无定义"
-      ],
-      "explanationZh": "p→0 时 p·log(1/p)→0，零概率结果对熵没有贡献，加多少个都不影响。",
-      "id": 429,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon entropy / zero-probability outcomes",
-      "source": "kp"
-    },
-    {
-      "question": "Why is a 50/50 yes/no question the best strategy in Guess Who?",
-      "options": [
-        "Its answer has the highest average information: 1 bit",
-        "Its answer always eliminates exactly one character",
-        "It is the easiest question to answer honestly",
-        "It guarantees a win within four questions"
-      ],
-      "correct": 0,
-      "explanation": "A binary answer carries at most 1 bit on average, reached when both answers are equally likely. Whatever the answer, you eliminate many characters. 'Are you Bob?' usually gets 'no', which tells you almost nothing.",
-      "questionZh": "为什么在 Guess Who? 中问 50/50 的是非题是最佳策略？",
-      "optionsZh": [
-        "它的答案平均信息量最大：1 比特",
-        "无论答案如何都恰好排除一个角色",
-        "这种问题最容易诚实回答",
-        "保证四个问题内获胜"
-      ],
-      "explanationZh": "二元回答平均最多 1 bit，两个答案等概率时达到；无论回答是什么都能排除很多人。问“你是 Bob 吗”几乎总得到“不是”，信息很少。",
-      "id": 430,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Entropy as average surprise / yes-no questions",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement correctly matches each quantity to what it is about?",
-      "options": [
-        "$h(x)$ is about one sample value; $H(X)$ is about the random variable",
-        "$h(x)$ is about a random variable; $H(X)$ is about one sample",
-        "Both are about the whole joint distribution",
-        "Both $h(x)$ and $H(X)$ are about one sample"
-      ],
-      "correct": 0,
-      "explanation": "Capital X is the random variable, lower-case x is one sample/outcome. Shannon information content h(x) is attached to a specific value; entropy H(X) is the average over the variable's distribution.",
-      "questionZh": "下列哪项正确对应了每个量所描述的对象？",
-      "optionsZh": [
-        "$h(x)$ 描述一个具体取值；$H(X)$ 描述随机变量",
-        "$h(x)$ 描述随机变量；$H(X)$ 描述单个样本",
-        "两者都描述整个联合分布",
-        "$h(x)$ 与 $H(X)$ 都描述单个样本"
-      ],
-      "explanationZh": "大写 X 是随机变量，小写 x 是样本取值。h(x) 属于某个具体取值，H(X) 是对整个分布的平均。",
-      "id": 431,
-      "course": "CSYS5030",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Uncertainty & Entropy I / Shannon information content / sample vs variable",
-      "source": "kp"
-    },
-    {
-      "question": "Four horses win with probabilities 1/2, 1/4, 1/8, 1/8. Using an optimal code, how many bits on average are needed to report the winner?",
-      "options": [
-        "1.25 bits",
-        "1.75 bits",
-        "2.00 bits",
-        "1.50 bits"
-      ],
-      "correct": 1,
-      "explanation": "H = ½·1 + ¼·2 + ⅛·3 + ⅛·3 = 1.75 bits. Shorter codewords go to likely outcomes (A=0, B=10, C=110, D=111), which beats the 2 bits needed if all were equally likely.",
-      "questionZh": "四匹马获胜概率分别为 1/2、1/4、1/8、1/8。用最优编码，平均需要多少比特来报告获胜者？",
-      "optionsZh": [
-        "1.25 bits",
-        "1.75 bits",
-        "2.00 bits",
-        "1.50 bits"
-      ],
-      "explanationZh": "H = ½·1 + ¼·2 + ⅛·3 + ⅛·3 = 1.75 bits。高概率结果用短码（A=0, B=10, C=110, D=111），比等概率时的 2 bits 更省。",
-      "steps": [
-        "$h = 1, 2, 3, 3$ bits",
-        "$H = 0.5 + 0.5 + 0.375 + 0.375 = 1.75$ bits"
-      ],
-      "id": 432,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Entropy as optimal code length / horse race",
-      "source": "kp"
-    },
-    {
-      "question": "For two random variables, when does $H(X,Y) = H(X) + H(Y)$ hold?",
-      "options": [
-        "Only when $X$ and $Y$ are independent",
-        "Only when $X = Y$",
-        "Always, by the chain rule",
-        "Only when both variables are uniform"
-      ],
-      "correct": 0,
-      "explanation": "In general H(X,Y) ≤ H(X) + H(Y), with equality only for independent variables (substitute p(x,y)=p(x)p(y)). The chain rule H(X,Y) = H(X) + H(Y|X) is the identity that always holds.",
-      "questionZh": "对两个随机变量，什么时候 $H(X,Y) = H(X) + H(Y)$ 成立？",
-      "optionsZh": [
-        "仅当 $X$ 与 $Y$ 独立时",
-        "仅当 $X = Y$ 时",
-        "总是成立，由链式法则",
-        "仅当两个变量都均匀分布时"
-      ],
-      "explanationZh": "一般 H(X,Y) ≤ H(X)+H(Y)，只有独立时取等。总是成立的是链式法则 H(X,Y)=H(X)+H(Y|X)。",
-      "id": 433,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Joint entropy / independence",
-      "source": "kp"
-    },
-    {
-      "question": "Which identity holds for ANY two discrete random variables?",
-      "options": [
-        "$H(X \\mid Y) = H(Y \\mid X)$",
-        "$H(X,Y) = H(X) + H(Y)$",
-        "$H(X,Y) = H(X) + H(Y \\mid X)$",
-        "$H(X,Y) = H(X \\mid Y) + H(Y \\mid X)$"
-      ],
-      "correct": 2,
-      "explanation": "Chain rule: H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y). Like double-entry bookkeeping: once X is counted, Y must be counted given X, or the shared part is counted twice. H(X|Y) and H(Y|X) are generally different.",
-      "questionZh": "下列哪个等式对任意两个离散随机变量都成立？",
-      "optionsZh": [
-        "$H(X \\mid Y) = H(Y \\mid X)$",
-        "$H(X,Y) = H(X) + H(Y)$",
-        "$H(X,Y) = H(X) + H(Y \\mid X)$",
-        "$H(X,Y) = H(X \\mid Y) + H(Y \\mid X)$"
-      ],
-      "explanationZh": "链式法则 H(X,Y)=H(X)+H(Y|X)。像复式记账：已经算过 X，再算 Y 时必须条件于 X，否则重叠部分会被重复计数。H(X|Y) 与 H(Y|X) 一般不相等。",
-      "id": 434,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Chain rule for entropy",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about conditional entropy is always true?",
-      "options": [
-        "$H(X \\mid Y)$ can be negative for discrete variables",
-        "$H(X \\mid Y) \\le H(X)$, with equality when $X$ and $Y$ are independent",
-        "$H(X \\mid Y) \\ge H(X)$ because conditioning adds a variable",
-        "$H(X \\mid Y) = 0$ whenever $X$ and $Y$ are correlated"
-      ],
-      "correct": 1,
-      "explanation": "On average, knowing Y cannot increase uncertainty about X: H(X|Y) ≤ H(X), equal iff independent. H(X|Y) = 0 only when X is fully determined by Y. Discrete entropies are never negative.",
-      "questionZh": "关于条件熵，哪项总是成立？",
-      "optionsZh": [
-        "离散变量的 $H(X \\mid Y)$ 可以为负",
-        "$H(X \\mid Y) \\le H(X)$，独立时取等",
-        "$H(X \\mid Y) \\ge H(X)$，因为条件化多了一个变量",
-        "只要 $X$ 与 $Y$ 相关就有 $H(X \\mid Y) = 0$"
-      ],
-      "explanationZh": "平均而言，知道 Y 不会增加对 X 的不确定性；独立时取等。只有 X 完全由 Y 决定时 H(X|Y)=0。离散熵不会为负。",
-      "id": 435,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Conditional entropy / bounds",
-      "source": "kp"
-    },
-    {
-      "question": "A player cycles strictly scissors → paper → rock → scissors… over many games. Which pair of values is correct?",
-      "options": [
-        "$H(\\text{move}) = 1.585$ bits, $H(\\text{move} \\mid \\text{prev}) = 0$",
-        "$H(\\text{move}) = 1$ bit, $H(\\text{move} \\mid \\text{prev}) = 0.5$ bits",
-        "$H(\\text{move}) = 0$, $H(\\text{move} \\mid \\text{prev}) = 1.585$ bits",
-        "$H(\\text{move}) = 1.585$ bits, $H(\\text{move} \\mid \\text{prev}) = 1.585$ bits"
-      ],
-      "correct": 0,
-      "explanation": "Pooled, the three moves are equally likely, so H(move) = log₂3 ≈ 1.585 bits (looks random!). But given the previous move, the next one is certain, so H(move|prev) = 0. Entropy alone cannot tell a perfect cycle from true randomness.",
-      "questionZh": "一名玩家在多局中严格循环 剪刀→布→石头→剪刀……。哪组数值正确？",
-      "optionsZh": [
-        "$H(\\text{move}) = 1.585$ bits, $H(\\text{move} \\mid \\text{prev}) = 0$",
-        "$H(\\text{move}) = 1$ bit, $H(\\text{move} \\mid \\text{prev}) = 0.5$ bits",
-        "$H(\\text{move}) = 0$, $H(\\text{move} \\mid \\text{prev}) = 1.585$ bits",
-        "$H(\\text{move}) = 1.585$ bits, $H(\\text{move} \\mid \\text{prev}) = 1.585$ bits"
-      ],
-      "explanationZh": "合并样本后三种招式等概率，H=log₂3≈1.585 bits（看起来很随机）；但已知上一步时下一步完全确定，条件熵为 0。熵本身分不清完美循环与真随机。",
-      "id": 436,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Conditional entropy / Scissors-Paper-Rock",
-      "source": "kp"
-    },
-    {
-      "question": "You estimate the entropy of a fair coin from only 10 flips with the plug-in estimator, many times. What do you expect?",
-      "options": [
-        "Always exactly 1 bit",
-        "Values usually above 1 bit",
-        "Values centred on 0.5 bits",
-        "Values often below 1 bit (biased down)"
-      ],
-      "correct": 3,
-      "explanation": "The plug-in estimator treats sample frequencies as the true probabilities. With few samples the frequencies are rarely exactly 50/50, and entropy can never exceed 1 bit here, so estimates are biased downwards (e.g. 0.97, 1.00, 0.72). More samples bring them closer to 1 bit.",
-      "questionZh": "用 plug-in 估计器，仅凭 10 次抛掷来估计一枚公平硬币的熵，重复很多次。你预期会看到什么？",
-      "optionsZh": [
-        "总是恰好 1 比特",
-        "通常高于 1 比特",
-        "以 0.5 比特为中心",
-        "经常低于 1 比特（向下偏）"
-      ],
-      "explanationZh": "plug-in 把样本频率当真实概率。样本少时很少恰好 50/50，而熵在这里不可能超过 1 bit，所以估计值向下偏（如 0.97、1.00、0.72）。样本越多越接近 1。",
-      "id": 437,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Plug-in estimator / finite-sample bias",
-      "source": "kp"
-    },
-    {
-      "question": "$X$ and $Y$ are independent fair bits. What is $H(X,Y)$, and what is the alphabet of the joint variable?",
-      "options": [
-        "2 bits; alphabet {00, 01, 10, 11}",
-        "2 bits; alphabet {0, 1, 2}",
-        "1 bit; alphabet {0, 1}",
-        "4 bits; alphabet {00, 01, 10, 11}"
-      ],
-      "correct": 0,
-      "explanation": "Gluing symbols together gives a 4-symbol alphabet {00,01,10,11}; with all four equally likely, H(X,Y) = log₂4 = 2 bits (= H(X)+H(Y) since they are independent).",
-      "questionZh": "$X$ 与 $Y$ 是相互独立的公平比特。$H(X,Y)$ 是多少？联合变量的字母表是什么？",
-      "optionsZh": [
-        "2 比特；{00, 01, 10, 11}",
-        "2 比特；{0, 1, 2}",
-        "1 比特；{0, 1}",
-        "4 比特；{00, 01, 10, 11}"
-      ],
-      "explanationZh": "把符号“粘起来”得到 4 元字母表；四种等概率，H=log₂4=2 bits（独立，所以等于 H(X)+H(Y)）。",
-      "id": 438,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Joint entropy / 'gluing' symbols",
-      "source": "kp"
-    },
-    {
-      "question": "A measurement says a signal carries 2 bits of entropy. What does this number tell you?",
-      "options": [
-        "That the signal is about the weather",
-        "What the two bits mean",
-        "Which two symbols were sent",
-        "How much variability or uncertainty there is"
-      ],
-      "correct": 3,
-      "explanation": "Information theory measures amount only. 2 bits tells you how much uncertainty there is, not what it is about. Meaning only enters when you ask how much one variable reduces uncertainty about another.",
-      "questionZh": "某测量显示一个信号的熵为 2 比特。这个数字告诉了你什么？",
-      "optionsZh": [
-        "这个信号是关于天气的",
-        "这两个比特是什么意思",
-        "发送了哪两个符号",
-        "有多少变异性或不确定性"
-      ],
-      "explanationZh": "信息论只度量“量”。2 bits 只告诉你不确定性有多大，不告诉你它是关于什么的。",
-      "id": 439,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Information is not meaning",
-      "source": "kp"
-    },
-    {
-      "question": "Optimal code lengths $\\log_2(1/p)$ are usually not whole numbers. How can a code get closer to the entropy per symbol?",
-      "options": [
-        "Round every length down to the nearest integer",
-        "Use base-10 logarithms instead of base 2",
-        "Use a longer stop symbol after each codeword",
-        "Encode blocks of 2, 3, 4… symbols at a time"
-      ],
-      "correct": 3,
-      "explanation": "Block coding: encode several symbols together. The rounding loss is shared over the block, so the bits per symbol approach the entropy as the block grows. Huffman codes are prefix codes and need no stop symbol.",
-      "questionZh": "最优码长 $\\log_2(1/p)$ 通常不是整数。怎样让编码的每符号平均码长更接近熵？",
-      "optionsZh": [
-        "把每个码长向下取整",
-        "改用以 10 为底的对数",
-        "在每个码字后加更长的停止符",
-        "每次把 2、3、4……个符号成块编码"
-      ],
-      "explanationZh": "分块编码：多个符号一起编码，取整损失被分摊，块越大每符号码长越接近熵。Huffman 是前缀码，不需要停止符。",
-      "id": 440,
-      "course": "CSYS5030",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Uncertainty & Entropy II / Block coding",
-      "source": "kp"
-    },
-    {
-      "question": "Which is NOT a property of mutual information $I(X;Y)$?",
-      "options": [
-        "$I(X;Y) \\le \\min(H(X), H(Y))$",
-        "$I(X;Y) \\ge H(X) + H(Y)$",
-        "$I(X;Y) = I(Y;X)$",
-        "$I(X;Y) \\ge 0$"
-      ],
-      "correct": 1,
-      "explanation": "MI is non-negative, symmetric, and bounded above by the smaller entropy (the overlap of the Venn diagram cannot exceed the smaller circle). I = H(X)+H(Y)−H(X,Y), so it is never larger than H(X)+H(Y).",
-      "questionZh": "下列哪项不是互信息 $I(X;Y)$ 的性质？",
-      "optionsZh": [
-        "$I(X;Y) \\le \\min(H(X), H(Y))$",
-        "$I(X;Y) \\ge H(X) + H(Y)$",
-        "$I(X;Y) = I(Y;X)$",
-        "$I(X;Y) \\ge 0$"
-      ],
-      "explanationZh": "MI 非负、对称、上界为较小的熵（Venn 图重叠不超过小圆）。I=H(X)+H(Y)−H(X,Y)，不会超过 H(X)+H(Y)。",
-      "id": 441,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Mutual information / properties",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement is exactly equivalent to $I(X;Y) = 0$?",
-      "options": [
-        "$H(X) = H(Y)$",
-        "$H(X \\mid Y) = 0$",
-        "$X$ and $Y$ are statistically independent",
-        "$X$ and $Y$ have zero linear correlation"
-      ],
-      "correct": 2,
-      "explanation": "I(X;Y) = 0 ⟺ p(x,y) = p(x)p(y). Zero correlation is weaker: a non-linear relationship can have zero correlation but positive MI. H(X|Y) = 0 means X is fully determined by Y, which is the opposite extreme.",
-      "questionZh": "下列哪项与 $I(X;Y) = 0$ 完全等价？",
-      "optionsZh": [
-        "$H(X) = H(Y)$",
-        "$H(X \\mid Y) = 0$",
-        "$X$ 与 $Y$ 统计独立",
-        "$X$ 与 $Y$ 线性相关系数为 0"
-      ],
-      "explanationZh": "I=0 ⟺ 独立。零相关更弱：非线性关系可能相关系数为 0 但 MI>0。H(X|Y)=0 是另一个极端（X 被 Y 完全决定）。",
-      "id": 442,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Mutual information / independence",
-      "source": "kp"
-    },
-    {
-      "question": "What is $I(X;X)$?",
-      "options": [
-        "0",
-        "$2H(X)$",
-        "1 bit",
-        "$H(X)$"
-      ],
-      "correct": 3,
-      "explanation": "I(X;X) = H(X) + H(X) − H(X,X) = H(X). A variable tells you everything about itself; this is why entropy is sometimes loosely called 'information'.",
-      "questionZh": "$I(X;X)$ 等于多少？",
-      "optionsZh": [
-        "0",
-        "$2H(X)$",
-        "1 bit",
-        "$H(X)$"
-      ],
-      "explanationZh": "I(X;X)=H(X)+H(X)−H(X,X)=H(X)。变量完全告诉你关于自己的一切，所以熵常被笼统地称为“信息量”。",
-      "id": 443,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Mutual information / self-information",
-      "source": "kp"
-    },
-    {
-      "question": "Base rate $p(\\text{rain}) = 0.2$. When the forecast says 'sunny', $p(\\text{rain} \\mid \\text{sunny}) = 0.05$. On a day forecast sunny it rains. What is $i(\\text{rain};\\text{sunny})$?",
-      "options": [
-        "0 bits",
-        "−0.25 bits",
-        "−2 bits",
-        "+2 bits"
-      ],
-      "correct": 2,
-      "explanation": "i = log₂(0.05/0.2) = log₂(0.25) = −2 bits. Negative pointwise MI means the forecast was misinformative: it made the outcome that actually happened less expected.",
-      "questionZh": "基准 $p(\\text{rain}) = 0.2$。预报“晴”时 $p(\\text{rain} \\mid \\text{sunny}) = 0.05$。某天预报晴但下雨了，$i(\\text{rain};\\text{sunny})$ 是多少？",
-      "optionsZh": [
-        "0 比特",
-        "−0.25 比特",
-        "−2 比特",
-        "+2 比特"
-      ],
-      "explanationZh": "i=log₂(0.05/0.2)=log₂0.25=−2 bits。逐点 MI 为负 = 误导信息（misinformation）：预报让真实发生的结果显得更不可能。",
-      "steps": [
-        "$i(x;y) = \\log_2 \\frac{p(x\\mid y)}{p(x)}$",
-        "$= \\log_2 \\frac{0.05}{0.2} = \\log_2 0.25 = -2$ bits"
-      ],
-      "id": 444,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Pointwise mutual information / weather forecast",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about pointwise mutual information $i(x;y)$ is correct?",
-      "options": [
-        "It can be negative, though its average $I(X;Y)$ cannot",
-        "It is negative whenever $p(x \\mid y) > p(x)$",
-        "It is only defined for continuous variables",
-        "It is always non-negative, like MI"
-      ],
-      "correct": 0,
-      "explanation": "i(x;y) = log₂ p(x|y)/p(x). It is positive when y raises the probability of the x that occurred and negative (misinformation) when it lowers it. MI is the average of these local values and is always ≥ 0.",
-      "questionZh": "关于逐点互信息 $i(x;y)$，哪项正确？",
-      "optionsZh": [
-        "它可以为负，但其平均值 $I(X;Y)$ 不能",
-        "当 $p(x \\mid y) > p(x)$ 时为负",
-        "只对连续变量有定义",
-        "和 MI 一样总是非负"
-      ],
-      "explanationZh": "y 提高了实际发生的 x 的概率时为正，降低时为负（误导）。MI 是这些逐点值的平均，总是 ≥ 0。",
-      "id": 445,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Pointwise mutual information / sign",
-      "source": "kp"
-    },
-    {
-      "question": "Symbols really follow distribution $P$, but you design your code for distribution $Q$. Which quantity is the average extra cost in bits per symbol?",
-      "options": [
-        "$I(P;Q)$",
-        "$D(P\\|Q) = H(P,Q) - H(P)$",
-        "$H(P)$",
-        "$H(P,Q)$"
-      ],
-      "correct": 1,
-      "explanation": "Cross-entropy H(P,Q) = Σ p log(1/q) is the average code length when coding for Q. KL divergence D(P‖Q) = H(P,Q) − H(P) is the extra cost over the optimal H(P).",
-      "questionZh": "符号真实服从分布 $P$，但你按分布 $Q$ 设计了编码。哪个量是每符号平均多付出的比特数？",
-      "optionsZh": [
-        "$I(P;Q)$",
-        "$D(P\\|Q) = H(P,Q) - H(P)$",
-        "$H(P)$",
-        "$H(P,Q)$"
-      ],
-      "explanationZh": "交叉熵 H(P,Q) 是按 Q 编码的平均码长；KL 散度 D(P‖Q)=H(P,Q)−H(P) 是比最优多出来的代价。",
-      "id": 446,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Cross-entropy and KL divergence",
-      "source": "kp"
-    },
-    {
-      "question": "Which description of $I(X;Y)$ is the 'Bayesian' form the lecturer prefers?",
-      "options": [
-        "The entropy of $X$ plus the entropy of $Y$",
-        "The number of symbols that $X$ and $Y$ share",
-        "The variance of $X$ explained by a straight line in $Y$",
-        "The expected log ratio of posterior $p(x\\mid y)$ to prior $p(x)$"
-      ],
-      "correct": 3,
-      "explanation": "I(X;Y) = E[log₂ p(x|y)/p(x)]: how much, on average, knowing y updates our belief about x. Other views: KL divergence from independence, coding cost of ignoring dependence, deviation from independence, non-linear correlation.",
-      "questionZh": "下列哪种描述是老师最喜欢的互信息“贝叶斯”形式？",
-      "optionsZh": [
-        "$X$ 的熵加 $Y$ 的熵",
-        "$X$ 与 $Y$ 共有的符号个数",
-        "用 $Y$ 的直线能解释的 $X$ 的方差",
-        "后验 $p(x\\mid y)$ 与先验 $p(x)$ 之比的对数期望"
-      ],
-      "explanationZh": "I(X;Y)=E[log₂ p(x|y)/p(x)]：平均而言知道 y 后对 x 的判断改变了多少。其他视角：与独立分布的 KL 散度、忽略依赖的编码代价、非线性相关。",
-      "id": 447,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Mutual information / interpretations",
-      "source": "kp"
-    },
-    {
-      "question": "A player throws only rock in game 1, only scissors in game 2 and only paper in game 3. You pool all moves and compute entropy. What do you get, and why?",
-      "options": [
-        "Near 0 bits, because each game is predictable",
-        "It cannot be computed from pooled samples",
-        "Near 1.585 bits, because the pooled moves look equally likely",
-        "Exactly 1 bit, because there are three games"
-      ],
-      "correct": 2,
-      "explanation": "Pooled, the three moves appear equally often, so H ≈ log₂3 = 1.585 bits. Entropy answers 'how uncertain is one randomly drawn sample?', not 'how predictable is the strategy?' — 'It's answering that question perfectly, just not the question we think we're asking.'",
-      "questionZh": "某玩家第 1 局只出石头，第 2 局只出剪刀，第 3 局只出布。你把所有招式合并后算熵，结果如何？为什么？",
-      "optionsZh": [
-        "接近 0 比特，因为每局都可预测",
-        "合并样本无法计算",
-        "接近 1.585 比特，因为合并后三种招式看起来等概率",
-        "恰好 1 比特，因为有三局"
-      ],
-      "explanationZh": "合并后三种招式出现次数相同，H≈log₂3。熵回答的是“随机抽一个样本有多不确定”，不是“策略有多可预测”。",
-      "id": 448,
-      "course": "CSYS5030",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Mutual Information / Pooling samples / what entropy measures",
-      "source": "kp"
-    },
-    {
-      "question": "$Y$ and $Z$ are independent fair bits and $X = Y \\oplus Z$ (XOR). Which values are correct?",
-      "options": [
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 1$ bit",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 1$ bit"
-      ],
-      "correct": 3,
-      "explanation": "Alone, Y tells nothing about X (X is still 50/50). Once Z is known, Y fully determines X, so I(X;Y|Z) = 1 bit. Conditioning increased MI: this is synergy.",
-      "questionZh": "$Y$ 与 $Z$ 是独立公平比特，$X = Y \\oplus Z$（异或）。哪组值正确？",
-      "optionsZh": [
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 1$ bit",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 1$ bit"
-      ],
-      "explanationZh": "单独看 Y 对 X 一无所知（X 仍是 50/50）；已知 Z 后 Y 完全决定 X，CMI=1 bit。条件化让 MI 增加了：协同（synergy）。",
-      "id": 449,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / XOR synergy",
-      "source": "kp"
-    },
-    {
-      "question": "$X$, $Y$ and $Z$ are all copies of the same fair random bit. Which values are correct?",
-      "options": [
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 1$ bit",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 1$ bit"
-      ],
-      "correct": 0,
-      "explanation": "Y tells 1 bit about X, but once Z is known X is already certain, so Y adds nothing: I(X;Y|Z) = 0. Conditioning removed the redundant information.",
-      "questionZh": "$X$、$Y$、$Z$ 都是同一个公平随机比特的拷贝。哪组值正确？",
-      "optionsZh": [
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 0$",
-        "$I(X;Y) = 1$ bit, $I(X;Y\\mid Z) = 1$ bit",
-        "$I(X;Y) = 0$, $I(X;Y\\mid Z) = 1$ bit"
-      ],
-      "explanationZh": "Y 关于 X 有 1 bit，但已知 Z 后 X 已确定，Y 不再提供新信息：CMI=0。条件化去掉了冗余信息。",
-      "id": 450,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / redundancy",
-      "source": "kp"
-    },
-    {
-      "question": "A student claims: 'Conditioning on $Z$ can only remove information, so $I(X;Y\\mid Z) \\le I(X;Y)$.' Is this right?",
-      "options": [
-        "No, CMI can be larger than MI when there is synergy",
-        "Yes, conditioning always reduces mutual information",
-        "Yes, but only for continuous variables",
-        "No, CMI is always exactly equal to MI"
-      ],
-      "correct": 0,
-      "explanation": "Conditioning is not subtracting Z; it looks at X and Y from the position of knowing Z. Redundancy makes CMI < MI, synergy (e.g. XOR) makes CMI > MI. Real data usually contain both, and the difference only shows the net effect.",
-      "questionZh": "某学生说：“条件化于 $Z$ 只能去掉信息，所以 $I(X;Y\\mid Z) \\le I(X;Y)$。”对吗？",
-      "optionsZh": [
-        "不对，有协同时 CMI 可以大于 MI",
-        "对，条件化总会减少互信息",
-        "对，但仅限连续变量",
-        "不对，CMI 总是恰好等于 MI"
-      ],
-      "explanationZh": "条件化不是减去 Z，而是站在已知 Z 的位置重新看 X 与 Y。冗余使 CMI<MI，协同（如 XOR）使 CMI>MI。真实数据通常两者都有，差值只是净效应。",
-      "id": 451,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / can it exceed MI?",
-      "source": "kp"
-    },
-    {
-      "question": "Which expression equals $I(X; Y, Z)$?",
-      "options": [
-        "$H(X) + I(Y;Z)$",
-        "$I(X;Y \\mid Z) + I(X;Z \\mid Y)$",
-        "$I(X;Y) + I(X;Z)$",
-        "$I(X;Y) + I(X;Z \\mid Y)$"
-      ],
-      "correct": 3,
-      "explanation": "Chain rule ('information regression'): I(X;Y,Z) = I(X;Y) + I(X;Z|Y) = I(X;Z) + I(X;Y|Z). The order does not matter as long as each step conditions on everything already included. Simply adding I(X;Y)+I(X;Z) double-counts redundancy and misses synergy.",
-      "questionZh": "哪个式子等于 $I(X; Y, Z)$？",
-      "optionsZh": [
-        "$H(X) + I(Y;Z)$",
-        "$I(X;Y \\mid Z) + I(X;Z \\mid Y)$",
-        "$I(X;Y) + I(X;Z)$",
-        "$I(X;Y) + I(X;Z \\mid Y)$"
-      ],
-      "explanationZh": "链式法则（信息回归）：I(X;Y,Z)=I(X;Y)+I(X;Z|Y)=I(X;Z)+I(X;Y|Z)。顺序无关，只要每步都条件于已加入的变量。直接相加会重复计数冗余、漏掉协同。",
-      "id": 452,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Chain rule for mutual information",
-      "source": "kp"
-    },
-    {
-      "question": "$X \\to Y \\to Z$ is a Markov chain ($Z$ is computed only from $Y$). What follows?",
-      "options": [
-        "$I(X;Z) \\ge I(X;Y)$",
-        "$I(X;Z) = I(X;Y)$ always",
-        "$I(X;Y) \\ge I(X;Z)$",
-        "$I(Y;Z) = 0$"
-      ],
-      "correct": 2,
-      "explanation": "Markov means I(X;Z|Y) = 0. Expanding I(X;Y,Z) both ways: I(X;Y) + 0 = I(X;Z) + I(X;Y|Z) ≥ I(X;Z). Processing cannot create information about X.",
-      "questionZh": "$X \\to Y \\to Z$ 构成马尔可夫链（$Z$ 只由 $Y$ 计算得到）。能推出什么？",
-      "optionsZh": [
-        "$I(X;Z) \\ge I(X;Y)$",
-        "$I(X;Z) = I(X;Y)$ always",
-        "$I(X;Y) \\ge I(X;Z)$",
-        "$I(Y;Z) = 0$"
-      ],
-      "explanationZh": "马尔可夫意味着 I(X;Z|Y)=0。用两种顺序展开 I(X;Y,Z)：I(X;Y)+0 = I(X;Z)+I(X;Y|Z) ≥ I(X;Z)。数据处理不能凭空产生关于 X 的信息。",
-      "steps": [
-        "$I(X;Y,Z) = I(X;Y) + \\underbrace{I(X;Z\\mid Y)}_{=0}$",
-        "$I(X;Y,Z) = I(X;Z) + \\underbrace{I(X;Y\\mid Z)}_{\\ge 0}$",
-        "$\\Rightarrow I(X;Y) \\ge I(X;Z)$"
-      ],
-      "id": 453,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Data processing inequality",
-      "source": "kp"
-    },
-    {
-      "question": "Which expression is equivalent to $I(X;Y \\mid Z)$?",
-      "options": [
-        "$H(X,Y,Z) - H(Z)$",
-        "$H(X) - H(X\\mid Y,Z)$",
-        "$H(X\\mid Y) - H(X\\mid Z)$",
-        "$H(X\\mid Z) - H(X\\mid Y,Z)$"
-      ],
-      "correct": 3,
-      "explanation": "I(X;Y|Z) = H(X|Z) + H(Y|Z) − H(X,Y|Z) = H(X|Z) − H(X|Y,Z): how much extra uncertainty about X is removed by Y once Z is already known.",
-      "questionZh": "哪个式子与 $I(X;Y \\mid Z)$ 等价？",
-      "optionsZh": [
-        "$H(X,Y,Z) - H(Z)$",
-        "$H(X) - H(X\\mid Y,Z)$",
-        "$H(X\\mid Y) - H(X\\mid Z)$",
-        "$H(X\\mid Z) - H(X\\mid Y,Z)$"
-      ],
-      "explanationZh": "I(X;Y|Z)=H(X|Z)+H(Y|Z)−H(X,Y|Z)=H(X|Z)−H(X|Y,Z)：已知 Z 后，再知道 Y 额外消除了多少关于 X 的不确定性。",
-      "id": 454,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / equivalent form",
-      "source": "kp"
-    },
-    {
-      "question": "You compute $I(\\text{prev};\\text{next})$ from several Scissors-Paper-Rock games, each against a different opponent. How should samples be formed?",
-      "options": [
-        "Pair the last move of one game with the first of the next",
-        "Within each game pair move $t$ with move $t+1$, then pool the pairs",
-        "Use only the first move of every game",
-        "Concatenate all games, then pair every move with the one after it"
-      ],
-      "correct": 1,
-      "explanation": "previous = sequence without its last element, next = sequence without its first element, done per game. Never pair across game boundaries: each game is a separate realisation against a different opponent.",
-      "questionZh": "你要用若干局剪刀石头布（每局对手不同）计算 $I(\\text{prev};\\text{next})$。样本应如何构造？",
-      "optionsZh": [
-        "把上一局最后一步和下一局第一步配对",
-        "每局内部把第 t 步和第 t+1 步配对，再把各局样本对合并",
-        "只用每局的第一步",
-        "把所有局拼起来，然后每一步和下一步配对"
-      ],
-      "explanationZh": "previous=去掉最后一个，next=去掉第一个，逐局提取。绝不能跨局配对：每局是对不同对手的独立实现。",
-      "id": 455,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Time-series sample pairs",
-      "source": "kp"
-    },
-    {
-      "question": "$I(X;Y \\mid Z) = 0$ means…",
-      "options": [
-        "$X$, $Y$ and $Z$ are identical",
-        "$X$ and $Y$ are conditionally independent given $Z$",
-        "$Z$ is independent of both $X$ and $Y$",
-        "$X$ and $Y$ are independent"
-      ],
-      "correct": 1,
-      "explanation": "I(X;Y|Z) = 0 ⟺ p(x,y|z) = p(x|z)p(y|z). X and Y can still be dependent unconditionally (e.g. the copy example has I(X;Y)=1 but CMI = 0).",
-      "questionZh": "$I(X;Y \\mid Z) = 0$ 意味着……",
-      "optionsZh": [
-        "$X$、$Y$、$Z$ 完全相同",
-        "给定 $Z$ 时 $X$ 与 $Y$ 条件独立",
-        "$Z$ 与 $X$、$Y$ 都独立",
-        "$X$ 与 $Y$ 独立"
-      ],
-      "explanationZh": "CMI=0 ⟺ p(x,y|z)=p(x|z)p(y|z)。X 与 Y 无条件时仍可能相关（拷贝例子 I(X;Y)=1 但 CMI=0）。",
-      "id": 456,
-      "course": "CSYS5030",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Conditional Mutual Information / Conditional mutual information / zero",
-      "source": "kp"
-    },
-    {
-      "question": "Which expression is NOT well-formed in this course's notation?",
-      "options": [
-        "$I(X_1, X_2; Y \\mid Z_1, Z_2)$",
-        "$H(X_1, X_2 \\mid Z)$",
-        "$H(X; Y)$",
-        "$I(X; Y \\mid Z)$"
-      ],
-      "correct": 2,
-      "explanation": "Entropy takes any number of commas, no semicolon and at most one conditioning bar. Mutual information takes exactly one semicolon (left of the bar) and at most one bar. H(X;Y) has a semicolon, so it is not a valid entropy.",
-      "questionZh": "按本课记号规则，哪个式子写法不合法？",
-      "optionsZh": [
-        "$I(X_1, X_2; Y \\mid Z_1, Z_2)$",
-        "$H(X_1, X_2 \\mid Z)$",
-        "$H(X; Y)$",
-        "$I(X; Y \\mid Z)$"
-      ],
-      "explanationZh": "熵：逗号任意，没有分号，条件竖线最多一个。互信息：恰好一个分号（在竖线左边），竖线最多一个。H(X;Y) 出现分号，不合法。",
-      "id": 457,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / Notation / semicolons and bars",
-      "source": "kp"
-    },
-    {
-      "question": "A pointwise mutual information of exactly 1 bit means that, after seeing $y$, the outcome $x$ became…",
-      "options": [
-        "certain",
-        "half as likely as before",
-        "twice as likely as before",
-        "independent of $y$"
-      ],
-      "correct": 2,
-      "explanation": "i(x;y) = log₂ p(x|y)/p(x) = 1 ⇒ p(x|y) = 2p(x). Roulette: knowing 'black' moves p(4) from 1/36 to 1/18. It does not always mean half the options were cleanly eliminated; probabilities may just be redistributed.",
-      "questionZh": "逐点互信息恰好为 1 比特，意味着看到 $y$ 之后，结果 $x$ 变得……",
-      "optionsZh": [
-        "确定发生",
-        "可能性减半",
-        "比原来可能 2 倍",
-        "与 $y$ 无关"
-      ],
-      "explanationZh": "i=log₂ p(x|y)/p(x)=1 ⇒ p(x|y)=2p(x)。轮盘例子：知道“黑色”后 p(4) 从 1/36 变成 1/18。不一定字面上排除了一半选项，也可能只是概率被重新分配。",
-      "id": 458,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / 1 bit = probability ratio of 2",
-      "source": "kp"
-    },
-    {
-      "question": "Among 24 characters: 5 have horns, of whom 3 have eyebrows; 11 characters in total have eyebrows. What is $i(\\text{horns};\\text{eyebrows})$ for a character with both?",
-      "options": [
-        "≈ 0.39 bits",
-        "≈ 1.31 bits",
-        "≈ 0.60 bits",
-        "≈ −0.39 bits"
-      ],
-      "correct": 0,
-      "explanation": "p(eyebrows|horns) = 3/5, p(eyebrows) = 11/24. i = log₂((3/5)/(11/24)) = log₂(72/55) ≈ log₂ 1.309 ≈ 0.39 bits. 1.31 is the ratio itself, not its log.",
-      "questionZh": "24 个角色中 5 个有角，其中 3 个有眉毛；总共 11 个有眉毛。对一个既有角又有眉毛的角色，$i(\\text{horns};\\text{eyebrows})$ 是多少？",
-      "optionsZh": [
-        "≈ 0.39 比特",
-        "≈ 1.31 比特",
-        "≈ 0.60 比特",
-        "≈ −0.39 比特"
-      ],
-      "explanationZh": "p(眉毛|角)=3/5，p(眉毛)=11/24，i=log₂(72/55)≈0.39 bits。1.31 是概率比本身，不是它的对数。",
-      "steps": [
-        "$p(\\text{eb}\\mid\\text{horns}) = 3/5$, $p(\\text{eb}) = 11/24$",
-        "$i = \\log_2 \\frac{3/5}{11/24} = \\log_2 1.309 \\approx 0.39$ bits"
-      ],
-      "id": 459,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / Pointwise MI / Guess Who horns and eyebrows",
-      "source": "kp"
-    },
-    {
-      "question": "What is the correct order of calls when using a JIDT calculator?",
-      "options": [
-        "initialise() → construct → compute → add/setObservations",
-        "set properties → compute → construct → initialise()",
-        "construct → set properties → initialise() → add/setObservations → compute",
-        "construct → add/setObservations → initialise() → set properties → compute"
-      ],
-      "correct": 2,
-      "explanation": "Construct the calculator, set properties (as strings), call initialise() (needed after any setProperty), add or set observations (addObservations can be called several times, e.g. once per game), then compute the average (or local) values.",
-      "questionZh": "使用 JIDT calculator 时正确的调用顺序是什么？",
-      "optionsZh": [
-        "initialise() → 构造 → 计算 → 添加/设置观测",
-        "设置属性 → 计算 → 构造 → initialise()",
-        "构造 → 设置属性 → initialise() → 添加/设置观测 → 计算",
-        "构造 → 添加/设置观测 → initialise() → 设置属性 → 计算"
-      ],
-      "explanationZh": "构造 → setProperty（字符串）→ initialise()（改属性后必须调用）→ addObservations（可多次，例如每局一次）→ compute。",
-      "id": 460,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / JIDT usage paradigm",
-      "source": "kp"
-    },
-    {
-      "question": "What input does a JIDT discrete calculator with alphabet size (base) 3 expect?",
-      "options": [
-        "Integers 0, 1, 2",
-        "Integers 1, 2, 3",
-        "Any strings such as 'R', 'P', 'S'",
-        "Real numbers between 0 and 1"
-      ],
-      "correct": 0,
-      "explanation": "JIDT discrete calculators accept only integers from 0 to alphabetSize−1. Map Scissors/Paper/Rock to 0/1/2 first.",
-      "questionZh": "字母表大小（base）为 3 的 JIDT 离散 calculator 期望什么样的输入？",
-      "optionsZh": [
-        "整数 0、1、2",
-        "整数 1、2、3",
-        "任意字符串，如 'R'、'P'、'S'",
-        "0 到 1 之间的实数"
-      ],
-      "explanationZh": "JIDT 离散 calculator 只接受 0 到 alphabetSize−1 的整数，先把剪刀/布/石头映射为 0/1/2。",
-      "id": 461,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / JIDT discrete data",
-      "source": "kp"
-    },
-    {
-      "question": "Our home-made estimator counts frequencies and plugs them into the formulas. Which statement about it is correct?",
-      "options": [
-        "It can only be used for continuous data",
-        "It gives the exact true entropy for any sample size",
-        "It is the maximum likelihood (plug-in) estimator, and the estimate is itself a random variable",
-        "It is unbiased, so only its variance matters"
-      ],
-      "correct": 2,
-      "explanation": "Frequencies plugged into the formula are the maximum likelihood estimate. Because the data are random, the estimate is random too, with a bias (average error) and a variance (spread across same-size data sets).",
-      "questionZh": "我们自己写的估计器统计频率并代入公式。关于它哪项正确？",
-      "optionsZh": [
-        "只能用于连续数据",
-        "任何样本量下都给出精确真值",
-        "它是最大似然（plug-in）估计器，估计值本身也是随机变量",
-        "它是无偏的，只需关心方差"
-      ],
-      "explanationZh": "频率代入公式 = 最大似然估计。数据是随机的，所以估计值也是随机变量，有偏差（平均误差）和方差（同样大小数据集之间的波动）。",
-      "id": 462,
-      "course": "CSYS5030",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 JIDT Software / Plug-in estimator = MLE",
-      "source": "kp"
-    },
-    {
-      "question": "For a weak relationship estimated from few samples with the plug-in estimator, the typical biases are…",
-      "options": [
-        "entropy biased up, MI biased down",
-        "both unbiased",
-        "both biased down",
-        "entropy biased down, MI biased up"
-      ],
-      "correct": 3,
-      "explanation": "With finite samples, plug-in entropy tends to be underestimated, while MI for weak or no relationships tends to be overestimated (random structure looks like dependence). This is a tendency, not an absolute rule.",
-      "questionZh": "用 plug-in 估计器、少量样本估计弱关系时，典型的偏差方向是……",
-      "optionsZh": [
-        "熵偏高，MI 偏低",
-        "两者都无偏",
-        "两者都偏低",
-        "熵偏低，MI 偏高"
-      ],
-      "explanationZh": "有限样本时 plug-in 熵常被低估，而弱关系/无关系的 MI 常被高估（随机结构看起来像依赖）。是趋势不是绝对。",
-      "id": 463,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Bias of estimators",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about differential entropy $h(X) = -\\int f(x)\\log f(x)\\,dx$ is correct?",
-      "options": [
-        "It does not change when $X$ is multiplied by 2",
-        "It equals the limit of discrete entropy as bins shrink",
-        "It is always at least 0, like discrete entropy",
-        "It can be negative, e.g. Uniform[0, 0.5] has $h = -1$ bit"
-      ],
-      "correct": 3,
-      "explanation": "h can be negative: Uniform[0,a] has h = log₂ a, so a = 0.5 gives −1 bit. h(aX) = h(X) + log|a|, so scaling changes it. The discretised entropy H_Δ ≈ h − log Δ diverges, so h only makes sense for comparisons. h is translation invariant.",
-      "questionZh": "关于微分熵 $h(X) = -\\int f\\log f\\,dx$，哪项正确？",
-      "optionsZh": [
-        "$X$ 乘以 2 时不变",
-        "等于分箱变细时离散熵的极限",
-        "和离散熵一样总是 ≥ 0",
-        "可以为负，例如 Uniform[0, 0.5] 的 $h = -1$ 比特"
-      ],
-      "explanationZh": "h 可为负：Uniform[0,a] 的 h=log₂a，a=0.5 时为 −1 bit。h(aX)=h(X)+log|a|，缩放会改变它。离散化熵 H_Δ≈h−logΔ 发散，所以 h 只在比较时有意义。平移不变。",
-      "id": 464,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Differential entropy / properties",
-      "source": "kp"
-    },
-    {
-      "question": "Why is mutual information between continuous variables well defined even though differential entropy depends on scaling?",
-      "options": [
-        "Because MI is measured in nats",
-        "Because the divergent and scaling terms cancel in the sums and differences of entropies",
-        "Because continuous MI is always 0",
-        "Because MI uses only discrete bins"
-      ],
-      "correct": 1,
-      "explanation": "MI = h(X) + h(Y) − h(X,Y): the −log Δ terms (and the log|a| scaling terms) cancel. So continuous MI is non-negative, scale invariant and equals the limit of discretised MI.",
-      "questionZh": "为什么微分熵依赖缩放，连续变量间的互信息却仍然定义良好？",
-      "optionsZh": [
-        "因为 MI 用 nats 计量",
-        "因为熵的加减中发散项和缩放项相互抵消",
-        "因为连续 MI 总是 0",
-        "因为 MI 只用离散分箱"
-      ],
-      "explanationZh": "MI=h(X)+h(Y)−h(X,Y)，−logΔ 项和 log|a| 缩放项都抵消。所以连续 MI 非负、缩放不变，并等于离散化 MI 的极限。",
-      "id": 465,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Continuous MI / scaling",
-      "source": "kp"
-    },
-    {
-      "question": "$X$ and $Y$ are jointly Gaussian with correlation $\\rho = -0.6$. What is $I(X;Y)$?",
-      "options": [
-        "≈ −0.223 nats",
-        "≈ 0.223 nats",
-        "≈ 0.360 nats",
-        "0 nats, because $\\rho < 0$"
-      ],
-      "correct": 1,
-      "explanation": "I = −½ ln(1 − ρ²) = −½ ln(0.64) ≈ 0.223 nats. The sign of ρ does not matter: information theory is semantics-free and only cares about the strength of the dependence.",
-      "questionZh": "$X$ 与 $Y$ 联合高斯，相关系数 $\\rho = -0.6$。$I(X;Y)$ 是多少？",
-      "optionsZh": [
-        "≈ −0.223 nats",
-        "≈ 0.223 nats",
-        "≈ 0.360 nats",
-        "0 nats，因为 $\\rho < 0$"
-      ],
-      "explanationZh": "I=−½ln(1−ρ²)=−½ln0.64≈0.223 nats。ρ 的符号无关紧要：信息论不关心语义，只关心依赖强度。",
-      "steps": [
-        "$1-\\rho^2 = 1 - 0.36 = 0.64$",
-        "$I = -\\tfrac12 \\ln 0.64 \\approx 0.223$ nats"
-      ],
-      "id": 466,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian MI from correlation",
-      "source": "kp"
-    },
-    {
-      "question": "What does the Gaussian (linear) estimator of MI capture?",
-      "options": [
-        "All non-linear structure exactly",
-        "Nothing for continuous data",
-        "An upper bound on MI for any data",
-        "Only the linear component of the relationship, so it is a lower bound on MI"
-      ],
-      "correct": 3,
-      "explanation": "The Gaussian estimator models data as jointly Gaussian, so it sees only the linear part and gives a lower bound for MI (not necessarily for CMI). It needs fewer samples than model-free estimators.",
-      "questionZh": "MI 的高斯（线性）估计器捕捉的是什么？",
-      "optionsZh": [
-        "精确捕捉所有非线性结构",
-        "对连续数据什么也捕捉不到",
-        "对任何数据都是 MI 的上界",
-        "只捕捉关系中的线性分量，因此是 MI 的下界"
-      ],
-      "explanationZh": "高斯估计器把数据当作联合高斯，只看到线性部分，给出 MI 的下界（CMI 不一定）。它所需样本比 model-free 估计器少。",
-      "id": 467,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian estimator / what it captures",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about the box-kernel estimator is correct?",
-      "options": [
-        "It assumes the data are Gaussian",
-        "It is insensitive to its parameter, unlike KSG",
-        "It always gives exactly zero for independent data",
-        "It is very sensitive to the radius $r$: small $r$ tends to overestimate, large $r$ loses detail and underestimates"
-      ],
-      "correct": 3,
-      "explanation": "Kernel estimation counts neighbours within a fixed radius r. It is model-free but very sensitive to r. Small r: undersampling and overestimation; large r: detail lost and underestimation.",
-      "questionZh": "关于 box-kernel 估计器，哪项正确？",
-      "optionsZh": [
-        "它假设数据为高斯",
-        "和 KSG 不同，它对参数不敏感",
-        "对独立数据总是恰好给出 0",
-        "对半径 $r$ 非常敏感：$r$ 小易高估，$r$ 大丢细节而低估"
-      ],
-      "explanationZh": "kernel 估计在固定半径 r 内数邻居，model-free 但对 r 极敏感。r 小 → 欠采样高估；r 大 → 丢失细节低估。",
-      "id": 468,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Kernel estimator / radius",
-      "source": "kp"
-    },
-    {
-      "question": "Which features describe the KSG (Kraskov-Stögbauer-Grassberger) estimator?",
-      "options": [
-        "Fixed bin widths and no bias correction",
-        "A Gaussian model fitted to the data",
-        "Adaptive width set by the k-th nearest neighbour, bias correction, and estimates that can be slightly negative",
-        "Results always reported in bits"
-      ],
-      "correct": 2,
-      "explanation": "KSG uses a dynamic neighbourhood (distance to the k-th nearest neighbour, default k = 4) with digamma bias correction, so it is stable in k. It can output small negative values, which mean 'consistent with zero'. Algorithm 2 is the default (lower bias, higher variance). Results are in nats.",
-      "questionZh": "下列哪组特征描述了 KSG 估计器？",
-      "optionsZh": [
-        "固定箱宽、无偏差修正",
-        "对数据拟合高斯模型",
-        "由第 k 近邻决定的自适应宽度、偏差修正、估计值可略为负",
-        "结果总是以 bits 给出"
-      ],
-      "explanationZh": "KSG 用动态邻域（第 k 近邻，默认 k=4）+ digamma 偏差修正，对 k 稳定；可输出小的负值，表示“与 0 一致”。默认 Alg.2（偏差小方差大）。单位 nats。",
-      "id": 469,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / KSG estimator",
-      "source": "kp"
-    },
-    {
-      "question": "With a modest number of samples, the Gaussian estimator gives a significant MI but KSG gives a value near 0. What is the best interpretation?",
-      "options": [
-        "There is likely a (linear) relationship; the model-free KSG needs more data to detect it",
-        "The relationship must be purely non-linear",
-        "This is a contradiction, so one estimator must be wrong",
-        "KSG proves the variables are independent"
-      ],
-      "correct": 0,
-      "explanation": "Running both estimators is the recommended 'four-quadrant' check. Gaussian > 0 with KSG ≈ 0 is not a contradiction: model-free estimators need more samples to detect the same relationship.",
-      "questionZh": "样本量不多时，高斯估计器给出显著的 MI，但 KSG 给出接近 0 的值。最合理的解读是？",
-      "optionsZh": [
-        "很可能存在（线性）关系；model-free 的 KSG 需要更多数据才能检测到",
-        "关系一定是纯非线性的",
-        "这是矛盾，必有一个估计器错了",
-        "KSG 证明了变量独立"
-      ],
-      "explanationZh": "同时跑两个估计器是推荐的“四象限”检查。高斯>0 而 KSG≈0 不矛盾：model-free 估计器检测同样的关系需要更多样本。",
-      "id": 470,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Gaussian vs KSG results",
-      "source": "kp"
-    },
-    {
-      "question": "In JIDT, which estimator reports continuous-data results in bits rather than nats?",
-      "options": [
-        "Gaussian estimator",
-        "None of them; all use nats",
-        "KSG estimator",
-        "Kernel estimator"
-      ],
-      "correct": 3,
-      "explanation": "Discrete calculators use bits, continuous calculators use nats, except the kernel estimator, which reports bits. Always state the unit.",
-      "questionZh": "JIDT 中哪个估计器对连续数据的结果以 bits 而不是 nats 给出？",
-      "optionsZh": [
-        "高斯估计器",
-        "都不是，全部用 nats",
-        "KSG 估计器",
-        "Kernel 估计器"
-      ],
-      "explanationZh": "离散用 bits，连续用 nats，例外是 kernel 估计器（bits）。答题务必写单位。",
-      "id": 471,
-      "course": "CSYS5030",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 Information-Theoretic Estimators / Units across estimators",
-      "source": "kp"
-    },
-    {
-      "question": "When testing whether a measured MI is significant, what is the null hypothesis?",
-      "options": [
-        "The variables are independent",
-        "The MI equals its maximum $\\min(H(X),H(Y))$",
-        "The variables are identical",
-        "The estimator is unbiased"
-      ],
-      "correct": 0,
-      "explanation": "H₀: X and Y are independent (I = 0). Finite samples almost always give a non-zero MI, so we ask how likely a value at least this large is under H₀.",
-      "questionZh": "检验测得的 MI 是否显著时，零假设是什么？",
-      "optionsZh": [
-        "两个变量独立",
-        "MI 等于其最大值 $\\min(H(X),H(Y))$",
-        "两个变量完全相同",
-        "估计器无偏"
-      ],
-      "explanationZh": "H₀：X 与 Y 独立。有限样本几乎总会测出非零 MI，所以要问在 H₀ 下得到至少这么大的值有多可能。",
-      "id": 472,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Hypothesis testing / null hypothesis",
-      "source": "kp"
-    },
-    {
-      "question": "How is a surrogate sample for testing $I(X;Y)$ on i.i.d. data created, and what does it preserve?",
-      "options": [
-        "Shuffle $Y$: keeps both marginal distributions, destroys the dependence",
-        "Sort $Y$: keeps the dependence, destroys the marginals",
-        "Add noise to $X$: keeps everything",
-        "Duplicate $X$: doubles the sample size"
-      ],
-      "correct": 0,
-      "explanation": "Shuffling Y relative to X keeps p(x) and p(y) but breaks the joint dependence. Repeating S times gives an empirical null distribution; p = fraction of surrogates with MI ≥ the measured value.",
-      "questionZh": "对 i.i.d. 数据检验 $I(X;Y)$ 时，surrogate 样本怎样构造？保留了什么？",
-      "optionsZh": [
-        "打乱 $Y$：保留两个边际分布，破坏依赖关系",
-        "排序 $Y$：保留依赖，破坏边际",
-        "给 $X$ 加噪声：全部保留",
-        "复制 $X$：样本量翻倍"
-      ],
-      "explanationZh": "相对 X 打乱 Y，保留 p(x)、p(y)，破坏联合依赖。重复 S 次得经验零分布；p 值 = surrogate MI ≥ 实测值的比例。",
-      "id": 473,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Surrogates",
-      "source": "kp"
-    },
-    {
-      "question": "For autocorrelated time series, which surrogate method is preferred over plain shuffling?",
-      "options": [
-        "Rotating (circularly shifting) the source series",
-        "Removing every second sample",
-        "Sorting both series",
-        "Reversing the target series"
-      ],
-      "correct": 0,
-      "explanation": "Shuffling destroys the autocorrelation of the source, making the null too easy. Rotating keeps the source's autocorrelation while breaking its alignment with the target.",
-      "questionZh": "对有自相关的时间序列，哪种 surrogate 方法优于直接打乱？",
-      "optionsZh": [
-        "对源序列做旋转（循环平移）",
-        "每隔一个样本删一个",
-        "对两个序列排序",
-        "反转目标序列"
-      ],
-      "explanationZh": "打乱会破坏源的自相关，使零分布过于宽松。旋转保留源的自相关，同时打破它与目标的对齐。",
-      "id": 474,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Surrogates for time series",
-      "source": "kp"
-    },
-    {
-      "question": "To test whether $I(X;Y\\mid Z)$ is significant, what should the surrogates do?",
-      "options": [
-        "Shuffle the source $Y$ while keeping $X$ and $Z$ together",
-        "Shuffle all three variables independently",
-        "Shuffle $X$ and $Z$ separately",
-        "Shuffle $Z$ only"
-      ],
-      "correct": 0,
-      "explanation": "Keep the target and conditioning variable paired so their relationship is preserved; shuffle only the source to destroy the conditional dependence.",
-      "questionZh": "检验 $I(X;Y\\mid Z)$ 是否显著时，surrogate 应如何构造？",
-      "optionsZh": [
-        "打乱源 $Y$，保持 $X$ 与 $Z$ 一起不动",
-        "三个变量各自独立打乱",
-        "分别打乱 $X$ 和 $Z$",
-        "只打乱 $Z$"
-      ],
-      "explanationZh": "保持目标和条件变量配对不动以保留它们之间的关系，只打乱源以破坏条件依赖。",
-      "id": 475,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Testing conditional MI",
-      "source": "kp"
-    },
-    {
-      "question": "For which JIDT estimators is an analytic (χ²) null distribution available?",
-      "options": [
-        "KSG and kernel",
-        "Discrete and Gaussian",
-        "KSG only",
-        "All estimators"
-      ],
-      "correct": 1,
-      "explanation": "Discrete and Gaussian estimators have χ² analytic nulls: fast and deterministic, but approximate and less accurate for small samples or time series. KSG has none, so it needs surrogates (bootstrap p-values are random).",
-      "questionZh": "JIDT 中哪些估计器有解析（χ²）零分布？",
-      "optionsZh": [
-        "KSG 和 kernel",
-        "Discrete 和 Gaussian",
-        "只有 KSG",
-        "所有估计器"
-      ],
-      "explanationZh": "Discrete 与 Gaussian 有 χ² 解析零分布：快且确定，但为近似，小样本和时间序列时不准。KSG 没有，只能用 surrogate（bootstrap p 值是随机的）。",
-      "id": 476,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Analytic null distributions",
-      "source": "kp"
-    },
-    {
-      "question": "You want the plug-in MI between two variables that each have 4 states. By the course heuristic, how many samples do you need at least?",
-      "options": [
-        "≥ 8, ideally ≥ 16",
-        "≥ 12, ideally ≥ 40",
-        "≥ 48, ideally ≥ 160",
-        "≥ 4, ideally ≥ 10"
-      ],
-      "correct": 2,
-      "explanation": "There are 4 × 4 = 16 joint configurations. Heuristic: N ≥ 3 × configurations (48), better ≥ 10 × (160). Configurations grow exponentially with alphabet size and dimension.",
-      "questionZh": "要用 plug-in 估计两个各有 4 个状态的变量之间的 MI。按课程启发式，至少需要多少样本？",
-      "optionsZh": [
-        "≥ 8，最好 ≥ 16",
-        "≥ 12，最好 ≥ 40",
-        "≥ 48，最好 ≥ 160",
-        "≥ 4，最好 ≥ 10"
-      ],
-      "explanationZh": "联合状态配置 4×4=16。启发式：N ≥ 3×配置数（48），最好 ≥ 10×（160）。配置数随字母表和维数指数增长。",
-      "id": 477,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Sample size heuristic",
-      "source": "kp"
-    },
-    {
-      "question": "A measured MI is not statistically significant ($p = 0.3$). What can you conclude?",
-      "options": [
-        "The estimator must be broken",
-        "The MI value is exactly 0",
-        "There is definitely no relationship",
-        "The data do not provide evidence of a relationship; one may exist but be too weak for this sample size"
-      ],
-      "correct": 3,
-      "explanation": "Not significant ≠ no relationship. More samples narrow the null distribution and stabilise the measurement, so weaker relationships become detectable.",
-      "questionZh": "测得的 MI 不显著（$p = 0.3$）。能得出什么结论？",
-      "optionsZh": [
-        "估计器一定坏了",
-        "MI 恰好为 0",
-        "一定没有关系",
-        "数据没有提供存在关系的证据；关系可能存在但对这个样本量来说太弱"
-      ],
-      "explanationZh": "不显著 ≠ 没有关系。样本更多时零分布更窄、实测值更稳，更弱的关系也能被检测到。",
-      "id": 478,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Interpreting non-significance",
-      "source": "kp"
-    },
-    {
-      "question": "Why set JIDT's DYN_CORR_EXCL (Theiler window) when using KSG on autocorrelated time series?",
-      "options": [
-        "It makes the series stationary",
-        "Temporally close points contaminate the nearest-neighbour search and inflate MI",
-        "It chooses the embedding length automatically",
-        "It converts nats to bits"
-      ],
-      "correct": 1,
-      "explanation": "Neighbours that are close in time are close in value because of autocorrelation, not because of a real relationship, which inflates KSG MI. Exclude neighbours within the maximum autocorrelation length. It does not fix non-stationarity; for that take (log) differences.",
-      "questionZh": "对有自相关的时间序列使用 KSG 时，为什么要设置 JIDT 的 DYN_CORR_EXCL（Theiler window）？",
-      "optionsZh": [
-        "让序列变平稳",
-        "时间上相近的点污染近邻搜索，导致 MI 被高估",
-        "自动选择嵌入长度",
-        "把 nats 换成 bits"
-      ],
-      "explanationZh": "时间相邻的点因为自相关而数值相近，并非真实关系，会让 KSG 的 MI 偏高。排除最大自相关长度以内的近邻。它解决不了非平稳；非平稳应取（对数）差分。",
-      "id": 479,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Autocorrelation and the Theiler window",
-      "source": "kp"
-    },
-    {
-      "question": "Which quantity is used as a bias-corrected MI estimate?",
-      "options": [
-        "$I - \\langle I_{\\text{surr}}\\rangle$, the measured MI minus the mean surrogate MI",
-        "The largest surrogate value",
-        "$I / H(X,Y)$ only",
-        "$I + \\langle I_{\\text{surr}}\\rangle$"
-      ],
-      "correct": 0,
-      "explanation": "Subtracting the mean of the surrogate (null) distribution removes the bias expected under independence. For discrete data you may also normalise by an entropy to get a value in [0,1].",
-      "questionZh": "下列哪个量被用作偏差修正后的 MI 估计？",
-      "optionsZh": [
-        "$I - \\langle I_{\\text{surr}}\\rangle$，实测 MI 减去 surrogate MI 的均值",
-        "最大的 surrogate 值",
-        "只有 $I / H(X,Y)$",
-        "$I + \\langle I_{\\text{surr}}\\rangle$"
-      ],
-      "explanationZh": "减去零分布均值，去掉独立情况下也会出现的偏差。离散数据还可以除以熵归一化到 [0,1]。",
-      "id": 480,
-      "course": "CSYS5030",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Statistical Significance / Bias-corrected MI",
-      "source": "kp"
-    },
-    {
-      "question": "Which two features characterise self-organisation (Sayama's definition)?",
-      "options": [
-        "Organisation increases over time, without central or external control",
-        "The system is in equilibrium, with random rules",
-        "Order increases over scale, with a central leader",
-        "Entropy increases over time, with external forcing"
-      ],
-      "correct": 0,
-      "explanation": "A system spontaneously forms non-trivial macroscopic structure or behaviour over time. Features: organisation increases over time, and there is no central or external controller (some outside influence is allowed, but not total control).",
-      "questionZh": "自组织（Sayama 定义）的两个特征是什么？",
-      "optionsZh": [
-        "组织度随时间增加，且没有中心/外部控制",
-        "系统处于平衡态，规则随机",
-        "秩序随尺度增加，并有中心领导者",
-        "熵随时间增加，并有外部驱动"
-      ],
-      "explanationZh": "系统随时间自发形成非平凡的宏观结构/行为。特征：组织度随时间增加；没有中心/外部控制（可以有部分外部影响，但不是完全控制）。",
-      "id": 481,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Self-organisation / definition",
-      "source": "kp"
-    },
-    {
-      "question": "Why is 'one minus single-cell entropy' a poor measure of organisation in a cellular automaton?",
-      "options": [
-        "It cannot be computed for binary cells",
-        "It is always negative",
-        "A random pattern and a checkerboard can have the same single-cell entropy",
-        "It counts the same cell twice"
-      ],
-      "correct": 2,
-      "explanation": "A checkerboard and a random pattern both have half the cells on, so the same single-cell entropy, yet their organisation is completely different. Organisation lives in relationships between cells.",
-      "questionZh": "为什么“1 减去单格熵”不适合度量元胞自动机的组织度？",
-      "optionsZh": [
-        "二值格子无法计算",
-        "它总是负的",
-        "随机图案和棋盘格的单格熵可能相同",
-        "它把同一个格子算了两次"
-      ],
-      "explanationZh": "棋盘格和随机图案都是一半格子为 1，单格熵相同，但组织度完全不同。组织体现在格子之间的关系里。",
-      "id": 482,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Measuring organisation / complement of entropy",
-      "source": "kp"
-    },
-    {
-      "question": "Three variables are copies of one fair bit. What is their multi-information $\\sum_i H(X_i) - H(X_1,X_2,X_3)$?",
-      "options": [
-        "0 bits",
-        "2 bits",
-        "1 bit",
-        "3 bits"
-      ],
-      "correct": 1,
-      "explanation": "Σ H(X_i) = 3 × 1 = 3 bits, joint entropy = 1 bit, so multi-information = 2 bits. Its drawbacks: it breaks the one-semicolon rule, double-counts shared information and is hard to estimate in high dimensions.",
-      "questionZh": "三个变量都是同一个公平比特的拷贝。它们的 multi-information $\\sum_i H(X_i) - H(X_1,X_2,X_3)$ 是多少？",
-      "optionsZh": [
-        "0 比特",
-        "2 比特",
-        "1 比特",
-        "3 比特"
-      ],
-      "explanationZh": "ΣH=3，联合熵=1，所以 multi-information=2 bits。缺点：违反“一个分号”原则、重复计数、高维难估计。",
-      "id": 483,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Multi-information",
-      "source": "kp"
-    },
-    {
-      "question": "'The information that the forecast and the weather hold in common' describes which measure?",
-      "options": [
-        "Shannon information content",
-        "Mutual information",
-        "Conditional entropy",
-        "Joint entropy"
-      ],
-      "correct": 1,
-      "explanation": "'Held in common / shared' = mutual information. 'Together/combined' = joint entropy. 'Optimal code for one particular value' = Shannon information content. 'Misinformative' = negative pointwise MI.",
-      "questionZh": "“预报和天气共同持有的信息”描述的是哪个量？",
-      "optionsZh": [
-        "Shannon 信息量",
-        "互信息",
-        "条件熵",
-        "联合熵"
-      ],
-      "explanationZh": "“共同持有”= MI；“合起来”= 联合熵；“某个具体取值的最优编码”= Shannon 信息量；“误导”= 逐点 MI<0。",
-      "id": 484,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Recognising measures from wording",
-      "source": "kp"
-    },
-    {
-      "question": "Which phrase refers to a specific value (so needs a pointwise/local measure) rather than a variable?",
-      "options": [
-        "'the clothing distribution'",
-        "'the colour of clothing'",
-        "'whether someone wears white'",
-        "'is wearing white'"
-      ],
-      "correct": 3,
-      "explanation": "'Whether …' is a variable (average measure); 'is wearing white' is a particular outcome, so you would use a pointwise quantity such as h(x) or i(x;y).",
-      "questionZh": "哪个短语指的是具体取值（因此需要逐点/局部量），而不是变量？",
-      "optionsZh": [
-        "“衣服的分布”",
-        "“衣服的颜色”",
-        "“是否穿白衣”",
-        "“正穿着白衣”"
-      ],
-      "explanationZh": "“是否……”是变量（平均量）；“正穿着白衣”是具体取值，要用 h(x)、i(x;y) 这类逐点量。",
-      "id": 485,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Variable vs value wording",
-      "source": "kp"
-    },
-    {
-      "question": "When may samples from different variables be pooled into one estimate?",
-      "options": [
-        "Only when the variables are independent",
-        "When the variables operate in the same way (e.g. cells of a CA), not when they follow different strategies",
-        "Never, each variable must be analysed alone",
-        "Always, because more samples are always better"
-      ],
-      "correct": 1,
-      "explanation": "Pooling assumes homogeneity: all variables are realisations of the same process. Ising or CA cells qualify; players with different strategies do not.",
-      "questionZh": "什么时候可以把不同变量的样本合并成一次估计？",
-      "optionsZh": [
-        "仅当变量相互独立时",
-        "当这些变量以相同方式运作时（如 CA 的格子），策略不同的玩家则不行",
-        "永远不行，每个变量必须单独分析",
-        "总是可以，样本越多越好"
-      ],
-      "explanationZh": "合并的前提是同质性：所有变量是同一过程的实现。Ising/CA 格子可以，策略不同的玩家不行。",
-      "id": 486,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Pooling samples / homogeneity",
-      "source": "kp"
-    },
-    {
-      "question": "In the 2D Ising model, where do long-range correlations (high MI between distant spins) appear?",
-      "options": [
-        "At very low temperature only",
-        "At very high temperature only",
-        "Near the critical temperature ≈ 2.27",
-        "At every temperature equally"
-      ],
-      "correct": 2,
-      "explanation": "Low temperature: uniform (little uncertainty); high temperature: random (little shared information). Near the critical temperature ≈ 2.27, long-range correlations appear. Finite systems show the transition slightly higher.",
-      "questionZh": "在 2D Ising 模型中，长程关联（远距离自旋间 MI 高）出现在哪里？",
-      "optionsZh": [
-        "只在极低温",
-        "只在极高温",
-        "临界温度约 2.27 附近",
-        "所有温度都一样"
-      ],
-      "explanationZh": "低温均匀（不确定性小）；高温随机（共享信息少）；临界温度约 2.27 附近出现长程关联。有限尺寸系统的转变点略偏高。",
-      "id": 487,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Ising model / critical temperature",
-      "source": "kp"
-    },
-    {
-      "question": "When is the local (pointwise) MI $i(x;y)$ undefined for empirical data?",
-      "options": [
-        "When the pair $(x, y)$ never occurred together",
-        "When the MI is negative",
-        "When the variables are binary",
-        "When $x = y$"
-      ],
-      "correct": 0,
-      "explanation": "If x and y were never observed together, p(x|y) = 0 and log 0 is undefined. Such a pair never appears in the data, so it never needs a local value.",
-      "questionZh": "对经验数据，局部（逐点）MI $i(x;y)$ 什么时候无定义？",
-      "optionsZh": [
-        "当 $(x, y)$ 这对取值从未同时出现时",
-        "当 MI 为负时",
-        "当变量是二值时",
-        "当 $x = y$ 时"
-      ],
-      "explanationZh": "x 与 y 从未同时出现时 p(x|y)=0，log0 无定义。这样的组合不会出现在数据里，也就不需要局部值。",
-      "id": 488,
-      "course": "CSYS5030",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 Self-Organisation / Local MI undefined case",
-      "source": "kp"
-    },
-    {
-      "question": "The three operations of distributed computation map onto information dynamics as…",
-      "options": [
-        "memory → entropy, signalling → MI, processing → CMI",
-        "memory → transfer, signalling → storage, processing → entropy",
-        "memory → modification, signalling → storage, processing → transfer",
-        "memory → storage, signalling → transfer, processing → modification"
-      ],
-      "correct": 3,
-      "explanation": "Memory = information storage (AIS), signalling = information transfer (TE), processing = information modification.",
-      "questionZh": "分布式计算的三种操作对应信息动力学的……",
-      "optionsZh": [
-        "记忆→熵，信号→MI，处理→CMI",
-        "记忆→传递，信号→存储，处理→熵",
-        "记忆→修改，信号→存储，处理→传递",
-        "记忆→存储，信号→传递，处理→修改"
-      ],
-      "explanationZh": "Memory = 信息存储（AIS），Signalling = 信息传递（TE），Processing = 信息修改。",
-      "id": 489,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Computation ↔ information dynamics",
-      "source": "kp"
-    },
-    {
-      "question": "Which feature belongs to biological (natural) computation rather than a classical computer, according to Mitchell's comparison?",
-      "options": [
-        "Deterministic, serial and error-free",
-        "Decentralised, parallel, local and stochastic, exploiting randomness",
-        "Centralised control with a single program",
-        "A static digital tape designed by humans"
-      ],
-      "correct": 1,
-      "explanation": "Computers: digital static tape, deterministic, serial, error-free, centralised, human-designed. Biological computation: analogue, spatio-temporal patterns, statistical sampling, decentralised, parallel, local, stochastic and uses randomness, shaped by natural selection; it is ongoing rather than terminating.",
-      "questionZh": "按 Mitchell 的对比，哪一特征属于生物（自然）计算而非经典计算机？",
-      "optionsZh": [
-        "确定、串行、无差错",
-        "去中心、并行、局部、随机，并利用随机性",
-        "单一程序的集中控制",
-        "人类设计的静态数字纸带"
-      ],
-      "explanationZh": "计算机：数字静态纸带、确定、串行、无差错、集中、人类设计。生物计算：模拟、时空模式、统计采样、去中心、并行、局部、随机且利用随机性，由自然选择塑造，持续进行而非终止。",
-      "id": 490,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Biological vs computer computation",
-      "source": "kp"
-    },
-    {
-      "question": "What does the entropy rate $H_{\\mu X} = \\lim_{n\\to\\infty} H(X_n \\mid X_1, \\dots, X_{n-1})$ measure?",
-      "options": [
-        "The total uncertainty of the whole series",
-        "The entropy of the first sample only",
-        "The uncertainty remaining in the next value after the entire past is known",
-        "The information the past holds about the next value"
-      ],
-      "correct": 2,
-      "explanation": "Entropy rate is the conditional entropy of the next value given the past: the uncertainty left after using the past. For stationary processes it equals the slope of block entropy, lim (1/n)H(X₁…Xₙ). In coding terms, it is the minimum average code length per symbol for a source with memory.",
-      "questionZh": "熵率 $H_{\\mu X} = \\lim H(X_n \\mid X_1, \\dots, X_{n-1})$ 度量的是什么？",
-      "optionsZh": [
-        "整个序列的总不确定性",
-        "只是第一个样本的熵",
-        "已知全部过去后，下一个值剩余的不确定性",
-        "过去关于下一个值的信息"
-      ],
-      "explanationZh": "熵率 = 给定过去时下一个值的条件熵：用过去之后剩余的不确定性。平稳时等于块熵斜率 lim(1/n)H(X₁..Xₙ)。编码意义：有记忆信源每符号最小平均码长。",
-      "id": 491,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate / definition",
-      "source": "kp"
-    },
-    {
-      "question": "Which pair of entropy rates is correct?",
-      "options": [
-        "Both have $H_\\mu = 0$",
-        "i.i.d. process: $H_\\mu = H(X)$; deterministic periodic process: $H_\\mu = 0$",
-        "i.i.d. process: $H_\\mu = 0$; periodic process: $H_\\mu = H(X)$",
-        "Both have $H_\\mu = H(X)$"
-      ],
-      "correct": 1,
-      "explanation": "For i.i.d. samples the past says nothing, so H_μ = H(X). For a deterministic periodic sequence the past fixes the next value, so H_μ = 0.",
-      "questionZh": "哪组熵率正确？",
-      "optionsZh": [
-        "两者都是 0",
-        "i.i.d. 过程：$H_\\mu = H(X)$；确定性周期过程：$H_\\mu = 0$",
-        "i.i.d.：$H_\\mu = 0$；周期过程：$H_\\mu = H(X)$",
-        "两者都是 $H(X)$"
-      ],
-      "explanationZh": "i.i.d. 时过去不提供信息，H_μ=H(X)；确定性周期序列由过去决定下一个值，H_μ=0。",
-      "id": 492,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate / special cases",
-      "source": "kp"
-    },
-    {
-      "question": "Which identity links entropy, entropy rate and active information storage?",
-      "options": [
-        "$A_X = H(X_{n+1}) + H_{\\mu X}$",
-        "$H(X_{n+1}) = A_X + H_{\\mu X}$",
-        "$H(X_{n+1}) = A_X - H_{\\mu X}$",
-        "$H_{\\mu X} = A_X \\cdot H(X_{n+1})$"
-      ],
-      "correct": 1,
-      "explanation": "The uncertainty of the next value splits into the part explained by the past (AIS) and the part left over (entropy rate).",
-      "questionZh": "哪个等式把熵、熵率和主动信息存储联系起来？",
-      "optionsZh": [
-        "$A_X = H(X_{n+1}) + H_{\\mu X}$",
-        "$H(X_{n+1}) = A_X + H_{\\mu X}$",
-        "$H(X_{n+1}) = A_X - H_{\\mu X}$",
-        "$H_{\\mu X} = A_X \\cdot H(X_{n+1})$"
-      ],
-      "explanationZh": "下一个值的不确定性 = 被过去解释的部分（AIS）+ 剩余部分（熵率）。",
-      "id": 493,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Entropy rate and storage are complementary",
-      "source": "kp"
-    },
-    {
-      "question": "A binary Markov chain always goes 0 → 1, and from 1 goes to 0 or stays at 1 with probability 0.5 each. What is its entropy rate?",
-      "options": [
-        "1 bit",
-        "≈ 0.918 bits",
-        "≈ 0.667 bits",
-        "0 bits"
-      ],
-      "correct": 2,
-      "explanation": "Stationary: p(0) = 0.5/(1 + 0.5) = 1/3, p(1) = 2/3. H_μ = p(0)·H_b(1) + p(1)·H_b(0.5) = (1/3)·0 + (2/3)·1 ≈ 0.667 bits. 0.918 bits is H(X) = H_b(1/3); the difference ≈ 0.25 bits is the AIS (k = 1).",
-      "questionZh": "一个二值马尔可夫链：从 0 总是转到 1；从 1 以各 0.5 的概率转到 0 或留在 1。它的熵率是多少？",
-      "optionsZh": [
-        "1 比特",
-        "≈ 0.918 比特",
-        "≈ 0.667 比特",
-        "0 比特"
-      ],
-      "explanationZh": "平稳分布 p(0)=1/3，p(1)=2/3。H_μ=Σp(x)·H_b(离开x的概率)=(1/3)·0+(2/3)·1≈0.667 bits。0.918 是 H(X)，两者之差≈0.25 bits 就是 AIS（k=1）。",
-      "steps": [
-        "$p(0) = \\frac{0.5}{1+0.5} = \\tfrac13$, $p(1) = \\tfrac23$",
-        "$H_\\mu = \\tfrac13 H_b(1) + \\tfrac23 H_b(0.5) = 0 + \\tfrac23 = 0.667$ bits"
-      ],
-      "id": 494,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Two-state Markov chain",
-      "source": "kp"
-    },
-    {
-      "question": "In $\\mathbf{X}_n^{(k)}$, which samples are included?",
-      "options": [
-        "$X_{n-k}, \\dots, X_{n-1}$ — excluding $X_n$",
-        "$X_{n+1}, \\dots, X_{n+k}$ — the next $k$ values",
-        "$X_{n-k+1}, \\dots, X_n$ — the $k$ most recent values ending at $X_n$",
-        "$X_1, \\dots, X_k$ — the first $k$ values"
-      ],
-      "correct": 2,
-      "explanation": "The past state of length k ends at X_n and is used to predict X_{n+1}.",
-      "questionZh": "$\\mathbf{X}_n^{(k)}$ 包含哪些样本？",
-      "optionsZh": [
-        "$X_{n-k}, \\dots, X_{n-1}$——不含 $X_n$",
-        "$X_{n+1}, \\dots, X_{n+k}$——接下来 $k$ 个值",
-        "$X_{n-k+1}, \\dots, X_n$——以 $X_n$ 结尾的最近 $k$ 个值",
-        "$X_1, \\dots, X_k$——最前面 $k$ 个值"
-      ],
-      "explanationZh": "长度 k 的过去状态以 X_n 结尾，用来预测 X_{n+1}。",
-      "id": 495,
-      "course": "CSYS5030",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Information Processing & Entropy Rate / Embedding notation",
-      "source": "kp"
-    },
-    {
-      "question": "Which expression defines active information storage $A_X(k)$?",
-      "options": [
-        "$I(\\mathbf{X}_n^{(k)}; X_{n+1})$",
-        "$H(X_{n+1} \\mid \\mathbf{X}_n^{(k)})$",
-        "$H(\\mathbf{X}_n^{(k)})$",
-        "$I(Y_n; X_{n+1} \\mid \\mathbf{X}_n^{(k)})$"
-      ],
-      "correct": 0,
-      "explanation": "AIS = MI between the past state and the next value: the stored information that is actively used to compute the next value. H(X_{n+1}|past) is the entropy rate; I(Y;X'|past) is transfer entropy.",
-      "questionZh": "哪个式子定义了主动信息存储 $A_X(k)$？",
-      "optionsZh": [
-        "$I(\\mathbf{X}_n^{(k)}; X_{n+1})$",
-        "$H(X_{n+1} \\mid \\mathbf{X}_n^{(k)})$",
-        "$H(\\mathbf{X}_n^{(k)})$",
-        "$I(Y_n; X_{n+1} \\mid \\mathbf{X}_n^{(k)})$"
-      ],
-      "explanationZh": "AIS = 过去状态与下一个值之间的 MI：正被用于计算下一个值的存储信息。条件熵那个是熵率，带 Y 的是转移熵。",
-      "id": 496,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / Active information storage / definition",
-      "source": "kp"
-    },
-    {
-      "question": "A local AIS value is negative at some time step. What does that indicate?",
-      "options": [
-        "The past was misinformative: the usual pattern broke and the next value came from elsewhere",
-        "The series is i.i.d.",
-        "An estimation error that should be removed",
-        "Perfect storage of information"
-      ],
-      "correct": 0,
-      "explanation": "Local AIS a = log₂ p(x_{n+1}|past)/p(x_{n+1}). It is negative when the past made the actual next value less likely, e.g. at a glider in a cellular automaton, where information arrives by transfer instead.",
-      "questionZh": "某一时刻的局部 AIS 为负，说明什么？",
-      "optionsZh": [
-        "过去起了误导作用：惯常模式被打破，下一个值的信息来自别处",
-        "序列是 i.i.d. 的",
-        "估计误差，应删除",
-        "信息被完美存储"
-      ],
-      "explanationZh": "局部 AIS a=log₂ p(x_{n+1}|过去)/p(x_{n+1})。过去让实际的下一个值更不可能时为负，例如 CA 中的 glider 处，此时信息来自传递。",
-      "id": 497,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / Local AIS",
-      "source": "kp"
-    },
-    {
-      "question": "A series repeats 0, 0, 1, 0, 0, 1, … (period 3). What is the smallest $k$ that makes the next value fully predictable from the past?",
-      "options": [
-        "$k = 3$",
-        "$k = 1$",
-        "$k = 2$",
-        "$k = 4$"
-      ],
-      "correct": 2,
-      "explanation": "With k = 1, after a 0 the next value could be 0 or 1. With k = 2: 00 → 1, 01 → 0, 10 → 0, all deterministic. So k = 2 is the minimum.",
-      "questionZh": "序列重复 0, 0, 1, 0, 0, 1, …（周期 3）。使下一个值能由过去完全预测的最小 $k$ 是多少？",
-      "optionsZh": [
-        "$k = 3$",
-        "$k = 1$",
-        "$k = 2$",
-        "$k = 4$"
-      ],
-      "explanationZh": "k=1 时，0 之后可能是 0 也可能是 1；k=2 时 00→1、01→0、10→0，全部确定。所以最小 k=2。",
-      "id": 498,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / Minimum embedding length for periodic series",
-      "source": "kp"
-    },
-    {
-      "question": "How does AIS differ from autocorrelation?",
-      "options": [
-        "Autocorrelation captures only the linear effect of each past value separately; AIS captures total memory including non-linear and joint effects",
-        "Autocorrelation includes all past values jointly",
-        "AIS only measures linear dependence",
-        "They are identical for all data"
-      ],
-      "correct": 0,
-      "explanation": "Autocorrelation looks at one lag at a time and only linearly. AIS uses the whole embedded past jointly and captures non-linear storage.",
-      "questionZh": "AIS 与自相关有什么不同？",
-      "optionsZh": [
-        "自相关只单独捕捉每个过去值的线性影响；AIS 捕捉包括非线性和联合作用在内的总记忆",
-        "自相关联合考虑所有过去值",
-        "AIS 只度量线性依赖",
-        "对所有数据两者都相同"
-      ],
-      "explanationZh": "自相关一次只看一个滞后、且只看线性；AIS 联合使用嵌入的全部过去，能捕捉非线性存储。",
-      "id": 499,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / AIS vs autocorrelation",
-      "source": "kp"
-    },
-    {
-      "question": "Why not simply choose a very large embedding length $k$ for AIS?",
-      "options": [
-        "Larger $k$ captures more memory but causes undersampling and bias",
-        "JIDT does not allow $k > 1$",
-        "Large $k$ makes the data non-stationary",
-        "Larger $k$ always reduces AIS to 0"
-      ],
-      "correct": 0,
-      "explanation": "The sweet spot is where earlier values stop contributing or the data can no longer support their contribution. Methods: Ragwitz (minimise KNN prediction error), maximise bias-corrected AIS (A − ⟨A_surr⟩), or non-uniform embedding (IDTxl).",
-      "questionZh": "为什么不干脆把 AIS 的嵌入长度 $k$ 选得很大？",
-      "optionsZh": [
-        "$k$ 越大捕获的记忆越多，但会欠采样并产生偏差",
-        "JIDT 不允许 $k > 1$",
-        "$k$ 大会让数据非平稳",
-        "$k$ 大时 AIS 总会降为 0"
-      ],
-      "explanationZh": "甜点在“更早的值不再贡献”或“数据已不足以证实其贡献”处。方法：Ragwitz（KNN 预测误差最小）、最大化偏差修正 AIS（A−⟨A_surr⟩）、非均匀嵌入（IDTxl）。",
-      "id": 500,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / Choosing k / trade-off",
-      "source": "kp"
-    },
-    {
-      "question": "Which JIDT setting asks the calculator to pick $k$ (and $\\tau$) by maximising bias-corrected AIS?",
-      "options": [
-        "k_HISTORY = AUTO",
-        "AUTO_EMBED_METHOD = NONE",
-        "DYN_CORR_EXCL = MAX",
-        "AUTO_EMBED_METHOD = MAX_CORR_AIS"
-      ],
-      "correct": 3,
-      "explanation": "AUTO_EMBED_METHOD ∈ {NONE, RAGWITZ, MAX_CORR_AIS}, with AUTO_EMBED_K_SEARCH_MAX and AUTO_EMBED_TAU_SEARCH_MAX. The chosen values are written back to k_HISTORY and TAU (read with getProperty()). Only for KSG/Gaussian.",
-      "questionZh": "哪个 JIDT 设置让 calculator 通过最大化偏差修正 AIS 来选择 $k$（和 $\\tau$）？",
-      "optionsZh": [
-        "k_HISTORY = AUTO",
-        "AUTO_EMBED_METHOD = NONE",
-        "DYN_CORR_EXCL = MAX",
-        "AUTO_EMBED_METHOD = MAX_CORR_AIS"
-      ],
-      "explanationZh": "AUTO_EMBED_METHOD ∈ {NONE, RAGWITZ, MAX_CORR_AIS}，配合 AUTO_EMBED_K_SEARCH_MAX、AUTO_EMBED_TAU_SEARCH_MAX；结果写回 k_HISTORY、TAU，用 getProperty() 读取。仅 KSG/Gaussian。",
-      "id": 501,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / JIDT auto-embedding",
-      "source": "kp"
-    },
-    {
-      "question": "How does AIS differ from excess entropy (predictive information)?",
-      "options": [
-        "AIS is the storage used for the next value; excess entropy is all stored information about the entire future",
-        "AIS includes information from other variables",
-        "They are always equal",
-        "Excess entropy only concerns the next value"
-      ],
-      "correct": 0,
-      "explanation": "AIS = I(past; next value). Excess entropy / predictive information = I(past; whole future) = total storage. For stationary processes excess entropy equals predictive information.",
-      "questionZh": "AIS 与 excess entropy（predictive information）有何不同？",
-      "optionsZh": [
-        "AIS 是用于下一个值的存储；excess entropy 是关于整个未来的全部存储信息",
-        "AIS 包含来自其他变量的信息",
-        "两者总是相等",
-        "excess entropy 只关心下一个值"
-      ],
-      "explanationZh": "AIS=I(过去;下一值)；excess entropy/predictive information=I(过去;整个未来)=全部存储。平稳时 excess entropy = predictive information。",
-      "id": 502,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / AIS vs excess entropy",
-      "source": "kp"
-    },
-    {
-      "question": "In elementary CA rule 54, where is local AIS strongly positive and where is it negative?",
-      "options": [
-        "Negative everywhere",
-        "Positive at gliders; negative in domains",
-        "Positive everywhere",
-        "Positive in domains and blinkers (storage); negative at gliders"
-      ],
-      "correct": 3,
-      "explanation": "Domains and blinkers are stored patterns, so local AIS is positive. At moving gliders the cell's own past is misinformative because information is being transferred in from neighbours. The best k for rule 54 is about 15.",
-      "questionZh": "在初等 CA rule 54 中，局部 AIS 在哪里明显为正、在哪里为负？",
-      "optionsZh": [
-        "处处为负",
-        "glider 处为正；domain 处为负",
-        "处处为正",
-        "domain 和 blinker 处为正（存储）；glider 处为负"
-      ],
-      "explanationZh": "domain、blinker 是被存储的模式，局部 AIS 为正；移动的 glider 处格子自身的过去起误导作用，因为信息是从邻居传进来的。rule 54 最优 k≈15。",
-      "id": 503,
-      "course": "CSYS5030",
-      "week": "Week 10",
-      "lectureWeek": "Week 10",
-      "knowledgeLocation": "W10 Active Information Storage / AIS in cellular automata",
-      "source": "kp"
-    },
-    {
-      "question": "Which expression is the transfer entropy from $Y$ to $X$ (target history length $k$, source history length 1)?",
-      "options": [
-        "$I(Y_n; X_{n+1} \\mid \\mathbf{X}_n^{(k)})$",
-        "$I(Y_n; X_{n+1})$",
-        "$I(\\mathbf{X}_n^{(k)}; X_{n+1})$",
-        "$H(X_{n+1} \\mid Y_n)$"
-      ],
-      "correct": 0,
-      "explanation": "TE is the CMI between the source's past and the target's next value, conditioned on the target's own past. Without that conditioning it is just lagged MI; I(past; next) alone is AIS.",
-      "questionZh": "从 $Y$ 到 $X$ 的转移熵（目标历史长度 $k$，源历史长度 1）是哪个式子？",
-      "optionsZh": [
-        "$I(Y_n; X_{n+1} \\mid \\mathbf{X}_n^{(k)})$",
-        "$I(Y_n; X_{n+1})$",
-        "$I(\\mathbf{X}_n^{(k)}; X_{n+1})$",
-        "$H(X_{n+1} \\mid Y_n)$"
-      ],
-      "explanationZh": "TE = 源的过去与目标下一个值之间、条件于目标自身过去的 CMI。不条件化就只是滞后 MI；I(过去;下一值) 是 AIS。",
-      "id": 504,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy / definition",
-      "source": "kp"
-    },
-    {
-      "question": "Why does TE condition on the target's own past instead of using lagged MI $I(Y_n; X_{n+1})$?",
-      "options": [
-        "To avoid needing any samples of the source",
-        "To remove information the source shares with the target's past (storage) and to include synergy with it",
-        "To make it equal to Pearson correlation",
-        "To make the measure symmetric"
-      ],
-      "correct": 1,
-      "explanation": "Both are directional, but conditioning on the target's past removes redundant information that is really storage and adds synergistic information. TE therefore focuses on state transitions of the target.",
-      "questionZh": "为什么 TE 要条件于目标自身的过去，而不是直接用滞后 MI $I(Y_n; X_{n+1})$？",
-      "optionsZh": [
-        "免去需要源的样本",
-        "去掉源与目标过去共享的信息（属于存储），并纳入与之协同的信息",
-        "让它等于皮尔逊相关",
-        "让度量对称"
-      ],
-      "explanationZh": "两者都有方向，但条件于目标过去能去掉其实是存储的冗余信息、加入协同信息，所以 TE 关注目标的状态转移。",
-      "id": 505,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy vs lagged MI",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about transfer entropy and causality is correct?",
-      "options": [
-        "TE and causality are identical for Gaussian data",
-        "TE ≠ causality: a causal source may contribute only to storage, and a hidden common driver can create TE",
-        "Positive TE proves Y causes X",
-        "Zero TE proves there is no causal link"
-      ],
-      "correct": 1,
-      "explanation": "TE measures predictive information transfer. A causal source may show little TE if its effect looks like storage; a hidden common driver can create TE without a direct link. Still, TE reveals emergent structures such as gliders.",
-      "questionZh": "关于转移熵与因果，哪项正确？",
-      "optionsZh": [
-        "对高斯数据 TE 与因果完全相同",
-        "TE ≠ 因果：因果源可能只贡献存储，隐藏的共同驱动也能产生 TE",
-        "TE 为正证明 Y 导致 X",
-        "TE 为零证明没有因果联系"
-      ],
-      "explanationZh": "TE 度量的是预测性信息传递。因果源的作用可能表现为存储，TE 很小；隐藏共同驱动可在没有直接连接时产生 TE。但 TE 能揭示 glider 等涌现结构。",
-      "id": 506,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Transfer entropy is not causality",
-      "source": "kp"
-    },
-    {
-      "question": "For the Gaussian estimator, transfer entropy is equivalent to…",
-      "options": [
-        "Pearson correlation",
-        "Granger causality (up to a factor of 2)",
-        "Active information storage",
-        "Lagged MI with no conditioning"
-      ],
-      "correct": 1,
-      "explanation": "For linear-Gaussian models, TE = ½ × Granger causality (in nats).",
-      "questionZh": "对高斯估计器，转移熵等价于……",
-      "optionsZh": [
-        "皮尔逊相关",
-        "Granger 因果（相差因子 2）",
-        "主动信息存储",
-        "不条件化的滞后 MI"
-      ],
-      "explanationZh": "线性高斯模型下 TE = ½ × Granger 因果（nats）。",
-      "id": 507,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Gaussian TE and Granger causality",
-      "source": "kp"
-    },
-    {
-      "question": "What is the recommended order for setting TE parameters?",
-      "options": [
-        "Use $k = l = u = 1$ always",
-        "Embed the source first, then set target $k = 0$",
-        "Embed the target first, then the source ($l$, $\\tau_Y$), then choose the source–target delay $u$ that maximises TE",
-        "Choose the delay first, then ignore embeddings"
-      ],
-      "correct": 2,
-      "explanation": "① Target embedding (e.g. MAX_CORR_AIS or Ragwitz, with _DEST_ONLY), ② source embedding when the source is hidden-Markov or several past values matter, ③ scan the DELAY u and take the one with maximum TE.",
-      "questionZh": "TE 参数的推荐设置顺序是什么？",
-      "optionsZh": [
-        "总是用 $k = l = u = 1$",
-        "先嵌入源，再把目标 $k$ 设为 0",
-        "先嵌入目标，再嵌入源（$l$, $\\tau_Y$），最后选使 TE 最大的源-目标延迟 $u$",
-        "先选延迟，忽略嵌入"
-      ],
-      "explanationZh": "① 目标嵌入（MAX_CORR_AIS 或 Ragwitz，_DEST_ONLY）② 源嵌入（隐马尔可夫或多个过去值起作用时）③ 扫描 DELAY u，取 TE 最大者。",
-      "id": 508,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / TE parameter selection",
-      "source": "kp"
-    },
-    {
-      "question": "Why compute conditional TE $T_{Y\\to X \\mid Z}$ in addition to pairwise TE?",
-      "options": [
-        "To make the computation faster",
-        "Because conditional TE never needs significance testing",
-        "Because pairwise TE is always zero",
-        "To remove redundancy from common drivers or indirect paths and to reveal synergy such as gating"
-      ],
-      "correct": 3,
-      "explanation": "Conditioning on Z removes redundant information (common driver Z, or a path Y → Z → X) and can reveal synergy (gating). Both pairwise and conditional TE are needed: T_{Y→X} + T_{Z→X|Y} = T_{Z→X} + T_{Y→X|Z}.",
-      "questionZh": "为什么除了成对 TE 还要计算条件 TE $T_{Y\\to X \\mid Z}$？",
-      "optionsZh": [
-        "为了算得更快",
-        "因为条件 TE 不需要显著性检验",
-        "因为成对 TE 总是 0",
-        "去除共同驱动或间接路径带来的冗余，并揭示门控等协同"
-      ],
-      "explanationZh": "条件于 Z 可去掉冗余（Z 是共同驱动或 Y→Z→X 路径），也能揭示协同（门控）。两者都需要：T_{Y→X}+T_{Z→X|Y}=T_{Z→X}+T_{Y→X|Z}。",
-      "id": 509,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Conditional transfer entropy",
-      "source": "kp"
-    },
-    {
-      "question": "In the heartbeat example the next value of $d$ is fully determined by $(d_n, s_n)$. Then local TE equals $-\\log_2 p(d_{n+1} \\mid d_n)$. If a 0 → 1 switch has $p(1 \\mid 0) = 0.05$, what is its local TE?",
-      "options": [
-        "≈ 0.074 bits",
-        "≈ 4.32 bits",
-        "0.05 bits",
-        "≈ −4.32 bits"
-      ],
-      "correct": 1,
-      "explanation": "Local TE = −log₂ 0.05 ≈ 4.32 bits (the rare switch carries the most transferred information). Staying at 0 with p = 0.95 gives only ≈ 0.074 bits. Because the source fully determines the outcome, local TE is never negative here.",
-      "questionZh": "在 heartbeat 例子中，$d$ 的下一个值由 $(d_n, s_n)$ 完全决定，所以局部 TE = $-\\log_2 p(d_{n+1} \\mid d_n)$。若 0→1 切换的 $p(1 \\mid 0) = 0.05$，其局部 TE 是多少？",
-      "optionsZh": [
-        "≈ 0.074 比特",
-        "≈ 4.32 比特",
-        "0.05 比特",
-        "≈ −4.32 比特"
-      ],
-      "explanationZh": "局部 TE=−log₂0.05≈4.32 bits（罕见切换传递的信息最多）。保持 0（p=0.95）只有≈0.074 bits。源完全决定结果，所以这里局部 TE 不会为负。",
-      "id": 510,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / Heartbeat example / local TE",
-      "source": "kp"
-    },
-    {
-      "question": "In a partial information decomposition of the target's next value with sources $M$ (its own past) and $Y$, which is correct?",
-      "options": [
-        "AIS and TE both equal the redundancy",
-        "AIS = unique{M} + redundancy{M}{Y}; TE = unique{Y} + synergy{MY}",
-        "AIS = synergy only; TE = redundancy only",
-        "AIS = unique{Y} + synergy; TE = unique{M} + redundancy"
-      ],
-      "correct": 1,
-      "explanation": "Because AIS is measured without conditioning on Y, it contains the redundant part. TE conditions on the past, so it contains Y's unique information plus the synergy between Y and the past.",
-      "questionZh": "对目标下一个值做部分信息分解（源为自身过去 $M$ 和 $Y$），哪项正确？",
-      "optionsZh": [
-        "AIS 和 TE 都等于冗余",
-        "AIS = 独有{M} + 冗余{M}{Y}；TE = 独有{Y} + 协同{MY}",
-        "AIS 只有协同；TE 只有冗余",
-        "AIS = 独有{Y} + 协同；TE = 独有{M} + 冗余"
-      ],
-      "explanationZh": "AIS 不条件于 Y，所以包含冗余部分；TE 条件于过去，所以是 Y 的独有信息 + Y 与过去的协同。",
-      "id": 511,
-      "course": "CSYS5030",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Transfer Entropy / PID view of AIS and TE",
-      "source": "kp"
-    },
-    {
-      "question": "Which description matches an effective network?",
-      "options": [
-        "A directed network giving the minimal multivariate model that reproduces and explains each node's time-series updates",
-        "An undirected network of pairwise correlations or MI",
-        "A directed network showing every pairwise statistical relationship",
-        "The physical (causal) wiring, usually found by intervention"
-      ],
-      "correct": 0,
-      "explanation": "Functional network: undirected, MI/correlation, explains no mechanism. Structural: causal wiring, usually needs intervention. Effective: directed, minimal model that reproduces and explains the dynamics. A directed network of pairwise relationships is a directed functional network.",
-      "questionZh": "哪项描述符合有效网络（effective network）？",
-      "optionsZh": [
-        "一个有向网络，给出能复现并解释每个节点时间序列更新的最小多变量模型",
-        "由成对相关或 MI 构成的无向网络",
-        "显示所有成对统计关系的有向网络",
-        "物理（因果）连接，通常需要干预才能得到"
-      ],
-      "explanationZh": "功能网络：无向、MI/相关、不解释机制。结构网络：因果连接、一般需干预。有效网络：有向、能复现并解释动力学的最小模型。成对关系的有向网络是有向功能网络。",
-      "id": 512,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Types of networks",
-      "source": "kp"
-    },
-    {
-      "question": "You test pairwise TE for every ordered pair in a 5-node network at $\\alpha = 0.05$ with Bonferroni correction. What per-test threshold do you use?",
-      "options": [
-        "0.01",
-        "0.05",
-        "0.005",
-        "0.0025"
-      ],
-      "correct": 3,
-      "explanation": "Number of tests M = G(G−1) = 5 × 4 = 20 ordered pairs, so α/M = 0.05/20 = 0.0025. FDR is an alternative correction.",
-      "questionZh": "在 5 节点网络中对每个有序对做成对 TE 检验，$\\alpha = 0.05$，用 Bonferroni 校正。每次检验的阈值是多少？",
-      "optionsZh": [
-        "0.01",
-        "0.05",
-        "0.005",
-        "0.0025"
-      ],
-      "explanationZh": "检验数 M=G(G−1)=5×4=20 个有序对，α/M=0.05/20=0.0025。也可用 FDR。",
-      "steps": [
-        "$M = G(G-1) = 20$",
-        "$\\alpha/M = 0.05/20 = 0.0025$"
-      ],
-      "id": 513,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Multiple comparisons / Bonferroni",
-      "source": "kp"
-    },
-    {
-      "question": "Which is NOT one of the listed problems with pairwise TE network inference?",
-      "options": [
-        "It ignores redundancy (common drivers, paths) and synergy (gating)",
-        "It cannot handle discrete data",
-        "Multiple comparisons inflate false positives",
-        "Wrong TE parameters (embedding, delay) give false positives/negatives"
-      ],
-      "correct": 1,
-      "explanation": "The three problems are multiple comparisons, wrong TE parameters, and not handling redundancy/synergy. Pairwise TE works fine on discrete data.",
-      "questionZh": "下列哪项不是成对 TE 网络推断的问题之一？",
-      "optionsZh": [
-        "忽略冗余（共同驱动、路径）与协同（门控）",
-        "无法处理离散数据",
-        "多重比较导致假阳性增加",
-        "TE 参数（嵌入、延迟）设错导致假阳性/假阴性"
-      ],
-      "explanationZh": "三个问题：多重比较、TE 参数设错、不处理冗余/协同。成对 TE 对离散数据完全适用。",
-      "id": 514,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Problems with pairwise inference",
-      "source": "kp"
-    },
-    {
-      "question": "Why not compute TE from each source conditioned on ALL other variables at once?",
-      "options": [
-        "It always finds too many links",
-        "It undersamples in high dimensions and can delete true links when redundant parents cancel each other out",
-        "It is mathematically undefined",
-        "JIDT cannot compute conditional TE"
-      ],
-      "correct": 1,
-      "explanation": "Conditioning on everything means huge conditioning sets (undersampling), and two redundant parents can each look uninformative given the other, so both links are removed.",
-      "questionZh": "为什么不一次性对每个源条件于所有其他变量计算 TE？",
-      "optionsZh": [
-        "总会找到过多连接",
-        "高维下欠采样，而且冗余父节点相互抵消会删掉真实连接",
-        "数学上无定义",
-        "JIDT 不能计算条件 TE"
-      ],
-      "explanationZh": "条件于全部变量意味着条件集极大（欠采样）；两个冗余父节点在彼此条件下都显得无信息，两条连接都会被删掉。",
-      "id": 515,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Conditioning on all other variables",
-      "source": "kp"
-    },
-    {
-      "question": "What is the correct order of the greedy effective-network algorithm for one target?",
-      "options": [
-        "Compute pairwise MI → threshold at 0.1 → done",
-        "Embed target → start with empty parent set → add the source with the largest significant CTE given parents → repeat → prune → test the final set",
-        "Prune first → embed target → add random sources",
-        "Add all sources → remove the smallest → stop"
-      ],
-      "correct": 1,
-      "explanation": "Steps: 0 embed the target, 1 empty set P, 2 compute CTE for each candidate given P, 3 add the largest if significant, 4 loop, 5 prune, 6 test the whole set. Statistical tests act as the brake; max statistics handle multiple comparisons; the order of inclusion does not matter in the end. IDTxl implements this.",
-      "questionZh": "针对一个目标，贪心有效网络算法的正确顺序是？",
-      "optionsZh": [
-        "计算成对 MI → 阈值 0.1 → 结束",
-        "嵌入目标 → 空父集 → 加入给定父集下 CTE 最大且显著的源 → 循环 → 剪枝 → 整体检验",
-        "先剪枝 → 嵌入目标 → 随机加入源",
-        "加入全部源 → 删掉最小的 → 停止"
-      ],
-      "explanationZh": "0 嵌入目标 → 1 空集 → 2 条件于 P 算各源 CTE → 3 最大且显著则加入 → 4 循环 → 5 剪枝 → 6 整体检验。统计检验作“刹车”，max statistics 处理多重比较，加入顺序最终无关。IDTxl 实现了它。",
-      "id": 516,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Greedy multivariate algorithm",
-      "source": "kp"
-    },
-    {
-      "question": "A researcher wants to know whether $Y$ adds information about $X$'s next value beyond what $Z$ already provides. Which measure fits?",
-      "options": [
-        "$A_X$",
-        "$T_{Y\\to X}$",
-        "$T_{Y\\to X \\mid Z}$",
-        "$I(Y;Z)$"
-      ],
-      "correct": 2,
-      "explanation": "'Beyond what Z provides' means conditioning on Z: conditional TE. Pairwise TE answers whether Y alone helps predict X.",
-      "questionZh": "研究者想知道 $Y$ 在 $Z$ 已提供的信息之外，是否还能提供关于 $X$ 下一个值的信息。应该用哪个量？",
-      "optionsZh": [
-        "$A_X$",
-        "$T_{Y\\to X}$",
-        "$T_{Y\\to X \\mid Z}$",
-        "$I(Y;Z)$"
-      ],
-      "explanationZh": "“在 Z 之外”意味着条件于 Z：条件 TE。成对 TE 回答的是 Y 单独是否有助于预测 X。",
-      "id": 517,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Pairwise vs conditional TE choice",
-      "source": "kp"
-    },
-    {
-      "question": "Effective networks are not causal networks. Why are they still useful?",
-      "options": [
-        "They need no statistical testing",
-        "They only work for linear systems",
-        "They are always identical to structural networks",
-        "They may be the best the data allow, reflect changes in dynamic state and reveal emergent computational structure"
-      ],
-      "correct": 3,
-      "explanation": "Without interventions, effective networks are often the best achievable; they track how the dynamics change and expose emergent computation.",
-      "questionZh": "有效网络不是因果网络，为什么仍然有用？",
-      "optionsZh": [
-        "不需要统计检验",
-        "只适用于线性系统",
-        "它们总与结构网络相同",
-        "它们可能是数据能做到的最好结果，能反映动态状态变化并揭示涌现的计算结构"
-      ],
-      "explanationZh": "没有干预时有效网络往往是能得到的最好结果；它反映动力学的变化并揭示涌现计算。",
-      "id": 518,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Effective networks and causality",
-      "source": "kp"
-    },
-    {
-      "question": "In the tutorial inferring a network from a CA, which approach came closest to the true neighbour structure?",
-      "options": [
-        "Pairwise TE with no significance test",
-        "Greedy multivariate TE with $k = 1$",
-        "Multi-information of all cells",
-        "MI network with a fixed threshold"
-      ],
-      "correct": 1,
-      "explanation": "The MI network was symmetric and blocky (domains); pairwise TE concentrated on neighbours but thresholds were hard to choose; p-values + Bonferroni were more principled but kept extra parents; greedy multivariate TE with k = 1 was closest.",
-      "questionZh": "在用 CA 推断网络的 tutorial 中，哪种方法最接近真实的邻居结构？",
-      "optionsZh": [
-        "不做显著性检验的成对 TE",
-        "贪心多变量 TE，$k = 1$",
-        "所有格子的 multi-information",
-        "固定阈值的 MI 网络"
-      ],
-      "explanationZh": "MI 网络对称、呈块状（domain 造成）；成对 TE 集中在邻居但阈值难定；p 值 + Bonferroni 更有原则但仍有多余父节点；贪心多变量 + k=1 最接近。",
-      "id": 519,
-      "course": "CSYS5030",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Effective Network Inference / Tutorial results / CA network inference",
-      "source": "kp"
-    },
-    {
       "question": "Which list gives the five layers of the Internet model used in this course, from top to bottom?",
       "options": [
         "Application, transport, network, link, physical",
@@ -13033,7 +10563,7 @@ window.QUIZ_DATA = {
         "应用层、会话层、网络层、链路层、物理层"
       ],
       "explanationZh": "本课用 5 层模型。ISO/OSI 是 7 层，表示层和会话层并入应用层（或视为不存在）。",
-      "id": 520,
+      "id": 423,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13058,7 +10588,7 @@ window.QUIZ_DATA = {
         "传输层"
       ],
       "explanationZh": "链路层：相邻节点之间；网络层：非相邻主机之间（路由 + 转发）；传输层：进程之间，通过套接字。",
-      "id": 521,
+      "id": 424,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13087,7 +10617,7 @@ window.QUIZ_DATA = {
         "DNS"
       ],
       "explanationZh": "HTTP、FTP、SMTP、DNS、SIP、RTP、MQTT、CoAP 属于应用层；TCP、UDP、MPTCP 属于传输层。（QUIC 归属有争议，本课视为做传输层工作的应用层协议。）",
-      "id": 522,
+      "id": 425,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13112,7 +10642,7 @@ window.QUIZ_DATA = {
         "在远距离网络之间路由"
       ],
       "explanationZh": "链路层三功能：差错检测、介质访问控制、链路层寻址。跨网络路由是网络层的事。",
-      "id": 523,
+      "id": 426,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13137,7 +10667,7 @@ window.QUIZ_DATA = {
         "每个参与者收益相同"
       ],
       "explanationZh": "纳什均衡：没有任何一方能通过只改变自己的策略获益。它不一定是社会最优（囚徒困境）。",
-      "id": 524,
+      "id": 427,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13162,7 +10692,7 @@ window.QUIZ_DATA = {
         "(坦白, 坦白) 是纳什均衡，尽管 (沉默, 沉默) 对社会更好"
       ],
       "explanationZh": "从 (沉默,沉默) 出发任一方改坦白都会获益（−1→0），所以不是均衡；从 (坦白,坦白) 改沉默会更差（−5→−10）。合作最优不是均衡：这就是困境。",
-      "id": 525,
+      "id": 428,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13187,7 +10717,7 @@ window.QUIZ_DATA = {
         "1 个，两人都沉默"
       ],
       "explanationZh": "(发,不发) 和 (不发,发) 都是均衡：发送方改变会从 10 降到 0，沉默方改变会从 0 降到 −5。问题是两个自私对等方无法商定谁牺牲。",
-      "id": 526,
+      "id": 429,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13217,7 +10747,7 @@ window.QUIZ_DATA = {
         "Cooperative: $U = 10p - 15p^2$, $U' = 10 - 30p = 0 \\Rightarrow p = 1/3$",
         "$U(1/3) = 10/3 - 15/9 = 5/3$"
       ],
-      "id": 527,
+      "id": 430,
       "course": "COMP5416",
       "week": "Week 01",
       "lectureWeek": "Week 01",
@@ -13242,7 +10772,7 @@ window.QUIZ_DATA = {
         "端口、套接字和进程"
       ],
       "explanationZh": "协议定义交换报文的格式、顺序，以及收发时采取的动作。Internet 标准是 IETF 发布的 RFC；Skype 是私有协议的例子。",
-      "id": 528,
+      "id": 431,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13271,7 +10801,7 @@ window.QUIZ_DATA = {
         "$d_{trans} = L/R = 10^4/10^8 = 0.1$ ms",
         "$d_{prop} = d/s = 2\\times10^6 / 2\\times10^8 = 10$ ms"
       ],
-      "id": 529,
+      "id": 432,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13296,7 +10826,7 @@ window.QUIZ_DATA = {
         "60 分钟"
       ],
       "explanationZh": "10 辆车全部通过第一个收费站 10×12 s=2 min（传输），最后一辆车再跑 100 km 用 60 min（传播），共 62 min。",
-      "id": 530,
+      "id": 433,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13321,7 +10851,7 @@ window.QUIZ_DATA = {
         "电路交换支持 10 个用户；分组交换可支持 35 个，超过 10 人同时活跃的概率约 0.0004"
       ],
       "explanationZh": "电路：⌊1000/100⌋=10。分组：35 人时 X~Bin(35,0.1)，P(X>10)≈0.0004。100 人时平均恰好用满，但过载概率约 41.7%：“平均够用”≠“几乎总是够用”。",
-      "id": 531,
+      "id": 434,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13346,7 +10876,7 @@ window.QUIZ_DATA = {
         "转发前先预留电路"
       ],
       "explanationZh": "分组交换机必须收完整个分组才能转发，所以每一跳都增加 L/R 的传输时延。",
-      "id": 532,
+      "id": 435,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13371,7 +10901,7 @@ window.QUIZ_DATA = {
         "5 Mbps"
       ],
       "explanationZh": "每连接吞吐量 = min(R_s, R_c, R/10) = min(2, 1, 0.5) = 0.5 Mbps，主干是瓶颈。",
-      "id": 533,
+      "id": 436,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13396,7 +10926,7 @@ window.QUIZ_DATA = {
         "降为零"
       ],
       "explanationZh": "La/R≈0 时延小；→1 时延剧增；>1 时到达超过服务能力，时延无界增长，缓冲满时丢包。",
-      "id": 534,
+      "id": 437,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13421,7 +10951,7 @@ window.QUIZ_DATA = {
         "部署最便宜"
       ],
       "explanationZh": "FTTN/FTTC 最后一段仍是铜缆，限制速率。光纤：长距低损耗、误码率低、不受电磁干扰。",
-      "id": 535,
+      "id": 438,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13446,7 +10976,7 @@ window.QUIZ_DATA = {
         "两者都像分组交换一样按需共享"
       ],
       "explanationZh": "FDM 按频率切分，一直发但速率低；TDM 按时间切分，周期性拿到时隙并占用全部带宽。",
-      "id": 536,
+      "id": 439,
       "course": "COMP5416",
       "week": "Week 02",
       "lectureWeek": "Week 02",
@@ -13471,7 +11001,7 @@ window.QUIZ_DATA = {
         "22 个 RTT"
       ],
       "explanationZh": "每个对象 2 个 RTT（TCP 建连 + 请求响应），11 个对象 × 2 = 22 个 RTT。",
-      "id": 537,
+      "id": 440,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13501,7 +11031,7 @@ window.QUIZ_DATA = {
         "Images: $\\lceil 10/5 \\rceil = 2$ rounds × $1\\,RTT$",
         "Total $= 4\\,RTT$"
       ],
-      "id": 538,
+      "id": 441,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13526,7 +11056,7 @@ window.QUIZ_DATA = {
         "GET 和 POST"
       ],
       "explanationZh": "HTTP/1.0：GET、POST、HEAD；HTTP/1.1 增加 PUT（上传文件到 URL 路径）和 DELETE。HEAD 要求响应中不包含对象本身。",
-      "id": 539,
+      "id": 442,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13551,7 +11081,7 @@ window.QUIZ_DATA = {
         "505 HTTP Version Not Supported"
       ],
       "explanationZh": "301：永久移动，新地址在 Location: 头里。200 成功、400 请求有误、404 不存在、505 版本不支持。（条件 GET 对未修改对象返回 304 Not Modified。）",
-      "id": 540,
+      "id": 443,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13576,7 +11106,7 @@ window.QUIZ_DATA = {
         "像 HTTP 一样只用一条连接"
       ],
       "explanationZh": "FTP 控制与数据分离：控制 21（带外），数据 20（每个文件新开一条）。服务器保存状态（当前目录、认证），与无状态的 HTTP 相反。",
-      "id": 541,
+      "id": 444,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13601,7 +11131,7 @@ window.QUIZ_DATA = {
         "两者都是运行在 UDP 上的拉协议"
       ],
       "explanationZh": "SMTP 把邮件从发件服务器推到收件服务器（TCP 25）；HTTP 拉取对象。从服务器取信到用户代理用 POP3/IMAP（或网页邮箱的 HTTP）。",
-      "id": 542,
+      "id": 445,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13626,7 +11156,7 @@ window.QUIZ_DATA = {
         "HTTP 响应中的 Set-cookie 首部行"
       ],
       "explanationZh": "Cookie 四部分：响应里的 Set-cookie、后续请求里的 Cookie、浏览器保存的 cookie 文件、网站后端数据库。都在 HTTP 层，不在 TCP。",
-      "id": 543,
+      "id": 446,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13651,7 +11181,7 @@ window.QUIZ_DATA = {
         "≈ 0.58"
       ],
       "explanationZh": "只有未命中的 60% 走接入链路：0.6×1.5=0.9 Mbps，利用率≈0.9/1.54≈0.58。时延降到约 1.2 s，比把链路升级到 154 Mbps 便宜得多。",
-      "id": 544,
+      "id": 447,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13676,7 +11206,7 @@ window.QUIZ_DATA = {
         "交互游戏"
       ],
       "explanationZh": "文件传输、邮件、Web 文档不能丢且弹性、不时间敏感。交互游戏容忍丢失、要求约 100 ms 时延但只需几 kbps：吞吐量与时延是独立维度。",
-      "id": 545,
+      "id": 448,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13704,7 +11234,7 @@ window.QUIZ_DATA = {
         "HTTP 服务器会保存客户过去请求的信息"
       ],
       "explanationZh": "代理缓存对浏览器是服务器、对源服务器是客户。SSL 在应用层、TCP 之上。HTTP 无状态。FTP 数据 20、控制 21。",
-      "id": 546,
+      "id": 449,
       "course": "COMP5416",
       "week": "Week 03",
       "lectureWeek": "Week 03",
@@ -13729,7 +11259,7 @@ window.QUIZ_DATA = {
         "数据库距离远、难以维护"
       ],
       "explanationZh": "集中式原理上能用，但有单点故障、流量巨大、距离远、难维护：无法扩展。",
-      "id": 547,
+      "id": 450,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13754,7 +11284,7 @@ window.QUIZ_DATA = {
         "它是位于用户 ISP 的根服务器"
       ],
       "explanationZh": "每个 ISP 都有本地（默认）DNS。主机把查询发给它，它向层级结构查询并缓存结果。它不属于根/TLD/权威层级。",
-      "id": 548,
+      "id": 451,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13779,7 +11309,7 @@ window.QUIZ_DATA = {
         "一条 NS 记录，外加该名字服务器的 A 记录"
       ],
       "explanationZh": "NS：域 → 其权威服务器主机名。没有对应的 A 记录（主机名 → IP）就联系不上。MX 是邮件服务器；CNAME 把别名映射到规范名。",
-      "id": 549,
+      "id": 452,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13804,7 +11334,7 @@ window.QUIZ_DATA = {
         "$\\max\\{NF/u_s,\\ NF/d_{min}\\}$"
       ],
       "explanationZh": "P2P：服务器至少上传一份（是 F/u_s 不是 NF/u_s）；最慢对等方要下载完（F/d_min）；总共 NF 比特由服务器和所有对等方一起上传。C/S 是 max{NF/u_s, F/d_min}，随 N 线性增长。",
-      "id": 550,
+      "id": 453,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13829,7 +11359,7 @@ window.QUIZ_DATA = {
         "0.1 小时"
       ],
       "explanationZh": "D_P2P=max{F/u_s, NF/(u_s+Nu)} → F/u=1 h：每个新对等方都带来上传能力（自扩展性）。C/S 无上界增长（N=10 时 1 h，P2P 0.5 h）。",
-      "id": 551,
+      "id": 454,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13854,7 +11384,7 @@ window.QUIZ_DATA = {
         "从不疏通 top 4 以外的对等方"
       ],
       "explanationZh": "一报还一报：向当前给你发得最快的 4 个对等方发送，每 10 秒重估；每 30 秒随机乐观疏通一个，它可能进入 top 4。请求用最稀缺优先。",
-      "id": 552,
+      "id": 455,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13879,7 +11409,7 @@ window.QUIZ_DATA = {
         "13 → 12, 15 → 14"
       ],
       "explanationZh": "key 分给立即后继（≥key 的最小 ID），不是数值最近。13→14；没有 ≥15 的 ID，环回到最小的 1。",
-      "id": 553,
+      "id": 456,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13904,7 +11434,7 @@ window.QUIZ_DATA = {
         "一个用于 IPv4，一个用于 IPv6"
       ],
       "explanationZh": "服务器的欢迎（监听）套接字等待联系；每次 accept() 返回一个由四元组标识的专用连接套接字。UDP 只用一个套接字，从 recvfrom() 得到客户地址。",
-      "id": 554,
+      "id": 457,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13929,7 +11459,7 @@ window.QUIZ_DATA = {
         "只有请求主机"
       ],
       "explanationZh": "递归：每个被联系的服务器替你问下一级，负载压在根和 TLD。迭代：被问的服务器回答“我不知道，去问它”，由本地服务器跑腿，被视为最佳实践。",
-      "id": 555,
+      "id": 458,
       "course": "COMP5416",
       "week": "Week 04",
       "lectureWeek": "Week 04",
@@ -13954,7 +11484,7 @@ window.QUIZ_DATA = {
         "两种协议都进同一个套接字"
       ],
       "explanationZh": "UDP 套接字由二元组（目的 IP、目的端口）标识，不同源共享；TCP 由四元组标识，每条连接独占一个套接字。",
-      "id": 556,
+      "id": 459,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -13983,7 +11513,7 @@ window.QUIZ_DATA = {
         "内置拥塞控制"
       ],
       "explanationZh": "UDP：无握手（无额外时延）、无连接状态、8 字节小首部、无拥塞控制（想多快发就多快发）。它根本没有拥塞控制。",
-      "id": 557,
+      "id": 460,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14013,7 +11543,7 @@ window.QUIZ_DATA = {
         "Wraparound: $1011101110111011 + 1 = 1011101110111100$",
         "Checksum $=$ complement $= 0100010001000011$"
       ],
-      "id": 558,
+      "id": 461,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14038,7 +11568,7 @@ window.QUIZ_DATA = {
         "校验和"
       ],
       "explanationZh": "rdt2.0 加校验和 + ACK/NAK 处理比特差错；rdt2.1 加序号 0/1 处理 ACK 损坏；rdt2.2 去掉 NAK（用重复 ACK）；rdt3.0 加定时器处理丢包。",
-      "id": 559,
+      "id": 462,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14067,7 +11597,7 @@ window.QUIZ_DATA = {
         "$L/R = 8000/10^9 = 0.008$ ms",
         "$U = \\frac{0.008}{30 + 0.008} \\approx 0.00027$"
       ],
-      "id": 560,
+      "id": 463,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14092,7 +11622,7 @@ window.QUIZ_DATA = {
         "GBN 只重传 2；SR 重传 2、3、4、5"
       ],
       "explanationZh": "GBN：累积 ACK，接收方丢弃乱序分组（不缓存），只给最老的未确认分组一个定时器，重传整个窗口。SR：单独 ACK，接收方缓存 3–5，每个分组一个定时器，只重传 2。",
-      "id": 561,
+      "id": 464,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14117,7 +11647,7 @@ window.QUIZ_DATA = {
         "再次为它发送 ACK"
       ],
       "explanationZh": "那个分组的 ACK 可能丢了，发送方窗口卡在它上面。接收方必须对 [rcv_base−N, rcv_base−1] 的分组重新 ACK，否则发送方永远无法前进。",
-      "id": 562,
+      "id": 465,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14142,7 +11672,7 @@ window.QUIZ_DATA = {
         "传输层运行在路由器中；网络层只在端系统中"
       ],
       "explanationZh": "网络层在主机间搬运数据报；传输层把它扩展到进程，只运行在端系统中。",
-      "id": 563,
+      "id": 466,
       "course": "COMP5416",
       "week": "Week 05",
       "lectureWeek": "Week 05",
@@ -14167,7 +11697,7 @@ window.QUIZ_DATA = {
         "92"
       ],
       "explanationZh": "TCP 按字节编号。ACK = 下一个期望的字节：92+8=100（累积确认）。",
-      "id": 564,
+      "id": 467,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14192,7 +11722,7 @@ window.QUIZ_DATA = {
         "117.5 ms"
       ],
       "explanationZh": "EstimatedRTT=(1−α)·Est+α·Sample=87.5+17.5=105 ms。TimeoutInterval=EstimatedRTT+4·DevRTT（DevRTT 用 β=0.25）。",
-      "id": 565,
+      "id": 468,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14217,7 +11747,7 @@ window.QUIZ_DATA = {
         "收到第一个重复 ACK 后"
       ],
       "explanationZh": "3 个重复 ACK（原 ACK + 3 个副本）强烈暗示已确认数据之后的段丢了，TCP 在定时器到期前就重传它。",
-      "id": 566,
+      "id": 469,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14242,7 +11772,7 @@ window.QUIZ_DATA = {
         "像 GBN 一样重传窗口内所有未确认段"
       ],
       "explanationZh": "TCP 只有一个定时器，超时只重传最老的未确认段（并重启定时器），不像 GBN 重传整个窗口。",
-      "id": 567,
+      "id": 470,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14267,7 +11797,7 @@ window.QUIZ_DATA = {
         "ssthresh 变为 8；两者都把 cwnd 设为 1"
       ],
       "explanationZh": "任何丢包 ssthresh=cwnd/2=8。Reno 遇 3 个重复 ACK：cwnd 减半（快速恢复）后线性增长。Tahoe：超时和 3-dup 都 cwnd=1。Reno 超时也设为 1。",
-      "id": 568,
+      "id": 471,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14292,7 +11822,7 @@ window.QUIZ_DATA = {
         "每个 RTT 增加 1 MSS"
       ],
       "explanationZh": "慢启动每个 ACK 加 1 MSS，等价于每 RTT 翻倍，“慢”只是起点低。cwnd 达到 ssthresh 后进入拥塞避免（每 RTT +1 MSS，AIMD）。",
-      "id": 569,
+      "id": 472,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14317,7 +11847,7 @@ window.QUIZ_DATA = {
         "600 KB/s"
       ],
       "explanationZh": "窗口在 W/2 与 W 之间变化，平均 3W/4。吞吐量 = 0.75×120 KB/0.1 s = 900 KB/s（约 7.2 Mbps）。",
-      "id": 570,
+      "id": 473,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14342,7 +11872,7 @@ window.QUIZ_DATA = {
         "两者都只由 rwnd 控制"
       ],
       "explanationZh": "rwnd 通告接收方剩余缓冲；cwnd 限制网络负载。LastByteSent−LastByteAcked ≤ min(cwnd, rwnd)。",
-      "id": 571,
+      "id": 474,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14367,7 +11897,7 @@ window.QUIZ_DATA = {
         "无法携带任何选项"
       ],
       "explanationZh": "时延不定且有重传时，旧的 SYN 会让服务器打开客户已不需要的连接，旧数据也会被接受。三次握手（SYN、SYNACK、ACK）解决这个问题，第三个段可以带数据。",
-      "id": 572,
+      "id": 475,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14392,7 +11922,7 @@ window.QUIZ_DATA = {
         "用更小的 MSS"
       ],
       "explanationZh": "TCP 公平是按连接的：K 条连接共享 R 时每条约 R/K，开更多连接就拿更多。UDP 根本没有拥塞控制。",
-      "id": 573,
+      "id": 476,
       "course": "COMP5416",
       "week": "Week 06",
       "lectureWeek": "Week 06",
@@ -14417,7 +11947,7 @@ window.QUIZ_DATA = {
         "创建欢迎套接字"
       ],
       "explanationZh": "UDP 无连接，每次 sendto() 都带目的地址，服务器从 recvfrom() 得知客户地址。TCP 客户 connect() 一次（三次握手）后直接 send()。",
-      "id": 574,
+      "id": 477,
       "course": "COMP5416",
       "week": "Week 07",
       "lectureWeek": "Week 07",
@@ -14442,7 +11972,7 @@ window.QUIZ_DATA = {
         "把服务器绑定到 80 端口"
       ],
       "explanationZh": "accept() 在欢迎套接字上阻塞直到有客户连接，然后返回该客户专用的连接套接字；欢迎套接字继续监听其他客户。",
-      "id": 575,
+      "id": 478,
       "course": "COMP5416",
       "week": "Week 07",
       "lectureWeek": "Week 07",
@@ -14467,7 +11997,7 @@ window.QUIZ_DATA = {
         "没事，$r$ 会自动调整"
       ],
       "explanationZh": "平均填充速率低于播放速率，缓冲终会被抽空而卡顿。E(x)≥r 时足够的初始播放时延可以吸收波动。播放时延越大下溢越少，代价是等待更久。",
-      "id": 576,
+      "id": 479,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14492,7 +12022,7 @@ window.QUIZ_DATA = {
         "在 DNS 服务器"
       ],
       "explanationZh": "服务器把视频按多种码率切块并提供 manifest。客户端测量带宽，决定何时、以什么码率、从哪里请求每一块。",
-      "id": 577,
+      "id": 480,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14517,7 +12047,7 @@ window.QUIZ_DATA = {
         "通过 DNS：内容提供商的权威 DNS 返回 CDN 主机名，CDN 的 DNS 再返回附近服务器的 IP"
       ],
       "explanationZh": "视频 URL 经提供商 DNS 解析到 CDN 名字；CDN 的权威 DNS 选择一个集群（最近或最空闲）并返回其 IP。讲义的 Netflix 例子里由客户端 ping 选择 CDN。",
-      "id": 578,
+      "id": 481,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14542,7 +12072,7 @@ window.QUIZ_DATA = {
         "352.8 kbps"
       ],
       "explanationZh": "码率=采样率×每样本比特数=8000×8=64 kbps（PCM 语音）。音乐 44100×8=352.8 kbps。",
-      "id": 579,
+      "id": 482,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14567,7 +12097,7 @@ window.QUIZ_DATA = {
         "只在每个讲话段开始时调整；讲话段内不调整"
       ],
       "explanationZh": "d_i、v_i 每个分组都用 EWMA 更新，但播放时刻 t_i+d_i+K·v_i 只用于讲话段的第一个分组；静默期被拉长或压缩。",
-      "id": 580,
+      "id": 483,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14592,7 +12122,7 @@ window.QUIZ_DATA = {
         "都不是"
       ],
       "explanationZh": "0→40：时间戳差>20 ms，但序号也跳了（2 丢了），是丢包不是静默。40→100：差 60 ms 且序号 3→4 连续，所以新讲话段从 100 开始。",
-      "id": 581,
+      "id": 484,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14617,7 +12147,7 @@ window.QUIZ_DATA = {
         "简单 XOR FEC 每组最多恢复 1 个丢失块；交织没有冗余但增加时延"
       ],
       "explanationZh": "XOR FEC 每 n 块发一个校验块：每组只能救 1 个，开销 1/n，并增加播放时延。交织把单元打散，丢一个分组只留下小空洞：无冗余但时延大。捎带低码率副本要额外带宽。",
-      "id": 582,
+      "id": 485,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14642,7 +12172,7 @@ window.QUIZ_DATA = {
         "RTP 运行在 UDP 之上，不提供任何 QoS 保证"
       ],
       "explanationZh": "RTP 在 UDP 之上加负载类型、序号、时间戳、SSRC。路由器不看 RTP 首部，所以没有时延或带宽保证。8 kHz 音频、20 ms 一块时时间戳每包加 160。",
-      "id": 583,
+      "id": 486,
       "course": "COMP5416",
       "week": "Week 08",
       "lectureWeek": "Week 08",
@@ -14667,7 +12197,7 @@ window.QUIZ_DATA = {
         "经过注册服务器"
       ],
       "explanationZh": "SIP 代理和注册服务器只处理信令（INVITE、200 OK、ACK、定位被叫）。建立后 RTP 媒体端到端直接传输。",
-      "id": 584,
+      "id": 487,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14692,7 +12222,7 @@ window.QUIZ_DATA = {
         "仅靠分组标记"
       ],
       "explanationZh": "四条原则：①分组标记让路由器区分类；②通过监管隔离/保护不守规矩的流；③隔离的同时高效利用资源；④需求超过容量时呼叫准入。",
-      "id": 585,
+      "id": 488,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14717,7 +12247,7 @@ window.QUIZ_DATA = {
         "120"
       ],
       "explanationZh": "N(t) ≤ rt+b = 100×0.5+20 = 70。t→0 时上界是突发大小 b；长期平均速率为 r。",
-      "id": 586,
+      "id": 489,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14742,7 +12272,7 @@ window.QUIZ_DATA = {
         "其余类按权重比例瓜分链路"
       ],
       "explanationZh": "WFQ 是保持工作的：每类至少得到 R·w_i/Σw_j，某类空闲时其余类按权重瓜分。优先级调度是非抢占的。",
-      "id": 587,
+      "id": 490,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14767,7 +12297,7 @@ window.QUIZ_DATA = {
         "无法解码"
       ],
       "explanationZh": "D=(1/M)ΣZ_m c_m=(1/8)(−8)=−1，每一项乘积都是 −1。多个发送方时信号相加，只有码正交才能解开。",
-      "id": 588,
+      "id": 491,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14792,7 +12322,7 @@ window.QUIZ_DATA = {
         "无线一定意味着移动"
       ],
       "explanationZh": "给定调制下 SNR 越高 BER 越低（代价是功率）。无线主机可以是静止的。隐藏终端正是因为发送方互相听不到，信号在接收方碰撞。信号随距离衰减。",
-      "id": 589,
+      "id": 492,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14817,7 +12347,7 @@ window.QUIZ_DATA = {
         "把尽力而为做到最好"
       ],
       "explanationZh": "尽力而为：无保证、无网络支持、到处都是。DiffServ：按类标记/调度/监管，软保证，部分部署。每连接 QoS：准入后软/硬保证，复杂度高，几乎没有部署。",
-      "id": 590,
+      "id": 493,
       "course": "COMP5416",
       "week": "Week 10",
       "lectureWeek": "Week 10",
@@ -14842,7 +12372,7 @@ window.QUIZ_DATA = {
         "让数据帧优先于 ACK"
       ],
       "explanationZh": "接收方只等 SIFS 就回 ACK；其他站必须侦听到信道空闲达更长的 DIFS，因此抢不到 ACK 前面。802.11 无法检测碰撞，所以需要链路层 ACK。",
-      "id": 591,
+      "id": 494,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14867,7 +12397,7 @@ window.QUIZ_DATA = {
         "继续倒数"
       ],
       "explanationZh": "计数器只在信道空闲时倒数，等得久的站下次更早发。没收到 ACK 就扩大退避区间。",
-      "id": 592,
+      "id": 495,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14892,7 +12422,7 @@ window.QUIZ_DATA = {
         "两者都只导致碰撞"
       ],
       "explanationZh": "隐藏终端互相听不到，在共同接收方碰撞，RTS/CTS 可以缓解。暴露终端因听到一个其实不影响自己接收方的传输而退让。RTS/CTS 仍可能失败（如 RTS 碰撞）。",
-      "id": 593,
+      "id": 496,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14917,7 +12447,7 @@ window.QUIZ_DATA = {
         "每个分组用一个新地址"
       ],
       "explanationZh": "间接路由中通信者总是发往永久地址；归属代理截获后隧道转发到转交地址（COA）。对通信者透明，但造成三角路由。",
-      "id": 594,
+      "id": 497,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14942,7 +12472,7 @@ window.QUIZ_DATA = {
         "HLR 在访问网络；VLR 在归属网络"
       ],
       "explanationZh": "HLR（归属位置寄存器）在归属网络，存永久号码、签约和当前位置；VLR（访问位置寄存器）在访问网络，为当前在此的每个用户保存记录。",
-      "id": 595,
+      "id": 498,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14967,7 +12497,7 @@ window.QUIZ_DATA = {
         "由旧 BSS 发起，先建立新路径再释放旧路径"
       ],
       "explanationZh": "旧 BSS 决定切换（如别处信号更强）并通知 MSC，MSC 建好到新 BSS 的路径后再释放旧 BSS 资源：先建后拆。",
-      "id": 596,
+      "id": 499,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -14992,7 +12522,7 @@ window.QUIZ_DATA = {
         "主机先发 DHCP 请求再扫描"
       ],
       "explanationZh": "被动扫描：AP 发信标帧，主机选 AP 并关联。主动扫描：主机广播探测请求，AP 回探测响应，再关联请求/响应。DHCP 在关联之后。",
-      "id": 597,
+      "id": 500,
       "course": "COMP5416",
       "week": "Week 11",
       "lectureWeek": "Week 11",
@@ -15017,7 +12547,7 @@ window.QUIZ_DATA = {
         "AMF（接入与移动性管理功能）"
       ],
       "explanationZh": "SMF 管会话：分配 IP、选择 UPF、QoS 控制。AMF 管连接/可达性、移动性、接入授权、位置。AUSF 认证；UDM 管身份与凭据；UDR 存签约数据。UPF 是唯一的用户面功能。",
-      "id": 598,
+      "id": 501,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15042,7 +12572,7 @@ window.QUIZ_DATA = {
         "UPF 到基站的隧道端点；设备 IP 地址不变"
       ],
       "explanationZh": "UE 的 IP 不变；UPF 与 RAN 之间的 GTP-U 隧道从源基站移到目标基站。",
-      "id": 599,
+      "id": 502,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15067,7 +12597,7 @@ window.QUIZ_DATA = {
         "一个 central 加最多 7 个 peripheral；peripheral 之间不能直接通信"
       ],
       "explanationZh": "piconet（<10 m）最多 8 个设备：central + 最多 7 个 peripheral，只能 central↔peripheral 通信，靠轮询、625 µs TDM 时隙。经典蓝牙在 2.4 GHz ISM 频段 79 个 1 MHz 信道上每个时隙跳频以减少干扰。",
-      "id": 600,
+      "id": 503,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15092,7 +12622,7 @@ window.QUIZ_DATA = {
         "两者 RTT 相同"
       ],
       "explanationZh": "GEO 相对地面静止、覆盖大，但 RTT 约 800 ms（对 VoIP 太大）。LEO 以约 27,000 km/h 运动、覆盖小、可见 5–15 分钟，需要多颗卫星加星间链路组成星座。",
-      "id": 601,
+      "id": 504,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15117,7 +12647,7 @@ window.QUIZ_DATA = {
         "每个 QUIC 流各自独立地可靠、按序交付，丢包只卡住自己的流"
       ],
       "explanationZh": "TCP 只有一条有序字节流：丢一个段会挡住后面所有数据，包括其他 HTTP/2 流的数据。QUIC（基于 UDP）按流做可靠传输。它用 UDP 是为了能在用户空间快速演进，不是放弃可靠性。",
-      "id": 602,
+      "id": 505,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15145,7 +12675,7 @@ window.QUIZ_DATA = {
         "QUIC 是网络层协议"
       ],
       "explanationZh": "QUIC 用连接 ID 而非四元组标识连接，可跨网络迁移。MAX_DATA 限整个连接，MAX_STREAM_DATA 限单个流（讲义写反了）。它在应用层、基于 UDP，并有类似 TCP 的拥塞控制。",
-      "id": 603,
+      "id": 506,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15170,7 +12700,7 @@ window.QUIZ_DATA = {
         "WiFi 6"
       ],
       "explanationZh": "IoT 需要几米到几公里的无线链路、几百 bps 到约 1 Mbps、极低能耗。短距：WiFi、BLE、Zigbee；低功耗广域：LoRaWAN、LTE-M；传统广域：蜂窝 4G/5G。",
-      "id": 604,
+      "id": 507,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15195,7 +12725,7 @@ window.QUIZ_DATA = {
         "只有归属代理相同时才可以"
       ],
       "explanationZh": "归属代理把分组隧道到 FA 的 COA；封装内层分组仍带移动设备的永久地址，FA 据此交付。",
-      "id": 605,
+      "id": 508,
       "course": "COMP5416",
       "week": "Week 12",
       "lectureWeek": "Week 12",
@@ -15221,7 +12751,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案 7：每人预留 20 Mbps，⌊150/20⌋=7。",
       "fixedOptions": true,
-      "id": 606,
+      "id": 509,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15243,7 +12773,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案 No：13×20=260 Mbps>150 Mbps。",
       "fixedOptions": true,
-      "id": 607,
+      "id": 510,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15273,7 +12803,7 @@ window.QUIZ_DATA = {
         "$0.2 \\times 0.06872 = 0.0137 \\approx 0.014$"
       ],
       "fixedOptions": true,
-      "id": 608,
+      "id": 511,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15302,7 +12832,7 @@ window.QUIZ_DATA = {
         "$\\binom{13}{1} p (1-p)^{12} = 13 \\times 0.0137 = 0.179$"
       ],
       "fixedOptions": true,
-      "id": 609,
+      "id": 512,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15328,7 +12858,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案 0.13：20/150≈0.133。",
       "fixedOptions": true,
-      "id": 610,
+      "id": 513,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15358,7 +12888,7 @@ window.QUIZ_DATA = {
         "$1287 \\times 0.2^8 \\times 0.8^5 \\approx 0.00108$"
       ],
       "fixedOptions": true,
-      "id": 611,
+      "id": 514,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15389,7 +12919,7 @@ window.QUIZ_DATA = {
         "Sum $\\approx 0.00125$"
       ],
       "fixedOptions": true,
-      "id": 612,
+      "id": 515,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 01",
@@ -15415,7 +12945,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案 TCP：单一有序字节流，丢一个段后面的数据都要等。QUIC 每个流独立；UDP 不保证顺序。",
       "fixedOptions": true,
-      "id": 613,
+      "id": 516,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 12",
@@ -15443,7 +12973,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案：根服务器。缓存里没有时，本地服务器从层级顶端开始问。",
       "fixedOptions": true,
-      "id": 614,
+      "id": 517,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 04",
@@ -15469,7 +12999,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案：TLD 服务器。根回复 .edu 的 TLD 服务器（严格说是指引而非转发）。",
       "fixedOptions": true,
-      "id": 615,
+      "id": 518,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 04",
@@ -15495,7 +13025,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案：权威服务器。TLD 返回 dns.umass.edu 的 NS 记录（及其 IP）。",
       "fixedOptions": true,
-      "id": 616,
+      "id": 519,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 04",
@@ -15521,7 +13051,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案 A：用户要的是主机名→IP。",
       "fixedOptions": true,
-      "id": 617,
+      "id": 520,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 04",
@@ -15543,7 +13073,7 @@ window.QUIZ_DATA = {
       ],
       "explanationZh": "官方答案：迭代，减轻根和 TLD 服务器负担。",
       "fixedOptions": true,
-      "id": 618,
+      "id": 521,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 04",
@@ -15571,1874 +13101,11 @@ window.QUIZ_DATA = {
         "$\\frac17 Z\\cdot c^{(1)} = 12/7 \\approx 1.71$"
       ],
       "fixedOptions": true,
-      "id": 619,
+      "id": 522,
       "course": "COMP5416",
       "week": "Sample Exam",
       "lectureWeek": "Week 10",
       "knowledgeLocation": "W10 SIP, QoS & Wireless / CDMA / non-orthogonal codes · Sample Exam Q4.1",
-      "source": "kp"
-    },
-    {
-      "question": "Using historical data with each customer's monthly spending in dollars, we want to predict next month's spending for a new customer. What kind of task is this?",
-      "options": [
-        "Supervised regression",
-        "Unsupervised clustering",
-        "Reinforcement learning",
-        "Supervised classification"
-      ],
-      "correct": 0,
-      "explanation": "Ask two questions: are there labels? (yes, past spending) → supervised. Is the label a category or a number? (a number) → regression.",
-      "questionZh": "利用历史数据（每位客户每月消费金额），预测新客户下个月的消费金额。这是什么任务？",
-      "optionsZh": [
-        "监督回归",
-        "无监督聚类",
-        "强化学习",
-        "监督分类"
-      ],
-      "explanationZh": "先问有没有标签（有，过去的消费）→ 监督；再问标签是类别还是数字（数字）→ 回归。",
-      "id": 620,
-      "course": "COMP5318",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Introduction / Task types / regression vs classification",
-      "source": "kp"
-    },
-    {
-      "question": "A shop has purchase histories but no labels and wants to discover groups of similar customers. What kind of task is this?",
-      "options": [
-        "Unsupervised clustering",
-        "Supervised classification",
-        "Supervised regression",
-        "Reinforcement learning"
-      ],
-      "correct": 0,
-      "explanation": "No labels and the goal is to group similar examples → clustering. Domain experts are still needed to interpret what each cluster means.",
-      "questionZh": "某商店有购买记录但没有标签，想发现相似客户的分组。这是什么任务？",
-      "optionsZh": [
-        "无监督聚类",
-        "监督分类",
-        "监督回归",
-        "强化学习"
-      ],
-      "explanationZh": "没有标签、目标是把相似样本分组 → 聚类。聚类结果仍需领域专家解释。",
-      "id": 621,
-      "course": "COMP5318",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Introduction / Task types / clustering",
-      "source": "kp"
-    },
-    {
-      "question": "A robot learns to walk by trying actions and receiving a reward when it moves forward without falling. What kind of learning is this?",
-      "options": [
-        "Reinforcement learning",
-        "Supervised classification",
-        "Supervised regression",
-        "Unsupervised clustering"
-      ],
-      "correct": 0,
-      "explanation": "Learning a decision policy from rewards obtained by interacting with an environment is reinforcement learning; there is no labelled correct action for each state.",
-      "questionZh": "机器人通过尝试动作学走路，向前走且不摔倒时获得奖励。这是哪种学习？",
-      "optionsZh": [
-        "强化学习",
-        "监督分类",
-        "监督回归",
-        "无监督聚类"
-      ],
-      "explanationZh": "通过与环境交互获得奖励来学习决策策略 → 强化学习；每个状态没有标注好的正确动作。",
-      "id": 622,
-      "course": "COMP5318",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Introduction / Task types / reinforcement learning",
-      "source": "kp"
-    },
-    {
-      "question": "In the six-step data mining process, which step comes directly after 'understand the data'?",
-      "options": [
-        "Evaluate",
-        "Deploy",
-        "Build the model",
-        "Prepare the data"
-      ],
-      "correct": 3,
-      "explanation": "Order: understand the business → understand the data → prepare the data ⇄ modelling → evaluation → deployment (or back to the start if results are poor).",
-      "questionZh": "在数据挖掘六步流程中，“理解数据”之后紧接着是哪一步？",
-      "optionsZh": [
-        "评估",
-        "部署",
-        "建模",
-        "准备数据"
-      ],
-      "explanationZh": "顺序：理解业务 → 理解数据 → 准备数据 ⇄ 建模 → 评估 → 部署（效果差就回到开头）。",
-      "id": 623,
-      "course": "COMP5318",
-      "week": "Week 01",
-      "lectureWeek": "Week 01",
-      "knowledgeLocation": "W1 Introduction / Data mining process",
-      "source": "kp"
-    },
-    {
-      "question": "When using min-max scaling with 10-fold cross-validation, where should the min and max be computed?",
-      "options": [
-        "On the training and test data combined",
-        "On the training part of each fold only",
-        "On the test fold",
-        "On the whole dataset before splitting"
-      ],
-      "correct": 1,
-      "explanation": "Scaling parameters must come from training data only (inside each fold, from that fold's training part). Using test data is data leakage and gives over-optimistic results.",
-      "questionZh": "在 10 折交叉验证中使用 min-max 缩放，最小值和最大值应该在哪里计算？",
-      "optionsZh": [
-        "在训练和测试数据合起来上",
-        "只在每一折的训练部分上",
-        "在测试折上",
-        "在划分前的整个数据集上"
-      ],
-      "explanationZh": "缩放参数只能从训练数据算（每折里只用这一折的训练部分）。用到测试数据就是数据泄漏，结果会偏乐观。",
-      "id": 624,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Scaling / data leakage",
-      "source": "kp"
-    },
-    {
-      "question": "On the training set a feature has min 10 and max 60. What is the min-max scaled value of a test example with value 30?",
-      "options": [
-        "0.4",
-        "0.3",
-        "0.6",
-        "0.5"
-      ],
-      "correct": 0,
-      "explanation": "x' = (x − min)/(max − min) = (30 − 10)/(60 − 10) = 20/50 = 0.4. A test value outside [10, 60] could fall outside [0, 1], which is fine.",
-      "questionZh": "训练集上某特征最小值 10、最大值 60。测试样本取值 30，min-max 缩放后是多少？",
-      "optionsZh": [
-        "0.4",
-        "0.3",
-        "0.6",
-        "0.5"
-      ],
-      "explanationZh": "x'=(x−min)/(max−min)=(30−10)/(60−10)=0.4。测试值超出 [10,60] 时可以落在 [0,1] 之外，这是正常的。",
-      "id": 625,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Scaling / calculation",
-      "source": "kp"
-    },
-    {
-      "question": "What are the Euclidean and Manhattan distances between (1, 2) and (4, 6)?",
-      "options": [
-        "Euclidean 25, Manhattan 7",
-        "Euclidean 7, Manhattan 5",
-        "Euclidean 5, Manhattan 5",
-        "Euclidean 5, Manhattan 7"
-      ],
-      "correct": 3,
-      "explanation": "Differences 3 and 4. Euclidean = √(9 + 16) = 5. Manhattan = 3 + 4 = 7.",
-      "questionZh": "点 (1, 2) 与 (4, 6) 的欧氏距离和曼哈顿距离分别是多少？",
-      "optionsZh": [
-        "欧氏 25，曼哈顿 7",
-        "欧氏 7，曼哈顿 5",
-        "欧氏 5，曼哈顿 5",
-        "欧氏 5，曼哈顿 7"
-      ],
-      "explanationZh": "差值 3 和 4。欧氏=√(9+16)=5；曼哈顿=3+4=7。",
-      "id": 626,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Distances",
-      "source": "kp"
-    },
-    {
-      "question": "x = 1000000000 and y = 0000001001. What are SMC and Jaccard similarity?",
-      "options": [
-        "SMC = 0.7, Jaccard = 0",
-        "SMC = 0, Jaccard = 0.7",
-        "SMC = 0.7, Jaccard = 0.7",
-        "SMC = 0.3, Jaccard = 0.3"
-      ],
-      "correct": 0,
-      "explanation": "f11 = 0, f10 = 1, f01 = 2, f00 = 7. SMC = (f11 + f00)/10 = 0.7. Jaccard = f11/(f11 + f10 + f01) = 0. For sparse 0/1 data (e.g. shopping baskets) Jaccard is preferred because shared 0s are not evidence of similarity.",
-      "questionZh": "x = 1000000000，y = 0000001001。SMC 和 Jaccard 相似度分别是多少？",
-      "optionsZh": [
-        "SMC = 0.7, Jaccard = 0",
-        "SMC = 0, Jaccard = 0.7",
-        "SMC = 0.7, Jaccard = 0.7",
-        "SMC = 0.3, Jaccard = 0.3"
-      ],
-      "explanationZh": "f11=0, f10=1, f01=2, f00=7。SMC=(f11+f00)/10=0.7；Jaccard=f11/(f11+f10+f01)=0。稀疏 0/1 数据（如购物篮）用 Jaccard，因为共同的 0 不代表相似。",
-      "id": 627,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Binary similarity / SMC vs Jaccard",
-      "source": "kp"
-    },
-    {
-      "question": "What is the cosine similarity between (3, 4) and (4, 3)?",
-      "options": [
-        "0.48",
-        "1.00",
-        "0.96",
-        "0.75"
-      ],
-      "correct": 2,
-      "explanation": "cos = x·y / (‖x‖‖y‖) = (12 + 12)/(5 × 5) = 24/25 = 0.96.",
-      "questionZh": "向量 (3, 4) 与 (4, 3) 的余弦相似度是多少？",
-      "optionsZh": [
-        "0.48",
-        "1.00",
-        "0.96",
-        "0.75"
-      ],
-      "explanationZh": "cos=x·y/(‖x‖‖y‖)=(12+12)/(5×5)=0.96。",
-      "id": 628,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Cosine similarity",
-      "source": "kp"
-    },
-    {
-      "question": "For a test point, the 3 nearest neighbours are: class A at distance 1, class B at distance 2, class B at distance 2. Which class do plain 3-NN and 1/d²-weighted 3-NN predict?",
-      "options": [
-        "Plain: B; weighted: A",
-        "Both B",
-        "Both A",
-        "Plain: A; weighted: B"
-      ],
-      "correct": 0,
-      "explanation": "Plain majority: B has 2 votes vs 1. Weighted with 1/d²: A = 1/1 = 1; B = 1/4 + 1/4 = 0.5. So weighting reverses the decision to A.",
-      "questionZh": "某测试点的 3 个最近邻：类 A 距离 1，类 B 距离 2，类 B 距离 2。普通 3-NN 和按 1/d² 加权的 3-NN 分别预测哪一类？",
-      "optionsZh": [
-        "普通：B；加权：A",
-        "都是 B",
-        "都是 A",
-        "普通：A；加权：B"
-      ],
-      "explanationZh": "普通多数投票：B 2 票对 1 票。按 1/d² 加权：A=1；B=1/4+1/4=0.5，加权后结论反转为 A。",
-      "steps": [
-        "Plain: A = 1 vote, B = 2 votes → B",
-        "Weighted: $A = 1/1^2 = 1$, $B = 2 \\times 1/2^2 = 0.5$ → A"
-      ],
-      "id": 629,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / kNN / distance-weighted voting",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about kNN is correct?",
-      "options": [
-        "Most of the cost is at prediction time because all training examples must be stored and compared",
-        "Feature scaling does not matter for kNN",
-        "kNN learns a weight vector during training",
-        "Training is slow but prediction is instant"
-      ],
-      "correct": 0,
-      "explanation": "kNN is a lazy learner: training just stores the data; prediction computes distances to every stored example. Because it uses distances, features must be scaled first.",
-      "questionZh": "关于 kNN，哪项正确？",
-      "optionsZh": [
-        "主要代价在预测阶段，因为必须存储并比较所有训练样本",
-        "特征缩放对 kNN 无影响",
-        "kNN 在训练时学习一个权重向量",
-        "训练慢但预测瞬间完成"
-      ],
-      "explanationZh": "kNN 是懒惰学习：训练只是存数据，预测时要算到每个样本的距离。它依赖距离，所以要先缩放。",
-      "id": 630,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / kNN / properties",
-      "source": "kp"
-    },
-    {
-      "question": "Rank feature-selection approaches from fastest to slowest.",
-      "options": [
-        "Brute force, wrapper, filter",
-        "Wrapper, filter, brute force",
-        "Filter, brute force, wrapper",
-        "Filter, wrapper, brute force"
-      ],
-      "correct": 3,
-      "explanation": "Filter methods score features independently of the classifier (fast). Wrapper methods train the classifier on candidate subsets (slow). Brute force tries all 2^d subsets (slowest). Also: a correlation of 0 only means no linear relationship.",
-      "questionZh": "把特征选择方法从快到慢排序。",
-      "optionsZh": [
-        "暴力搜索、Wrapper、Filter",
-        "Wrapper、Filter、暴力搜索",
-        "Filter、暴力搜索、Wrapper",
-        "Filter、Wrapper、暴力搜索"
-      ],
-      "explanationZh": "Filter 不依赖分类器单独给特征打分（快）；Wrapper 要在候选子集上训练分类器（慢）；暴力搜索要试全部 2^d 个子集（最慢）。另外：相关系数为 0 只说明没有线性关系。",
-      "id": 631,
-      "course": "COMP5318",
-      "week": "Week 02",
-      "lectureWeek": "Week 02",
-      "knowledgeLocation": "W2 Data Preprocessing & kNN / Feature selection / correlation",
-      "source": "kp"
-    },
-    {
-      "question": "Fit simple linear regression by least squares to (1, 2), (2, 3), (3, 5). What is the prediction at $x = 4$?",
-      "options": [
-        "≈ 6.33",
-        "≈ 7.00",
-        "≈ 6.00",
-        "≈ 5.50"
-      ],
-      "correct": 0,
-      "explanation": "x̄ = 2, ȳ = 10/3. S_xy = (−1)(−4/3) + 0 + (1)(5/3) = 3, S_xx = 2. Slope = 1.5, intercept = 10/3 − 3 = 1/3. ŷ(4) = 1/3 + 6 ≈ 6.33.",
-      "questionZh": "用最小二乘对 (1, 2)、(2, 3)、(3, 5) 拟合简单线性回归。$x = 4$ 时的预测值是多少？",
-      "optionsZh": [
-        "≈ 6.33",
-        "≈ 7.00",
-        "≈ 6.00",
-        "≈ 5.50"
-      ],
-      "explanationZh": "x̄=2，ȳ=10/3；S_xy=3，S_xx=2；斜率 1.5，截距 1/3；ŷ(4)=1/3+6≈6.33。",
-      "steps": [
-        "$\\bar x = 2$, $\\bar y = 10/3$",
-        "$S_{xy} = 3$, $S_{xx} = 2$ ⇒ $b_1 = 1.5$",
-        "$b_0 = 10/3 - 1.5 \\times 2 = 1/3$",
-        "$\\hat y(4) = 1/3 + 6 \\approx 6.33$"
-      ],
-      "id": 632,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares / calculation",
-      "source": "kp"
-    },
-    {
-      "question": "A model's errors on three examples are +1, −2, +3. What are MAE and MSE?",
-      "options": [
-        "MAE 2, MSE 14",
-        "MAE 6, MSE ≈ 4.67",
-        "MAE 2, MSE ≈ 4.67",
-        "MAE 0.67, MSE 14"
-      ],
-      "correct": 2,
-      "explanation": "MAE = (1 + 2 + 3)/3 = 2. MSE = (1 + 4 + 9)/3 = 14/3 ≈ 4.67. MSE squares errors, so it is more sensitive to outliers than MAE.",
-      "questionZh": "模型在三个样本上的误差为 +1、−2、+3。MAE 和 MSE 分别是多少？",
-      "optionsZh": [
-        "MAE 2，MSE 14",
-        "MAE 6，MSE ≈ 4.67",
-        "MAE 2，MSE ≈ 4.67",
-        "MAE 0.67，MSE 14"
-      ],
-      "explanationZh": "MAE=(1+2+3)/3=2；MSE=(1+4+9)/3≈4.67。MSE 对误差平方，比 MAE 对离群点更敏感。",
-      "id": 633,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / MAE vs MSE",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about regularised linear regression is correct?",
-      "options": [
-        "Regularisation reduces the training error",
-        "Increasing α makes coefficients larger",
-        "L2 (Ridge) sets coefficients exactly to 0",
-        "L1 (Lasso) can set some coefficients exactly to 0; increasing Ridge's α shrinks coefficients more"
-      ],
-      "correct": 3,
-      "explanation": "Lasso's L1 penalty produces sparse solutions (feature selection). Ridge's L2 penalty shrinks coefficients toward 0 but rarely to exactly 0; larger α → stronger shrinkage. Regularisation usually increases training error to reduce overfitting.",
-      "questionZh": "关于正则化线性回归，哪项正确？",
-      "optionsZh": [
-        "正则化会降低训练误差",
-        "增大 α 会让系数变大",
-        "L2（Ridge）会把系数压成恰好 0",
-        "L1（Lasso）能把某些系数压成恰好 0；增大 Ridge 的 α 会让系数更小"
-      ],
-      "explanationZh": "Lasso 的 L1 惩罚产生稀疏解（相当于特征选择）；Ridge 的 L2 惩罚把系数往 0 压但很少恰好为 0；α 越大压得越狠。正则化通常会提高训练误差以减少过拟合。",
-      "id": 634,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / Regularisation / Lasso vs Ridge",
-      "source": "kp"
-    },
-    {
-      "question": "A logistic regression model has $w_0 = -1$, $w_1 = 2$. For $x = 1.3$ (threshold 0.5), what is the output and the predicted class?",
-      "options": [
-        "≈ 0.17, negative class",
-        "≈ 0.83, positive class",
-        "≈ 0.50, undecided",
-        "≈ 1.6, positive class"
-      ],
-      "correct": 1,
-      "explanation": "z = −1 + 2 × 1.3 = 1.6. σ(1.6) = 1/(1 + e^{−1.6}) ≈ 0.83 = P(positive | x). 0.83 > 0.5 → positive. 1.6 is z, not the probability.",
-      "questionZh": "逻辑回归模型 $w_0 = -1$、$w_1 = 2$。当 $x = 1.3$（阈值 0.5）时，输出和预测类别是什么？",
-      "optionsZh": [
-        "≈ 0.17，负类",
-        "≈ 0.83，正类",
-        "≈ 0.50，无法判断",
-        "≈ 1.6，正类"
-      ],
-      "explanationZh": "z=−1+2×1.3=1.6，σ(1.6)≈0.83 = P(正类|x)，大于 0.5 → 正类。1.6 是 z 不是概率。",
-      "steps": [
-        "$z = -1 + 2(1.3) = 1.6$",
-        "$\\sigma(1.6) = 1/(1+e^{-1.6}) \\approx 0.83$"
-      ],
-      "id": 635,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression / prediction",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about least-squares linear regression is correct?",
-      "options": [
-        "It minimises the sum of absolute residuals",
-        "It maximises $R^2$ on the test data",
-        "From $R^2$ alone you can tell the sign of the correlation $r$",
-        "It minimises the sum of squared residuals on the training data"
-      ],
-      "correct": 3,
-      "explanation": "Least squares minimises SSE = Σ(y − ŷ)². R² = r² for simple regression, so its value cannot show whether r is positive or negative.",
-      "questionZh": "关于最小二乘线性回归，哪项正确？",
-      "optionsZh": [
-        "它最小化残差绝对值之和",
-        "它最大化测试数据上的 $R^2$",
-        "只看 $R^2$ 就能知道相关系数 $r$ 的正负",
-        "它最小化训练数据上残差的平方和"
-      ],
-      "explanationZh": "最小二乘最小化 SSE=Σ(y−ŷ)²。简单回归中 R²=r²，看不出 r 的正负号。",
-      "id": 636,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares / what is minimised",
-      "source": "kp"
-    },
-    {
-      "question": "Why might you train linear regression with gradient descent instead of the normal equation?",
-      "options": [
-        "Gradient descent never needs a learning rate",
-        "The normal equation cannot handle more than one feature",
-        "The normal equation needs a matrix inverse, which is expensive with very many features",
-        "Gradient descent always finds a better minimum"
-      ],
-      "correct": 2,
-      "explanation": "The MSE loss of linear regression is convex, so both reach the same optimum. The closed form needs (XᵀX)⁻¹, which is costly for large d; gradient descent scales better but needs a learning rate and (ideally) scaled features.",
-      "questionZh": "为什么有时用梯度下降而不是正规方程来训练线性回归？",
-      "optionsZh": [
-        "梯度下降从不需要学习率",
-        "正规方程不能处理多于一个特征",
-        "正规方程需要求矩阵的逆，特征很多时代价很高",
-        "梯度下降总能找到更好的极小值"
-      ],
-      "explanationZh": "线性回归的 MSE 损失是凸的，两者到达同一最优。闭式解要算 (XᵀX)⁻¹，d 大时代价高；梯度下降扩展性好，但需要学习率和（最好）缩放后的特征。",
-      "id": 637,
-      "course": "COMP5318",
-      "week": "Week 03",
-      "lectureWeek": "Week 03",
-      "knowledgeLocation": "W3 Linear & Logistic Regression / Gradient descent for regression",
-      "source": "kp"
-    },
-    {
-      "question": "Training data: 4 spam and 6 ham emails. P(free | spam) = 3/4, P(free | ham) = 1/6, P(link | spam) = 2/4, P(link | ham) = 3/6. An email contains 'free' and 'link'. What is P(spam | email)?",
-      "options": [
-        "0.25",
-        "0.15",
-        "0.50",
-        "0.75"
-      ],
-      "correct": 3,
-      "explanation": "Score(spam) = 0.4 × 3/4 × 2/4 = 0.15. Score(ham) = 0.6 × 1/6 × 3/6 = 0.05. Posterior = 0.15/(0.15 + 0.05) = 0.75 → spam. 0.15 is only the unnormalised score.",
-      "questionZh": "训练数据：4 封垃圾邮件、6 封正常邮件。P(free|spam)=3/4，P(free|ham)=1/6，P(link|spam)=2/4，P(link|ham)=3/6。某邮件包含 free 和 link，P(spam|邮件) 是多少？",
-      "optionsZh": [
-        "0.25",
-        "0.15",
-        "0.50",
-        "0.75"
-      ],
-      "explanationZh": "得分(spam)=0.4×3/4×2/4=0.15；得分(ham)=0.6×1/6×3/6=0.05；后验=0.15/0.2=0.75 → 垃圾邮件。0.15 只是未归一化的得分。",
-      "steps": [
-        "$0.4 \\times \\frac34 \\times \\frac24 = 0.15$",
-        "$0.6 \\times \\frac16 \\times \\frac36 = 0.05$",
-        "$P(\\text{spam}\\mid e) = \\frac{0.15}{0.20} = 0.75$"
-      ],
-      "id": 638,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes / calculation",
-      "source": "kp"
-    },
-    {
-      "question": "What is the 'naive' assumption in Naive Bayes?",
-      "options": [
-        "Features are conditionally independent given the class",
-        "All classes have equal prior probability",
-        "Features are independent of the class",
-        "Features are normally distributed"
-      ],
-      "correct": 0,
-      "explanation": "Given the class, features don't influence each other, so P(x₁,…,x_d | c) = Π P(x_i | c). Priors may differ, and features must depend on the class to be useful.",
-      "questionZh": "朴素贝叶斯中“朴素”的假设是什么？",
-      "optionsZh": [
-        "给定类别时各特征条件独立",
-        "所有类别先验概率相等",
-        "特征与类别独立",
-        "特征服从正态分布"
-      ],
-      "explanationZh": "知道类别后各特征互不影响，因此 P(x₁..x_d|c)=ΠP(x_i|c)。先验可以不同；特征必须与类别相关才有用。",
-      "id": 639,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes / assumption",
-      "source": "kp"
-    },
-    {
-      "question": "Feature 'outlook' has 3 possible values. In class 'no' (6 examples), 'overcast' never appears. With Laplace smoothing, what is P(overcast | no)?",
-      "options": [
-        "1/7",
-        "0",
-        "1/6",
-        "1/9"
-      ],
-      "correct": 3,
-      "explanation": "(count + 1)/(n + number of values) = (0 + 1)/(6 + 3) = 1/9. Without smoothing one zero would make the whole product 0.",
-      "questionZh": "特征 outlook 有 3 种取值。在类别 no（6 个样本）中 overcast 从未出现。用 Laplace 平滑后 P(overcast | no) 是多少？",
-      "optionsZh": [
-        "1/7",
-        "0",
-        "1/6",
-        "1/9"
-      ],
-      "explanationZh": "(计数+1)/(n+取值个数)=(0+1)/(6+3)=1/9。不平滑的话一个 0 会让整个乘积变 0。",
-      "id": 640,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Laplace smoothing",
-      "source": "kp"
-    },
-    {
-      "question": "A classifier has TP = 40, FP = 10, FN = 20. What are precision, recall and F1?",
-      "options": [
-        "P = 0.80, R ≈ 0.67, F1 ≈ 0.73",
-        "P = 0.80, R ≈ 0.67, F1 ≈ 0.75",
-        "P ≈ 0.67, R = 0.80, F1 ≈ 0.73",
-        "P = 0.80, R = 0.80, F1 = 0.80"
-      ],
-      "correct": 0,
-      "explanation": "Precision = TP/(TP + FP) = 40/50 = 0.8. Recall = TP/(TP + FN) = 40/60 ≈ 0.667. F1 = 2PR/(P + R) ≈ 0.727 (harmonic mean, below the arithmetic mean 0.733).",
-      "questionZh": "某分类器 TP = 40、FP = 10、FN = 20。precision、recall、F1 分别是多少？",
-      "optionsZh": [
-        "P = 0.80, R ≈ 0.67, F1 ≈ 0.73",
-        "P = 0.80, R ≈ 0.67, F1 ≈ 0.75",
-        "P ≈ 0.67, R = 0.80, F1 ≈ 0.73",
-        "P = 0.80, R = 0.80, F1 = 0.80"
-      ],
-      "explanationZh": "Precision=40/50=0.8；Recall=40/60≈0.667；F1=2PR/(P+R)≈0.727（调和平均，低于算术平均）。",
-      "steps": [
-        "$P = 40/50 = 0.80$",
-        "$R = 40/60 = 0.667$",
-        "$F_1 = \\frac{2 \\times 0.8 \\times 0.667}{1.467} \\approx 0.727$"
-      ],
-      "id": 641,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Precision, recall, F1",
-      "source": "kp"
-    },
-    {
-      "question": "How should hyperparameters (e.g. $k$ in kNN) be chosen?",
-      "options": [
-        "With a validation set or cross-validation on the training data; the test set is used once at the end",
-        "By using the whole dataset for both tuning and testing",
-        "By training on the test set",
-        "By picking the value with the best test accuracy"
-      ],
-      "correct": 0,
-      "explanation": "Tuning on the test set leaks information and overestimates performance. Use a validation set or k-fold CV on the training data, then evaluate the final model once on the test set.",
-      "questionZh": "超参数（如 kNN 的 $k$）应如何选择？",
-      "optionsZh": [
-        "用验证集或训练数据上的交叉验证；测试集最后只用一次",
-        "整个数据集同时用于调参和测试",
-        "在测试集上训练",
-        "选测试准确率最高的值"
-      ],
-      "explanationZh": "在测试集上调参会泄漏信息、高估性能。用验证集或训练数据上的 k 折 CV 调参，最终模型在测试集上只评估一次。",
-      "id": 642,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Evaluation / test set use",
-      "source": "kp"
-    },
-    {
-      "question": "In a dataset with 99% negative examples, a model that always predicts 'negative' has 99% accuracy. Why is this misleading?",
-      "options": [
-        "Its precision on the negative class is 0",
-        "Its recall on the positive class is 0",
-        "The F1 score is always 1 in this case",
-        "Accuracy cannot be above 95%"
-      ],
-      "correct": 1,
-      "explanation": "It never finds a positive (TP = 0), so positive-class recall is 0. Use precision, recall, F1 or a confusion matrix for imbalanced data.",
-      "questionZh": "在 99% 为负例的数据集上，总是预测“负”的模型准确率为 99%。为什么这有误导性？",
-      "optionsZh": [
-        "它对负类的 precision 为 0",
-        "它对正类的 recall 为 0",
-        "这种情况下 F1 总是 1",
-        "准确率不可能超过 95%"
-      ],
-      "explanationZh": "它从不找出正例（TP=0），正类 recall 为 0。类别不平衡时应看 precision、recall、F1 或混淆矩阵。",
-      "id": 643,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Imbalanced data",
-      "source": "kp"
-    },
-    {
-      "question": "What does stratified k-fold cross-validation guarantee?",
-      "options": [
-        "Each example appears in the test fold k times",
-        "Each fold has roughly the same class proportions as the full dataset",
-        "Each fold contains only one class",
-        "The folds are chosen to maximise accuracy"
-      ],
-      "correct": 1,
-      "explanation": "Stratification keeps the class distribution in every fold similar to the whole dataset; each example is in the test fold exactly once.",
-      "questionZh": "分层 k 折交叉验证保证了什么？",
-      "optionsZh": [
-        "每个样本在测试折中出现 k 次",
-        "每折的类别比例与整个数据集大致相同",
-        "每折只包含一个类别",
-        "折的划分让准确率最高"
-      ],
-      "explanationZh": "分层让每折的类别分布与整体相近；每个样本恰好在测试折中出现一次。",
-      "id": 644,
-      "course": "COMP5318",
-      "week": "Week 04",
-      "lectureWeek": "Week 04",
-      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Stratified cross-validation",
-      "source": "kp"
-    },
-    {
-      "question": "A node has 6 positive and 4 negative examples. Splitting on A gives a left child (4+, 0−) and a right child (2+, 4−). What is the information gain?",
-      "options": [
-        "≈ 0.97 bits",
-        "≈ 0.92 bits",
-        "≈ 0.42 bits",
-        "≈ 0.55 bits"
-      ],
-      "correct": 2,
-      "explanation": "H(parent) = H(0.6, 0.4) ≈ 0.971. H(left) = 0; H(right) = H(1/3, 2/3) ≈ 0.918. Weighted child entropy = 0.4 × 0 + 0.6 × 0.918 ≈ 0.551. Gain ≈ 0.971 − 0.551 ≈ 0.42.",
-      "questionZh": "某节点有 6 个正例、4 个负例。按 A 划分后，左子节点 (4+, 0−)，右子节点 (2+, 4−)。信息增益是多少？",
-      "optionsZh": [
-        "≈ 0.97 bits",
-        "≈ 0.92 bits",
-        "≈ 0.42 bits",
-        "≈ 0.55 bits"
-      ],
-      "explanationZh": "H(父)=H(0.6,0.4)≈0.971；H(左)=0；H(右)=H(1/3,2/3)≈0.918；加权子熵=0.6×0.918≈0.551；增益≈0.42。",
-      "steps": [
-        "$H(6/10, 4/10) = 0.971$",
-        "$H(\\text{right}) = H(1/3, 2/3) = 0.918$",
-        "Weighted $= 0.4(0) + 0.6(0.918) = 0.551$",
-        "Gain $= 0.971 - 0.551 = 0.420$"
-      ],
-      "id": 645,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain / calculation",
-      "source": "kp"
-    },
-    {
-      "question": "Why can information gain prefer a feature like 'customer ID'?",
-      "options": [
-        "Features with many values split data into tiny pure subsets; gain ratio corrects this",
-        "Because entropy is undefined for numeric features",
-        "Because IDs are always the most predictive feature",
-        "Because pruning removes all other features"
-      ],
-      "correct": 0,
-      "explanation": "A unique ID gives one pure leaf per example, so child entropy is 0 and gain is maximal, but it does not generalise. Gain ratio divides by the split information to penalise many-valued features.",
-      "questionZh": "为什么信息增益可能偏爱“客户 ID”这样的特征？",
-      "optionsZh": [
-        "取值多的特征把数据切成很小的纯子集；增益率可以修正",
-        "因为数值特征的熵无定义",
-        "因为 ID 总是最有预测力的特征",
-        "因为剪枝会删掉其他所有特征"
-      ],
-      "explanationZh": "唯一 ID 让每个样本成为一个纯叶子，子熵为 0、增益最大，但无法泛化。增益率除以分裂信息来惩罚取值多的特征。",
-      "id": 646,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain bias",
-      "source": "kp"
-    },
-    {
-      "question": "Match the method to its idea: which pairing is correct?",
-      "options": [
-        "AdaBoost: sample with replacement and average",
-        "Bagging: increase the weights of misclassified examples",
-        "Gradient boosting: each new model fits the residuals (true − current prediction)",
-        "Random forest: use all features at every split"
-      ],
-      "correct": 2,
-      "explanation": "Bagging: bootstrap samples (with replacement), average/vote — reduces variance. AdaBoost: raise the relative weight of misclassified examples for the next learner. Gradient boosting: fit the residuals. Random forest: bagging + a random subset of features at each split.",
-      "questionZh": "下列方法与思想的对应，哪项正确？",
-      "optionsZh": [
-        "AdaBoost：有放回抽样再平均",
-        "Bagging：提高被分错样本的权重",
-        "梯度提升：每个新模型拟合残差（真实值 − 当前预测）",
-        "随机森林：每次分裂都用全部特征"
-      ],
-      "explanationZh": "Bagging：有放回抽样、平均/投票，降低方差。AdaBoost：提高分错样本的相对权重。梯度提升：拟合残差。随机森林：Bagging + 每次分裂随机选部分特征。",
-      "id": 647,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensembles / definitions",
-      "source": "kp"
-    },
-    {
-      "question": "Why does bagging usually help unstable learners such as deep decision trees?",
-      "options": [
-        "It reduces bias by making each tree deeper",
-        "It removes the need for any training data",
-        "It guarantees zero training error",
-        "Averaging models trained on different bootstrap samples reduces variance"
-      ],
-      "correct": 3,
-      "explanation": "Deep trees have high variance: small data changes give very different trees. Averaging many trees trained on bootstrap samples (ideally with uncorrelated errors) reduces variance. Boosting mainly reduces bias.",
-      "questionZh": "为什么 Bagging 通常能帮助深决策树这类不稳定的学习器？",
-      "optionsZh": [
-        "通过让每棵树更深来降低偏差",
-        "不再需要任何训练数据",
-        "保证训练误差为 0",
-        "对不同自助样本训练的模型取平均能降低方差"
-      ],
-      "explanationZh": "深树方差大：数据稍变树就差很多。对大量自助样本训练的树取平均（误差最好不相关）可以降低方差。Boosting 主要降低偏差。",
-      "id": 648,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Bagging / why it helps",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about decision trees and rule learners is correct?",
-      "options": [
-        "1R uses all features in one rule",
-        "PRISM adds conditions to make rules more general",
-        "A path from root to leaf is a conjunction (AND) of tests; pruning decisions use a validation set",
-        "A path is a disjunction (OR) of tests"
-      ],
-      "correct": 2,
-      "explanation": "Each root-to-leaf path is an AND of conditions. Pruning is judged on validation data. 1R builds rules on a single feature. PRISM (covering) adds conditions to make each rule purer (more accurate), not more general.",
-      "questionZh": "关于决策树和规则学习，哪项正确？",
-      "optionsZh": [
-        "1R 在一条规则里用所有特征",
-        "PRISM 添加条件是为了让规则更一般",
-        "从根到叶的路径是各测试的合取（AND）；剪枝决策看验证集",
-        "路径是各测试的析取（OR）"
-      ],
-      "explanationZh": "根到叶路径是条件的 AND。剪枝看验证集。1R 只用一个特征建规则。PRISM（覆盖算法）加条件是为了让规则更纯，不是更一般。",
-      "id": 649,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Decision trees / rules and pruning",
-      "source": "kp"
-    },
-    {
-      "question": "For an ensemble of classifiers to beat its members, which condition matters most?",
-      "options": [
-        "All members are identical copies",
-        "Members are better than random and make different (uncorrelated) errors",
-        "All members are worse than random guessing",
-        "Members are trained on the test set"
-      ],
-      "correct": 1,
-      "explanation": "Majority voting helps when each base classifier has error < 0.5 and errors are independent: the probability that most are wrong at once is small. Identical members add nothing.",
-      "questionZh": "集成分类器要胜过其成员，最重要的条件是什么？",
-      "optionsZh": [
-        "所有成员完全相同",
-        "成员比随机猜好，并且犯的错不同（不相关）",
-        "所有成员都比随机猜差",
-        "成员在测试集上训练"
-      ],
-      "explanationZh": "当每个基分类器错误率 < 0.5 且错误相互独立时，多数投票有效：大多数同时出错的概率很小。完全相同的成员毫无帮助。",
-      "id": 650,
-      "course": "COMP5318",
-      "week": "Week 05",
-      "lectureWeek": "Week 05",
-      "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensembles / when they help",
-      "source": "kp"
-    },
-    {
-      "question": "A linear SVM has weight vector $\\mathbf w = (3, 4)$. What is the width of the margin?",
-      "options": [
-        "10",
-        "0.2",
-        "0.4",
-        "5"
-      ],
-      "correct": 2,
-      "explanation": "Margin = 2/‖w‖ = 2/5 = 0.4. 1/‖w‖ = 0.2 is only half of it (distance from the hyperplane to one margin boundary).",
-      "questionZh": "线性 SVM 的权重向量 $\\mathbf w = (3, 4)$。间隔宽度是多少？",
-      "optionsZh": [
-        "10",
-        "0.2",
-        "0.4",
-        "5"
-      ],
-      "explanationZh": "间隔=2/‖w‖=2/5=0.4。1/‖w‖=0.2 只是一半（超平面到一侧边界的距离）。",
-      "id": 651,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / SVM margin",
-      "source": "kp"
-    },
-    {
-      "question": "For $K(\\mathbf x, \\mathbf z) = (\\mathbf x \\cdot \\mathbf z + 1)^2$ with $\\mathbf x = (1, 2)$ and $\\mathbf z = (3, 1)$, what is $K$?",
-      "options": [
-        "36",
-        "25",
-        "49",
-        "6"
-      ],
-      "correct": 0,
-      "explanation": "x·z = 3 + 2 = 5, so K = (5 + 1)² = 36. The kernel equals a dot product in a higher-dimensional feature space without building that space.",
-      "questionZh": "核函数 $K(\\mathbf x, \\mathbf z) = (\\mathbf x \\cdot \\mathbf z + 1)^2$，$\\mathbf x = (1, 2)$，$\\mathbf z = (3, 1)$，$K$ 是多少？",
-      "optionsZh": [
-        "36",
-        "25",
-        "49",
-        "6"
-      ],
-      "explanationZh": "x·z=3+2=5，K=(5+1)²=36。核等于高维特征空间中的点积，但不需要真的构造那个空间。",
-      "id": 652,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / Kernels / polynomial",
-      "source": "kp"
-    },
-    {
-      "question": "For an RBF kernel $K = \\exp(-\\gamma\\lVert\\mathbf x - \\mathbf z\\rVert^2)$ with $\\gamma = 0.5$, $\\mathbf x = (1, 2)$, $\\mathbf z = (3, 1)$, what is $K$?",
-      "options": [
-        "≈ 0.607",
-        "≈ 0.325",
-        "≈ 0.082",
-        "≈ 0.007"
-      ],
-      "correct": 2,
-      "explanation": "‖x − z‖² = (−2)² + 1² = 5. K = exp(−0.5 × 5) = exp(−2.5) ≈ 0.082.",
-      "questionZh": "RBF 核 $K = \\exp(-\\gamma\\lVert\\mathbf x - \\mathbf z\\rVert^2)$，$\\gamma = 0.5$，$\\mathbf x = (1, 2)$，$\\mathbf z = (3, 1)$，$K$ 是多少？",
-      "optionsZh": [
-        "≈ 0.607",
-        "≈ 0.325",
-        "≈ 0.082",
-        "≈ 0.007"
-      ],
-      "explanationZh": "‖x−z‖²=4+1=5，K=exp(−2.5)≈0.082。",
-      "id": 653,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / Kernels / RBF",
-      "source": "kp"
-    },
-    {
-      "question": "Why doesn't the kernel trick need to store high-dimensional feature vectors?",
-      "options": [
-        "Because it discards all support vectors",
-        "Because it only works for linear data",
-        "The SVM only needs dot products between examples, which the kernel computes directly",
-        "Because it projects data to fewer dimensions like PCA"
-      ],
-      "correct": 2,
-      "explanation": "The dual SVM depends on data only through x_i·x_j. Replacing this with K(x_i, x_j) gives the dot product in the mapped space without computing the mapping.",
-      "questionZh": "为什么核技巧不需要存储高维特征向量？",
-      "optionsZh": [
-        "因为它丢弃了所有支持向量",
-        "因为它只适用于线性数据",
-        "SVM 只需要样本之间的点积，核函数可以直接算出它",
-        "因为它像 PCA 一样投影到更低维"
-      ],
-      "explanationZh": "对偶形式的 SVM 只通过 x_i·x_j 依赖数据。换成 K(x_i,x_j) 就得到映射空间中的点积，而无需计算映射本身。",
-      "id": 654,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / Kernel trick",
-      "source": "kp"
-    },
-    {
-      "question": "In a soft-margin SVM, what happens when C is increased?",
-      "options": [
-        "The number of features decreases",
-        "The margin always becomes wider",
-        "Training errors are ignored",
-        "Misclassification is penalised more, giving a narrower margin and higher risk of overfitting"
-      ],
-      "correct": 3,
-      "explanation": "C weights the slack penalty. Large C: few margin violations allowed, narrower margin, may overfit. Small C: wider margin, more violations tolerated.",
-      "questionZh": "软间隔 SVM 中增大 C 会怎样？",
-      "optionsZh": [
-        "特征数量减少",
-        "间隔总会变宽",
-        "训练误差被忽略",
-        "对分错的惩罚更重，间隔更窄，过拟合风险更高"
-      ],
-      "explanationZh": "C 是松弛变量惩罚的权重。C 大：几乎不允许越界，间隔窄，可能过拟合；C 小：间隔宽，容忍更多越界。",
-      "id": 655,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / Soft margin / C",
-      "source": "kp"
-    },
-    {
-      "question": "PCA eigenvalues are 5, 3, 1, 1. What is the smallest number of components that keeps at least 80% of the variance?",
-      "options": [
-        "4",
-        "3",
-        "2",
-        "1"
-      ],
-      "correct": 2,
-      "explanation": "Total = 10. Cumulative proportions: 0.5, 0.8, 0.9, 1.0. The first k reaching 0.8 is k = 2 (for 90% it would be 3).",
-      "questionZh": "PCA 的特征值为 5、3、1、1。至少保留 80% 方差需要的最少主成分数是多少？",
-      "optionsZh": [
-        "4",
-        "3",
-        "2",
-        "1"
-      ],
-      "explanationZh": "总和 10，累计比例 0.5、0.8、0.9、1.0。第一个达到 0.8 的是 k=2（90% 则需 3）。",
-      "id": 656,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / PCA / cumulative variance",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about PCA is correct?",
-      "options": [
-        "It selects a subset of the original columns",
-        "It creates new axes (linear combinations of features) ordered by variance, and features should be scaled first",
-        "Scaling never affects PCA",
-        "It uses class labels to find directions"
-      ],
-      "correct": 1,
-      "explanation": "PCA rotates the coordinate system to directions of maximum variance; components are combinations of all features, not chosen columns. It is unsupervised, and without scaling large-range features dominate.",
-      "questionZh": "关于 PCA，哪项正确？",
-      "optionsZh": [
-        "它从原始列中挑选一个子集",
-        "它构造按方差排序的新坐标轴（特征的线性组合），使用前应先缩放特征",
-        "缩放永远不影响 PCA",
-        "它利用类别标签寻找方向"
-      ],
-      "explanationZh": "PCA 把坐标系旋转到方差最大的方向；主成分是所有特征的组合，不是挑选列。它是无监督的；不缩放时取值范围大的特征会主导。",
-      "id": 657,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / PCA / properties",
-      "source": "kp"
-    },
-    {
-      "question": "Which training examples determine the SVM decision boundary?",
-      "options": [
-        "All training examples equally",
-        "Only the examples farthest from the boundary",
-        "The class means",
-        "The support vectors, which lie on or inside the margin"
-      ],
-      "correct": 3,
-      "explanation": "Only support vectors have non-zero Lagrange multipliers; removing other examples leaves the boundary unchanged.",
-      "questionZh": "哪些训练样本决定了 SVM 的决策边界？",
-      "optionsZh": [
-        "所有训练样本同等决定",
-        "只有离边界最远的样本",
-        "各类的均值",
-        "支持向量，即位于间隔边界上或间隔内的样本"
-      ],
-      "explanationZh": "只有支持向量的拉格朗日乘子非零；去掉其他样本边界不变。",
-      "id": 658,
-      "course": "COMP5318",
-      "week": "Week 06",
-      "lectureWeek": "Week 06",
-      "knowledgeLocation": "W6 SVM & PCA / SVM / support vectors",
-      "source": "kp"
-    },
-    {
-      "question": "A perceptron has $\\mathbf w = (0.5, -0.5)$, $b = 0$, step activation ($a = 1$ if $n \\ge 0$). For $\\mathbf x = (1, 2)$ with target $t = 1$ and learning rate 1, what are the updated weights and bias?",
-      "options": [
-        "$\\mathbf w = (1.5, 1.5)$, $b = 0$",
-        "$\\mathbf w = (1.5, 1.5)$, $b = 1$",
-        "$\\mathbf w = (-0.5, -2.5)$, $b = -1$",
-        "$\\mathbf w = (0.5, -0.5)$, $b = 0$"
-      ],
-      "correct": 1,
-      "explanation": "n = 0.5 − 1 + 0 = −0.5 → a = 0. Error e = t − a = 1. w ← w + e·x = (1.5, 1.5); b ← b + e = 1. Don't forget to update the bias.",
-      "questionZh": "感知机 $\\mathbf w = (0.5, -0.5)$，$b = 0$，阶跃激活（$n \\ge 0$ 时 $a = 1$）。输入 $\\mathbf x = (1, 2)$，目标 $t = 1$，学习率 1。更新后的权重和偏置是什么？",
-      "optionsZh": [
-        "$\\mathbf w = (1.5, 1.5)$, $b = 0$",
-        "$\\mathbf w = (1.5, 1.5)$, $b = 1$",
-        "$\\mathbf w = (-0.5, -2.5)$, $b = -1$",
-        "$\\mathbf w = (0.5, -0.5)$, $b = 0$"
-      ],
-      "explanationZh": "n=0.5−1=−0.5 → a=0；e=t−a=1；w←w+e·x=(1.5,1.5)；b←b+e=1。别忘了更新偏置。",
-      "steps": [
-        "$n = 0.5(1) - 0.5(2) + 0 = -0.5 \\Rightarrow a = 0$",
-        "$e = t - a = 1$",
-        "$\\mathbf w = (0.5+1, -0.5+2) = (1.5, 1.5)$, $b = 0 + 1 = 1$"
-      ],
-      "id": 659,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Perceptron update",
-      "source": "kp"
-    },
-    {
-      "question": "Hidden units: $h_1 = \\text{ReLU}(0.5x_1 - x_2)$, $h_2 = \\text{ReLU}(-x_1 + x_2)$. Output $o = \\sigma(2h_1 - h_2 - 0.5)$. For $\\mathbf x = (1, 0)$, what is $o$ and the class (threshold 0.5)?",
-      "options": [
-        "≈ 0.73, class 1",
-        "≈ 0.62, class 1",
-        "≈ 0.38, class 0",
-        "≈ 0.50, class 1"
-      ],
-      "correct": 1,
-      "explanation": "h₁ = ReLU(0.5) = 0.5; h₂ = ReLU(−1) = 0. Output net = 2(0.5) − 0 − 0.5 = 0.5; σ(0.5) ≈ 0.62 > 0.5 → class 1.",
-      "questionZh": "隐藏单元：$h_1 = \\text{ReLU}(0.5x_1 - x_2)$，$h_2 = \\text{ReLU}(-x_1 + x_2)$。输出 $o = \\sigma(2h_1 - h_2 - 0.5)$。当 $\\mathbf x = (1, 0)$ 时，$o$ 是多少，类别是什么（阈值 0.5）？",
-      "optionsZh": [
-        "≈ 0.73，类 1",
-        "≈ 0.62，类 1",
-        "≈ 0.38，类 0",
-        "≈ 0.50，类 1"
-      ],
-      "explanationZh": "h₁=ReLU(0.5)=0.5；h₂=ReLU(−1)=0；输出净输入=1−0−0.5=0.5；σ(0.5)≈0.62>0.5 → 类 1。",
-      "steps": [
-        "$h_1 = \\max(0, 0.5) = 0.5$, $h_2 = \\max(0, -1) = 0$",
-        "$net = 2(0.5) - 0 - 0.5 = 0.5$",
-        "$\\sigma(0.5) \\approx 0.62$"
-      ],
-      "id": 660,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Forward pass",
-      "source": "kp"
-    },
-    {
-      "question": "A weight $w = 2.0$ has loss gradient $\\partial L/\\partial w = 0.5$ and learning rate $\\eta = 0.1$. What is $w$ after one gradient-descent step?",
-      "options": [
-        "1.95",
-        "2.05",
-        "2.50",
-        "1.50"
-      ],
-      "correct": 0,
-      "explanation": "w ← w − η·∂L/∂w = 2.0 − 0.1 × 0.5 = 1.95. Gradient descent moves against the gradient (subtract, don't add).",
-      "questionZh": "权重 $w = 2.0$，损失梯度 $\\partial L/\\partial w = 0.5$，学习率 $\\eta = 0.1$。一步梯度下降后 $w$ 是多少？",
-      "optionsZh": [
-        "1.95",
-        "2.05",
-        "2.50",
-        "1.50"
-      ],
-      "explanationZh": "w←w−η·梯度=2.0−0.05=1.95。梯度下降沿梯度反方向（减，不是加）。",
-      "id": 661,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Gradient descent step",
-      "source": "kp"
-    },
-    {
-      "question": "A fully connected layer maps 4 inputs to 3 neurons, each with a bias. How many trainable parameters does it have?",
-      "options": [
-        "12",
-        "16",
-        "15",
-        "7"
-      ],
-      "correct": 2,
-      "explanation": "Weights 4 × 3 = 12, plus 3 biases = 15.",
-      "questionZh": "一个全连接层把 4 个输入映射到 3 个神经元，每个神经元有偏置。可训练参数有多少个？",
-      "optionsZh": [
-        "12",
-        "16",
-        "15",
-        "7"
-      ],
-      "explanationZh": "权重 4×3=12，加 3 个偏置 = 15。",
-      "id": 662,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Parameter count / dense layer",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement is correct?",
-      "options": [
-        "ReLU outputs 0 for negative inputs; sigmoid's small derivatives (≤ 0.25) can cause vanishing gradients in deep networks",
-        "Sigmoid's derivative can be as large as 1, so it never vanishes",
-        "ReLU outputs negative values for negative inputs",
-        "Vanishing gradients only happen with ReLU"
-      ],
-      "correct": 0,
-      "explanation": "ReLU(z) = max(0, z), gradient 1 for z > 0. Sigmoid's derivative is at most 0.25, and multiplying many small factors through layers shrinks gradients toward 0.",
-      "questionZh": "哪项正确？",
-      "optionsZh": [
-        "ReLU 对负输入输出 0；sigmoid 的导数很小（≤ 0.25），在深层网络中可能导致梯度消失",
-        "sigmoid 的导数最大可达 1，所以不会消失",
-        "ReLU 对负输入输出负值",
-        "梯度消失只在 ReLU 中出现"
-      ],
-      "explanationZh": "ReLU(z)=max(0,z)，z>0 时梯度为 1。sigmoid 的导数最大 0.25，经过多层连乘后梯度趋于 0。",
-      "id": 663,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Activation functions / ReLU and vanishing gradients",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about dropout is correct?",
-      "options": [
-        "It randomly drops units during training as regularisation; at inference the full network is used",
-        "It is used only at test time",
-        "It permanently deletes neurons after training",
-        "It speeds up convergence by removing the output layer"
-      ],
-      "correct": 0,
-      "explanation": "Dropout randomly zeroes units each training step, so the network cannot rely on specific co-adapted units. At test time all units are used (with scaling).",
-      "questionZh": "关于 Dropout，哪项正确？",
-      "optionsZh": [
-        "训练时随机丢弃单元以起正则化作用；推理时使用完整网络",
-        "只在测试时使用",
-        "训练后永久删除神经元",
-        "通过去掉输出层加速收敛"
-      ],
-      "explanationZh": "Dropout 每步训练随机把单元置 0，使网络不能依赖特定共适应单元。测试时使用全部单元（配合缩放）。",
-      "id": 664,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Dropout",
-      "source": "kp"
-    },
-    {
-      "question": "Why can't a single-layer perceptron learn XOR?",
-      "options": [
-        "The learning rate is always too small",
-        "XOR has too many training examples",
-        "XOR is not linearly separable",
-        "Perceptrons cannot learn AND"
-      ],
-      "correct": 2,
-      "explanation": "A single perceptron draws one line (hyperplane). XOR's positive points (0,1),(1,0) and negative points (0,0),(1,1) cannot be separated by one line; a hidden layer is needed.",
-      "questionZh": "为什么单层感知机学不会 XOR？",
-      "optionsZh": [
-        "学习率总是太小",
-        "XOR 的训练样本太多",
-        "XOR 不是线性可分的",
-        "感知机连 AND 都学不会"
-      ],
-      "explanationZh": "单个感知机只能画一条直线（超平面）。XOR 的正例 (0,1)、(1,0) 与负例 (0,0)、(1,1) 无法用一条线分开，需要隐藏层。",
-      "id": 665,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / XOR and the perceptron",
-      "source": "kp"
-    },
-    {
-      "question": "Compared with full-batch gradient descent, why is mini-batch gradient descent noisier?",
-      "options": [
-        "It updates weights only once per epoch",
-        "It uses a larger learning rate by definition",
-        "Each step's gradient is estimated from a small random subset of examples",
-        "It ignores the loss function"
-      ],
-      "correct": 2,
-      "explanation": "The mini-batch gradient is an estimate of the full gradient, so updates fluctuate; it is cheaper per step and the noise can help escape poor regions.",
-      "questionZh": "与全批量梯度下降相比，为什么小批量梯度下降更“吵”？",
-      "optionsZh": [
-        "它每个 epoch 只更新一次权重",
-        "按定义它使用更大的学习率",
-        "每一步的梯度只由一个小的随机样本子集估计",
-        "它忽略损失函数"
-      ],
-      "explanationZh": "小批量梯度是全梯度的估计，所以更新有波动；每步计算更便宜，噪声还可能帮助跳出不好的区域。",
-      "id": 666,
-      "course": "COMP5318",
-      "week": "Week 07",
-      "lectureWeek": "Week 07",
-      "knowledgeLocation": "W7 Neural Networks & Backpropagation / Mini-batch gradient descent",
-      "source": "kp"
-    },
-    {
-      "question": "A convolutional layer applies 16 filters of size 3 × 3 to an RGB input (3 channels). How many parameters does it have?",
-      "options": [
-        "160",
-        "448",
-        "432",
-        "144"
-      ],
-      "correct": 1,
-      "explanation": "Each filter has 3 × 3 × 3 = 27 weights + 1 bias = 28. 16 × 28 = 448. Forgetting the bias gives 432; forgetting channels gives 160.",
-      "questionZh": "一个卷积层对 RGB 输入（3 通道）使用 16 个 3 × 3 的卷积核。它有多少个参数？",
-      "optionsZh": [
-        "160",
-        "448",
-        "432",
-        "144"
-      ],
-      "explanationZh": "每个核 3×3×3=27 个权重 + 1 个偏置 = 28；16×28=448。漏偏置得 432，漏通道得 160。",
-      "steps": [
-        "$K(f \\times f \\times C + 1) = 16(3 \\times 3 \\times 3 + 1) = 16 \\times 28 = 448$"
-      ],
-      "id": 667,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / parameter count",
-      "source": "kp"
-    },
-    {
-      "question": "A 32 × 32 input goes through a 5 × 5 convolution (stride 1, no padding) and then 2 × 2 max pooling with stride 2. What is the output size?",
-      "options": [
-        "13 × 13",
-        "14 × 14",
-        "16 × 16",
-        "28 × 28"
-      ],
-      "correct": 1,
-      "explanation": "Conv: ⌊(32 + 0 − 5)/1⌋ + 1 = 28. Pool: ⌊(28 − 2)/2⌋ + 1 = 14.",
-      "questionZh": "32 × 32 的输入先经过 5 × 5 卷积（步长 1、无填充），再经过步长 2 的 2 × 2 最大池化。输出尺寸是多少？",
-      "optionsZh": [
-        "13 × 13",
-        "14 × 14",
-        "16 × 16",
-        "28 × 28"
-      ],
-      "explanationZh": "卷积：⌊(32−5)/1⌋+1=28；池化：⌊(28−2)/2⌋+1=14。",
-      "steps": [
-        "Conv: $\\lfloor(32 - 5)/1\\rfloor + 1 = 28$",
-        "Pool: $\\lfloor(28 - 2)/2\\rfloor + 1 = 14$"
-      ],
-      "id": 668,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size",
-      "source": "kp"
-    },
-    {
-      "question": "A 7 × 7 input, 3 × 3 filter, padding 1, stride 2. What is the output size?",
-      "options": [
-        "4 × 4",
-        "3 × 3",
-        "7 × 7",
-        "5 × 5"
-      ],
-      "correct": 0,
-      "explanation": "⌊(n + 2p − f)/s⌋ + 1 = ⌊(7 + 2 − 3)/2⌋ + 1 = 3 + 1 = 4.",
-      "questionZh": "输入 7 × 7，3 × 3 卷积核，填充 1，步长 2。输出尺寸是多少？",
-      "optionsZh": [
-        "4 × 4",
-        "3 × 3",
-        "7 × 7",
-        "5 × 5"
-      ],
-      "explanationZh": "⌊(n+2p−f)/s⌋+1=⌊(7+2−3)/2⌋+1=4。",
-      "id": 669,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size with padding",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement is correct?",
-      "options": [
-        "Weight sharing means every filter is identical",
-        "Weight sharing uses the same filter at every position, cutting parameters and detecting a feature anywhere; max pooling has no parameters",
-        "Pooling increases the spatial size",
-        "Max pooling learns a weight for each window"
-      ],
-      "correct": 1,
-      "explanation": "A filter slides over the image with the same weights, so far fewer parameters than a dense layer and translation-equivariant detection. Max pooling just takes the maximum in each window and has no trainable parameters; it reduces spatial size.",
-      "questionZh": "哪项正确？",
-      "optionsZh": [
-        "权重共享意味着所有卷积核都相同",
-        "权重共享在每个位置使用同一个卷积核，减少参数并能在任意位置检测特征；最大池化没有参数",
-        "池化会增大空间尺寸",
-        "最大池化为每个窗口学习一个权重"
-      ],
-      "explanationZh": "卷积核以相同权重在图像上滑动，参数远少于全连接，并能在任何位置检测特征。最大池化只取窗口最大值，没有可训练参数，会缩小空间尺寸。",
-      "id": 670,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / weight sharing and pooling",
-      "source": "kp"
-    },
-    {
-      "question": "How does an RNN process a sequence?",
-      "options": [
-        "It processes all time steps independently with no memory",
-        "It only works on images",
-        "It passes a hidden state from step to step, using the same weights at every time step",
-        "It uses different weights at each time step"
-      ],
-      "correct": 2,
-      "explanation": "h_t = f(W_x x_t + W_h h_{t−1} + b): the hidden state carries information forward and the weights are shared across time. Backpropagation through time can suffer vanishing gradients.",
-      "questionZh": "RNN 如何处理序列？",
-      "optionsZh": [
-        "各时间步独立处理、没有记忆",
-        "只能处理图像",
-        "在时间步之间传递隐藏状态，并在每个时间步使用相同的权重",
-        "每个时间步使用不同的权重"
-      ],
-      "explanationZh": "h_t=f(W_x x_t + W_h h_{t−1} + b)：隐藏状态向前传递信息，权重在各时间步共享。随时间反向传播可能出现梯度消失。",
-      "id": 671,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / RNN",
-      "source": "kp"
-    },
-    {
-      "question": "What is the main purpose of the gates and cell state in an LSTM?",
-      "options": [
-        "To reduce the sequence length",
-        "To remove the need for training",
-        "To make the network convolutional",
-        "To control what is kept, forgotten and output, easing the vanishing-gradient problem for long dependencies"
-      ],
-      "correct": 3,
-      "explanation": "Forget, input and output gates regulate the cell state, which provides an additive path for gradients, so LSTMs learn longer-range dependencies than plain RNNs.",
-      "questionZh": "LSTM 中门控和细胞状态的主要作用是什么？",
-      "optionsZh": [
-        "缩短序列长度",
-        "免去训练",
-        "让网络变成卷积网络",
-        "控制保留、遗忘和输出哪些信息，缓解长依赖中的梯度消失"
-      ],
-      "explanationZh": "遗忘门、输入门、输出门调节细胞状态，细胞状态为梯度提供加法通路，所以 LSTM 能比普通 RNN 学到更长的依赖。",
-      "id": 672,
-      "course": "COMP5318",
-      "week": "Week 08",
-      "lectureWeek": "Week 08",
-      "knowledgeLocation": "W8 CNN, RNN & LSTM / LSTM",
-      "source": "kp"
-    },
-    {
-      "question": "1-D points 1, 2, 6, 8, 9 with initial centroids $c_1 = 1$, $c_2 = 9$. After one assignment and update step, what are the centroids?",
-      "options": [
-        "1.5 and ≈ 7.67",
-        "3 and 8.5",
-        "1.5 and 8.5",
-        "1 and 9"
-      ],
-      "correct": 0,
-      "explanation": "Assign: 1, 2 → c₁ (2 is 1 from c₁, 7 from c₂); 6 → c₂ (5 vs 3); 8, 9 → c₂. Update: c₁ = 1.5, c₂ = (6 + 8 + 9)/3 ≈ 7.67. Assign everything first, then update.",
-      "questionZh": "一维点 1、2、6、8、9，初始质心 $c_1 = 1$、$c_2 = 9$。一次分配和更新后，质心是多少？",
-      "optionsZh": [
-        "1.5 和 ≈ 7.67",
-        "3 和 8.5",
-        "1.5 和 8.5",
-        "1 和 9"
-      ],
-      "explanationZh": "分配：1、2→c₁；6→c₂（距离 5 对 3）；8、9→c₂。更新：c₁=1.5，c₂=(6+8+9)/3≈7.67。先全部分配完再更新。",
-      "id": 673,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / k-means / one iteration",
-      "source": "kp"
-    },
-    {
-      "question": "1-D points 0, 1, 4, 10. Using complete linkage, at what distance does the second merge happen?",
-      "options": [
-        "10",
-        "4",
-        "6",
-        "3"
-      ],
-      "correct": 1,
-      "explanation": "First merge {0, 1} at 1. Complete linkage: d({0,1}, 4) = max(4, 3) = 4; d(4, 10) = 6; d({0,1}, 10) = 10. Smallest is 4. (Single linkage would merge at 3.)",
-      "questionZh": "一维点 0、1、4、10。使用 complete linkage，第二次合并发生在什么距离？",
-      "optionsZh": [
-        "10",
-        "4",
-        "6",
-        "3"
-      ],
-      "explanationZh": "第一次合并 {0,1}，距离 1。complete：d({0,1},4)=max(4,3)=4；d(4,10)=6；d({0,1},10)=10，最小为 4。（single linkage 会在 3 合并。）",
-      "id": 674,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / linkage",
-      "source": "kp"
-    },
-    {
-      "question": "Clusters $A = \\{0, 1\\}$ and $B = \\{4, 10\\}$ in 1-D. What is the average-linkage distance between them?",
-      "options": [
-        "4",
-        "6.5",
-        "3",
-        "10"
-      ],
-      "correct": 1,
-      "explanation": "Cross-cluster pairs: |0−4| = 4, |0−10| = 10, |1−4| = 3, |1−10| = 9. Average = 26/4 = 6.5. Single = 3, complete = 10.",
-      "questionZh": "一维中簇 $A = \\{0, 1\\}$ 与 $B = \\{4, 10\\}$。它们的 average linkage 距离是多少？",
-      "optionsZh": [
-        "4",
-        "6.5",
-        "3",
-        "10"
-      ],
-      "explanationZh": "跨簇点对距离 4、10、3、9，平均 26/4=6.5。single=3，complete=10。",
-      "id": 675,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Cluster distance / average linkage",
-      "source": "kp"
-    },
-    {
-      "question": "A GMM has two components with priors 0.5 and 0.5. For point x the likelihoods are 0.3 (component 1) and 0.1 (component 2). What is component 1's responsibility for x?",
-      "options": [
-        "0.15",
-        "0.30",
-        "0.75",
-        "0.50"
-      ],
-      "correct": 2,
-      "explanation": "r₁ = π₁p₁ / (π₁p₁ + π₂p₂) = 0.15/(0.15 + 0.05) = 0.75. GMM gives soft assignments, unlike k-means' hard assignments.",
-      "questionZh": "GMM 有两个分量，先验各 0.5。点 x 在分量 1、2 下的似然分别为 0.3 和 0.1。分量 1 对 x 的责任度是多少？",
-      "optionsZh": [
-        "0.15",
-        "0.30",
-        "0.75",
-        "0.50"
-      ],
-      "explanationZh": "r₁=π₁p₁/(π₁p₁+π₂p₂)=0.15/0.20=0.75。GMM 是软分配，k-means 是硬分配。",
-      "id": 676,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / GMM / responsibility",
-      "source": "kp"
-    },
-    {
-      "question": "Which statement about k-means is correct?",
-      "options": [
-        "It gives soft (probabilistic) cluster memberships",
-        "The best centroid under squared distance is the median",
-        "It always finds the global optimum",
-        "It is sensitive to initialisation; k-means++ picks initial centroids with probability proportional to squared distance"
-      ],
-      "correct": 3,
-      "explanation": "k-means converges to a local optimum that depends on the starting centroids. k-means++ spreads seeds by choosing points with probability ∝ D(x)². Under squared Euclidean distance the mean minimises the within-cluster sum.",
-      "questionZh": "关于 k-means，哪项正确？",
-      "optionsZh": [
-        "给出软（概率）簇成员关系",
-        "平方距离下最优质心是中位数",
-        "总能找到全局最优",
-        "对初始化敏感；k-means++ 按与距离平方成正比的概率选初始质心"
-      ],
-      "explanationZh": "k-means 收敛到依赖初始质心的局部最优。k-means++ 以 ∝D(x)² 的概率选点，让初始质心分散。平方欧氏距离下均值最小化簇内平方和。",
-      "id": 677,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / k-means / properties",
-      "source": "kp"
-    },
-    {
-      "question": "Which merge order does single linkage give for 1-D points 0, 1, 4, 10?",
-      "options": [
-        "{0,1} at 1, then {0,1,4} at 3, then all at 6",
-        "{4,10} first at 6",
-        "{0,1} at 1, then {4,10} at 6, then all at 3",
-        "{0,1} at 1, then {0,1,4} at 4, then all at 10"
-      ],
-      "correct": 0,
-      "explanation": "Single linkage uses the minimum cross-cluster distance: d({0,1},4) = 3 < d(4,10) = 6, then d({0,1,4},10) = 6.",
-      "questionZh": "对一维点 0、1、4、10，single linkage 的合并顺序是？",
-      "optionsZh": [
-        "{0,1} 在 1，然后 {0,1,4} 在 3，最后全部在 6",
-        "先在 6 合并 {4,10}",
-        "{0,1} 在 1，然后 {4,10} 在 6，最后全部在 3",
-        "{0,1} 在 1，然后 {0,1,4} 在 4，最后全部在 10"
-      ],
-      "explanationZh": "single linkage 取跨簇最小距离：d({0,1},4)=3 < d(4,10)=6；然后 d({0,1,4},10)=6。",
-      "id": 678,
-      "course": "COMP5318",
-      "week": "Week 09",
-      "lectureWeek": "Week 09",
-      "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / single linkage",
-      "source": "kp"
-    },
-    {
-      "question": "Weather Markov chain: P(S→S) = 0.8, P(S→R) = 0.2, P(R→S) = 0.4, P(R→R) = 0.6. Today is sunny. What is the probability that it rains in 2 days?",
-      "options": [
-        "0.28",
-        "0.16",
-        "0.20",
-        "0.36"
-      ],
-      "correct": 0,
-      "explanation": "Sum over paths: S→S→R = 0.8 × 0.2 = 0.16; S→R→R = 0.2 × 0.6 = 0.12. Total 0.28.",
-      "questionZh": "天气马尔可夫链：P(晴→晴)=0.8，P(晴→雨)=0.2，P(雨→晴)=0.4，P(雨→雨)=0.6。今天晴，2 天后下雨的概率是多少？",
-      "optionsZh": [
-        "0.28",
-        "0.16",
-        "0.20",
-        "0.36"
-      ],
-      "explanationZh": "列出所有路径相加：晴→晴→雨=0.16；晴→雨→雨=0.12；合计 0.28。",
-      "id": 679,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / n-step probability",
-      "source": "kp"
-    },
-    {
-      "question": "Which algorithm answers 'what is the most likely sequence of hidden states for these observations?'",
-      "options": [
-        "k-means",
-        "Baum-Welch (EM)",
-        "Forward algorithm",
-        "Viterbi"
-      ],
-      "correct": 3,
-      "explanation": "Evaluation (probability of the observations): forward algorithm (sum). Decoding (most likely state sequence): Viterbi (max). Learning parameters: Baum-Welch / EM.",
-      "questionZh": "哪个算法回答“对这些观测，最可能的隐藏状态序列是什么”？",
-      "optionsZh": [
-        "k-means",
-        "Baum-Welch（EM）",
-        "前向算法",
-        "Viterbi"
-      ],
-      "explanationZh": "评估（观测序列的概率）：前向算法（求和）。解码（最可能状态序列）：Viterbi（取最大）。学习参数：Baum-Welch/EM。",
-      "id": 680,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / HMM / three problems",
-      "source": "kp"
-    },
-    {
-      "question": "HMM: π(R) = 0.6, π(S) = 0.4; A: R→R 0.7, R→S 0.3, S→R 0.4, S→S 0.6; P(walk|R) = 0.1, P(shop|R) = 0.4, P(walk|S) = 0.6, P(shop|S) = 0.3. What is P(walk, shop)?",
-      "options": [
-        "≈ 0.104",
-        "≈ 0.300",
-        "≈ 0.082",
-        "≈ 0.055"
-      ],
-      "correct": 0,
-      "explanation": "f₁(R) = 0.6 × 0.1 = 0.06, f₁(S) = 0.4 × 0.6 = 0.24. f₂(R) = (0.06 × 0.7 + 0.24 × 0.4) × 0.4 = 0.0552. f₂(S) = (0.06 × 0.3 + 0.24 × 0.6) × 0.3 = 0.0486. Sum ≈ 0.1038.",
-      "questionZh": "HMM：π(R)=0.6，π(S)=0.4；转移 R→R 0.7、R→S 0.3、S→R 0.4、S→S 0.6；P(walk|R)=0.1，P(shop|R)=0.4，P(walk|S)=0.6，P(shop|S)=0.3。P(walk, shop) 是多少？",
-      "optionsZh": [
-        "≈ 0.104",
-        "≈ 0.300",
-        "≈ 0.082",
-        "≈ 0.055"
-      ],
-      "explanationZh": "f₁(R)=0.06，f₁(S)=0.24；f₂(R)=(0.042+0.096)×0.4=0.0552；f₂(S)=(0.018+0.144)×0.3=0.0486；总和≈0.1038。",
-      "steps": [
-        "$f_1(R) = 0.06$, $f_1(S) = 0.24$",
-        "$f_2(R) = (0.06 \\cdot 0.7 + 0.24 \\cdot 0.4)(0.4) = 0.0552$",
-        "$f_2(S) = (0.06 \\cdot 0.3 + 0.24 \\cdot 0.6)(0.3) = 0.0486$",
-        "$P = 0.1038$"
-      ],
-      "id": 681,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / HMM / forward algorithm",
-      "source": "kp"
-    },
-    {
-      "question": "Same HMM and observations (walk, shop). What is the most likely hidden state sequence?",
-      "options": [
-        "R, R",
-        "R, S",
-        "S, S",
-        "S, R"
-      ],
-      "correct": 2,
-      "explanation": "v₁(R) = 0.06, v₁(S) = 0.24. v₂(R) = max(0.06 × 0.7, 0.24 × 0.4) × 0.4 = 0.096 × 0.4 = 0.0384 (from S). v₂(S) = max(0.018, 0.144) × 0.3 = 0.0432 (from S). Largest is v₂(S) with back-pointer S → path S, S. Viterbi takes the max where forward takes the sum.",
-      "questionZh": "同一 HMM 与观测（walk, shop）。最可能的隐藏状态序列是什么？",
-      "optionsZh": [
-        "R, R",
-        "R, S",
-        "S, S",
-        "S, R"
-      ],
-      "explanationZh": "v₁(R)=0.06，v₁(S)=0.24；v₂(R)=max(0.042,0.096)×0.4=0.0384（来自 S）；v₂(S)=max(0.018,0.144)×0.3=0.0432（来自 S）。最大是 v₂(S)，回溯得 S, S。Viterbi 取最大，前向求和。",
-      "id": 682,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / HMM / Viterbi step",
-      "source": "kp"
-    },
-    {
-      "question": "What does the first-order Markov assumption state?",
-      "options": [
-        "All states are equally likely",
-        "The next state depends only on the current state",
-        "The next state depends on all past states equally",
-        "Observations are independent of hidden states"
-      ],
-      "correct": 1,
-      "explanation": "P(q_{t+1} | q_t, q_{t−1}, …) = P(q_{t+1} | q_t): 'tomorrow only depends on today'. In an HMM, each observation depends only on the current hidden state.",
-      "questionZh": "一阶马尔可夫假设说的是什么？",
-      "optionsZh": [
-        "所有状态等可能",
-        "下一个状态只依赖当前状态",
-        "下一个状态同等依赖所有过去状态",
-        "观测与隐藏状态无关"
-      ],
-      "explanationZh": "P(q_{t+1}|q_t, q_{t−1},…)=P(q_{t+1}|q_t)：“明天只看今天”。HMM 中每个观测只依赖当前隐藏状态。",
-      "id": 683,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / Markov assumption",
-      "source": "kp"
-    },
-    {
-      "question": "Same weather chain with initial probability P(S) = 0.5. What is the probability of the sequence S, S, R?",
-      "options": [
-        "0.10",
-        "0.16",
-        "0.08",
-        "0.40"
-      ],
-      "correct": 2,
-      "explanation": "P = π(S) × P(S→S) × P(S→R) = 0.5 × 0.8 × 0.2 = 0.08.",
-      "questionZh": "同一天气链，初始概率 P(晴)=0.5。序列 晴、晴、雨 的概率是多少？",
-      "optionsZh": [
-        "0.10",
-        "0.16",
-        "0.08",
-        "0.40"
-      ],
-      "explanationZh": "P=π(晴)×P(晴→晴)×P(晴→雨)=0.5×0.8×0.2=0.08。",
-      "id": 684,
-      "course": "COMP5318",
-      "week": "Week 11",
-      "lectureWeek": "Week 11",
-      "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / sequence probability",
-      "source": "kp"
-    },
-    {
-      "question": "Q(s, a) = 2, reward r = 1, γ = 0.9, max over a′ of Q(s′, a′) = 5, learning rate α = 0.5. What is the new Q(s, a)?",
-      "options": [
-        "5.50",
-        "3.75",
-        "3.50",
-        "2.50"
-      ],
-      "correct": 1,
-      "explanation": "Target = r + γ max Q(s′,·) = 1 + 4.5 = 5.5. Error = 5.5 − 2 = 3.5. New Q = 2 + 0.5 × 3.5 = 3.75. 5.5 would be the answer only if α = 1. For a terminal state the target is just r.",
-      "questionZh": "Q(s, a)=2，奖励 r=1，γ=0.9，max Q(s′, a′)=5，学习率 α=0.5。新的 Q(s, a) 是多少？",
-      "optionsZh": [
-        "5.50",
-        "3.75",
-        "3.50",
-        "2.50"
-      ],
-      "explanationZh": "目标值=1+0.9×5=5.5；误差=3.5；新 Q=2+0.5×3.5=3.75。5.5 只在 α=1 时成立。终止状态的目标值只有 r。",
-      "steps": [
-        "Target $= 1 + 0.9 \\times 5 = 5.5$",
-        "Error $= 5.5 - 2 = 3.5$",
-        "$Q \\leftarrow 2 + 0.5 \\times 3.5 = 3.75$"
-      ],
-      "id": 685,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / Q-learning update",
-      "source": "kp"
-    },
-    {
-      "question": "Q(s, a) = 4, the action leads to a terminal state with reward r = 10, γ = 0.9, α = 0.5. What is the new Q(s, a)?",
-      "options": [
-        "11.5",
-        "4",
-        "10",
-        "7"
-      ],
-      "correct": 3,
-      "explanation": "Terminal: target = r = 10 (no future term). New Q = 4 + 0.5 × (10 − 4) = 7.",
-      "questionZh": "Q(s, a)=4，动作导致终止状态，奖励 r=10，γ=0.9，α=0.5。新的 Q(s, a) 是多少？",
-      "optionsZh": [
-        "11.5",
-        "4",
-        "10",
-        "7"
-      ],
-      "explanationZh": "终止状态目标值=r=10（没有后续项）；新 Q=4+0.5×6=7。",
-      "id": 686,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / Q-learning / terminal state",
-      "source": "kp"
-    },
-    {
-      "question": "An action leads with probability 0.7 to reward 2 and a state of value 10, and with probability 0.3 to reward 0 and a state of value 4. With γ = 0.9, what is the expected action value?",
-      "options": [
-        "8.78",
-        "9.40",
-        "7.70",
-        "6.80"
-      ],
-      "correct": 0,
-      "explanation": "0.7 × (2 + 0.9 × 10) + 0.3 × (0 + 0.9 × 4) = 0.7 × 11 + 0.3 × 3.6 = 7.7 + 1.08 = 8.78.",
-      "questionZh": "某动作以 0.7 的概率得到奖励 2 并转到价值 10 的状态，以 0.3 的概率得到奖励 0 并转到价值 4 的状态。γ=0.9 时，期望动作价值是多少？",
-      "optionsZh": [
-        "8.78",
-        "9.40",
-        "7.70",
-        "6.80"
-      ],
-      "explanationZh": "0.7×(2+9)+0.3×(0+3.6)=7.7+1.08=8.78。",
-      "steps": [
-        "$0.7(2 + 0.9 \\cdot 10) = 7.7$",
-        "$0.3(0 + 0.9 \\cdot 4) = 1.08$",
-        "Sum $= 8.78$"
-      ],
-      "id": 687,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / Expected action value",
-      "source": "kp"
-    },
-    {
-      "question": "In DQN, which pairing of technique and purpose is correct?",
-      "options": [
-        "Both techniques increase exploration",
-        "The target network replaces the reward function",
-        "Experience replay breaks correlations between consecutive samples; a target network stabilises the target values",
-        "Experience replay stabilises targets; the target network breaks sample correlation"
-      ],
-      "correct": 2,
-      "explanation": "Replay stores transitions and trains on random minibatches, breaking the strong correlation of consecutive experiences. A periodically updated target network keeps the TD target from shifting every step. DQN replaces the Q-table with a network with shared parameters.",
-      "questionZh": "DQN 中技术与目的的对应，哪项正确？",
-      "optionsZh": [
-        "两种技术都是为了增加探索",
-        "目标网络取代了奖励函数",
-        "经验回放打破连续样本之间的相关性；目标网络稳定目标值",
-        "经验回放稳定目标值；目标网络打破样本相关性"
-      ],
-      "explanationZh": "经验回放存储转移并随机抽小批量训练，打破连续经验的强相关。定期更新的目标网络让 TD 目标不会每步都变。DQN 用共享参数的网络代替 Q 表。",
-      "id": 688,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / DQN / experience replay and target network",
-      "source": "kp"
-    },
-    {
-      "question": "What is the effect of decreasing the discount factor γ?",
-      "options": [
-        "Future (distant) rewards count for less, so the agent becomes more short-sighted",
-        "The learning rate decreases",
-        "Immediate rewards count for less",
-        "The agent explores more"
-      ],
-      "correct": 0,
-      "explanation": "Return = r₁ + γr₂ + γ²r₃ + …: smaller γ only changes the weight of later rewards. It is not the learning rate α or the exploration rate ε.",
-      "questionZh": "减小折扣因子 γ 会有什么效果？",
-      "optionsZh": [
-        "远期奖励的权重降低，智能体变得更短视",
-        "学习率降低",
-        "即时奖励的权重降低",
-        "智能体探索更多"
-      ],
-      "explanationZh": "回报=r₁+γr₂+γ²r₃+…：减小 γ 只改变远期奖励的权重。它不是学习率 α，也不是探索率 ε。",
-      "id": 689,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / Discount factor",
-      "source": "kp"
-    },
-    {
-      "question": "With an ε-greedy policy and ε = 0.1, what does the agent do?",
-      "options": [
-        "Always takes the best-known action",
-        "Takes a random action 90% of the time",
-        "Takes a random action 10% of the time and the best-known action otherwise",
-        "Stops learning after 10% of episodes"
-      ],
-      "correct": 2,
-      "explanation": "ε-greedy balances exploration (random action with probability ε) and exploitation (greedy action with probability 1 − ε).",
-      "questionZh": "ε-greedy 策略中 ε=0.1，智能体会怎么做？",
-      "optionsZh": [
-        "总是选当前最优动作",
-        "90% 的时间随机选动作",
-        "10% 的时间随机选动作，其余时间选当前最优动作",
-        "10% 的回合后停止学习"
-      ],
-      "explanationZh": "ε-greedy 在探索（以概率 ε 随机动作）和利用（以概率 1−ε 选贪心动作）之间平衡。",
-      "id": 690,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / Exploration vs exploitation",
-      "source": "kp"
-    },
-    {
-      "question": "How does reinforcement learning differ from supervised learning?",
-      "options": [
-        "Supervised learning maximises cumulative reward",
-        "The agent gets (possibly delayed) rewards from interacting with an environment, not labelled correct answers",
-        "RL needs a labelled dataset of correct actions",
-        "RL cannot handle sequential decisions"
-      ],
-      "correct": 1,
-      "explanation": "In RL there is no teacher giving the right action; the agent learns a policy that maximises expected cumulative (discounted) reward, and its actions affect the data it sees next.",
-      "questionZh": "强化学习与监督学习有何不同？",
-      "optionsZh": [
-        "监督学习最大化累计奖励",
-        "智能体通过与环境交互获得（可能延迟的）奖励，而不是带标签的正确答案",
-        "强化学习需要标注了正确动作的数据集",
-        "强化学习不能处理序贯决策"
-      ],
-      "explanationZh": "强化学习没有老师告诉正确动作；智能体学习最大化期望累计（折扣）奖励的策略，而且它的动作会影响接下来看到的数据。",
-      "id": 691,
-      "course": "COMP5318",
-      "week": "Week 12",
-      "lectureWeek": "Week 12",
-      "knowledgeLocation": "W12 Reinforcement Learning / RL vs supervised learning",
       "source": "kp"
     }
   ],
@@ -17493,17 +13160,6 @@ window.QUIZ_DATA = {
       "Week 12"
     ],
     "COMP5318": [
-      "Week 01",
-      "Week 02",
-      "Week 03",
-      "Week 04",
-      "Week 05",
-      "Week 06",
-      "Week 07",
-      "Week 08",
-      "Week 09",
-      "Week 11",
-      "Week 12",
       "Practice Exam 1",
       "Practice Exam 2"
     ],
@@ -17523,18 +13179,6 @@ window.QUIZ_DATA = {
       "Textbook Practice (Kurose & Ross)"
     ],
     "CSYS5030": [
-      "Week 01",
-      "Week 02",
-      "Week 03",
-      "Week 04",
-      "Week 05",
-      "Week 06",
-      "Week 07",
-      "Week 08",
-      "Week 09",
-      "Week 10",
-      "Week 11",
-      "Week 12",
       "Sample Exam"
     ]
   }
