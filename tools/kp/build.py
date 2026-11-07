@@ -14,10 +14,14 @@ sys.path.insert(0, HERE)
 ROOT = os.path.dirname(os.path.dirname(HERE))
 DATA = os.path.join(ROOT, "data", "questions.json")
 
-# Courses whose banks are built into the app. csys5030.py and comp5318.py are
-# written but held back; add them here to publish them.
-ENABLED = ["comp5416"]
-MODULES = [__import__(name) for name in ENABLED]
+import csys5030  # noqa: E402
+
+MODULES = [csys5030]
+for name in ("comp5416", "comp5318"):
+    try:
+        MODULES.append(__import__(name))
+    except ImportError:
+        pass
 
 
 def shuffled(item, rng):
