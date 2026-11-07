@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W01 学习任务的类型</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 01</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W01 学习任务的类型与数据挖掘流程</h1>
+<p class="subtitle">这一周没有计算题。考的是给一个场景，判断它属于哪类学习任务；两套 Practice Exam 各考 1 题（PE1 Q1、PE2 Q1）。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 判断任务类型</a></td><td class="c"><span class="stars">★★★</span></td><td>先问有没有标签，再问标签是类别还是数字</td></tr>
+    <tr><td><a href="#t2">2 数据挖掘六步</a></td><td class="c"><span class="stars">★</span></td><td>某件事属于哪一步；清洗的三类问题</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　判断任务类型 <span class="stars">★★★</span></h2>
+<p>数据是一张表：每一行是<strong>样本</strong>，前面的列是<strong>特征</strong>，想预测的那一列是<strong>标签</strong>。标签是<strong>领域专家</strong>事先标上去的。</p>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li><strong>有没有标签？</strong>有 → 监督学习；没有、只想分组 → 无监督（聚类）；没有、只有奖励和惩罚 → 强化学习。</li>
+    <li><strong>（监督）标签是类别还是数字？</strong>有限的几个类别 → 分类；连续数字 → 回归。</li>
+  </ol>
+</div>
+<div class="table-wrap"><table>
+  <tr><th>任务</th><th>标签</th><th>要得到什么</th><th>例子</th></tr>
+  <tr><td>监督 · 分类</td><td>有</td><td>一个类别</td><td>垃圾邮件、欺诈、猫狗</td></tr>
+  <tr><td>监督 · 回归</td><td>有</td><td>一个数字</td><td>房价、气温、用电量</td></tr>
+  <tr><td>无监督 · 聚类</td><td>没有</td><td>分组（簇内近、簇间远）</td><td>客户分群、文档分组</td></tr>
+  <tr><td>强化学习</td><td>没有，只有奖励</td><td>每一步选什么动作</td><td>机器人走路、下棋</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">两个易错点</span>
+  <ul>
+    <li>分类还是回归<strong>只看要预测的答案</strong>，和特征无关。「明天会不会下雨」是分类，「明天下多少毫米」是回归。</li>
+    <li>聚类训练时不要标签，但<strong>仍然需要领域专家</strong>：给簇起名字、判断分几组合理。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q1 · 检查一下">
+  <div class="mcq-q">用已知成交价的历史房屋数据，预测一套新房子的售价，这是？</div>
+  <ol class="mcq-src"><li>监督回归</li><li>监督分类</li><li>强化学习</li><li>无监督聚类</li></ol>
+  <div class="mcq-exp">有成交价 = 有标签；价格是连续数字 = 回归。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　数据挖掘六步 <span class="stars">★</span></h2>
+<p>数据挖掘 = 应用的机器学习：从大量、多维的数据里找<strong>有意义、有用、可行动</strong>（meaningful, useful, actionable）的规律。</p>
+<div class="table-wrap"><table>
+  <tr><th>步骤</th><th>做什么</th></tr>
+  <tr><td>1 Business understanding</td><td>公司要什么目标；数据挖掘<strong>能不能</strong>帮上忙；能收集什么数据</td></tr>
+  <tr><td>2 Data understanding</td><td>拿初始数据，检查质量够不够</td></tr>
+  <tr><td>3 Data preparation</td><td>清洗（缺失、错误、不一致）、变换（缩放、降维、选特征）</td></tr>
+  <tr><td>4 Modelling</td><td>训练模型；和第 3 步<strong>来回反复</strong></td></tr>
+  <tr><td>5 Evaluation</td><td>看指标，也看规律是否真的有意义；不满意<strong>回到第 1 步</strong></td></tr>
+  <tr><td>6 Deployment</td><td>接入现有系统，持续维护</td></tr>
+</table></div>
+<p>清洗要处理的三类问题：<strong>Incomplete</strong>（缺失值）、<strong>Noisy</strong>（错误值、离群点）、<strong>Inconsistent</strong>（<code>NSW</code> 和 <code>New South Wales</code>、日月顺序不同）。</p>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">把 <code>NSW</code> 和 <code>New South Wales</code> 统一成一种写法，属于哪一步？</div>
+  <ol class="mcq-src"><li>Business understanding</li><li>Data understanding</li><li>Data preparation</li><li>Evaluation</li></ol>
+  <div class="mcq-exp">清洗不一致的数据属于准备数据。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="3" data-src="PE2 Q1">
+  <div class="mcq-q">分析师按购买特征的相似程度，把<strong>没有标签</strong>的客户记录分组，这是？</div>
+  <ol class="mcq-src"><li>监督分类</li><li>监督回归</li><li>强化学习</li><li>无监督聚类</li></ol>
+  <div class="mcq-exp">没有标签，目的是从特征里发现分组。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">机器人通过「摔倒扣分、前进加分」学会走路，这是？</div>
+  <ol class="mcq-src"><li>监督分类</li><li>强化学习</li><li>无监督聚类</li><li>监督回归</li></ol>
+  <div class="mcq-exp">没有标签，只有奖励。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">根据过去已标注的交易，判断一笔新交易是否欺诈，这是？</div>
+  <ol class="mcq-src"><li>监督分类</li><li>监督回归</li><li>无监督聚类</li><li>强化学习</li></ol>
+  <div class="mcq-exp">有标签，答案是「是 / 否」。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">「聚类不需要标签，所以完全不需要领域专家」，这句话？</div>
+  <ol class="mcq-src"><li>对，算法会自动命名簇</li><li>对，簇数由数据决定</li><li>错，解释簇和定簇数要专家</li><li>错，聚类训练也要标签</li></ol>
+  <div class="mcq-exp">训练不要标签，但结果的解释要懂业务的人。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">模型评估结果不满意，按六步流程一般回到哪一步？</div>
+  <ol class="mcq-src"><li>Data preparation</li><li>Business understanding</li><li>Modelling</li><li>Deployment</li></ol>
+  <div class="mcq-exp">Evaluation 不满意回到第 1 步；Modelling 和 Preparation 之间才是来回反复。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">预测明天悉尼的用电量（有历史用电量记录），这是？</div>
+  <ol class="mcq-src"><li>监督分类</li><li>无监督聚类</li><li>强化学习</li><li>监督回归</li></ol>
+  <div class="mcq-exp">要预测一个数字。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>有标签 → 监督（类别 = 分类，数字 = 回归）；无标签想分组 → 聚类；只有奖励 → 强化学习。</li>
+  <li>标签是专家标的；聚类结果也要专家解释。</li>
+  <li>六步：业务 → 数据 → 准备 ⇄ 建模 → 评估（不满意回到 1）→ 部署。</li>
+  <li>清洗三类：不完整、噪声、不一致。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Tan, Steinbach, Karpatne &amp; Kumar《Introduction to Data Mining》第 1 章；Géron《Hands-On Machine Learning》第 1 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week01-introduction.html" target="_blank" rel="noopener">W01 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 1</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

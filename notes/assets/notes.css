@@ -171,3 +171,17 @@ td.c, th.c { text-align: center; }
 .weeks .sub { display: block; font-size: 0.85em; color: var(--muted); font-weight: 400; margin-top: 2px; }
 .weeks .n { font-size: 0.8em; color: var(--muted); white-space: nowrap; }
 .weeks li.off { padding: 12px 14px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); font-size: 0.9em; }
+
+/* ---------- short-answer practice (click to reveal) ---------- */
+details.sa { margin: 14px 0; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+details.sa > summary { cursor: pointer; list-style: none; color: var(--text-strong); }
+details.sa > summary::-webkit-details-marker { display: none; }
+details.sa > summary .sa-tag { display: inline-block; font-size: 0.75em; padding: 1px 8px; margin-right: 8px; border-radius: 999px; background: var(--mark); color: var(--primary); font-weight: 600; }
+details.sa > summary::after { content: "看答案 ▾"; display: block; margin-top: 8px; font-size: 0.85em; color: var(--primary); }
+details.sa[open] > summary::after { content: "收起 ▴"; }
+details.sa .sa-ans { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+@media print { details.sa .sa-ans { display: block; } }
+
+/* code blocks */
+pre { background: var(--card-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; overflow-x: auto; max-width: 100%; font-size: 0.88em; line-height: 1.45; }
+pre code { background: none; padding: 0; font-size: 1em; }

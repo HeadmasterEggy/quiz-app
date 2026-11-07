@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W11 马尔可夫链与 HMM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 11</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W11 马尔可夫链与隐马尔可夫模型</h1>
+<p class="subtitle">HMM 前向算法大题（PE1 Q34，10 分）；Viterbi 一步；三大问题各用什么算法；马尔可夫链路径概率。对应 PE1 Q26、27、34，PE2 Q26、27。W11 的 transformer notebook 不考。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 马尔可夫链路径概率</a></td><td class="c"><span class="stars">★★</span></td><td>初始 × 各步转移；n 步后把所有路径加起来</td></tr>
+    <tr><td><a href="#t2">2 HMM 三大问题</a></td><td class="c"><span class="stars">★★★</span></td><td>概率 → 前向；最可能序列 → Viterbi；参数 → EM</td></tr>
+    <tr><td><a href="#t3">3 前向算法手算</a></td><td class="c"><span class="stars">★★★</span></td><td>初始化 → 递推（求和）→ 最后加起来</td></tr>
+    <tr><td><a href="#t4">4 Viterbi 手算</a></td><td class="c"><span class="stars">★★★</span></td><td>把求和换成取最大，记指针，回溯</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　马尔可夫链路径概率 <span class="stars">★★</span></h2>
+<p><strong>马尔可夫假设</strong>：下一个状态只取决于当前状态。模型 = 初始分布 + 转移矩阵（<strong>行是今天、列是明天，每行和为 1</strong>）。</p>
+<div class="formula">$$P(s_1, s_2, \dots, s_T) = P(s_1)\prod_{t=2}^{T}P(s_t\mid s_{t-1})$$</div>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>$P(\text{晴}) = 0.1$，晴→晴 0.8，晴→多云 0.1，多云→雨 0.2：$P(\text{晴, 晴, 多云, 雨}) = 0.1\times0.8\times0.1\times0.2 = 0.0016$。</p>
+  <p>PE1 Q27：从 A 出发两步后在 B：A→A→B $0.6\times0.4 = 0.24$，A→B→B $0.4\times0.7 = 0.28$，合计 <strong>0.52</strong>。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q27 · 检查一下">
+  <div class="mcq-q">两状态链从 A 出发，A→A 0.6，A→B 0.4，B→A 0.3，B→B 0.7。恰好两步后在 B 的概率？</div>
+  <ol class="mcq-src"><li>0.28</li><li>0.40</li><li>0.52</li><li>0.24</li></ol>
+  <div class="mcq-exp">两条路径要加起来。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　HMM 三大问题 <span class="stars">★★★</span></h2>
+<p>状态<strong>看不见</strong>（天气），只看得到和它有关的观测（访客带不带伞）。模型 $\lambda = (E, A, A_0)$：初始分布 $A_0$、转移 $a_{jk}$、发射 $e_k(x)$。</p>
+<div class="table-wrap"><table>
+  <tr><th>问题</th><th>已知 → 求</th><th>算法</th></tr>
+  <tr><td><strong>Evaluation</strong></td><td>模型 → 观测序列的概率 $P(X)$</td><td><strong>前向</strong></td></tr>
+  <tr><td><strong>Decoding</strong></td><td>模型 → 最可能的<strong>整条</strong>隐状态序列</td><td><strong>Viterbi</strong></td></tr>
+  <tr><td><strong>Learning</strong></td><td>只有观测 → 估计 $A, E, A_0$</td><td><strong>EM（Baum-Welch）</strong></td></tr>
+</table></div>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q26 · 检查一下">
+  <div class="mcq-q">HMM 的转移和发射概率未知，要从观测序列估计，这是？</div>
+  <ol class="mcq-src"><li>评估，用前向算法</li><li>学习，用 EM（Baum-Welch）</li><li>解码，用 Viterbi</li><li>聚类，用 K-means</li></ol>
+  <div class="mcq-exp">参数未知 = learning。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　前向算法手算 <span class="stars">★★★</span></h2>
+<p>$P(X)$ 要对所有 $N^T$ 条隐状态路径求和；前向算法合并共同前缀，复杂度 $N^2T$。</p>
+<div class="formula">$$f_k(i) = P(x_1..x_i,\ \text{第 } i \text{ 步在 } k)\quad\text{（联合概率，不是后验）}$$</div>
+<div class="formula">$$f_k(1) = A_0(k)\,e_k(x_1)\qquad f_k(i) = e_k(x_i)\sum_j f_j(i-1)\,a_{jk}\qquad P(X) = \sum_k f_k(T)$$</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q34）</span>
+  <p>观测 (x, y)。$\pi = (0.7, 0.3)$；$e_A = (0.6, 0.4)$，$e_B = (0.2, 0.8)$；A→A 0.8，A→B 0.2，B→A 0.3，B→B 0.7。</p>
+  <p>$f_1(A) = 0.7\times0.6 = 0.42$；$f_1(B) = 0.3\times0.2 = 0.06$。</p>
+  <p>$f_2(A) = 0.4\times(0.42\times0.8 + 0.06\times0.3) = 0.4\times0.354 = 0.1416$。</p>
+  <p>$f_2(B) = 0.8\times(0.42\times0.2 + 0.06\times0.7) = 0.8\times0.126 = 0.1008$。</p>
+  <p>$P(x, y) = 0.1416 + 0.1008 = $ <strong>0.2424</strong>。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <ul>
+    <li>递推用的是<strong>到达</strong>状态 k 的转移 $a_{jk}$（矩阵那一<strong>列</strong>），别读成从 k 出发的那一行。</li>
+    <li>发射概率在括号外只乘一次。</li>
+    <li>中间结果多保留几位，最后再四舍五入。</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　Viterbi 手算 <span class="stars">★★★</span></h2>
+<p>和前向<strong>只差一处：$\sum$ 换成 $\max$</strong>，并记下取到最大的前一状态（指针），最后从最大的 $V_k(T)$ 回溯。</p>
+<div class="formula">$$V_k(1) = A_0(k)\,e_k(x_1)\qquad V_k(i) = e_k(x_i)\max_j V_j(i-1)\,a_{jk}$$</div>
+<div class="box example">
+  <span class="box-title">例题（PE2 Q27）</span>
+  <p>$V_1(A) = 0.3$，$V_1(B) = 0.2$；$P(B\mid A) = 0.4$，$P(B\mid B) = 0.7$；$e_B = 0.5$。</p>
+  <p>候选 $0.12$、$0.14$ → 取 0.14（指针 B）→ $V_2(B) = 0.070$。前向则是 $(0.12 + 0.14)\times0.5 = 0.13$。</p>
+</div>
+<p>同一 PE1 Q34 模型跑 Viterbi：$V_2(A) = 0.4\times0.336 = 0.1344$（指针 A），$V_2(B) = 0.8\times0.084 = 0.0672$（指针 A）→ 路径 <strong>A, A</strong>。</p>
+<div class="box trap">
+  <span class="box-title">看整条路径</span>
+  <p>第 1 步分数最高的状态不一定在最佳路径上（下面雨伞题：第 1 步 S 最高，但答案是 F, R）。看清题目问「概率」还是「最可能序列」。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q26 · 检查一下">
+  <div class="mcq-q">HMM 和观测序列都固定，Viterbi 算法解决的是？</div>
+  <ol class="mcq-src"><li>找最可能的完整隐状态路径</li><li>求观测序列的总概率</li><li>估计转移和发射概率</li><li>求每一步各状态的后验</li></ol>
+  <div class="mcq-exp">解码。B 是前向算法。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam 和 Tutorial。</p>
+
+<div class="mcq" data-answer="3" data-src="PE2 Q27">
+  <div class="mcq-q">$V_1(A) = 0.3$，$V_1(B) = 0.2$；$P(B\mid A) = 0.4$，$P(B\mid B) = 0.7$；下一个观测在 B 的发射概率 0.5。$V_2(B)$？</div>
+  <ol class="mcq-src"><li>0.130</li><li>0.060</li><li>0.140</li><li>0.070</li></ol>
+  <div class="mcq-exp">max(0.12, 0.14) × 0.5。A 是前向的求和。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">用 PE1 Q34 的模型，观测序列只有 (y)。$P(y)$ 是？</div>
+  <ol class="mcq-src"><li>0.28</li><li>0.52</li><li>0.24</li><li>0.60</li></ol>
+  <div class="mcq-exp">$0.7\times0.4 + 0.3\times0.8 = 0.28 + 0.24$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">前向变量 $f_k(i)$ 表示？</div>
+  <ol class="mcq-src"><li>已知前 i 个观测后在状态 k 的后验</li><li>从状态 k 出发的转移概率</li><li>前 i 个观测且第 i 步在 k 的联合概率</li><li>第 i 步最可能的状态</li></ol>
+  <div class="mcq-exp">联合，不是后验。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">马尔可夫链转移矩阵的每一行？</div>
+  <ol class="mcq-src"><li>加起来等于 1</li><li>加起来等于状态数</li><li>每列加起来等于 1</li><li>对角线必须最大</li></ol>
+  <div class="mcq-exp">行是 from，列是 to。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">3 个隐状态、10 个观测，暴力枚举有多少条路径？前向算法复杂度量级？</div>
+  <ol class="mcq-src"><li>30 条，$N^T$</li><li>1000 条，$NT$</li><li>59049 条，$N^T$</li><li>59049 条，$N^2T$</li></ol>
+  <div class="mcq-exp">$3^{10} = 59049$；前向 $N^2T$。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · Tutorial T11 雨伞题</span>隐状态 S、R、F，$A_0 = (0.4, 0.3, 0.3)$。转移（行是今天，到 S、R、F）：S (0.8, 0.05, 0.15)，R (0.2, 0.6, 0.2)，F (0.2, 0.3, 0.5)。发射（NA 没带伞、U 带伞）：S (0.9, 0.1)，R (0.2, 0.8)，F (0.7, 0.3)。观测 NA、U，最可能的天气序列？</summary>
+  <div class="sa-ans">
+    <p>第 1 步（NA）：$V_1 = (0.36, 0.06, 0.21)$。</p>
+    <p>到 S：max(0.288, 0.012, 0.042) = 0.288（S）× 0.1 = 0.0288。</p>
+    <p>到 R：max(0.018, 0.036, 0.063) = 0.063（F）× 0.8 = 0.0504。</p>
+    <p>到 F：max(0.054, 0.012, 0.105) = 0.105（F）× 0.3 = 0.0315。</p>
+    <p>最大 $V_2(R) = 0.0504$，指针 F → <strong>Foggy, Rainy</strong>。晴转雨只有 0.05，所以第 1 步最高的 S 不在最佳路径上。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>用雨伞题的模型，用前向算法求 $P(\text{NA}, \text{U})$。</summary>
+  <div class="sa-ans">
+    <p>$f_1 = (0.36, 0.06, 0.21)$。</p>
+    <p>$f_2(S) = 0.1\times(0.288 + 0.012 + 0.042) = 0.0342$；$f_2(R) = 0.8\times(0.018 + 0.036 + 0.063) = 0.0936$；$f_2(F) = 0.3\times(0.054 + 0.012 + 0.105) = 0.0513$。</p>
+    <p>$P = 0.0342 + 0.0936 + 0.0513 = 0.1791$。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>马尔可夫链：初始 × 转移连乘；n 步后在某状态 = 所有路径之和；行和为 1。</li>
+  <li>概率 → 前向；最可能整条序列 → Viterbi；参数 → EM（Baum-Welch）。</li>
+  <li>前向：$f_k(1) = A_0 e$；$f_k(i) = e_k\sum_j f_j a_{jk}$；$P = \sum_k f_k(T)$。</li>
+  <li>Viterbi：同上把 Σ 换 max，记指针、回溯；看整条路径。</li>
+  <li>用到达 k 的那一列转移；发射乘一次。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>Rabiner (1989)《A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition》第 III 节（三大问题）；Jurafsky &amp; Martin《Speech and Language Processing》附录 A（HMM）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week11-markov-models-hmm.html" target="_blank" rel="noopener">W11 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 11</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W08 CNN、RNN 与 LSTM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 08</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W08 CNN、RNN 与 LSTM</h1>
+<p class="subtitle">卷积层参数个数；输出尺寸；权重共享；池化；RNN 的隐藏状态；为什么用 LSTM。对应 PE1 Q20–22，PE2 Q20–22。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 卷积与权重共享</a></td><td class="c"><span class="stars">★★</span></td><td>对应相乘再相加；同一滤波器各处共享</td></tr>
+    <tr><td><a href="#t2">2 输出尺寸与参数个数</a></td><td class="c"><span class="stars">★★★</span></td><td>$\lfloor(n+2p-f)/s\rfloor + 1$；$K(f^2C + 1)$</td></tr>
+    <tr><td><a href="#t3">3 池化与 CNN 结构</a></td><td class="c"><span class="stars">★★</span></td><td>最大池化取最大值，没有参数</td></tr>
+    <tr><td><a href="#t4">4 RNN 与 LSTM</a></td><td class="c"><span class="stars">★★</span></td><td>隐藏状态带信息；门控缓解梯度消失</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　卷积与权重共享 <span class="stars">★★</span></h2>
+<p>全连接处理图像的问题：丢了空间结构、对位置敏感、参数太多（784 输入 × 32 = 25 120）。CNN 用小滤波器在图上滑动，<strong>对应位置相乘再相加</strong>得到特征图。</p>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>滤波器 $\begin{bmatrix}1&0&1\\0&1&0\\1&0&1\end{bmatrix}$，图像块 $\begin{bmatrix}1&1&1\\0&1&1\\0&0&1\end{bmatrix}$：只有四角和中心起作用，$1 + 1 + 1 + 0 + 1 = 4$。</p>
+</div>
+<ul>
+  <li>图案越像，输出越大；滤波器的数是<strong>学出来的</strong>。</li>
+  <li><strong>权重共享</strong>：同一滤波器所有位置用同一组权重 → 参数少、图案出现在哪都能检测。</li>
+  <li>多通道：滤波器厚度 = 输入通道数；各通道结果<strong>相加</strong>再加偏置，得<strong>一张</strong>特征图；K 个滤波器 → K 个输出通道。</li>
+</ul>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q20 · 检查一下">
+  <div class="mcq-q">一个学到的滤波器能在图像很多位置检测同一种边缘，且参数很少，靠的是？</div>
+  <ol class="mcq-src"><li>滤波器权重在所有位置共享</li><li>最大池化</li><li>全连接输出层</li><li>Dropout</li></ol>
+  <div class="mcq-exp">权重共享。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　输出尺寸与参数个数 <span class="stars">★★★</span></h2>
+<div class="formula">$$\text{输出边长} = \left\lfloor\frac{n + 2p - f}{s}\right\rfloor + 1\qquad \text{参数} = K\times(f\times f\times C + 1)$$</div>
+<p>$n$ 输入边长，$f$ 滤波器边长，$p$ 填充，$s$ 步长；$K$ 滤波器个数，$C$ 输入通道数，+1 是偏置。<strong>参数个数与图像宽高无关。</strong>池化也用同一个尺寸公式。</p>
+<div class="table-wrap"><table>
+  <tr><th>例子</th><th>计算</th><th>结果</th></tr>
+  <tr><td>7×7，3×3，s = 1</td><td>$(7 - 3)/1 + 1$</td><td>5×5</td></tr>
+  <tr><td>7×7，3×3，s = 2</td><td>$(7 - 3)/2 + 1$</td><td>3×3</td></tr>
+  <tr><td>7×7，3×3，s = 1，p = 1</td><td>$(7 + 2 - 3)/1 + 1$</td><td>7×7（同尺寸）</td></tr>
+  <tr><td>4 个 3×3，C = 2</td><td>$4\times(18 + 1)$</td><td><strong>76</strong></td></tr>
+  <tr><td>MNIST Conv2D(32, 3×3)</td><td>$32\times(9 + 1)$</td><td>320</td></tr>
+  <tr><td>再接 Conv2D(64, 3×3)</td><td>$64\times(9\times32 + 1)$</td><td>18 496</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <ul>
+    <li>忘了偏置：$4\times18 = 72$；忘了通道：$4\times10 = 40$。</li>
+    <li>第二层的 C 是<strong>上一层的滤波器个数</strong>（32），不是原图通道数 1。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q22 · 检查一下">
+  <div class="mcq-q">4 个 3×3 滤波器，输入 2 个通道，每个滤波器有 1 个偏置。可训练参数共多少？</div>
+  <ol class="mcq-src"><li>72</li><li>40</li><li>76</li><li>36</li></ol>
+  <div class="mcq-exp">$4\times(3\times3\times2 + 1)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　池化与 CNN 结构 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>最大池化</strong>取窗口最大值；平均池化取平均。2×2、步长 2：边长减半，面积减少 75%。</li>
+  <li><strong>池化没有可训练权重。</strong>作用：减少参数和计算、减少过拟合、对小偏移不敏感。</li>
+</ul>
+<div class="box example">
+  <span class="box-title">例题（PE2 Q22）</span>
+  <p>18×18 → 3×3 卷积（s = 1，p = 0）→ $(18 - 3) + 1 = 16$ → 2×2 池化（s = 2）→ $(16 - 2)/2 + 1 = 8$ → <strong>8×8</strong>。</p>
+</div>
+<p>典型结构：输入 → [卷积 → ReLU → 池化] × 几次 → 拉平 → 全连接 → softmax。28×28×1 → 26×26×32 → 13×13×32 → 11×11×64 → 5×5×64 → 1600 → 10。前面的层学边缘，往后学纹理、部件。经典：LeNet-5、AlexNet（ReLU、dropout）、VGG（全 3×3、更深）、GoogLeNet（Inception，约 500 万参数）。</p>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q20 · 检查一下">
+  <div class="mcq-q">标准 2×2 最大池化从每个窗口传出什么？</div>
+  <ol class="mcq-src"><li>四个值的平均</li><li>窗口里最大的值</li><li>学到的加权和</li><li>四个值的总和</li></ol>
+  <div class="mcq-exp">池化没有要训练的权重。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　RNN 与 LSTM <span class="stars">★★</span></h2>
+<p>序列数据：长度不固定、前后有关系。RNN 一次读一个元素，维护<strong>隐藏状态</strong>（记忆）：</p>
+<div class="formula">$$\mathbf h_t = \tanh(W_{hh}\mathbf h_{t-1} + W_{xh}\mathbf x_t)\qquad \mathbf y_t = W_{hy}\mathbf h_t$$</div>
+<ul>
+  <li><strong>每个时间步用同一组权重</strong>，能处理任意长度，参数不随长度增加。训练用 <strong>BPTT</strong>。</li>
+  <li>例：$h_t = \tanh(0.5h_{t-1} + x_t)$，输入 (1, 0)：$h_1 = \tanh 1 = 0.762$，$h_2 = \tanh 0.381 = 0.364$（输入 0 但仍记得第 1 步）。</li>
+  <li>形式：一对多（看图说话）、多对一（情感分类）、多对多（翻译、逐帧标注）。</li>
+  <li><strong>梯度消失 / 爆炸</strong>：反传每步乘一次 $W_{hh}$ 和 tanh 导数，难学远距离关系。</li>
+</ul>
+<h3>LSTM</h3>
+<p>加一条<strong>长期记忆</strong> $C_t$，三个 sigmoid 门（0 全挡，1 全放）：</p>
+<div class="table-wrap"><table>
+  <tr><th>门</th><th>作用</th></tr>
+  <tr><td>遗忘门 $f_t$</td><td>旧记忆留多少</td></tr>
+  <tr><td>输入门 $i_t$ + 候选 $\tilde C_t$</td><td>新信息写进多少</td></tr>
+  <tr><td>输出门 $o_t$</td><td>记忆里哪些拿出来作为 $h_t$</td></tr>
+</table></div>
+<div class="formula">$$C_t = f_t\odot C_{t-1} + i_t\odot\tilde C_t\qquad h_t = o_t\odot\tanh(C_t)$$</div>
+<p>$C_t$ 的更新是<strong>加法</strong>，遗忘门 ≈ 1 时旧记忆和梯度几乎原样传过去 → 缓解梯度消失。措辞是「有助于」，<strong>不保证完美记忆</strong>。GRU 是简化版。</p>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q21 · 检查一下">
+  <div class="mcq-q">简单 RNN 中，把前面时间步的信息带到下一步的是？</div>
+  <ol class="mcq-src"><li>每个位置一套独立权重</li><li>池化层</li><li>输出层的 softmax</li><li>循环的隐藏状态</li></ol>
+  <div class="mcq-exp">循环权重在各时间步共享。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q22">
+  <div class="mcq-q">18×18 输入 → 3×3 卷积（步长 1，不填充）→ 2×2 最大池化（步长 2），最后尺寸？</div>
+  <ol class="mcq-src"><li>9×9</li><li>8×8</li><li>7×7</li><li>16×16</li></ol>
+  <div class="mcq-exp">16 再减半。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q21">
+  <div class="mcq-q">有些长序列任务为什么用 LSTM 而不用简单 RNN？</div>
+  <ol class="mcq-src"><li>门控调节存、留、输出，有助于长期保留信息和梯度</li><li>LSTM 保证完美记住整个序列</li><li>LSTM 没有循环连接</li><li>LSTM 的参数比 RNN 少</li></ol>
+  <div class="mcq-exp">「有助于」而非「保证」。LSTM 参数更多（4 个全连接层）。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">32×32×3 彩色图，Conv2D(16, 5×5, padding = 2, stride = 1)。输出尺寸和参数个数？</div>
+  <ol class="mcq-src"><li>28×28×16，1 216</li><li>32×32×16，1 200</li><li>32×32×16，1 216</li><li>32×32×3，416</li></ol>
+  <div class="mcq-exp">$(32 + 4 - 5) + 1 = 32$；$16\times(75 + 1) = 1216$。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">关于池化层，正确的是？</div>
+  <ol class="mcq-src"><li>有和卷积一样多的权重</li><li>会增加特征图尺寸</li><li>必须用平均池化</li><li>没有要训练的权重</li></ol>
+  <div class="mcq-exp">只是固定规则。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">卷积层的参数个数与下面哪个<strong>无关</strong>？</div>
+  <ol class="mcq-src"><li>滤波器个数</li><li>输入图像的宽和高</li><li>输入通道数</li><li>滤波器大小</li></ol>
+  <div class="mcq-exp">权重共享带来的好处。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">10×10 输入，3×3 滤波器，步长 2，不填充，输出边长？</div>
+  <ol class="mcq-src"><li>4</li><li>5</li><li>3</li><li>8</li></ol>
+  <div class="mcq-exp">$\lfloor 7/2\rfloor + 1 = 3 + 1$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">LSTM 中决定旧的长期记忆保留多少的是？</div>
+  <ol class="mcq-src"><li>输入门</li><li>输出门</li><li>遗忘门</li><li>候选层</li></ol>
+  <div class="mcq-exp">$f_t\odot C_{t-1}$。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>64×64×3 输入 → Conv2D(8, 3×3, s = 1, p = 0) → 2×2 最大池化（s = 2）→ Conv2D(16, 3×3, s = 1, p = 1)。求每一步输出尺寸和两个卷积层的参数个数。</summary>
+  <div class="sa-ans">
+    <p>卷积 1：$(64 - 3) + 1 = 62$ → 62×62×8；参数 $8\times(27 + 1) = 224$。</p>
+    <p>池化：$(62 - 2)/2 + 1 = 31$ → 31×31×8；0 参数。</p>
+    <p>卷积 2：$(31 + 2 - 3) + 1 = 31$ → 31×31×16；参数 $16\times(9\times8 + 1) = 16\times73 = 1168$。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>输出边长 $\lfloor(n + 2p - f)/s\rfloor + 1$，卷积和池化连着算。</li>
+  <li>参数 $K(f^2C + 1)$；别忘偏置和通道；后一层的 C = 前一层的 K；与图像大小无关。</li>
+  <li>权重共享 → 参数少、位置无关；最大池化取最大、无参数。</li>
+  <li>RNN：隐藏状态带信息、各步共享权重、BPTT、梯度消失。</li>
+  <li>LSTM：遗忘 / 输入 / 输出门，$C_t$ 加法更新，有助于（不保证）长期记忆。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Géron《Hands-On Machine Learning》第 14 章（CNN）与第 15 章（RNN）；Olah 的博客 <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a>。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week08-cnn-rnn-lstm.html" target="_blank" rel="noopener">W08 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 8</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

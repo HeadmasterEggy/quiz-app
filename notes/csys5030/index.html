@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 知识点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="../../index.html">← 题库</a>
+  <span>CSYS5030</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>CSYS5030 知识点与题型</h1>
+<p class="subtitle">每周一页：这一周考什么、每种题型的知识点和解法、陷阱、一道检查题，最后一组混合练习、简答练习和考前速记。选择题点了就判分，多选题勾完点「提交」；简答题点开看参考答案。</p>
+
+<div class="box exam">
+  <span class="box-title">期末</span>
+  <p>11 月 19 日 13:00，F10A SR344。阅读 10 分钟 + 作答 1.5 小时，闭卷，可带非编程计算器。<strong>Section A：20 道选择题，各 1 分；Section B：3 道简答，共 20 分。</strong>卷子附公式表（H、联合、条件、I、条件 I）和样本库函数（<code>entropy_empirical</code> 等）。<strong>答案要写单位</strong>（bits / nats）。及格门槛 40%。</p>
+</div>
+
+<ul class="weeks">
+  <li><a href="week01.html"><span class="wk">W01</span><span class="ttl">不确定性与熵（一）<span class="sub">信息量 h、熵 H、单位、最大熵</span></span><span class="n">15 题</span></a></li>
+  <li><a href="week02.html"><span class="wk">W02</span><span class="ttl">不确定性与熵（二）<span class="sub">编码含义、plug-in、联合与条件熵、链式法则</span></span><span class="n">14 题</span></a></li>
+  <li><a href="week03.html"><span class="wk">W03</span><span class="ttl">互信息<span class="sub">I 的几种写法、局部 MI、交叉熵与 KL</span></span><span class="n">13 题</span></a></li>
+  <li><a href="week04.html"><span class="wk">W04</span><span class="ttl">条件互信息<span class="sub">冗余 vs 协同（XOR）、链式法则、数据处理不等式</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week05.html"><span class="wk">W05</span><span class="ttl">JIDT 与离散估计<span class="sub">plug-in = MLE、记号、JIDT 五步、代码题</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week06.html"><span class="wk">W06</span><span class="ttl">连续变量的估计器<span class="sub">偏差、微分熵、Gaussian MI、kernel vs KSG</span></span><span class="n">13 题</span></a></li>
+  <li><a href="week07.html"><span class="wk">W07</span><span class="ttl">统计显著性<span class="sub">surrogate 与 p 值、样本量、自相关排除</span></span><span class="n">13 题</span></a></li>
+  <li><a href="week08.html"><span class="wk">W08</span><span class="ttl">自组织<span class="sub">措辞 → 度量、同质变量合并、Ising / 蚁群</span></span><span class="n">10 题</span></a></li>
+  <li><a href="week09.html"><span class="wk">W09</span><span class="ttl">信息处理与熵率<span class="sub">存储 / 传递 / 修改、熵率、马尔可夫链</span></span><span class="n">9 题</span></a></li>
+  <li><a href="week10.html"><span class="wk">W10</span><span class="ttl">信息存储（AIS）<span class="sub">局部 AIS、最小 k、选 k、CA 与英文文本</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week11.html"><span class="wk">W11</span><span class="ttl">信息传递（TE）<span class="sub">写 TE 表达式、heartbeat、TE ≠ 因果、条件 TE</span></span><span class="n">13 题</span></a></li>
+  <li><a href="week12.html"><span class="wk">W12</span><span class="ttl">有效网络推断<span class="sub">三种网络、Bonferroni、贪心多变量算法</span></span><span class="n">10 题</span></a></li>
+</ul>
+
+<div class="box source">
+  <span class="box-title">怎么用</span>
+  <p>先读一页的知识点，做完那一页的混合练习和简答；第二天再去<a href="../../index.html">题库</a>做同一周的题，隔一天再做一次比连着做两遍记得牢。标「样卷」的是官方 Sample Exam 的题，标「自拟」的是按考点出的。</p>
+  <p>教材：Cover &amp; Thomas《Elements of Information Theory》；Bossomaier et al.《An Introduction to Transfer Entropy》；Lizier 的 JIDT 论文。样卷完整解答见博客 <a href="https://qiao1.top/posts/csys5030-sample-exam-solutions.html" target="_blank" rel="noopener">CSYS5030 Sample Exam 解答</a>，考前总复习见 <a href="https://qiao1.top/posts/csys5030-week13-wrap-up-exam-review.html" target="_blank" rel="noopener">W13 Wrap-up</a>。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W03 互信息</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 03</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W03 互信息</h1>
+<p class="subtitle">对应 Module 3（What is Information? I）。互信息、逐点互信息与误导信息，顺带交叉熵和 KL 散度。样卷 Q2、Q7、Q11、Q12 和简答 Q21 都在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 算互信息、Venn 图</a></td><td class="c"><span class="stars">★★★</span></td><td>$I = H(X) + H(Y) - H(X,Y)$；非负、对称、$\le\min H$</td></tr>
+    <tr><td><a href="#t2">2 逐点互信息与误导信息</a></td><td class="c"><span class="stars">★★★</span></td><td>$i = \log_2 p(x\mid y)/p(x)$，可以为负</td></tr>
+    <tr><td><a href="#t3">3 误导信息的约束（简答）</a></td><td class="c"><span class="stars">★★★</span></td><td>$p(x\mid y) &lt; p(x)$ 解不等式，再加表合法性</td></tr>
+    <tr><td><a href="#t4">4 解读与样本混池的坑</a></td><td class="c"><span class="stars">★★</span></td><td>MI = 0 ⟺ 独立；混池熵答的是另一个问题</td></tr>
+    <tr><td><a href="#t5">5 交叉熵与 KL 散度</a></td><td class="c"><span class="stars">★</span></td><td>按错分布编码的码长与额外代价</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　算互信息、Venn 图 <span class="stars">★★★</span></h2>
+<div class="formula">$$I(X;Y) = H(X) + H(Y) - H(X,Y) = H(X) - H(X\mid Y) = H(Y) - H(Y\mid X)$$</div>
+<p><strong>Venn 图</strong>：两个圆分别是 $H(X)$、$H(Y)$，重叠部分是 $I(X;Y)$，各自剩下的是条件熵，<strong>总面积是 $H(X,Y)$</strong>。</p>
+<div class="table-wrap"><table>
+  <tr><th>性质</th><th>说明</th></tr>
+  <tr><td>非负</td><td>$I \ge 0$；<strong>$I = 0$ ⟺ 独立</strong></td></tr>
+  <tr><td>对称</td><td>$I(X;Y) = I(Y;X)$</td></tr>
+  <tr><td>上界</td><td>$I \le \min(H(X), H(Y))$：重叠不能大于小圆</td></tr>
+  <tr><td>自信息</td><td>$I(X;X) = H(X)$</td></tr>
+</table></div>
+<div class="box method">
+  <span class="box-title">解法步骤（给联合概率表）</span>
+  <ol class="steps">
+    <li>求边际，算 $H(X)$、$H(Y)$。</li>
+    <li>逐格算 $H(X,Y)$。</li>
+    <li>$I = H(X) + H(Y) - H(X,Y)$，检查 $0 \le I \le \min$。</li>
+  </ol>
+</div>
+<h3>例题（样卷 Q11 的表）</h3>
+<p>$p(0,0) = 0.5$，$p(0,1) = 0.1$，$p(1,0) = 0.1$，$p(1,1) = 0.3$：$H(X) = H(Y) = 0.971$，$H(X,Y) = 1.685$ → $I = 0.971 + 0.971 - 1.685 = $ <strong>0.257 bits</strong>。</p>
+
+<div class="mcq" data-answer="4" data-src="样卷 Q12 · 检查一下">
+  <div class="mcq-q">Venn 图中 α 是只属于 $X$ 的部分，β 是重叠，γ 是只属于 $Y$ 的部分。α + β + γ 等于？（A $H(X)+H(Y)$　B $H(X,Y)$　C $H(X)+H(Y)-I(X;Y)$）</div>
+  <ol class="mcq-src"><li>A</li><li>B</li><li>C</li><li>A 和 B</li><li>B 和 C</li></ol>
+  <div class="mcq-exp">总面积是联合熵；把两个圆相加会把重叠算两次，所以要减一次 $I$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　逐点互信息与误导信息 <span class="stars">★★★</span></h2>
+<div class="formula">$$i(x;y) = \log_2\frac{p(x\mid y)}{p(x)} = \log_2\frac{p(x,y)}{p(x)p(y)} = h(x) - h(x\mid y)\qquad I(X;Y) = \langle i(x;y)\rangle$$</div>
+<ul>
+  <li>样卷 Q2：<strong>Shannon 信息量之于熵，就像逐点 MI 之于 MI</strong>（局部值与平均值）。</li>
+  <li><strong>$i &lt; 0$ = 误导信息</strong>：$y$ 让实际发生的 $x$ 看起来<strong>更不可能</strong>，$p(x\mid y) &lt; p(x)$。<strong>平均值非负，单点可以为负。</strong></li>
+  <li>若 $p(x,y) = 0$（这对组合从没出现），$i$ 无定义。</li>
+</ul>
+<h3>例题（讲课）：天气预报</h3>
+<p>基准 $p(\text{雨}) = 0.2$。预报晴却下雨：$p(\text{雨}\mid\text{晴}) = 0.05$ → $\log_2(0.05/0.2) = $ <strong>−2 bits</strong>（误导）。预报雨且下雨：$\log_2(0.8/0.2) = $ <strong>+2 bits</strong>。</p>
+<p>真实数据：Seinfeld 剧本里相邻字符 Z→Z 最强、Q→U 强正，<strong>V→N 为负</strong>。</p>
+
+<div class="mcq" data-answer="1" data-src="样卷 Q11 · 检查一下">
+  <div class="mcq-q">$p(0,0) = 0.5$，$p(0,1) = 0.1$，$p(1,0) = 0.1$，$p(1,1) = 0.3$。哪一对是误导性的？</div>
+  <ol class="mcq-src"><li>$x{=}0, y{=}0$</li><li>$x{=}0, y{=}1$</li><li>$x{=}1, y{=}1$</li><li>都不是</li></ol>
+  <div class="mcq-exp">$\log_2\frac{0.1}{0.6 \times 0.4} = \log_2 0.417 &lt; 0$。另两个比值 0.5/0.36、0.3/0.16 都 &gt; 1。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　误导信息的约束（简答） <span class="stars">★★★</span></h2>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>误导 ⟺ $i(x;y) &lt; 0$ ⟺ $p(x\mid y) &lt; p(x)$。</li>
+    <li>用未知数写出 $p(y)$ 和 $p(x\mid y) = p(x,y)/p(y)$，解不等式。</li>
+    <li><strong>加上概率表合法性</strong>（每格 $\ge 0$）给出另一侧的界；人数题要取整。</li>
+  </ol>
+</div>
+<h3>例题（样卷 Q21）</h3>
+<p>Guess Who 24 人：$p(x{=}1) = 5/24$，$p(x{=}1, y{=}1) = 3/24$，$p(x{=}0, y{=}1) = \alpha/24$。要 $y{=}1$ 对 $x{=}1$ 误导：</p>
+<div class="formula">$$p(x{=}1\mid y{=}1) = \frac{3}{3+\alpha} &lt; \frac{5}{24} \iff 72 &lt; 15 + 5\alpha \iff \alpha &gt; 11.4$$</div>
+<p>α 是人数 → $\alpha \ge 12$；合法性 $p(x{=}0, y{=}0) = (19-\alpha)/24 \ge 0$ → $\alpha \le 19$。答案 <strong>$12 \le \alpha \le 19$</strong>。</p>
+<p>(b) α = 5 时，得知 $x{=}0, y{=}0$：$p = 14/24$，$h = \log_2(24/14) \approx $ <strong>0.78 bits</strong>（联合事件的信息量）。</p>
+<div class="box trap">
+  <span class="box-title">常丢的分</span>
+  <p>只写 α &gt; 11.4，<strong>忘了另一侧</strong>的合法性界；或「严格小于」时没排除等号（等号是独立，$i = 0$）。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　解读与样本混池的坑 <span class="stars">★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>视角</th><th>互信息是……</th></tr>
+  <tr><td>KL 散度</td><td>真实联合分布与「假设独立」的分布 $p(x)p(y)$ 之间的 KL 散度</td></tr>
+  <tr><td>Bayesian（老师最爱）</td><td>$\langle\log_2 p(x\mid y)/p(x)\rangle$：后验比先验的对数期望</td></tr>
+  <tr><td>编码</td><td>假设独立编码、不利用相依关系所多花的码长</td></tr>
+  <tr><td>统计</td><td>对独立性的偏离；<strong>$I = 0$ ⟺ 独立</strong></td></tr>
+  <tr><td>相关性</td><td><strong>非线性版本的相关</strong>，model-free</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">样本混池</span>
+  <p>一个玩家第一组全出石头、第二组全出剪刀、第三组全出布，把样本拼在一起算熵 ≈ $\log_2 3$，看起来「很随机」。熵答的是<strong>「随机抽一个样本有多不确定」</strong>，不关心时序；完美循环的策略也是满熵。想问「可预测性」要用 $H(\text{next}\mid\text{prev})$。老师：<em>it's answering that question perfectly, just not the question we think we're asking.</em></p>
+</div>
+<p>措辞：「共同持有的信息」= MI；「合起来的不确定性」= 联合熵；「是否 X」说的是变量，「是 X」说的是取值。</p>
+
+<div class="mcq" data-answer="0" data-src="样卷 Q7 · 检查一下">
+  <div class="mcq-q">$X$ 的分布 (0.7, 0.1, 0.1, 0.1)，$Y$ 的分布 (0.7, 0.3)。只知道这些，一定成立的是？</div>
+  <ol class="mcq-src"><li>$H(X) &gt; H(Y)$</li><li>$h(x{=}0) &gt; h(y{=}0)$</li><li>$I(X;Y) &gt; 0$</li><li>以上都不对</li></ol>
+  <div class="mcq-exp">$H(X) = 1.36 &gt; H(Y) = 0.88$；$h(x{=}0) = h(y{=}0)$ 相等；只有边际无法判断 MI。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　交叉熵与 KL 散度 <span class="stars">★</span></h2>
+<div class="formula">$$H(P,Q) = \sum_x p(x)\log_2\frac{1}{q(x)}\qquad D(P\|Q) = H(P,Q) - H(P) = \sum_x p(x)\log_2\frac{p(x)}{q(x)} \ge 0$$</div>
+<ul>
+  <li>交叉熵：真实分布是 $P$，却<strong>按 $Q$ 设计编码</strong>时的平均码长；机器学习的 loss。</li>
+  <li>KL：<strong>用错分布编码多付的代价</strong>。$I(X;Y) = D\big(p(x,y)\,\|\,p(x)p(y)\big)$。</li>
+  <li>老师说后面不会再用，但值得懂。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q2">
+  <div class="mcq-q">____ 之于熵，就像逐点互信息之于互信息。</div>
+  <ol class="mcq-src"><li>联合熵</li><li>条件熵</li><li>Shannon 信息量</li><li>交叉熵</li></ol>
+  <div class="mcq-exp">$H = \langle h\rangle$，$I = \langle i\rangle$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="样卷 Q9">
+  <div class="mcq-q">$Y$ 和 $Z$ 都是真实温度 $X$ 的近乎完美的测量。$Y$、$Z$ 关于 $X$ 的信息大部分是？</div>
+  <ol class="mcq-src"><li>冗余的</li><li>协同的</li><li>误导的</li><li>相互独立的</li></ol>
+  <div class="mcq-exp">两个都几乎是 $X$ 的拷贝，知道一个后另一个几乎没新东西。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">基准 $p(\text{雨}) = 0.2$，预报晴时 $p(\text{雨}\mid\text{晴}) = 0.05$。预报晴而实际下雨，逐点互信息是？</div>
+  <ol class="mcq-src"><li>+2 bits</li><li>−2 bits</li><li>−0.25 bits</li><li>0 bits</li></ol>
+  <div class="mcq-exp">$\log_2(0.05/0.2) = \log_2 0.25$。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲课">
+  <div class="mcq-q">关于互信息，正确的是？</div>
+  <ol class="mcq-src"><li>$I(X;Y) = I(Y;X)$</li><li>$I(X;Y) \le \min(H(X), H(Y))$</li><li>每一对取值的 $i(x;y)$ 都非负</li><li>$I(X;Y) = 0$ ⟺ 独立</li></ol>
+  <div class="mcq-exp">只有平均非负，逐点可负。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">$I(X;X)$ 等于？</div>
+  <ol class="mcq-src"><li>0</li><li>1 bit</li><li>$H(X)$</li><li>$2H(X)$</li></ol>
+  <div class="mcq-exp">变量对自己的信息就是它的熵。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">把一个玩家多场比赛的出招拼成一个序列算熵，接近 $\log_2 3$。能说明什么？</div>
+  <ol class="mcq-src"><li>他的策略不可预测</li><li>随机抽一招时不确定性高</li><li>他每一场都在随机出</li><li>他没有固定的策略</li></ol>
+  <div class="mcq-exp">完美循环或每场固定一招都可能给出满熵。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">$H(X) = 1$，$H(Y) = 1.5$，$H(X,Y) = 2.2$（bits）。$I(X;Y)$ 是？</div>
+  <ol class="mcq-src"><li>0.2 bits</li><li>0.3 bits</li><li>0.5 bits</li><li>1.2 bits</li></ol>
+  <div class="mcq-exp">$1 + 1.5 - 2.2$。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">$H(X) = 1$ bit，$H(Y) = 3$ bits。$I(X;Y)$ 不可能是？</div>
+  <ol class="mcq-src"><li>0 bits</li><li>0.5 bits</li><li>1 bit</li><li>1.5 bits</li></ol>
+  <div class="mcq-exp">上界 $\min = 1$ bit。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">KL 散度 $D(P\|Q)$ 表示？</div>
+  <ol class="mcq-src"><li>按 $Q$ 编码的平均码长</li><li>按 $Q$ 而非 $P$ 编码多付的码长</li><li>$P$ 和 $Q$ 的互信息</li><li>$P$ 和 $Q$ 的联合熵</li></ol>
+  <div class="mcq-exp">A 是交叉熵；KL = 交叉熵 − $H(P)$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">$p(x) = 0.25$，$p(x\mid y) = 0.5$。$i(x;y)$ 是？</div>
+  <ol class="mcq-src"><li>+1 bit</li><li>−1 bit</li><li>+2 bits</li><li>0.25 bits</li></ol>
+  <div class="mcq-exp">$\log_2 2$：$y$ 让 $x$ 变得更可能。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 样卷 Q21 改</span>Guess Who 24 人，$p(x{=}1) = 6/24$，$p(x{=}1, y{=}1) = 2/24$，$p(x{=}0, y{=}1) = \alpha/24$。$y{=}1$ 对 $x{=}1$ 是误导性的，求 α 的取值范围。</summary>
+  <div class="sa-ans">
+    <p>误导 ⟺ $p(x{=}1\mid y{=}1) &lt; p(x{=}1)$。$p(y{=}1) = (2+\alpha)/24$，$p(x{=}1\mid y{=}1) = 2/(2+\alpha)$。</p>
+    <p>$\frac{2}{2+\alpha} &lt; \frac{6}{24} = \frac14 \iff 8 &lt; 2 + \alpha \iff \alpha &gt; 6$ → $\alpha \ge 7$。</p>
+    <p>合法性：$p(x{=}0) = 18/24$，$p(x{=}0, y{=}0) = (18-\alpha)/24 \ge 0$ → $\alpha \le 18$。答案 $7 \le \alpha \le 18$。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>从 $I(X;Y) = H(X) + H(Y) - H(X,Y)$ 推出 $I(X;Y) = H(X) - H(X\mid Y)$。</summary>
+  <div class="sa-ans">
+    <p>由 $H(X\mid Y) = H(X,Y) - H(Y)$ 得 $H(X,Y) = H(Y) + H(X\mid Y)$。</p>
+    <p>代入：$I = H(X) + H(Y) - H(Y) - H(X\mid Y) = H(X) - H(X\mid Y)$。∎</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$I = H(X) + H(Y) - H(X,Y) = H(X) - H(X\mid Y)$；非负、对称、$\le \min H$；$I(X;X) = H(X)$。</li>
+  <li>Venn：重叠 = MI，总面积 = 联合熵 = $H(X) + H(Y) - I$。</li>
+  <li>$i(x;y) = \log_2 p(x\mid y)/p(x)$；负 = 误导；平均非负；共现为 0 时无定义。</li>
+  <li>误导约束题：$p(x\mid y) &lt; p(x)$ 解出一侧，表合法性给另一侧，取整。</li>
+  <li>$I = 0$ ⟺ 独立；MI 是非线性的相关；混池熵不看时序。</li>
+  <li>交叉熵 = 按 $Q$ 编码的码长；KL = 多付的部分；MI = 联合与独立乘积之间的 KL。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Cover &amp; Thomas 第 2 章 2.3–2.4 节</strong>（相对熵与互信息、Venn 图关系），逐点互信息可看 <strong>Lizier《The Local Information Dynamics of Distributed Computation》第 2 章</strong>或 Bossomaier et al. 第 2 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week03-mutual-information.html" target="_blank" rel="noopener">W03 周笔记</a>、<a href="https://qiao1.top/posts/csys5030-sample-exam-solutions.html" target="_blank" rel="noopener">样卷解析</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 3</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

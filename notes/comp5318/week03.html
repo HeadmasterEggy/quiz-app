@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W03 线性与逻辑回归</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 03</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W03 线性回归、逻辑回归与正则化</h1>
+<p class="subtitle">最小二乘手算（PE2 Q32，10 分大题）；MAE 和 MSE；L1 与 L2 的区别；逻辑回归输出的意思。对应 PE1 Q5–7，PE2 Q5–7、Q32。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 最小二乘手算</a></td><td class="c"><span class="stars">★★★</span></td><td>均值 → $S_{xy}, S_{xx}$ → 斜率截距 → 残差 → MSE</td></tr>
+    <tr><td><a href="#t2">2 误差指标与 R²</a></td><td class="c"><span class="stars">★★★</span></td><td>离群点影响小的是 MAE；$r = \pm\sqrt{R^2}$</td></tr>
+    <tr><td><a href="#t3">3 逻辑回归</a></td><td class="c"><span class="stars">★★</span></td><td>sigmoid 输出正类概率；对数几率是线性的</td></tr>
+    <tr><td><a href="#t4">4 过拟合与正则化</a></td><td class="c"><span class="stars">★★★</span></td><td>L1 能把系数压到正好 0；α 大 → 系数小</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　最小二乘手算 <span class="stars">★★★</span></h2>
+<p>直线 $\hat y = b_0 + b_1 x$。残差 $e_i = y_i - \hat y_i$（真实减预测）。让 <strong>SSE = $\sum e_i^2$ 最小</strong>的直线就是最小二乘直线。平方是为了正负不抵消，并重罚大误差。</p>
+<div class="formula">$$b_1 = \frac{S_{xy}}{S_{xx}},\quad b_0 = \bar y - b_1\bar x,\qquad S_{xy} = \sum(x_i - \bar x)(y_i - \bar y),\quad S_{xx} = \sum(x_i - \bar x)^2$$</div>
+<p>最小二乘直线一定经过 $(\bar x, \bar y)$。</p>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li>算 $\bar x$、$\bar y$。</li>
+    <li>列表：$x - \bar x$、$y - \bar y$、两者乘积、$(x - \bar x)^2$；求和得 $S_{xy}$、$S_{xx}$。</li>
+    <li>$b_1 = S_{xy}/S_{xx}$，$b_0 = \bar y - b_1\bar x$。</li>
+    <li>每个点算 $\hat y$、残差、残差平方；SSE 求和，MSE = SSE / n。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE2 Q32）</span>
+  <p>数据 (1,2)、(2,2)、(3,5)。$\bar x = 2$，$\bar y = 3$。</p>
+  <div class="table-wrap"><table>
+    <tr><th class="c">x</th><th class="c">y</th><th class="c">x−x̄</th><th class="c">y−ȳ</th><th class="c">乘积</th><th class="c">(x−x̄)²</th></tr>
+    <tr><td class="c">1</td><td class="c">2</td><td class="c">−1</td><td class="c">−1</td><td class="c">1</td><td class="c">1</td></tr>
+    <tr><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">−1</td><td class="c">0</td><td class="c">0</td></tr>
+    <tr><td class="c">3</td><td class="c">5</td><td class="c">1</td><td class="c">2</td><td class="c">2</td><td class="c">1</td></tr>
+  </table></div>
+  <p>$S_{xy} = 3$，$S_{xx} = 2$，$b_1 = 1.5$，$b_0 = 3 - 3 = 0$，$\hat y = 1.5x$。</p>
+  <p>预测 (1.5, 3.0, 4.5)，残差 (0.5, −1, 0.5)，SSE $= 0.25 + 1 + 0.25 = 1.5$，<strong>MSE = 0.5</strong>。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <ul>
+    <li>乘积里负负得正算错。</li>
+    <li>新样本 $x = 2$ 恰好等于某训练点，也要报告<strong>模型预测值</strong> 3.0，不是训练集里的真实值 2。</li>
+    <li>MSE 忘了除以 n（SSE 才是总和）。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q7 · 检查一下">
+  <div class="mcq-q">$\bar x = 3$，$\bar y = 7$，$S_{xy} = 10$，$S_{xx} = 5$。截距和 $x = 5$ 时的预测值是？</div>
+  <ol class="mcq-src"><li>截距 7，预测 17</li><li>截距 2，预测 12</li><li>截距 1，预测 11</li><li>截距 −1，预测 9</li></ol>
+  <div class="mcq-exp">$b_1 = 2$，$b_0 = 7 - 6 = 1$，$\hat y = 1 + 10 = 11$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　误差指标与 R² <span class="stars">★★★</span></h2>
+<div class="formula">$$\text{MAE} = \frac1n\sum|y_i - \hat y_i|\qquad \text{MSE} = \frac1n\sum(y_i - \hat y_i)^2 = \frac{\text{SSE}}{n}\qquad \text{RMSE} = \sqrt{\text{MSE}}$$</div>
+<ul>
+  <li>MAE 随残差<strong>线性</strong>增长，MSE 随残差<strong>平方</strong>增长。<strong>想降低离群点影响用 MAE</strong>；想重罚大误差用 MSE / RMSE。</li>
+  <li>RMSE 单位和 y 一样，好解释。</li>
+</ul>
+<div class="formula">$$\text{SST} = \text{SSR} + \text{SSE}\qquad R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}$$</div>
+<p>SST = $\sum(y - \bar y)^2$（只猜平均值的误差）；SSR = $\sum(\hat y - \bar y)^2$（直线解释掉的）；SSE（没解释的，训练误差）。$R^2 = 0.8$：y 的变化 80% 被 x 的直线关系解释。</p>
+<div class="box trap">
+  <span class="box-title">正负号</span>
+  <p>$r = \pm\sqrt{R^2}$。$R^2 = 0.81$ 只能说 $r$ 是 0.9 或 −0.9，<strong>正负看斜率</strong>。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q7 · 检查一下">
+  <div class="mcq-q">真实值 (2, 4, 8)，预测值 (1, 6, 7)。MAE 和 MSE 是？</div>
+  <ol class="mcq-src"><li>1.33 和 2</li><li>2 和 1.33</li><li>1.33 和 6</li><li>4 和 6</li></ol>
+  <div class="mcq-exp">残差 (1, −2, 1)：MAE $= 4/3$，MSE $= 6/3$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　逻辑回归 <span class="stars">★★</span></h2>
+<p>线性回归做分类会输出 1.3、−0.2，不能当概率。逻辑回归先算 $z = b_0 + b_1 x$，再压进 (0, 1)：</p>
+<div class="formula">$$p = \frac{1}{1 + e^{-z}}\qquad \ln\frac{p}{1-p} = b_0 + b_1 x$$</div>
+<ul>
+  <li>$p$ = 样本属于<strong>正类</strong>的估计概率；$z = 0$ 时 $p = 0.5$。阈值默认 0.5，高风险场景可调低。</li>
+  <li>「线性」指<strong>对数几率（log-odds）</strong>是 x 的线性函数，不是 p。</li>
+  <li>系数：线性回归最小化平方误差；逻辑回归<strong>最大化似然</strong>。</li>
+</ul>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>$b_0 = -4.372$，$b_1 = 0.06696$，50 岁：$z = -4.372 + 3.348 = -1.024$；$p = 1/(1 + e^{1.024}) = 1/3.784 \approx 0.264$ → 类 0。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q5 · 检查一下">
+  <div class="mcq-q">逻辑回归对某样本输出 0.83，阈值 0.5，怎么解释？</div>
+  <ol class="mcq-src"><li>模型 83% 的预测是正确的</li><li>正类估计概率 0.83，判为正类</li><li>该样本一定属于正类</li><li>该样本与正类中心的距离是 0.83</li></ol>
+  <div class="mcq-exp">只是估计，不保证正确。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　过拟合与正则化 <span class="stars">★★★</span></h2>
+<ul>
+  <li><strong>过拟合</strong>：训练误差小、测试误差大（训练 RMSE 0.2，测试 8.5）；数据少、噪声多、模型太复杂。</li>
+  <li><strong>欠拟合</strong>：训练、测试都差。选<strong>验证集上最好</strong>的复杂度。</li>
+</ul>
+<div class="formula">$$\text{Ridge (L2)}: J = \text{MSE} + \alpha\sum w_i^2\qquad \text{Lasso (L1)}: J = \text{MSE} + \alpha\sum|w_i|$$</div>
+<div class="table-wrap"><table>
+  <tr><th></th><th>L2 Ridge</th><th>L1 Lasso</th></tr>
+  <tr><td>效果</td><td>系数变小，一般<strong>不会正好为 0</strong></td><td>一部分系数<strong>正好为 0</strong>（稀疏）</td></tr>
+  <tr><td>额外用途</td><td>—</td><td>自动做<strong>特征选择</strong></td></tr>
+</table></div>
+<p>$\alpha$ 变大：惩罚重、系数小、模型简单；训练误差通常上升，测试误差可能下降；$\alpha$ 极大时斜率都 ≈ 0，预测平均值（欠拟合）；$\alpha = 0$ 就是普通线性回归。</p>
+<div class="box trap">
+  <span class="box-title">别过度推论</span>
+  <p>正则化<strong>不保证</strong>测试精度一定提高；$\alpha$ 本身要用验证集或交叉验证来选。</p>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q6 · 检查一下">
+  <div class="mcq-q">用了 L1 惩罚后，好几个系数正好变成 0，这说明？</div>
+  <ol class="mcq-src"><li>测试精度一定提高了</li><li>不再需要选惩罚强度</li><li>模型一定欠拟合了</li><li>L1 惩罚能产生稀疏系数</li></ol>
+  <div class="mcq-exp">L1 的典型效果；A、B 都是过度推论。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q5">
+  <div class="mcq-q">回归模型有一个特别大的残差。怎样降低它对报告误差的影响？</div>
+  <ol class="mcq-src"><li>用 MSE 代替 MAE</li><li>用 MAE 代替 MSE</li><li>用 RMSE 代替 MAE</li><li>用 SSE 代替 MSE</li></ol>
+  <div class="mcq-exp">MAE 线性增长，大残差不会被平方放大。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q6">
+  <div class="mcq-q">Ridge 回归中把惩罚强度调大，对优化目标的直接影响是？</div>
+  <ol class="mcq-src"><li>推动系数变小的压力变大</li><li>更多系数正好变为 0</li><li>训练误差一定下降</li><li>学习率自动变小</li></ol>
+  <div class="mcq-exp">系数平方和那一项权重变大。B 是 L1 的特征。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">已知 $R^2 = 0.64$，回归斜率为负。相关系数 $r$ 是？</div>
+  <ol class="mcq-src"><li>0.64</li><li>0.8</li><li>−0.8</li><li>−0.64</li></ol>
+  <div class="mcq-exp">$\pm\sqrt{0.64} = \pm0.8$，斜率为负取负号。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">所有残差都是 0 时，正确的是？</div>
+  <ol class="mcq-src"><li>SST = SSE</li><li>R² = 0</li><li>SSR = 0</li><li>SST = SSR</li></ol>
+  <div class="mcq-exp">SSE = 0，R² = 1。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">逻辑回归中 $z = 0$ 时输出概率是？</div>
+  <ol class="mcq-src"><li>0</li><li>0.5</li><li>1</li><li>$e$</li></ol>
+  <div class="mcq-exp">$1/(1 + e^0) = 1/2$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">逻辑回归被称为线性模型，是因为？</div>
+  <ol class="mcq-src"><li>对数几率是特征的线性函数</li><li>输出概率是特征的线性函数</li><li>用最小二乘求系数</li><li>决策边界一定是曲线</li></ol>
+  <div class="mcq-exp">系数用最大似然求；决策边界是直线 / 超平面。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">训练 RMSE 0.2，测试 RMSE 8.5，最可能的情况和对策是？</div>
+  <ol class="mcq-src"><li>欠拟合，增加模型复杂度</li><li>欠拟合，加大正则化</li><li>过拟合，加大正则化</li><li>过拟合，减少训练数据</li></ol>
+  <div class="mcq-exp">训练好、测试差 = 过拟合；正则化、剪枝、更多数据都有帮助。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>数据 (0, 1)、(1, 3)、(2, 2)、(3, 6)。求最小二乘直线和训练 MSE。</summary>
+  <div class="sa-ans">
+    <p>$\bar x = 1.5$，$\bar y = 3$。$x - \bar x = (-1.5, -0.5, 0.5, 1.5)$，$y - \bar y = (-2, 0, -1, 3)$。</p>
+    <p>$S_{xy} = 3 + 0 - 0.5 + 4.5 = 7$；$S_{xx} = 2.25 + 0.25 + 0.25 + 2.25 = 5$。</p>
+    <p>$b_1 = 1.4$，$b_0 = 3 - 1.4\times1.5 = 0.9$，$\hat y = 0.9 + 1.4x$。</p>
+    <p>预测 (0.9, 2.3, 3.7, 5.1)，残差 (0.1, 0.7, −1.7, 0.9)，平方 (0.01, 0.49, 2.89, 0.81)，SSE = 4.2，<strong>MSE = 1.05</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>用上面例题的逻辑回归系数，求 45 岁的人属于正类的概率。</summary>
+  <div class="sa-ans">
+    <p>$z = -4.372 + 0.06696\times45 = -4.372 + 3.013 = -1.359$。</p>
+    <p>$p = 1/(1 + e^{1.359}) = 1/(1 + 3.892) \approx 0.204$，判为类 0。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$b_1 = S_{xy}/S_{xx}$，$b_0 = \bar y - b_1\bar x$；直线过 $(\bar x, \bar y)$；MSE = SSE / n。</li>
+  <li>MAE 对离群点不敏感；RMSE 单位同 y；SST = SSR + SSE，$R^2 = 1 - \text{SSE}/\text{SST}$，$r$ 的正负看斜率。</li>
+  <li>逻辑回归 $p = 1/(1 + e^{-z})$ 是正类概率；对数几率线性；最大似然。</li>
+  <li>L1 产生正好为 0 的系数（特征选择）；L2 只压小；α 大 → 系数小 → 可能欠拟合；α 要用验证集选。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Géron《Hands-On Machine Learning》第 4 章（线性回归、正则化、逻辑回归）；James et al.《An Introduction to Statistical Learning》第 3、4、6 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week03-linear-logistic-regression.html" target="_blank" rel="noopener">W03 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 3</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

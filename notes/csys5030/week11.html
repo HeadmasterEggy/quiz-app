@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W11 信息传递</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 11</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W11 信息传递（Transfer Entropy）</h1>
+<p class="subtitle">对应 Module 11。TE 的定义、为什么要条件于目标过去、TE ≠ 因果、实践三步、条件 TE 与信息回归。样卷 Q16、Q17、Q19 在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 TE 定义与写出表达式</a></td><td class="c"><span class="stars">★★★</span></td><td>$I(\mathbf Y; X_{n+1}\mid\mathbf X_n^{(k)})$，认清源、目标、过去</td></tr>
+    <tr><td><a href="#t2">2 TE vs 滞后 MI、PID</a></td><td class="c"><span class="stars">★★★</span></td><td>条件化去冗余（归存储）、加协同（归传递）</td></tr>
+    <tr><td><a href="#t3">3 Heartbeat 局部 TE</a></td><td class="c"><span class="stars">★★</span></td><td>切换时最大，没有负值，平均 = 源的熵率</td></tr>
+    <tr><td><a href="#t4">4 TE ≠ 因果；Gaussian TE = Granger</a></td><td class="c"><span class="stars">★★</span></td><td>因果源可能只贡献存储</td></tr>
+    <tr><td><a href="#t5">5 实践三步与条件 TE</a></td><td class="c"><span class="stars">★★★</span></td><td>目标嵌入 → 源嵌入 → 延迟；成对和条件 TE 都需要</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　TE 定义与写出表达式 <span class="stars">★★★</span></h2>
+<p>问题：已经考虑了目标自己的过去（存储），<strong>源的过去还能多帮多少</strong>预测目标的下一个值？</p>
+<div class="formula">$$T_{Y\to X}(k) = I\big(Y_n; X_{n+1}\mid\mathbf X_n^{(k)}\big) = \Big\langle\log_2\frac{p(x_{n+1}\mid\mathbf x_n^{(k)}, y_n)}{p(x_{n+1}\mid\mathbf x_n^{(k)})}\Big\rangle$$</div>
+<p>一般形式（源嵌入 $l$、延迟 $u$）：</p>
+<div class="formula">$$T_{Y\to X}(k, l, u) = I\big(\mathbf Y_{n+1-u}^{(l)}; X_{n+1}\mid\mathbf X_n^{(k)}\big)$$</div>
+<div class="box method">
+  <span class="box-title">解法步骤：写 TE 表达式</span>
+  <ol>
+    <li>谁是<strong>目标</strong>？它的<strong>下一个值</strong>放在 MI 第二个位置。</li>
+    <li>目标嵌入 $k$：条件里放 $X_{n-k+1}, \dots, X_n$（<strong>以 $X_n$ 结尾</strong>）。</li>
+    <li>源嵌入 $l$、延迟 $u$：第一个位置放源的 $l$ 个值，最后一个是 $Y_{n+1-u}$。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（样卷 Q17 模式）</span>
+  <p>Y → X 的 TE，源嵌入 1，目标嵌入 2，延迟 1：$I(Y_n; X_{n+1}\mid X_{n-1}, X_n)$。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <p>把条件写成源的过去、把目标过去写成 $X_{n+1}, X_n$（包括了要预测的值），或者条件里少了 $X_n$。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q17 · 检查一下">
+  <div class="mcq-q">Y → X 的 TE，源嵌入 1、目标嵌入 2、延迟 1，正确的是？</div>
+  <ol class="mcq-src"><li>$I(X_n; Y_{n+1}\mid Y_{n-1}, Y_n)$</li><li>$I(Y_n; X_{n+1}\mid Y_{n-1})$</li><li>$I(Y_n; X_{n+1}\mid X_{n-1}, X_n)$</li><li>$I(Y_n; X_{n+1}\mid X_n, X_{n+1})$</li></ol>
+  <div class="mcq-exp">A 方向反了；B 条件于源；D 条件里包含了要预测的值。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　TE vs 滞后 MI、PID <span class="stars">★★★</span></h2>
+<p>$I(Y_n; X_{n+1}\mid\mathbf X_n^{(k)})$ 和 $I(Y_n; X_{n+1})$ <strong>都有方向</strong>，但条件于目标过去让 TE 成为<strong>动态</strong>的量，关心的是<strong>状态转移</strong> $\mathbf x_n^{(k)}\to x_{n+1}$。</p>
+<div class="table-wrap"><table>
+  <tr><th>条件化的作用（W04）</th><th>在 TE 里的意义</th></tr>
+  <tr><td><strong>去除冗余</strong>，减少 MI</td><td>源与目标过去重复的信息算作<strong>存储</strong>，不算传递</td></tr>
+  <tr><td><strong>引入协同</strong>，增加 MI</td><td>源在目标过去的语境下才有信息量的部分算进<strong>传递</strong>（状态依赖）</td></tr>
+</table></div>
+<p><strong>PID</strong>（Williams &amp; Beer，两源：目标过去 M、源 Y）：</p>
+<div class="formula">$$\text{AIS} = \{M\}_{\text{独有}} + \{M\}\{Y\}_{\text{冗余}}\qquad \text{TE} = \{Y\}_{\text{独有}} + \{MY\}_{\text{协同}}$$</div>
+<div class="formula">$$H(X_{n+1}) = \underbrace{I(\mathbf X_n^{(k)}; X_{n+1})}_{\text{AIS}} + \underbrace{I(Y_n; X_{n+1}\mid\mathbf X_n^{(k)})}_{\text{TE}} + H(X_{n+1}\mid\mathbf X_n^{(k)}, Y_n)$$</div>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">按 PID，源和目标过去之间的<strong>冗余</strong>信息被算作？</div>
+  <ol class="mcq-src"><li>传递</li><li>存储</li><li>修改</li><li>两边各算一半</li></ol>
+  <div class="mcq-exp">先考虑过去的建模顺序：冗余归存储，协同归传递。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　Heartbeat 局部 TE <span class="stars">★★</span></h2>
+<p>源 S 是两状态马尔可夫链（$\lambda_1 = p(1\mid0) = 0.05$，$\lambda_0 = p(0\mid1) = 0.2$），目标复制源的上一个值 $d_{n+1} = s_n$。于是 $p(d_{n+1}\mid d_n, s_n) = 1$：</p>
+<div class="formula">$$t_{S\to D} = \log_2\frac{1}{p(d_{n+1}\mid d_n)}$$</div>
+<div class="table-wrap"><table>
+  <tr><th>事件</th><th class="c">局部 TE</th><th class="c">局部滞后 MI</th><th>差异</th></tr>
+  <tr><td><strong>0 → 1 切换</strong></td><td class="c">$\log_2\frac1{0.05} = $ <strong>4.32</strong></td><td class="c">2.32</td><td>TE 大：协同</td></tr>
+  <tr><td>1 → 0 切换</td><td class="c">$\log_2\frac1{0.2} = 2.32$</td><td class="c">0.32</td><td>TE 大：协同</td></tr>
+  <tr><td>保持 1</td><td class="c">$\log_2\frac1{0.8} = 0.32$</td><td class="c">2.32</td><td>TE 小：冗余</td></tr>
+  <tr><td>保持 0</td><td class="c">$\log_2\frac1{0.95} = 0.074$</td><td class="c">0.32</td><td>TE 小：冗余</td></tr>
+  <tr><td><strong>平均</strong></td><td class="c"><strong>0.3735</strong></td><td class="c">0.722</td><td>MI 把存储也算进来</td></tr>
+</table></div>
+<ul>
+  <li><strong>没有负的局部 TE</strong>：分子总是 1，源从不误导。</li>
+  <li>平均 TE = 源过程的<strong>熵率</strong>（W09 的 0.374）：源每步的全部新信息都传给了目标。</li>
+  <li>MI 只看「目标现在是不是 1」，TE 看<strong>转移</strong>，这才符合「信息传递」的直觉。</li>
+</ul>
+<p><strong>CA rule 54</strong>：只用邻居作源（周期边界 <code>(d-1) % 10000</code>）、合并样本，k = 15，TE ≈ 0.08 bits；<strong>glider 处局部 TE 强正 = 传递实体</strong>。左邻 → 格子突出右行 glider。</p>
+
+<div class="mcq" data-answer="0" data-src="Tutorial · 检查一下">
+  <div class="mcq-q">Heartbeat 例子里，源给目标信息最多的时刻是？</div>
+  <ol class="mcq-src"><li>目标从 0 切换到 1 时</li><li>目标一直保持 0 时</li><li>目标一直保持 1 时</li><li>所有时刻都一样多</li></ol>
+  <div class="mcq-exp">目标过去说「几乎肯定还是 0」，源给出罕见的切换：4.32 bits。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　TE ≠ 因果；Gaussian TE = Granger <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>因果</strong>关心<strong>干预</strong>的效应（Pearl）；<strong>信息传递</strong>把动态建模为<strong>计算</strong>。</li>
+  <li>例：X、Y 都是 0/1 交替且反相。无论 X 是被 Y 驱动还是自己翻转，观测数据一模一样；X 的过去已经完全预测下一个值，<strong>TE = 0，全是存储</strong>。</li>
+  <li><strong>因果源可能只服务于存储</strong>；<strong>非因果源（隐藏共同驱动）可以有传递</strong> → 尽量只分析因果源（CA 只看邻居）。</li>
+  <li>TE 能看到因果度量看不到的<strong>涌现计算结构</strong>（切换、glider）。两个概念<strong>互补</strong>。</li>
+  <li><strong>Gaussian 估计器的 TE 就是 Granger 因果</strong>（Granger = 2 × TE，TE 以 nats 计）。</li>
+</ul>
+
+<div class="mcq" data-answer="3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于 TE 与因果效应，正确的是？</div>
+  <ol class="mcq-src"><li>TE 显著就证明存在因果</li><li>TE 为零就证明没有因果</li><li>TE 只能在干预实验中计算</li><li>因果源可能只表现为存储</li></ol>
+  <div class="mcq-exp">反相交替例子：Y 驱动 X，但 TE = 0。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　实践三步与条件 TE <span class="stars">★★★</span></h2>
+<div class="box method">
+  <span class="box-title">实践三步</span>
+  <ol>
+    <li><strong>目标嵌入</strong> $k, \tau_X$：和 AIS 一样（最大化偏差修正 AIS / Ragwitz），<strong>先嵌入目标</strong>，免得把存储算成传递。</li>
+    <li><strong>源嵌入</strong> $l, \tau_Y$：观测掩盖了隐马尔可夫过程，或者多个过去 Y 值有因果作用时才需要。</li>
+    <li><strong>源-目标延迟</strong> $u$：<strong>取使 TE 最大的</strong>，简单条件下与真实因果延迟一致（Wibral 2013）。JIDT 用 <code>DELAY</code>（kernel 估计器除外）。</li>
+  </ol>
+</div>
+<p>JIDT KSG 的 <code>AUTO_EMBED_METHOD</code>：<code>NONE</code>、<code>RAGWITZ</code>、<code>RAGWITZ_DEST_ONLY</code>、<code>MAX_CORR_AIS</code>、<code>MAX_CORR_AIS_DEST_ONLY</code>（<code>_DEST_ONLY</code> 只嵌入目标）。</p>
+<h3>条件 TE</h3>
+<div class="formula">$$T_{Y\to X\mid Z} = I\big(Y_n; X_{n+1}\mid\mathbf X_n^{(k)}, Z_n\big)$$</div>
+<div class="table-wrap"><table>
+  <tr><th>结构</th><th>成对 TE</th><th>条件于 Z 后</th></tr>
+  <tr><td>共同驱动 Z→Y，Z→X</td><td>虚假 Y→X</td><td>冗余去掉，消失</td></tr>
+  <tr><td>路径 Y→Z→X</td><td>间接 Y→X</td><td>消失</td></tr>
+  <tr><td>门控 / XOR：Y、Z 共同决定 X</td><td>≈ 0，看不出</td><td>协同显现</td></tr>
+</table></div>
+<h3>信息回归：两个都需要</h3>
+<div class="formula">$$I(Y, Z; X_{n+1}\mid\mathbf X) = T_{Y\to X} + T_{Z\to X\mid Y} = T_{Z\to X} + T_{Y\to X\mid Z}$$</div>
+<p>成对 TE 和条件 TE 是同一链式分解按不同顺序展开的项，<strong>相加等于集体 TE</strong>。哪个顺序都对（样卷 Q19）。</p>
+<p>生理数据：心率 → 呼吸最优延迟 6（0.055 nats，显著）；条件于血氧后 CTE = 0.024 nats 仍显著，说明心率给了血氧给不了的信息，但部分冗余。</p>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">X = Y XOR Z（Y、Z 独立均匀）。成对 TE Y→X 和条件 TE Y→X|Z 分别大约是？</div>
+  <ol class="mcq-src"><li>1 bit 和 0</li><li>0 和 1 bit</li><li>都是 0</li><li>都是 1 bit</li></ol>
+  <div class="mcq-exp">门控 / 协同：单看 Y 没用，知道 Z 后 Y 决定 X。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0" data-src="样卷 Q16 类">
+  <div class="mcq-q">为什么 TE 要条件于目标自己的过去？</div>
+  <ol class="mcq-src"><li>避免把信息存储误算成信息传递</li><li>让 TE 变成对称的量</li><li>减少计算所需的样本数</li><li>使 TE 永远不会为负</li></ol>
+  <div class="mcq-exp">传递是相对存储定义的；此外条件化还让 TE 能包含协同、考察状态转移。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q19 类">
+  <div class="mcq-q">对目标 X 有两个候选源 Y、Z。为了完整理解 X 的信息处理，应该？</div>
+  <ol class="mcq-src"><li>只看成对 TE</li><li>只看条件 TE</li><li>成对和条件 TE 都看</li><li>只看集体 TE</li></ol>
+  <div class="mcq-exp">它们按不同顺序出现在同一个链式分解里，一起才完整。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲义">
+  <div class="mcq-q">扫描源-目标延迟 u 时，应选？</div>
+  <ol class="mcq-src"><li>使 TE 最小的 u</li><li>总是 u = 1</li><li>使滞后 MI 最大的 u</li><li>使 TE 最大的 u</li></ol>
+  <div class="mcq-exp">简单条件下这个 u 与真实因果延迟一致。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">对高斯变量，用 Gaussian 估计器算 TE 等价于？</div>
+  <ol class="mcq-src"><li>Pearson 相关</li><li>Granger 因果（差因子 2）</li><li>KL 散度</li><li>自相关</li></ol>
+  <div class="mcq-exp">Barnett, Barrett &amp; Seth 2009。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲义">
+  <div class="mcq-q">什么时候应该用源状态 $\mathbf y_n^{(l)}$（$l &gt; 1$）而不是标量 $y_n$？</div>
+  <ol class="mcq-src"><li>观测掩盖了隐马尔可夫过程</li><li>源是 i.i.d. 噪声</li><li>多个过去 Y 值对 X 有因果作用</li><li>目标嵌入 k = 1</li></ol>
+  <div class="mcq-exp">否则也可以用非均匀嵌入从 Y 中挑贡献者。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial">
+  <div class="mcq-q">CA rule 54 中，局部 TE（左邻 → 格子）强正的地方是？</div>
+  <ol class="mcq-src"><li>domain 内部</li><li>blinker</li><li>向右移动的 glider</li><li>所有格子均匀</li></ol>
+  <div class="mcq-exp">glider 是传递实体；右邻作源突出向左移动的 glider。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">成对 TE 显示 Y→X 显著，但条件于 Z 后几乎为零。最可能的结构是？</div>
+  <ol class="mcq-src"><li>Y、Z 对 X 有 XOR 门控</li><li>Y 是 X 唯一的直接源</li><li>Z 与 Y、X 都无关</li><li>Z 共同驱动 Y 和 X，或 Y→Z→X</li></ol>
+  <div class="mcq-exp">冗余被条件化去掉。门控会让条件 TE 变大。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">Heartbeat 中把 $\lambda_1$ 改成 0.1（$\lambda_0$ 仍 0.2），0 → 1 切换时的局部 TE 是？</div>
+  <ol class="mcq-src"><li>2.32 bits</li><li>3.32 bits</li><li>4.32 bits</li><li>0.15 bits</li></ol>
+  <div class="mcq-exp">$\log_2(1/0.1)$。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>解释 TE 与滞后互信息 $I(Y_n; X_{n+1})$ 的区别，并说明为什么 TE 更符合「信息传递」的直觉（可用 heartbeat 例子）。</summary>
+  <div class="sa-ans">
+    <p>两者都有方向。TE 条件于目标过去 $\mathbf X_n^{(k)}$：去掉源与目标过去的冗余（那部分其实是存储），并加入源在目标过去语境下才有的协同信息。</p>
+    <p>Heartbeat：滞后 MI 平均 0.722 bits，只要目标是 1 就「有信息」（保持 1 也是 2.32 bits）；TE 平均 0.3735 bits，在切换时最大（0 → 1 为 4.32 bits），保持时很小。传递应该是过去预测不到、由源带来的新信息，所以 TE 更合适。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>写出 Y→X 的 TE：源嵌入 $l = 2$（间隔 1）、目标嵌入 $k = 3$、源-目标延迟 $u = 2$。</summary>
+  <div class="sa-ans">
+    <p>$I(Y_{n-2}, Y_{n-1}; X_{n+1}\mid X_{n-2}, X_{n-1}, X_n)$。源最后一个值是 $Y_{n+1-u} = Y_{n-1}$。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$T_{Y\to X} = I(Y_n; X_{n+1}\mid\mathbf X_n^{(k)})$；目标过去以 $X_n$ 结尾；源最后一个值 $Y_{n+1-u}$。</li>
+  <li>条件化：冗余归存储，协同归传递；TE 关注状态转移。</li>
+  <li>Heartbeat：局部 TE $= -\log_2 p(d_{n+1}\mid d_n)$，0→1 为 4.32 最大，无负值，平均 0.3735 = 源熵率。</li>
+  <li>TE ≠ 因果；Gaussian TE = Granger / 2；尽量只分析因果源；glider = 传递实体。</li>
+  <li>三步：目标嵌入 → 源嵌入 → 延迟取 TE 最大；<code>_DEST_ONLY</code> 只嵌目标。</li>
+  <li>条件 TE：去共同驱动 / 路径，显现门控；成对 + 条件 = 集体 TE，两者都要。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Bossomaier et al.《An Introduction to Transfer Entropy》第 4 章 §4.1–4.3、§5.1</strong>，以及 <strong>Schreiber (2000)《Measuring Information Transfer》</strong>；heartbeat 推导见课程讲义 <code>teDerivation.pdf</code>。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week11-transfer-entropy.html" target="_blank" rel="noopener">W11 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 11</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W08 自组织与提问</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 08</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W08 自组织、措辞翻译与案例</h1>
+<p class="subtitle">对应 Module 8。自组织的定义与度量，以及老师讲 Calculation exercises 时强调的「把题目措辞翻译成度量」。考试的手算题和代码题几乎都靠这一步。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 自组织的定义与度量</a></td><td class="c"><span class="stars">★★</span></td><td>组织度随时间增加 + 无中心控制；熵的补不行</td></tr>
+    <tr><td><a href="#t2">2 措辞 → 度量</a></td><td class="c"><span class="stars">★★★</span></td><td>「是否」= 变量，「是」= 取值；「完全基于」= 两个条件</td></tr>
+    <tr><td><a href="#t3">3 手算综合题</a></td><td class="c"><span class="stars">★★★</span></td><td>边际 → 联合 → 条件 → MI；严格不等号要排除等号</td></tr>
+    <tr><td><a href="#t4">4 同质性与案例</a></td><td class="c"><span class="stars">★★</span></td><td>同样方式运作的变量才能合并样本</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　自组织的定义与度量 <span class="stars">★★</span></h2>
+<p><strong>Sayama</strong>：系统<strong>自发地</strong>随时间形成<strong>非平凡的宏观结构或行为</strong>的动态过程。两个特征：</p>
+<ol>
+  <li><strong>组织度随时间增加</strong>；</li>
+  <li><strong>动态不由中心化或外部控制主体引导</strong>（老师：不必完全没有，只要不是全部，比如交通有红绿灯）。</li>
+</ol>
+<p>例子：<strong>Game of Life</strong>（二维 CA，二值格子、同步更新、同一条局部规则看 8 邻居；出现静止、闪烁、滑翔图案，最终密度几乎不依赖初始密度）、鸟群、蚂蚁、交通、大脑。</p>
+<div class="table-wrap"><table>
+  <tr><th>度量思路</th><th>问题</th></tr>
+  <tr><td><strong>熵的补</strong>（熵低 = 有组织）</td><td><strong>棋盘格和随机图案的单格熵一样</strong>，看不到变量间结构</td></tr>
+  <tr><td><strong>Multi-information</strong> $\sum_i H(X_i) - H(X_1..X_k)$</td><td>违反「一个分号」、<strong>重复计数</strong>（没有链式法则的保证）、高维难估（100×100 = 10 000 维）</td></tr>
+  <tr><td>Statistical complexity</td><td>老师最喜欢，但<strong>不在本课范围</strong></td></tr>
+</table></div>
+<p><strong>本课立场</strong>：自组织是<strong>信息的结构化</strong>。与其找一个总指标，不如<strong>刻画信息结构的多个方面</strong>（时间、空间、变量关系、<strong>存储</strong>、<strong>传递</strong>、与任务相关）以及它们怎样随时间变化。这就是 W9–W12。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">为什么「熵的补」不能刻画自组织？</div>
+  <ol class="mcq-src"><li>熵不能用于二值变量</li><li>棋盘格与随机图案单格熵相同</li><li>熵总会随时间增加</li><li>熵需要太多样本</li></ol>
+  <div class="mcq-exp">单变量熵看不到变量之间的结构。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　措辞 → 度量 <span class="stars">★★★</span></h2>
+<p>考试题常不直接说度量名。先翻译：</p>
+<div class="table-wrap"><table>
+  <tr><th>题目说</th><th>对应</th></tr>
+  <tr><td>最优编码<strong>这个取值</strong>要几个 bit</td><td>Shannon 信息量 $h(x)$</td></tr>
+  <tr><td>对哪个变量<strong>最不确定</strong></td><td>各变量的熵，取最大</td></tr>
+  <tr><td>「<strong>是否</strong>穿白衣」与「是否棕发」</td><td><strong>变量</strong> → 平均量</td></tr>
+  <tr><td>「他<strong>穿着</strong>白衣」</td><td><strong>取值</strong> → 逐点量</td></tr>
+  <tr><td>两者<strong>共同持有</strong>的信息</td><td>MI（Venn 交集）</td></tr>
+  <tr><td>两者<strong>合起来</strong>的不确定性</td><td>联合熵</td></tr>
+  <tr><td>告诉你 A，<strong>谁的不确定性减少最多</strong></td><td>以 A 为一方的 MI，取最大</td></tr>
+  <tr><td><strong>misinformative / 误导</strong></td><td>逐点 MI &lt; 0</td></tr>
+  <tr><td>已知<strong>打网球</strong>时……</td><td>条件于某个取值，$I(W;B\mid T{=}\text{yes})$</td></tr>
+  <tr><td>A <strong>完全基于</strong> B 出招</td><td>$I(A;B) &gt; 0$ <strong>且</strong> $H(A\mid B) = 0$</td></tr>
+  <tr><td>上一局 → 下一局</td><td>时滞 MI，源 <code>[:-1]</code>、目标 <code>[1:]</code></td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">「完全基于」为什么要两个条件</span>
+  <p>只有 MI &gt; 0：有关系但没解释掉全部不确定性。只有 $H(A\mid B) = 0$：可能 A 本来就是常数（$H(A) = 0$），这时 MI 也是 0，不能说「基于 B」。</p>
+</div>
+<p>逐点 MI 在两个取值<strong>从未同时出现</strong>时无定义（条件概率是 0，log 0）。</p>
+
+<div class="mcq" data-answer="2" data-src="Calc. ex. Q4 · 检查一下">
+  <div class="mcq-q">判断「玩家 $V_i$ 完全基于 $V_7$ 出招」，需要检查的是？</div>
+  <ol class="mcq-src"><li>只要 $I(V_i;V_7) &gt; 0$</li><li>只要 $H(V_i\mid V_7) = 0$</li><li>$I &gt; 0$ 且 $H(V_i\mid V_7) = 0$</li><li>$H(V_i) = H(V_7)$</li></ol>
+  <div class="mcq-exp">排除「$V_i$ 本身就是常数」的情形。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　手算综合题 <span class="stars">★★★</span></h2>
+<h3>例题（Calculation exercises Q1）</h3>
+<div class="table-wrap"><table>
+  <tr><th>$p(x,y)$</th><th class="c">$x_1$</th><th class="c">$x_2$</th><th class="c">$p(y)$</th></tr>
+  <tr><td>$y_1$</td><td class="c">1/3</td><td class="c">1/3</td><td class="c">2/3</td></tr>
+  <tr><td>$y_2$</td><td class="c">1/4</td><td class="c">1/12</td><td class="c">1/3</td></tr>
+  <tr><td>$p(x)$</td><td class="c">7/12</td><td class="c">5/12</td><td></td></tr>
+</table></div>
+<ol class="steps">
+  <li>(a) 每个取值最少几个 bit → $h(x_1) = \log_2(12/7) = 0.78$，$h(x_2) = \log_2(12/5) = 1.26$ bits。</li>
+  <li>(b) $H(Y) = 0.92$，$H(X,Y) = 2 \times \frac13\log_2 3 + \frac14 \times 2 + \frac1{12}\log_2 12 = 1.86$，$H(X\mid Y) = 0.94$ bits。</li>
+  <li>是否<strong>严格</strong>小于 $H(X) = 0.98$？不用算：$y_1$ 下 $x$ 等概率、$y_2$ 下不等 → 不独立 → 严格小于。</li>
+  <li>(c) $I(X;Y) = 0.98 + 0.92 - 1.86 = 0.04$ bits；$Y$ 关于 $X$ 一样多（对称）。</li>
+</ol>
+<div class="box trap">
+  <span class="box-title">得分习惯</span>
+  <p><strong>单位必须写</strong>（四舍五入不在意）；严格不等号要说明为什么不在等号边界；约束题别漏概率表合法性给的界；参数曲线题先求参数的<strong>合法范围</strong>（每格在 [0, 1]）。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　同质性与案例 <span class="stars">★★</span></h2>
+<p><strong>同质性</strong>：多个变量以相同方式运作，才能看作同一底层变量的不同实现、<strong>合并样本</strong>（样本量大增）。</p>
+<ul>
+  <li><strong>Ising 模型的所有格子</strong>：✅ 可以合并。</li>
+  <li><strong>剪刀石头布不同玩家</strong>（各用不同策略）：❌ 应分别算。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>数据集</th><th>例子问题</th><th>要点</th></tr>
+  <tr><td>Ising</td><td>MI 随空间距离、温度怎么变</td><td>低温全同、高温随机；<strong>临界 T ≈ 2.27</strong> 长程关联；所有格子对一起 addObservations；有限尺寸转变点偏高</td></tr>
+  <tr><td>MNIST</td><td>哪个像素关于类别信息最多（特征选择）</td><td>像素阈值 15 二值化；离散 MI（2 → 10）；按数字分组平均局部 MI</td></tr>
+  <tr><td>蚂蚁觅食</td><td>形成信息素轨迹时位置的不确定性是否下降</td><td>把同一时刻的所有蚂蚁当样本（同质性假设）；熵下降、MI 上升</td></tr>
+</table></div>
+<p>模拟数据：<strong>丢掉暂态</strong>，多初始状态、多网络合并，并<strong>给出理由</strong>。</p>
+
+<div class="mcq" data-answer="0" data-src="讲课 · 检查一下">
+  <div class="mcq-q">分析 Ising 模型时，把所有格子对的样本放进同一个 MI 计算，依据的是？</div>
+  <ol class="mcq-src"><li>格子同质，以相同方式运作</li><li>格子之间相互独立</li><li>样本越多偏差越大</li><li>格子是连续变量</li></ol>
+  <div class="mcq-exp">同质才能看作同一变量的不同实现。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0,1" data-src="讲课">
+  <div class="mcq-q">文献中自组织的两个关键特征是？</div>
+  <ol class="mcq-src"><li>组织度随时间增加</li><li>无中心化或外部控制</li><li>系统总熵随时间增加</li><li>每个部件都很复杂</li></ol>
+  <div class="mcq-exp">Game of Life 的格子规则非常简单。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">Multi-information 被老师批评的主要原因是？</div>
+  <ol class="mcq-src"><li>它只能用于二值变量</li><li>会重复计数，且违反一个分号的规则</li><li>它总是等于 0</li><li>它不能处理时间序列</li></ol>
+  <div class="mcq-exp">没有链式法则那样的「复式记账」保证。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Calc. ex. Q2">
+  <div class="mcq-q">「是否穿白衣」和「是否棕发」共同持有的信息，应该算？</div>
+  <ol class="mcq-src"><li>联合熵 $H(W,B)$</li><li>逐点 MI $i(w;b)$</li><li>平均 MI $I(W;B)$</li><li>条件熵 $H(W\mid B)$</li></ol>
+  <div class="mcq-exp">「是否」说的是变量；「共同持有」= 交集。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="Calc. ex. Q4">
+  <div class="mcq-q">算 $V_6 = 1$ 对 $V_1$ 各取值的逐点 MI，某些 $V_1$ 取值算不出来，因为？</div>
+  <ol class="mcq-src"><li>样本太少</li><li>MI 是负的</li><li>$V_1$ 是常数</li><li>这些组合从未同时出现</li></ol>
+  <div class="mcq-exp">条件概率为 0，局部 MI 无定义。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">在剪刀石头布数据里，把不同同学的出招合并成一个变量来算熵，问题在于？</div>
+  <ol class="mcq-src"><li>样本太多</li><li>他们用不同策略，不同质</li><li>出招不是离散变量</li><li>同学之间相互独立</li></ol>
+  <div class="mcq-exp">不同算法不是同一底层变量。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">Ising 模型在哪个温度附近出现长程空间关联？</div>
+  <ol class="mcq-src"><li>很低的温度</li><li>很高的温度</li><li>临界温度约 2.27</li><li>与温度无关</li></ol>
+  <div class="mcq-exp">低温均匀锁定、高温近似随机，相变点附近最复杂。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">MNIST 里找「哪个像素对识别数字最有用」，最直接的信息论做法是？</div>
+  <ol class="mcq-src"><li>每个像素与类别的 MI，取最大</li><li>每个像素的熵，取最大</li><li>所有像素的联合熵</li><li>像素之间的 multi-information</li></ol>
+  <div class="mcq-exp">熵高只说明像素变化多，不说明和类别有关。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · Calc. ex. Q2(c)</span>24 个角色里 5 人携带鞋子，其中 3 人有工作；不携带鞋子但有工作的有 $x$ 人。「携带鞋子」对「有工作」是误导性的，求 $x$ 的范围。</summary>
+  <div class="sa-ans">
+    <p>误导 ⟺ $i(S{=}\text{yes}; E{=}\text{yes}) &lt; 0$ ⟺ $p(S{=}\text{yes}\mid E{=}\text{yes}) &lt; p(S{=}\text{yes})$。</p>
+    <p>$\frac{3}{3+x} &lt; \frac{5}{24} \iff 3 + x &gt; 14.4 \iff x &gt; 11.4$ → $x \ge 12$。</p>
+    <p>合法性：$p(S{=}\text{no}, E{=}\text{no}) = (19-x)/24 \ge 0$ → $x \le 19$。答案 $12 \le x \le 19$。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>给出自组织的定义，并说明为什么这门课不用一个单一数字来度量它。</summary>
+  <div class="sa-ans">
+    <p>定义（Sayama）：系统在没有中心或外部控制的情况下，自发地随时间形成非平凡宏观结构 / 行为，即组织度随时间增加。</p>
+    <p>单一指标都有缺陷：熵的补看不到结构（棋盘格 vs 随机）；multi-information 重复计数、高维难估。所以改为刻画信息结构的多个方面（存储、传递、空间 / 时间关系）及其随时间的变化。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>自组织：组织度随时间增加 + 无（全部的）外部控制；自组织 = 信息结构化。</li>
+  <li>熵的补不行（棋盘格）；multi-information 重复计数、高维；statistical complexity 不考。</li>
+  <li>措辞：「是否」变量 / 「是」取值；共同持有 = MI；合起来 = 联合熵；误导 = 逐点 MI &lt; 0；完全基于 = MI &gt; 0 且条件熵 = 0。</li>
+  <li>严格不等号排除等号（独立）；约束题加合法性界；写单位。</li>
+  <li>同质才能合并样本：Ising ✅，不同策略的玩家 ❌。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Prokopenko, Boschetti &amp; Ryan (2009)「An Information-Theoretic Primer on Complexity, Self-Organization, and Emergence」</strong>，以及 Lizier (2013) 博士论文 §2.1.2。Module 8 Item 5 的 Mitchell 与 Crutchfield 访谈（约 10 分钟）也值得看。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week08-self-organisation.html" target="_blank" rel="noopener">W08 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 8</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

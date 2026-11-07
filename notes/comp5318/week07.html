@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W07 神经网络与反向传播</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 07</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W07 感知机、多层神经网络与反向传播</h1>
+<p class="subtitle">前向传播大题（PE1 Q32、PE2 Q34，各 10 分）；感知机更新一步；梯度下降一步；ReLU；Dropout。对应 PE1 Q18、19、23、32，PE2 Q18、19、23、34。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 前向传播大题</a></td><td class="c"><span class="stars">★★★</span></td><td>加权和 → ReLU → 输出 → sigmoid → 判类</td></tr>
+    <tr><td><a href="#t2">2 感知机更新</a></td><td class="c"><span class="stars">★★★</span></td><td>$e = t - a$；偏置也要更新</td></tr>
+    <tr><td><a href="#t3">3 梯度下降与反向传播</a></td><td class="c"><span class="stars">★★</span></td><td>w <strong>减</strong> η×梯度；$\Delta w = \eta\delta o$</td></tr>
+    <tr><td><a href="#t4">4 训练技巧</a></td><td class="c"><span class="stars">★★</span></td><td>Dropout 是正则化、推理用完整网络；梯度消失</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　前向传播大题 <span class="stars">★★★</span></h2>
+<div class="formula">$$n = \mathbf w\cdot\mathbf x + b,\quad a = f(n)\qquad \sigma(z) = \frac{1}{1 + e^{-z}}\qquad \text{ReLU}(z) = \max(0, z)$$</div>
+<div class="table-wrap"><table>
+  <tr><th class="c">z</th><th class="c">−2</th><th class="c">−1</th><th class="c">0</th><th class="c">1</th><th class="c">2</th></tr>
+  <tr><td class="c">σ(z)</td><td class="c">0.119</td><td class="c">0.269</td><td class="c">0.5</td><td class="c">0.731</td><td class="c">0.881</td></tr>
+</table></div>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li>每个隐藏单元算预激活 $u$（加权和 + 偏置）。</li>
+    <li>ReLU：负数变 0，正数不变，得 $h$。</li>
+    <li>用 $h$ 算输出 $z$。</li>
+    <li>$\sigma(z)$ = 类 1 的概率；≥ 0.5 判类 1。</li>
+    <li>追问「把某单元换成恒等激活」：<strong>只有原来被截成 0 的负值单元受影响</strong>。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q32）</span>
+  <p>$x_1 = 1$，$x_2 = 3$；$u_A = x_1 + x_2 - 3$，$u_B = 2x_1 - x_2$；$z = h_A + 2h_B$。</p>
+  <p>$u_A = 1$，$u_B = -1$；$h_A = 1$，$h_B = 0$；$z = 1$，$\sigma(1) = 0.731$ → <strong>类 1</strong>。</p>
+  <p>B 换成恒等：$h_B = -1$，$z = -1$，$\sigma(-1) = 0.269$ → <strong>类 0</strong>，分类翻转。</p>
+</div>
+<p>为什么要非线性激活：全是线性层，叠多少层还是一个线性函数，学不会 XOR。通用逼近定理只说明足够宽的网络<strong>存在</strong>，不保证训练能找到。</p>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q18 · 检查一下">
+  <div class="mcq-q">ReLU 单元的预激活是负数，它输出？</div>
+  <ol class="mcq-src"><li>原来的负数</li><li>0.5</li><li>0</li><li>−1</li></ol>
+  <div class="mcq-exp">$\max(0, z)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　感知机更新 <span class="stars">★★★</span></h2>
+<p>阶跃激活：$n \ge 0$ 输出 1，否则 0。边界是一条直线。</p>
+<div class="formula">$$e = t - a\qquad \mathbf w \leftarrow \mathbf w + \eta e\mathbf x\qquad b \leftarrow b + \eta e$$</div>
+<div class="table-wrap"><table>
+  <tr><th>情况</th><th class="c">e</th><th>调整</th></tr>
+  <tr><td>该 1 输出 0</td><td class="c">+1</td><td>w 加 ηx，b 加 η</td></tr>
+  <tr><td>该 0 输出 1</td><td class="c">−1</td><td>w 减 ηx，b 减 η</td></tr>
+  <tr><td>正确</td><td class="c">0</td><td>不变</td></tr>
+</table></div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q19）</span>
+  <p>$\mathbf w = (0.4, -0.2)$，$b = 0.1$，$\eta = 0.2$，$\mathbf x = (2, 1)$，$a = 1$，$t = 0$：$\eta e = -0.2$；$\mathbf w = (0.4, -0.2) - (0.4, 0.2) = (0, -0.4)$；$b = -0.1$。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <p>忘了更新偏置（把它看成输入恒为 1 的权重）；$n = 0$ 时输出 1；输入分量为 0 的那个权重不变。</p>
+</div>
+<ul>
+  <li>线性可分时感知机保证有限步收敛，但找到任意一条线就停（不像 SVM 找最宽）。</li>
+  <li>AND、OR、NAND 可以；<strong>XOR 不行</strong>，要多一层：XOR = AND(NAND, OR)。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">$\mathbf w = (1, 1)$，$b = 0$，$\eta = 1$，输入 (0, 0)，目标 0。更新后是？</div>
+  <ol class="mcq-src"><li>w = (0, 0)，b = −1</li><li>w = (1, 1)，b = −1</li><li>w = (1, 1)，b = 0</li><li>w = (0, 0)，b = 0</li></ol>
+  <div class="mcq-exp">$n = 0 \ge 0$ 输出 1，$e = -1$；输入全 0，w 不变，只有 b 减 1。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　梯度下降与反向传播 <span class="stars">★★</span></h2>
+<div class="formula">$$\mathbf w \leftarrow \mathbf w - \eta\nabla L$$</div>
+<p>PE2 Q19：$\mathbf w = (0.5, -1)$，梯度 $(3, -2)$，$\eta = 0.1$：$(0.5 - 0.3, -1 + 0.2) = (0.2, -0.8)$。可能陷入局部最小。</p>
+<div class="table-wrap"><table>
+  <tr><th>方式</th><th>多久更新一次</th><th>特点</th></tr>
+  <tr><td>全批量</td><td>看完全部样本</td><td>梯度准，每步慢</td></tr>
+  <tr><td>SGD</td><td>每个样本</td><td>快，很吵</td></tr>
+  <tr><td>Mini-batch</td><td>每一小批</td><td>折中；吵是因为<strong>只用抽到的一批估计梯度</strong></td></tr>
+</table></div>
+<div class="formula">$$\Delta w_{pq} = \eta\,\delta_q\,o_p\qquad \delta_{\text{输出}} = (t - o)\,o(1 - o)\qquad \delta_{\text{隐藏}} = o(1 - o)\sum_i w_{qi}\delta_i$$</div>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>$x = 1 \xrightarrow{0.5}$ 隐藏 $\xrightarrow{0.5}$ 输出，sigmoid，$t = 1$，$\eta = 1$。</p>
+  <p>$o_h = \sigma(0.5) = 0.622$，$o = \sigma(0.311) = 0.577$。$\delta_o = 0.423\times0.577\times0.423 = 0.103$；$\delta_h = 0.622\times0.378\times(0.5\times0.103) = 0.0121$。</p>
+  <p>$\Delta w_2 = 0.103\times0.622 = 0.064$；$\Delta w_1 = 0.0121\times1 = 0.012$。</p>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE2 Q19 · 检查一下">
+  <div class="mcq-q">$\mathbf w = (0.5, -1.0)$，梯度 $(3, -2)$，学习率 0.1，走一步后是？</div>
+  <ol class="mcq-src"><li>(0.8, −1.2)</li><li>(3.5, −3.0)</li><li>(0.2, −1.2)</li><li>(0.2, −0.8)</li></ol>
+  <div class="mcq-exp">减去 $(0.3, -0.2)$。A 是加了梯度。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　训练技巧 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>Softmax</strong> $p_i = e^{o_i}/\sum e^{o_j}$；(0.3, 0.8, 0.2) → (0.28, 0.46, 0.26)；损失用交叉熵。</li>
+  <li>学习率太小慢、太大振荡发散；可衰减；<strong>Momentum</strong> 带上一步方向减少振荡。</li>
+  <li><strong>不能全 0 初始化</strong>：同层神经元梯度相同、永远一样（对称性）；用小随机数（Xavier）。</li>
+  <li><strong>梯度消失</strong>：sigmoid 两头平，导数 $o(1-o) \approx 0$，每层乘一次；ReLU 正区导数为 1 缓解。</li>
+  <li><strong>Dropout</strong>：训练时每次随机关掉一部分单元，网络不依赖固定组合 → <strong>正则化</strong>；单元不永久删除；<strong>推理用完整网络</strong>（inverted dropout 训练时已缩放，推理不再缩放）。</li>
+  <li><strong>早停</strong>：验证集不再提升就停（用验证集不用测试集）。</li>
+</ul>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q23 · 检查一下">
+  <div class="mcq-q">用 dropout 训练好的网络，标准推理方式是？</div>
+  <ol class="mcq-src"><li>用完整网络，缩放与训练约定一致</li><li>继续随机关掉一半单元</li><li>永久删除训练时关得最多的单元</li><li>多次随机关掉单元取最好的一次</li></ol>
+  <div class="mcq-exp">Dropout 只在训练时使用。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q19">
+  <div class="mcq-q">感知机 $\mathbf w = (0.4, -0.2)$，$b = 0.1$，$\eta = 0.2$；$\mathbf x = (2, 1)$，输出 1，目标 0。更新后？</div>
+  <ol class="mcq-src"><li>w = (0.8, 0)，b = 0.3</li><li>w = (0, −0.4)，b = −0.1</li><li>w = (0, −0.4)，b = 0.1</li><li>w = (0.2, −0.3)，b = −0.1</li></ol>
+  <div class="mcq-exp">$\eta e = -0.2$，w 减 $0.2\mathbf x$，b 减 0.2。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q18">
+  <div class="mcq-q">mini-batch 梯度下降为什么比全批量更「吵」？</div>
+  <ol class="mcq-src"><li>学习率更大</li><li>权重初始化不同</li><li>只用抽到的一小批估计梯度</li><li>用了不同的损失函数</li></ol>
+  <div class="mcq-exp">换一批，估计的梯度就不一样。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q23">
+  <div class="mcq-q">标准 dropout 训练时为什么每次随机关掉不同的隐藏单元？</div>
+  <ol class="mcq-src"><li>加快每一步的计算</li><li>永久压缩网络规模</li><li>让梯度变大</li><li>防止依赖固定的单元组合、减少过拟合</li></ol>
+  <div class="mcq-exp">是一种正则化。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">为什么不能把所有权重初始化为 0？</div>
+  <ol class="mcq-src"><li>同层神经元梯度相同，永远学不出差别</li><li>sigmoid 在 0 处没有定义</li><li>会导致梯度爆炸</li><li>偏置无法更新</li></ol>
+  <div class="mcq-exp">对称性问题。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">深层 sigmoid 网络前几层几乎学不动，最可能的原因和对策是？</div>
+  <ol class="mcq-src"><li>过拟合，加 dropout</li><li>学习率太大，调小</li><li>梯度消失，换 ReLU</li><li>数据泄漏，重新切分</li></ol>
+  <div class="mcq-exp">sigmoid 导数小，每层乘一次。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">单层感知机学不会下面哪个函数？</div>
+  <ol class="mcq-src"><li>AND</li><li>XOR</li><li>OR</li><li>NAND</li></ol>
+  <div class="mcq-exp">XOR 不是线性可分的。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · PE2 Q34</span>$x_1 = 2$，$x_2 = -1$；$u_A = x_1 + 2x_2 - 1$，$u_B = 2x_1 - x_2 - 2$，ReLU，$z = 3h_A + h_B - 1$。(a) 求 $u_A, u_B, h_A, h_B$；(b) 求 $z$、概率、类别；再只把 A 换成恒等激活。</summary>
+  <div class="sa-ans">
+    <p>(a) $u_A = 2 - 2 - 1 = -1$，$u_B = 4 + 1 - 2 = 3$；$h_A = 0$，$h_B = 3$。</p>
+    <p>(b) $z = 0 + 3 - 1 = 2$，$\sigma(2) = 0.881$ → <strong>类 1</strong>。</p>
+    <p>A 换恒等：$h_A = -1$，$z = -3 + 3 - 1 = -1$，$\sigma(-1) = 0.269$ → <strong>类 0</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>sigmoid 输出神经元 $o = 0.474$，目标 1。求 $\delta$；前一个神经元输出 0.332，$\eta = 0.9$，这条连接的 $\Delta w$？</summary>
+  <div class="sa-ans">
+    <p>$\delta = 0.526\times0.474\times0.526 \approx 0.131$；$\Delta w = 0.9\times0.131\times0.332 \approx 0.039$。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>前向：$u$ → ReLU → $z$ → σ → ≥ 0.5 判 1；换恒等只影响原来为负的单元；σ(±1) = 0.731 / 0.269，σ(2) = 0.881。</li>
+  <li>感知机：$e = t - a$，w 加 $\eta e\mathbf x$，b 加 $\eta e$；XOR 要两层。</li>
+  <li>梯度下降减梯度；mini-batch 吵是因为样本子集估计梯度。</li>
+  <li>$\Delta w = \eta\delta o_p$；输出 $\delta = (t-o)o(1-o)$。</li>
+  <li>Dropout 是训练时正则化，推理用完整网络；不能全 0 初始化；ReLU 缓解梯度消失。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Géron《Hands-On Machine Learning》第 10、11 章；Goodfellow et al.《Deep Learning》第 6 章（前馈网络与反向传播）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week07-neural-networks-backpropagation.html" target="_blank" rel="noopener">W07 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 7</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W06 估计器</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 06</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W06 信息论估计器</h1>
+<p class="subtitle">对应 Module 6。连续值数据怎么估熵和互信息：分箱、微分熵、高斯、核、KSG。样卷 Q13、Q14 在这一周，Gaussian + KSG 四象限是常考的解读题。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 偏差、方差与分箱</a></td><td class="c"><span class="stars">★★</span></td><td>熵偏低、MI 偏高（弱关系）；分箱对箱数敏感</td></tr>
+    <tr><td><a href="#t2">2 微分熵</a></td><td class="c"><span class="stars">★★</span></td><td>可为负，只在比较时有意义；MI 照旧</td></tr>
+    <tr><td><a href="#t3">3 高斯估计器与 $\rho$</a></td><td class="c"><span class="stars">★★★</span></td><td>$I = -\frac12\ln(1-\rho^2)$；只看线性</td></tr>
+    <tr><td><a href="#t4">4 核估计器 vs KSG</a></td><td class="c"><span class="stars">★★★</span></td><td>固定半径 vs 第 k 近邻；KSG 有偏差修正、可为负</td></tr>
+    <tr><td><a href="#t5">5 Gaussian + KSG 四象限</a></td><td class="c"><span class="stars">★★★</span></td><td>Gaussian ≈ 0、KSG &gt; 0 ⟹ 非线性关系</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　偏差、方差与分箱 <span class="stars">★★</span></h2>
+<div class="formula">$$\text{Bias} = \mathbb{E}[\hat H_N] - H_{\text{true}}\qquad \text{Variance：同样大小的不同样本集之间估计值的波动}$$</div>
+<ul>
+  <li>偏差取决于<strong>估计器类型 + 样本数</strong>，样本越多越小。</li>
+  <li>有限样本下<strong>熵通常低估，MI 通常高估</strong>（现实中多是弱关系）；不绝对，硬币和它的拷贝算 MI 会低估。</li>
+  <li>离散 plug-in 的 <strong>Miller–Madow 修正</strong>：$\hat H_{\text{MM}} = \hat H + \frac{|\mathcal{A}_X| - 1}{2N}$（nats），JIDT 没有内置。</li>
+  <li><strong>分箱（binning）</strong>：把连续值切成区间再用离散估计器。问题：<strong>对箱数和分箱方式敏感</strong>、没有标准答案；分界线两侧的近邻被当成完全不同。等宽是 JIDT 默认，也可以等频（max-entropy）。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　微分熵 <span class="stars">★★</span></h2>
+<div class="formula">$$h(X) = -\int f(x)\log f(x)\,dx\qquad H_\Delta \approx h(X) - \log\Delta$$</div>
+<ul>
+  <li>连续变量问 $P(X = a)$ 没意义；PDF 是单位长度上的概率质量，$P(X \in [a, a+\Delta]) \approx f(a)\Delta$。</li>
+  <li>离散化宽度 $\Delta \to 0$ 时 $-\log\Delta \to \infty$：一个真正的实数有无穷多不确定性。$h(X)$ 是不发散的那部分，<strong>主要用于比较</strong>（相减时 $\log\Delta$ 抵消）。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>操作</th><th>结果</th></tr>
+  <tr><td>平移 $X + c$</td><td>$h$ 不变</td></tr>
+  <tr><td>缩放 $aX$</td><td>$h(aX) = h(X) + \log|a|$；$|a| &lt; 1$ 时<strong>可以为负</strong></td></tr>
+  <tr><td>Uniform[0, 1]</td><td>$h = 0$，可作参照</td></tr>
+</table></div>
+<p><strong>好消息</strong>：MI、CMI、条件熵都是熵的和差，<strong>发散项抵消</strong>。连续 MI <strong>非负</strong>、<strong>对缩放不变</strong>，等于离散化取极限的结果。<strong>MI 比熵有用得多。</strong></p>
+
+<div class="mcq" data-answer="2" data-src="讲课 · 检查一下">
+  <div class="mcq-q">关于连续变量，下面哪个量可能是负数？</div>
+  <ol class="mcq-src"><li>互信息 $I(X;Y)$</li><li>条件互信息 $I(X;Y\mid Z)$</li><li>微分熵 $h(X)$</li><li>离散化后的熵 $H_\Delta$</li></ol>
+  <div class="mcq-exp">把分布缩窄到比 Uniform[0,1] 还窄时 $h &lt; 0$。MI、CMI 的真值仍非负。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　高斯估计器与 $\rho$ <span class="stars">★★★</span></h2>
+<div class="formula">$$h(\mathbf X) = \tfrac12\ln\big((2\pi e)^d|\Omega_X|\big)\qquad\Rightarrow\qquad I(X;Y) = -\tfrac12\ln(1-\rho^2)\ \text{nats}$$</div>
+<div class="box method">
+  <span class="box-title">推导步骤（必会）</span>
+  <ol class="steps">
+    <li>$h(X) = \frac12\ln(2\pi e\sigma_x^2)$，$h(Y) = \frac12\ln(2\pi e\sigma_y^2)$。</li>
+    <li>协方差矩阵行列式 $|\Omega_{XY}| = \sigma_x^2\sigma_y^2 - \rho^2\sigma_x^2\sigma_y^2 = \sigma_x^2\sigma_y^2(1-\rho^2)$。</li>
+    <li>$h(X,Y) = \frac12\ln\big((2\pi e)^2\sigma_x^2\sigma_y^2(1-\rho^2)\big)$。</li>
+    <li>$I = h(X) + h(Y) - h(X,Y)$，$(2\pi e)^2\sigma_x^2\sigma_y^2$ 抵消。</li>
+  </ol>
+</div>
+<ul>
+  <li><strong>与 $\rho$ 的符号无关</strong>：负相关时知道 $X$ 照样能预测 $Y$。信息论<strong>不带语义</strong>，只说强度不说方向。</li>
+  <li>$\rho \to \pm1$ 时 MI → ∞；真实数据里看到 MI 爆到无穷，通常是<strong>某列被复制了</strong>。</li>
+  <li>比相关系数强：能推广到多变量、有链式法则。</li>
+  <li><strong>Model-based</strong>：模型对就又准又快又省数据，模型错就错。只看<strong>线性</strong>分量；对 MI 是真值的<strong>下界</strong>，对 CMI 不一定。</li>
+  <li>单位：离散惯用 bits，连续惯用 <strong>nats</strong>（JIDT 的 Gaussian、KSG 输出 nats；<strong>核估计器例外，输出 bits</strong>）。</li>
+</ul>
+<h3>例题（自拟）</h3>
+<p>$\rho = 0.6$：$I = -\frac12\ln(1 - 0.36) = -\frac12\ln 0.64 = 0.223$ nats $= 0.322$ bits。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">两个高斯变量相关系数 $\rho = -0.8$，它们的 MI 是？</div>
+  <ol class="mcq-src"><li>负数，因为负相关</li><li>$-\frac12\ln 0.36 \approx 0.51$ nats</li><li>$-\frac12\ln 0.2 \approx 0.80$ nats</li><li>0，因为相关为负</li></ol>
+  <div class="mcq-exp">$1 - \rho^2 = 0.36$；与符号无关。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　核估计器 vs KSG <span class="stars">★★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th></th><th>Box kernel</th><th>KSG（Kraskov）</th></tr>
+  <tr><td>邻域</td><td><strong>固定半径 $r$</strong>（KERNEL_WIDTH，默认 0.25 个标准差）</td><td><strong>联合空间第 $k$ 近邻</strong>决定宽度（默认 $k = 4$）</td></tr>
+  <tr><td>估计</td><td>数竖条、横条、方盒里的点：$\hat I = \frac1N\sum\log\frac{\hat p(x,y)}{\hat p(x)\hat p(y)}$</td><td>数边际空间邻居 $n_x, n_y$，代入 digamma：$\psi(k) - \frac1k - \langle\psi(n_x) + \psi(n_y)\rangle + \psi(N)$（算法 2）</td></tr>
+  <tr><td>非线性</td><td>能</td><td>能</td></tr>
+  <tr><td>参数敏感</td><td><strong>极敏感</strong>：$r$ 小 → 欠采样<strong>高估</strong>；$r$ 大 → 丢细节<strong>低估</strong></td><td><strong>稳定得多</strong>（$k$ 4 → 15 只差约 25%）</td></tr>
+  <tr><td>偏差修正</td><td>没有</td><td><strong>内置</strong></td></tr>
+  <tr><td>负值</td><td></td><td><strong>可能输出负值 = 与 0 一致</strong>，不是 bug</td></tr>
+</table></div>
+<ul>
+  <li>核估计器是动态离散化（以每个点为中心），是过渡工具，帮助理解 KSG。</li>
+  <li>KSG 动态宽度：稀疏区域放大盒子防欠采样，密集区域缩小看细节。算法 1 偏差大方差小（便于比较），<strong>算法 2 偏差小方差大（本课默认）</strong>。</li>
+  <li>KSG 为数值稳定会加一点随机噪声，每次结果略有不同。</li>
+  <li><strong>已知数据是线性高斯时，Gaussian 估计器最好</strong>。</li>
+</ul>
+
+<div class="mcq" data-answer="4" data-src="样卷 Q14 · 检查一下">
+  <div class="mcq-q">Box-kernel 估计器相对 KSG 的优势是？</div>
+  <ol class="mcq-src"><li>能测非线性关系</li><li>能做显著性检验</li><li>能处理多维变量</li><li>以上都是</li><li>以上都不是</li></ol>
+  <div class="mcq-exp">这些 KSG 也都能做；KSG 还有自适应宽度和偏差修正。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　Gaussian + KSG 四象限 <span class="stars">★★★</span></h2>
+<p>同一数据同时跑两个估计器：</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>KSG ≈ 0</th><th>KSG &gt; 0</th></tr>
+  <tr><td><strong>Gaussian ≈ 0</strong></td><td>① 没关系，或太弱、样本不够测不出</td><td>② <strong>只有非线性关系</strong></td></tr>
+  <tr><td><strong>Gaussian &gt; 0</strong></td><td>④ 有线性关系，KSG 数据不够还没「追上」</td><td>③ 有线性关系；KSG 多出的是非线性分量</td></tr>
+</table></div>
+<p>④ 不矛盾：model-based 估计器很快锁定符合模型的关系；model-free 估计器要考虑所有关系、又大力做偏差修正，<strong>更保守、需要更多数据</strong>。</p>
+<h3>例题：睡眠呼吸暂停患者的心率与呼吸</h3>
+<p>Gaussian 在各滞后都只有千分之几 nats；KSG 约 0.13 nats，高两个数量级 → 象限 ② <strong>非线性关系</strong>。不能因为 Gaussian ≈ 0 就说「没有关系」。</p>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q13 · 检查一下">
+  <div class="mcq-q">Gaussian 估计 MI = 0.0010 nats（p = 0.28），KSG 估计 MI = 0.1347 nats（p = 0）。结论是？</div>
+  <ol class="mcq-src"><li>检测到线性，检测不到非线性</li><li>线性、非线性都检测到了</li><li>检测到非线性，检测不到线性</li><li>没有检测到任何关系</li></ol>
+  <div class="mcq-exp">就是心跳-呼吸数据的情形（象限 ②）。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">KSG 估计得到 MI = −0.05 nats，最合理的解读是？</div>
+  <ol class="mcq-src"><li>平均得到了误导信息</li><li>与 0 一致，偏差修正后的正常波动</li><li>估计器坏了</li><li>两变量负相关</li></ol>
+  <div class="mcq-exp">偏差修正把期望移到 0，单次估计仍会在 0 附近波动。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲课">
+  <div class="mcq-q">核估计器的 kernel width 从 0.1 增大到 1.0，MI 估计值通常会？</div>
+  <ol class="mcq-src"><li>单调下降，没有平台</li><li>单调上升</li><li>先升后降</li><li>基本不变</li></ol>
+  <div class="mcq-exp">小宽度欠采样高估，大宽度丢细节低估；中间某处碰对真值，但事先不知道是哪。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">已知数据来自线性耦合的高斯变量，哪个估计器最合适？</div>
+  <ol class="mcq-src"><li>Box kernel</li><li>分箱后用离散估计器</li><li>Gaussian</li><li>KSG</li></ol>
+  <div class="mcq-exp">模型正确时 model-based 最准、最快、最省数据。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲课">
+  <div class="mcq-q">关于连续变量的 MI，正确的是？</div>
+  <ol class="mcq-src"><li>真值非负</li><li>会随变量缩放而改变</li><li>可写成微分熵的和差</li><li>和 $\Delta$ 有关，会发散</li></ol>
+  <div class="mcq-exp">缩放是一一映射，不改变共享的信息；$\log\Delta$ 抵消。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">$h(aX)$ 等于？</div>
+  <ol class="mcq-src"><li>$h(X)$</li><li>$h(X) + \log|a|$</li><li>$a\,h(X)$</li><li>$h(X) - \log|a|$</li></ol>
+  <div class="mcq-exp">拉伸分布不确定性增加；平移才不变。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲课">
+  <div class="mcq-q">Gaussian 估计显著 &gt; 0，KSG 估计 ≈ 0。应该怎么解读？</div>
+  <ol class="mcq-src"><li>两个估计器有一个错了</li><li>只有非线性关系</li><li>没有任何关系</li><li>有线性关系，KSG 数据不够</li></ol>
+  <div class="mcq-exp">象限 ④：model-free 更保守，需要更多数据。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">KSG 两种算法的区别是？</div>
+  <ol class="mcq-src"><li>算法 1 偏差小方差大</li><li>算法 2 偏差小方差大</li><li>算法 2 不做偏差修正</li><li>算法 1 只能用于离散数据</li></ol>
+  <div class="mcq-exp">本课默认算法 2；算法 1 方差小，便于互相比较。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">$\rho = 0.6$ 的两个高斯变量，MI 约为？</div>
+  <ol class="mcq-src"><li>0.6 nats</li><li>0.36 nats</li><li>0.22 nats</li><li>0.51 nats</li></ol>
+  <div class="mcq-exp">$-\frac12\ln 0.64$。D 是 $\rho = 0.8$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲课">
+  <div class="mcq-q">真实数据算出 MI 非常大、接近无穷，最可能是？</div>
+  <ol class="mcq-src"><li>某一列被复制了</li><li>关系是非线性的</li><li>样本太少</li><li>用了 bits 而非 nats</li></ol>
+  <div class="mcq-exp">$\rho \to 1$ 时 MI → ∞，现实中通常意味着出错。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 讲课 Item 3</span>已知高斯熵 $h(\mathbf X) = \frac12\ln((2\pi e)^d|\Omega|)$。推导相关系数为 $\rho$ 的两个高斯变量的 MI，并说明 $\rho$ 的符号为什么不影响结果。</summary>
+  <div class="sa-ans">
+    <p>$|\Omega_{XY}| = \sigma_x^2\sigma_y^2(1-\rho^2)$；$I = \frac12\ln(2\pi e\sigma_x^2) + \frac12\ln(2\pi e\sigma_y^2) - \frac12\ln((2\pi e)^2\sigma_x^2\sigma_y^2(1-\rho^2)) = -\frac12\ln(1-\rho^2)$ nats。</p>
+    <p>只依赖 $\rho^2$。负相关时知道 $X$ 一样能预测 $Y$，只是方向相反；信息论只量强度，不带语义。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>同一组数据，Gaussian MI = 0.002 nats，KSG MI = 0.15 nats。解释可以得出什么结论，不能得出什么结论。</summary>
+  <div class="sa-ans">
+    <p>KSG 明显大于 0 而 Gaussian 接近 0 → 有非线性关系，线性分量几乎没有。</p>
+    <p>不能说「没有关系」（Gaussian 只看线性）；没做显著性检验前，也不能完全确定 0.15 不是偏差（W07）；也不能说是因果。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>Bias = 期望 − 真值；熵常低估，MI 常高估；分箱对箱数敏感。</li>
+  <li>微分熵：$H_\Delta \approx h - \log\Delta$；可为负；平移不变，缩放加 $\log|a|$；只用于比较。MI 照旧非负、缩放不变。</li>
+  <li>高斯：$I = -\frac12\ln(1-\rho^2)$ nats；与符号无关；只看线性；MI 下界。</li>
+  <li>Kernel：固定 $r$，极敏感，输出 bits。KSG：第 $k$ 近邻（4），digamma 偏差修正，稳定，可负 = 与 0 一致，算法 2 默认。</li>
+  <li>四象限：G≈0 K&gt;0 非线性；G&gt;0 K≈0 线性但 KSG 数据不够。</li>
+  <li>JIDT：属性用字符串设，改完必须 <code>initialise()</code>。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Lizier JIDT 论文附录 A.4</strong>，然后 <strong>Bossomaier et al. §3.2.5 与 §3.4</strong>；微分熵完整推导见 <strong>Cover &amp; Thomas 第 8 章</strong>；KSG 原文 Kraskov, Stögbauer &amp; Grassberger (2004) Phys. Rev. E。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week06-information-theoretic-estimators.html" target="_blank" rel="noopener">W06 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 6</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

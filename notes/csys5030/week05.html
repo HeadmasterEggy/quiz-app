@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W05 JIDT 与代码题</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 05</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W05 JIDT、估计与代码题</h1>
+<p class="subtitle">对应 Module 5（The JIDT software）。这一周没有新理论：答疑巩固 W1–W4，装好 JIDT。考试相关的是 plug-in = MLE、偏差与方差、记号规则、JIDT 的使用流程，以及简答里的代码题（样卷 Q23）。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 计算 vs 估计：plug-in、偏差、方差</a></td><td class="c"><span class="stars">★★</span></td><td>plug-in = MLE；估计值本身是随机变量</td></tr>
+    <tr><td><a href="#t2">2 记号规则与 1 bit 的含义</a></td><td class="c"><span class="stars">★★</span></td><td>MI 恰好一个分号；1 bit ⟺ 后验 / 先验 = 2</td></tr>
+    <tr><td><a href="#t3">3 JIDT 使用流程</a></td><td class="c"><span class="stars">★★</span></td><td>构造 → 设属性 → initialise → 加数据 → 计算</td></tr>
+    <tr><td><a href="#t4">4 写代码（简答）</a></td><td class="c"><span class="stars">★★★</span></td><td>样例库函数；联合用二维数组；时滞对齐</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　计算 vs 估计：plug-in、偏差、方差 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>有真实分布</strong>就是「计算」；只有<strong>有限样本</strong>，从数据估概率再代入，就是「估计」。</li>
+  <li>前四周用的 <strong>plug-in 估计</strong>（频率直接当概率）就是<strong>最大似然估计（MLE）</strong>：给定这批数据最可能的值。但数据是随机的，<strong>估计值本身也是随机变量</strong>。</li>
+  <li><strong>偏差</strong>：估计值<strong>平均</strong>偏离真值多少。<strong>方差</strong>：换一批同样大小的样本，估计值<strong>波动</strong>多大。</li>
+  <li>小样本 plug-in：熵<strong>偏低</strong>，MI <strong>偏高</strong>（W6–W7 展开）。</li>
+  <li>只用 Shannon 家族；Rényi 熵（概率取幂）满足不同公理，回答不同问题。传递熵等后面的量都只是 CMI 的特例。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">从样本数出频率、直接代入公式算熵，这种估计叫什么？</div>
+  <ol class="mcq-src"><li>KSG 估计</li><li>plug-in 估计（MLE）</li><li>核估计</li><li>高斯估计</li></ol>
+  <div class="mcq-exp">频率就是概率的最大似然估计。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　记号规则与 1 bit 的含义 <span class="stars">★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>量</th><th class="c">逗号</th><th class="c">分号</th><th class="c">条件竖线</th></tr>
+  <tr><td>熵 $H(X_1, X_2 \mid Z_1, Z_2)$</td><td class="c">任意</td><td class="c"><strong>0</strong></td><td class="c">最多 1</td></tr>
+  <tr><td>MI $I(X_1, X_2; Y_1 \mid Z_1, Z_2)$</td><td class="c">任意</td><td class="c"><strong>恰好 1</strong></td><td class="c">最多 1</td></tr>
+</table></div>
+<p>分号只在竖线左边。两个以上变量的「互信息」没有公认定义。</p>
+<h3>1 bit ⟺ 后验是先验的 2 倍</h3>
+<div class="formula">$$i(x;y) = 1\ \text{bit} \iff \frac{p(x\mid y)}{p(x)} = 2$$</div>
+<p>轮盘 36 个数：$p(4) = 1/36$，知道是黑色后 $p(4\mid\text{黑}) = 1/18$。这和字母表大小无关；换成 $\log_4$ 时，1 个单位对应比值 4。不一定字面上「排除一半选项」，可能只是重新分配概率。</p>
+<h3>例题（讲课）：Guess Who 的角与眉毛</h3>
+<div class="table-wrap"><table>
+  <tr><th></th><th class="c">有眉毛</th><th class="c">无眉毛</th><th class="c">合计</th></tr>
+  <tr><td>有角</td><td class="c">3</td><td class="c">2</td><td class="c">5</td></tr>
+  <tr><td>无角</td><td class="c">8</td><td class="c">11</td><td class="c">19</td></tr>
+  <tr><td>合计</td><td class="c">11</td><td class="c">13</td><td class="c">24</td></tr>
+</table></div>
+<div class="formula">$$i(\text{有角};\text{有眉毛}) = \log_2\frac{3/5}{11/24} = \log_2\frac{72}{55} \approx 0.39\ \text{bits}$$</div>
+
+<div class="mcq" data-answer="2" data-src="讲课 · 检查一下">
+  <div class="mcq-q">下面哪个写法不合法？</div>
+  <ol class="mcq-src"><li>$H(X, Y \mid Z)$</li><li>$I(X; Y, W \mid Z)$</li><li>$H(X; Y)$</li><li>$I(X, W; Y)$</li></ol>
+  <div class="mcq-exp">熵里没有分号。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　JIDT 使用流程 <span class="stars">★★</span></h2>
+<p><strong>JIDT</strong>（Java Information Dynamics Toolkit）：Java 写的，Python 通过 <strong>JPype</strong> 调用；支持离散和连续数据，后面的传递熵等都有。<strong>AutoAnalyser</strong> GUI 生成 Java / Python / MATLAB 代码。</p>
+<div class="box method">
+  <span class="box-title">生成代码的五步</span>
+  <ol class="steps">
+    <li>启动 JVM，连上 <code>infodynamics.jar</code>。</li>
+    <li>读数据（CSV：行 = 样本，列 = 变量）。</li>
+    <li><strong>构造 calculator</strong>，设属性（如离散的 <code>base</code>）。</li>
+    <li><code>initialise()</code>（可重复调用以清空、复用对象）。</li>
+    <li><code>setObservations()</code> / 多次 <code>addObservations()</code>，再 <code>computeAverageLocalOfObservations()</code>；要局部值用 <code>computeLocalOfPreviousObservations()</code>。</li>
+  </ol>
+</div>
+<ul>
+  <li>离散 calculator <strong>只接受整数 0 到 base−1</strong>；数据是 0–3 却设 base = 2 会报错。</li>
+  <li>演示：两列耦合数据，同一行对齐 MI = 0.0007 bits；<strong>打开 time difference（滞后一步）后 = 1.0002 bits</strong>。<strong>样本怎么配对决定结论</strong>。</li>
+  <li>考试<strong>不需要记方法名、属性名</strong>，但可能给 AutoAnalyser 的输出让你修改。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">同一份两列数据，同行对齐 MI ≈ 0，滞后一步 MI ≈ 1 bit。最合理的解释是？</div>
+  <ol class="mcq-src"><li>估计器出了 bug</li><li>两列的耦合体现在滞后一步</li><li>样本量不够</li><li>base 设错了</li></ol>
+  <div class="mcq-exp">样本配对方式回答的是不同的问题。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　写代码（简答） <span class="stars">★★★</span></h2>
+<p>考试给一个样例库（plug-in，离散），函数说明会印在卷子上：</p>
+<pre><code>entropy_empirical(xn)
+jointentropy_empirical(xn, yn)
+conditionalentropy_empirical(xn, yn)
+mutualinformation_empirical(xn, yn)
+conditionalmutualinformation_empirical(xn, yn, zn)</code></pre>
+<ul>
+  <li><code>xn[i]</code> 是第 i 个样本；<strong>多维变量用二维数组</strong>（行 = 样本，列 = 维度）；各参数<strong>同下标是对应样本</strong>。</li>
+  <li>看逻辑流程，语法小错不扣分；不会写的语法可以<strong>用注释描述</strong>拿部分分。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">三个得分点</span>
+  <ol class="steps">
+    <li>「每个变量的熵」→ 循环每一列。</li>
+    <li>「联合不确定性」→ <strong>把几列切成一个二维数组</strong>传进去，不能把熵相加（只有独立才成立）。</li>
+    <li>「上一局对下一局」→ <strong>源 <code>[:-1]</code>、目标 <code>[1:]</code></strong> 对齐；求最大时排除自己。</li>
+  </ol>
+</div>
+<h3>例题（样卷 Q23，7 分）：多人游戏，行 = 一局，列 = 玩家</h3>
+<pre><code># a) 每个玩家出招的熵
+for i in range(data.shape[1]):
+    print(i + 1, entropy_empirical(data[:, i]))
+
+# b) 玩家 1、2、3 的联合熵：三列作为一个多维变量
+H123 = entropy_empirical(data[:, 0:3])
+
+# c) 玩家 1 上一局的出招，对哪个其他玩家下一局的出招信息最多
+best, bestMI = -1, -1.0
+for j in range(1, data.shape[1]):              # 排除玩家 1
+    mi = mutualinformation_empirical(data[:-1, 0], data[1:, j])
+    if mi &gt; bestMI:
+        best, bestMI = j, mi</code></pre>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q23 · 检查一下">
+  <div class="mcq-q">要算玩家 1 上一局出招和玩家 2 下一局出招的 MI，参数应该怎么传？</div>
+  <ol class="mcq-src"><li><code>data[:, 0], data[:, 1]</code></li><li><code>data[1:, 0], data[:-1, 1]</code></li><li><code>data[:-1, 0], data[1:, 1]</code></li><li><code>data[:-1, 0], data[:-1, 1]</code></li></ol>
+  <div class="mcq-exp">源去掉最后一行，目标去掉第一行，第 n 行对第 n+1 行。A 是同一局；B 方向反了。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">逐点互信息正好是 1 bit，意味着？</div>
+  <ol class="mcq-src"><li>一半的选项一定被排除</li><li>后验概率是先验的 2 倍</li><li>后验概率是 0.5</li><li>字母表大小是 2</li></ol>
+  <div class="mcq-exp">比值 2，和字母表大小无关；不一定字面排除一半。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲课">
+  <div class="mcq-q">关于估计器的偏差和方差，正确的是？</div>
+  <ol class="mcq-src"><li>偏差是估计值平均偏离真值的程度</li><li>方差是真值本身的波动</li><li>方差是换样本后估计值的波动</li><li>plug-in 估计没有偏差</li></ol>
+  <div class="mcq-exp">真值是固定的；plug-in 小样本有系统偏差。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="样卷 Q23">
+  <div class="mcq-q">求玩家 1、2、3 的联合熵，最合适的写法是？</div>
+  <ol class="mcq-src"><li>三个 <code>entropy_empirical</code> 相加</li><li>三个 MI 相加</li><li>三个熵的最大值</li><li><code>entropy_empirical(data[:, 0:3])</code></li></ol>
+  <div class="mcq-exp">多维变量用二维数组；熵相加只在独立时成立。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">JIDT 离散 calculator 设 base = 4，数据可以取哪些值？</div>
+  <ol class="mcq-src"><li>1, 2, 3, 4</li><li>0, 1, 2, 3</li><li>任意整数</li><li>任意实数</li></ol>
+  <div class="mcq-exp">0 到 base−1 的整数。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">JIDT 里 <code>initialise()</code> 的作用是？</div>
+  <ol class="mcq-src"><li>启动 Java 虚拟机</li><li>读入 CSV 文件</li><li>准备计算并清空已加的数据</li><li>返回平均值</li></ol>
+  <div class="mcq-exp">可以重复调用来复用同一个对象。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">$p(x) = 0.1$，$p(x\mid y) = 0.4$，$i(x;y)$ 是？</div>
+  <ol class="mcq-src"><li>2 bits</li><li>0.3 bits</li><li>4 bits</li><li>−2 bits</li></ol>
+  <div class="mcq-exp">$\log_2 4$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">剪刀石头布数据有多场比赛，用 JIDT 算「上一步对下一步」的 MI 时，多场数据应该？</div>
+  <ol class="mcq-src"><li>拼成一个长序列一次 set</li><li>每场分别 <code>addObservations</code></li><li>只用最长的一场</li><li>每场算完取最大值</li></ol>
+  <div class="mcq-exp">逐场添加，避免跨场次配对。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>数据 <code>data</code> 行 = 时间步，列 0 是温度 $X$（已离散化），列 1 是湿度 $Y$，列 2 是风 $Z$。用样例库写代码：(a) 算 $I(X;Y)$；(b) 算 $Y$ 当前值对 $X$ 下一时刻值的信息，条件于 $X$ 当前值。</summary>
+  <div class="sa-ans">
+<pre><code># a)
+mi = mutualinformation_empirical(data[:, 0], data[:, 1])
+
+# b) 源 = Y 当前，目标 = X 下一时刻，条件 = X 当前
+cmi = conditionalmutualinformation_empirical(
+        data[:-1, 1],   # y_n
+        data[1:, 0],    # x_{n+1}
+        data[:-1, 0])   # x_n
+print("%.4f bits" % cmi)</code></pre>
+    <p>(b) 就是 W11 的传递熵 $I(Y_n; X_{n+1}\mid X_n)$。得分点：三个参数都用同一组下标对齐，写单位。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>plug-in = MLE；估计值是随机变量；偏差 = 平均偏离，方差 = 换样本的波动。</li>
+  <li>熵没有分号；MI 恰好一个分号；条件竖线最多一个。</li>
+  <li>1 bit ⟺ 后验 / 先验 = 2，与字母表无关。</li>
+  <li>JIDT：构造 → 属性 → initialise → set/addObservations → compute；离散值 0..base−1。</li>
+  <li>代码题：联合用二维数组；时滞 <code>[:-1]</code> 对 <code>[1:]</code>；排除自己；写单位；不会的语法写注释。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Lizier (2014)「JIDT: An information-theoretic toolkit for studying the dynamics of complex systems」第 III–IV 节</strong>，以及 JIDT Wiki 的 AutoAnalyser 页面。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week05-jidt-software.html" target="_blank" rel="noopener">W05 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 5</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>
