@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W11 WiFi、蜂窝与移动性</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 11</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W11 WiFi、蜂窝网络与移动性</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 第 7 章 7.3–7.7 节（802.11、蜂窝、移动性原理、Mobile IP、蜂窝移动性）。这一周以概念题为主，对应的计算题（LTE 时隙、转交地址）在 W12 tutorial。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 802.11 架构、扫描与关联</a></td><td class="c"><span class="stars">★</span></td><td>被动 3 步 AP 先开口，主动 4 步主机先开口</td></tr>
+    <tr><td><a href="#t2">2 CSMA/CA 流程</a></td><td class="c"><span class="stars">★★★</span></td><td>DIFS 后发；忙则退避、空闲才倒数；SIFS 回 ACK</td></tr>
+    <tr><td><a href="#t3">3 RTS / CTS，隐藏 vs 暴露终端</a></td><td class="c"><span class="stars">★★★</span></td><td>CTS 人人听到；隐藏 → 碰撞，暴露 → 浪费</td></tr>
+    <tr><td><a href="#t4">4 蜂窝 2G / 3G / 4G</a></td><td class="c"><span class="stars">★★</span></td><td>3G 数据网并行；4G 是 EPC 全 IP + OFDM</td></tr>
+    <tr><td><a href="#t5">5 移动性：间接 vs 直接路由</a></td><td class="c"><span class="stars">★★★</span></td><td>永久地址 / 转交地址、透明、三角路由、锚点</td></tr>
+    <tr><td><a href="#t6">6 Mobile IP</a></td><td class="c"><span class="stars">★★</span></td><td>三部分；隧道封装；ICMP 9；有效期可缩短</td></tr>
+    <tr><td><a href="#t7">7 HLR / VLR、GSM 切换、切换算法</a></td><td class="c"><span class="stars">★★</span></td><td>旧 BSS 发起，先建后拆；迟滞防乒乓</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　802.11 架构、扫描与关联 <span class="stars">★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>标准</th><th>最大速率</th><th>频段</th></tr>
+  <tr><td>802.11b</td><td>11 Mbps</td><td>2.4 GHz</td></tr>
+  <tr><td>802.11a</td><td>54 Mbps</td><td>5 GHz</td></tr>
+  <tr><td>802.11g</td><td>54 Mbps</td><td>2.4 GHz</td></tr>
+  <tr><td>802.11n（Wi-Fi 4）</td><td>600 Mbps</td><td>2.4、5 GHz</td></tr>
+  <tr><td>802.11ac（Wi-Fi 5）</td><td>3.47 Gbps</td><td>5 GHz</td></tr>
+  <tr><td>802.11ax（Wi-Fi 6）</td><td>14 Gbps</td><td>2.4、5 GHz</td></tr>
+</table></div>
+<ul>
+  <li><strong>全部用 CSMA/CA</strong>。记法：a、ac 只在 5 GHz；b、g 只在 2.4 GHz；n、ax 双频。</li>
+  <li>基站叫 <strong>AP</strong>；<strong>BSS（cell）= 无线主机 + 一个 AP</strong>；ad hoc 只有主机。</li>
+  <li>802.11b 把 2.4 GHz 分成 11 个信道，管理员给 AP 选信道，<strong>可能和邻近 AP 撞信道</strong>。</li>
+  <li>关联：扫描信道听<strong>信标帧</strong>（含 <strong>SSID</strong> 和 MAC）→ 选 AP → 可能认证 → 通常跑 <strong>DHCP</strong> 拿 IP。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>被动扫描（3 步）</th><th>主动扫描（4 步）</th></tr>
+  <tr><td>① <strong>AP 发信标</strong></td><td>① <strong>主机广播探测请求</strong></td></tr>
+  <tr><td>② 主机发关联请求</td><td>② 各 AP 回探测响应</td></tr>
+  <tr><td>③ AP 回关联响应</td><td>③ 主机发关联请求</td></tr>
+  <tr><td></td><td>④ AP 回关联响应</td></tr>
+</table></div>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">主动扫描关联一个 AP 共几步，第一步是什么？</div>
+  <ol class="mcq-src"><li>3 步，AP 先发信标帧</li><li>4 步，主机广播探测请求</li><li>4 步，AP 先发信标帧</li><li>2 步，主机发关联请求</li></ol>
+  <div class="mcq-exp">被动扫描才是 3 步、AP 先开口。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　CSMA/CA 流程 <span class="stars">★★★</span></h2>
+<h3>为什么不能用有线的 CSMA/CD</h3>
+<p>CSMA/CD 边发边听、发现碰撞立刻停。无线做不到：</p>
+<ul>
+  <li><strong>自己的信号太强</strong>，发送时听不到别人；</li>
+  <li><strong>衰落</strong>，收到的信号太弱；</li>
+  <li><strong>隐藏终端</strong>，根本感知不到所有碰撞。</li>
+</ul>
+<p>所以 802.11 <strong>不检测碰撞，而是避免碰撞</strong>（Collision Avoidance）。一旦碰撞，<strong>整个帧白发</strong>。</p>
+
+<div class="box method">
+  <span class="box-title">CSMA/CA 流程（必考）</span>
+  <ol class="steps">
+    <li>发送方听到信道<strong>空闲达 DIFS</strong>，发<strong>整个帧</strong>（不做碰撞检测）。</li>
+    <li>信道<strong>忙</strong>：选随机退避值，定时器<strong>只在信道空闲时倒数，忙时冻结</strong>；到 0 就发。</li>
+    <li><strong>没收到 ACK</strong>：扩大退避范围，回到第 2 步。</li>
+    <li>接收方正确收到后<strong>等 SIFS</strong> 回 ACK。</li>
+  </ol>
+</div>
+<div class="table-wrap"><table>
+  <tr><th>设计</th><th>为什么</th></tr>
+  <tr><td>需要链路层 ACK</td><td>发送方<strong>检测不到碰撞</strong>，只能靠 ACK 判断成功</td></tr>
+  <tr><td><strong>SIFS &lt; DIFS</strong></td><td><strong>让 ACK 优先</strong>：其他想发数据的站要等更长的 DIFS</td></tr>
+  <tr><td>退避只在空闲时倒数</td><td>公平：等得久的剩得少，下次更早发</td></tr>
+  <tr><td>失败后扩大退避</td><td>降低再次碰撞的概率（同以太网指数退避）</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">和 CSMA/CD 的区别</span>
+  <p>CSMA/CD 听到空闲就立刻发，碰了再停；CSMA/CA 一开始听到忙，等空闲后<strong>还要再随机退避</strong>才发，因为碰撞的代价是整个帧。</p>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于 CSMA/CA，正确的是？</div>
+  <ol class="mcq-src"><li>信道空闲 DIFS 后发送整个帧</li><li>退避定时器在信道忙时冻结</li><li>检测到碰撞就立即停止发送</li><li>没收到 ACK 时扩大退避范围</li></ol>
+  <div class="mcq-exp">CSMA/CA 不检测碰撞，C 是 CSMA/CD。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　RTS / CTS，隐藏终端 vs 暴露终端 <span class="stars">★★★</span></h2>
+<p><strong>思路</strong>：先用很短的帧预约信道，避免长数据帧碰撞。</p>
+<ol class="steps">
+  <li>发送方用 CSMA 向 AP 发短的 <strong>RTS</strong>。RTS 之间<strong>还会碰撞，但很短，损失小</strong>。</li>
+  <li>AP <strong>广播 CTS</strong>。</li>
+  <li><strong>所有节点都听得到 CTS</strong>：发送方发数据，其他节点推迟。</li>
+</ol>
+<ul>
+  <li><strong>RTS 碰撞了怎么知道？没收到 CTS。</strong></li>
+  <li><strong>解决隐藏终端</strong>：C 听不到 A 的 RTS，但听得到 AP 的 CTS(A)，于是推迟。</li>
+  <li><strong>仍会失败</strong>：CTS 在某隐藏节点处被碰撞；或别的节点在 CTS 发出时正在发、没听到。结论：<strong>显著减少但不能完全消除碰撞</strong>，实际只对长帧启用。</li>
+</ul>
+<h3>暴露终端</h3>
+<p>S1 → R1，S2 → R2；S1、S2 相邻，但 R1 离 S2 远、R2 离 S1 远。两条本可同时进行，但 <strong>S2 听到 S1 在发就不发了</strong>。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>隐藏终端</th><th>暴露终端</th></tr>
+  <tr><td>问题</td><td><strong>该等没等</strong>（听不到干扰者）</td><td><strong>不该等却等了</strong>（听到无关的发送者）</td></tr>
+  <tr><td>后果</td><td><strong>碰撞</strong></td><td><strong>吞吐量浪费</strong></td></tr>
+  <tr><td>根源</td><td colspan="2">载波侦听在<strong>发送方</strong>做，碰撞发生在<strong>接收方</strong></td></tr>
+</table></div>
+<h3>速率自适应</h3>
+<p>设备远离基站 → SNR 降、BER 升 → <strong>切到更低速率、BER 更低的调制</strong>（QAM256 → QAM16 → BPSK）。是 W10「选满足 BER 的最快调制」的动态版。</p>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">S1、S2 相邻，S1 → R1、S2 → R2，两个接收方互不干扰，但 S2 听到 S1 在发就不发了。这叫？</div>
+  <ol class="mcq-src"><li>隐藏终端</li><li>暴露终端</li><li>乒乓效应</li><li>三角路由</li></ol>
+  <div class="mcq-exp">后果是吞吐量浪费，不是碰撞。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　蜂窝网络 2G / 3G / 4G <span class="stars">★★</span></h2>
+<ul>
+  <li>组成：<strong>cell</strong>（一块区域）、<strong>基站 BS</strong>（类似 AP）、<strong>空中接口</strong>（设备和基站之间的物理层 / 链路层协议）、<strong>MSC</strong>（连到电话网，管理呼叫建立和移动性）。</li>
+  <li>第一跳共享频谱：<strong>FDMA / TDMA 组合</strong>，或 <strong>CDMA</strong>。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th></th><th>2G</th><th>3G</th><th>4G LTE</th></tr>
+  <tr><td>业务</td><td>语音</td><td>语音 + 数据</td><td><strong>全 IP</strong></td></tr>
+  <tr><td>核心</td><td>电路交换（BTS → BSC → MSC）</td><td><strong>语音网不变，并行一个数据网</strong>（SGSN → GGSN）</td><td><strong>EPC</strong> 统一电路和分组</td></tr>
+  <tr><td>空口</td><td>FDMA / TDMA</td><td>CDMA</td><td><strong>OFDM + TDM</strong></td></tr>
+</table></div>
+<p>4G 两大创新：<strong>EPC（演进分组核心，全 IP）</strong>和 <strong>OFDM + 时分</strong>的无线接入。资源网格是频率 × 0.5 ms 时隙，<strong>基站可在任意时隙、任意频率给任意设备分配</strong>（W12 tutorial 在这个网格上分配）。</p>
+
+<div class="mcq" data-answer="0,1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">4G LTE 相对 3G 的两大创新是？</div>
+  <ol class="mcq-src"><li>全 IP 的演进分组核心 EPC</li><li>OFDM 结合时分复用的空口</li><li>语音网和数据网并行运行</li><li>用 CDMA 作为空中接口</li></ol>
+  <div class="mcq-exp">C 是 3G 的特点，D 也是 3G。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　移动性：间接路由 vs 直接路由 <span class="stars">★★★</span></h2>
+<p>难点：手机号到哪都不变，但 <strong>IP 地址和子网绑定</strong>，换网就要换地址。</p>
+<div class="table-wrap"><table>
+  <tr><th>术语</th><th>意思</th><th>例子</th></tr>
+  <tr><td><strong>归属网络</strong></td><td>移动设备永久的「家」</td><td>128.119.40/24</td></tr>
+  <tr><td><strong>永久地址</strong></td><td>归属网络里的地址，<strong>总能用它找到设备</strong></td><td>128.119.40.186</td></tr>
+  <tr><td><strong>归属代理</strong></td><td>归属网络里替设备做移动性工作</td><td></td></tr>
+  <tr><td><strong>访问网络</strong></td><td>设备<strong>当前</strong>所在的网络</td><td>79.129.13/24</td></tr>
+  <tr><td><strong>转交地址 COA</strong></td><td><strong>访问网络里的地址</strong></td><td>79.129.13.2</td></tr>
+  <tr><td><strong>外地代理</strong></td><td>访问网络里替设备做移动性工作</td><td></td></tr>
+  <tr><td><strong>通信者</strong></td><td>想和移动设备通信的一方</td><td></td></tr>
+</table></div>
+<ul>
+  <li><strong>让路由器处理</strong>（路由表通告每台设备的永久地址）：<strong>扩展不到几百万台设备</strong>，不采用。</li>
+  <li><strong>注册</strong>：设备联系外地代理 → 外地代理告诉归属代理「它在我这」。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th></th><th>间接路由</th><th>直接路由</th></tr>
+  <tr><td>步骤</td><td>通信者发永久地址 → <strong>归属代理截获</strong>转给外地代理 → 设备；设备直接回复</td><td>通信者<strong>先向归属代理要 COA</strong> → 直接发外地代理 → 设备；设备直接回复</td></tr>
+  <tr><td>通信者用的地址</td><td><strong>永久地址</strong></td><td><strong>转交地址</strong></td></tr>
+  <tr><td>对通信者透明</td><td><strong>是</strong></td><td><strong>否</strong></td></tr>
+  <tr><td>路径</td><td><strong>三角路由</strong>（同一网络时尤其低效）</td><td>接近最短</td></tr>
+  <tr><td>换访问网络</td><td>向新 FA 注册，归属代理更新 COA，连接保持</td><td><strong>锚点外地代理</strong>：数据先到第一个 FA，再链式转给新 FA</td></tr>
+</table></div>
+<p>讲义类比：找常搬家的朋友，翻遍电话簿（路由处理）、问她父母（间接）、等她告诉你住哪（直接）。</p>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于间接路由，正确的是？</div>
+  <ol class="mcq-src"><li>存在三角路由问题</li><li>设备换网对通信者透明</li><li>通信者先向归属代理要 COA</li><li>移动设备直接回复通信者</li></ol>
+  <div class="mcq-exp">C 是直接路由。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t6">题型 6　Mobile IP（RFC 3344） <span class="stars">★★</span></h2>
+<p>三部分：<strong>间接路由</strong>、<strong>代理发现</strong>、<strong>向归属代理注册</strong>。</p>
+<div class="formula">$$\underbrace{[\text{dst }79.129.13.2\ |\ \overbrace{[\text{dst }128.119.40.186\ |\ \text{数据}]}^{\text{原分组}}]}_{\text{归属代理 → 外地代理（封装）}}\ \xrightarrow{\text{外地代理解封装}}\ [\text{dst }128.119.40.186\ |\ \text{数据}]$$</div>
+<ul>
+  <li><strong>隧道</strong>：归属代理把原分组整个装进目的为 COA 的新分组（IP-in-IP）。</li>
+  <li><strong>代理发现</strong>：代理广播 <strong>ICMP type 9</strong>，扩展 type 16；R 位要求注册，H / F 位表示归属 / 外地代理，带若干 COA。</li>
+  <li><strong>注册例子</strong>：设备请求 <strong>Lifetime 9999</strong>、identification 714 → FA 转 HA → HA 回 <strong>Lifetime 4999</strong>、identification 714。<strong>归属代理可以缩短有效期</strong>；identification 请求和回复相同，用来配对、防重放。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">Mobile IP 里归属代理怎么把分组送到移动设备？</div>
+  <ol class="mcq-src"><li>直接改写原分组的目的地址</li><li>把原分组封装进目的为 COA 的新分组</li><li>在访问网络里广播这个分组</li><li>交给 DNS 解析出新地址再发</li></ol>
+  <div class="mcq-exp">外地代理再解封装，交给设备。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t7">题型 7　HLR / VLR、GSM 切换、切换算法 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>HLR（归属位置寄存器）</strong>：归属网络里的数据库，存号码、用户资料、<strong>当前位置</strong>。</li>
+  <li><strong>VLR（访问位置寄存器）</strong>：访问网络里的数据库，当前在本网的每个用户一条。</li>
+  <li><strong>对应：HLR ≈ 归属代理，VLR ≈ 外地代理。</strong></li>
+  <li><strong>GSM 打给移动设备是间接路由</strong>：呼叫到归属网络 → 归属 MSC 查 HLR 得<strong>漫游号码</strong>（≈ COA）→ 建到访问 MSC 的第二段 → 接通设备。</li>
+</ul>
+<h3>GSM 同一 MSC 下的切换</h3>
+<p>为什么切：新 BSS 信号更强（保持连接、省电）、负载均衡。GSM <strong>不规定何时切</strong>（策略）。<strong>由旧 BSS 发起。</strong></p>
+<ol class="steps">
+  <li>旧 BSS 告诉 MSC 要切，给候选新 BSS 列表。</li>
+  <li>MSC 建到新 BSS 的路径；新 BSS 分配无线信道；新 BSS 通知 MSC 和旧 BSS 已就绪。</li>
+  <li>旧 BSS 通知设备切过去；设备和新 BSS 激活信道；设备经新 BSS 告诉 MSC 完成，MSC 改路由。</li>
+  <li>释放 MSC 到旧 BSS 的资源。</li>
+</ol>
+<p><strong>先建新路，再让设备过去，最后拆旧路</strong>，所以不断线。</p>
+<h3>切换算法</h3>
+<div class="table-wrap"><table>
+  <tr><th>算法</th><th>条件</th><th>特点</th></tr>
+  <tr><td>朴素 RSS</td><td>$P_{new} &gt; P_{old}$</td><td><strong>乒乓效应</strong>：边界附近来回切</td></tr>
+  <tr><td>阈值 $P_T$</td><td>且 $P_{old} &lt; P_T$</td><td>旧的还够好就不切</td></tr>
+  <tr><td>迟滞 $P_H$</td><td>$P_{new} &gt; P_{old} + P_H$</td><td><strong>新的要明显更好</strong>，抑制乒乓</td></tr>
+  <tr><td>驻留定时器</td><td>条件持续到定时器到期</td><td>过滤短暂波动</td></tr>
+</table></div>
+<p>记法：<strong>阈值看旧的够不够差，迟滞看新的好多少，驻留定时器看持续多久。</strong></p>
+<p>对上层的影响：TCP、UDP 照样跑，但<strong>TCP 把无线丢包当成拥塞，不必要地减小 cwnd</strong>；切换期间丢包和时延。</p>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">关于 GSM 同一 MSC 下的切换，正确的是？</div>
+  <ol class="mcq-src"><li>由旧的 BSS 发起切换</li><li>先建新路径再让设备切过去</li><li>最后释放到旧 BSS 的资源</li><li>由 GSM 标准规定切换时机</li></ol>
+  <div class="mcq-exp">GSM 不规定为什么、什么时候切。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义">
+  <div class="mcq-q">为什么无线局域网不用 CSMA/CD？</div>
+  <ol class="mcq-src"><li>发送时自己的信号盖过别人</li><li>信号衰落导致收到的太弱</li><li>隐藏终端使碰撞无法全部感知</li><li>无线链路上不会发生碰撞</li></ol>
+  <div class="mcq-exp">无线碰撞照样有，只是检测不到。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">蜂窝网络中，和 Mobile IP 的归属代理、外地代理分别对应的是？</div>
+  <ol class="mcq-src"><li>VLR、HLR</li><li>HLR、VLR</li><li>MSC、BSS</li><li>SGSN、GGSN</li></ol>
+  <div class="mcq-exp">H = Home，V = Visitor。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">为什么接收方发 ACK 前只等 SIFS，且 SIFS 比 DIFS 短？</div>
+  <ol class="mcq-src"><li>为了节省设备电量</li><li>让 ACK 优先于其他数据帧</li><li>为了测量往返时间</li><li>为了避免暴露终端</li></ol>
+  <div class="mcq-exp">别的站要等更长的 DIFS，抢不到 ACK 前面。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义">
+  <div class="mcq-q">关于直接路由，正确的是？</div>
+  <ol class="mcq-src"><li>解决了三角路由问题</li><li>对通信者不透明</li><li>换网后可用锚点 FA 链式转发</li><li>通信者始终使用永久地址</li></ol>
+  <div class="mcq-exp">通信者要用 COA。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">使用 RTS / CTS 时，发送方怎么知道自己的 RTS 碰撞了？</div>
+  <ol class="mcq-src"><li>检测到信号强度突变</li><li>等了一段时间没收到 CTS</li><li>收到 AP 发来的 NAK</li><li>同时收到两个 CTS 帧</li></ol>
+  <div class="mcq-exp">和数据帧一样，只能从「该来的回应没来」推断。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于 RTS / CTS，正确的是？</div>
+  <ol class="mcq-src"><li>RTS 之间仍可能碰撞但损失小</li><li>隐藏节点也能听到 AP 的 CTS</li><li>可以完全消除所有的碰撞</li><li>用来避免长数据帧的碰撞</li></ol>
+  <div class="mcq-exp">CTS 被碰撞或别人没听到时仍会失败。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">间接路由中，通信者把分组发到哪个地址？</div>
+  <ol class="mcq-src"><li>移动设备的转交地址</li><li>移动设备的永久地址</li><li>外地代理自己的地址</li><li>归属代理自己的地址</li></ol>
+  <div class="mcq-exp">归属代理截获后再隧道转发。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">Mobile IP 注册时设备请求 Lifetime 9999，归属代理的回复可能是？</div>
+  <ol class="mcq-src"><li>只能原样回 9999</li><li>可以更短，如 4999</li><li>必须比 9999 更长</li><li>回复里不带 Lifetime</li></ol>
+  <div class="mcq-exp">归属代理可以缩短有效期。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">要求新基站信号比旧基站强出一个余量才切换，用来抑制乒乓，这叫？</div>
+  <ol class="mcq-src"><li>阈值</li><li>迟滞</li><li>驻留定时器</li><li>速率自适应</li></ol>
+  <div class="mcq-exp">阈值看旧的，迟滞看新的好多少。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于 802.11，正确的是？</div>
+  <ol class="mcq-src"><li>BSS 由无线主机和一个 AP 组成</li><li>关联后通常用 DHCP 获取 IP</li><li>802.11a 工作在 2.4 GHz 频段</li><li>信标帧含 AP 的 SSID 和 MAC</li></ol>
+  <div class="mcq-exp">802.11a 是 5 GHz。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">无线和移动对 TCP 的主要性能影响是？</div>
+  <ol class="mcq-src"><li>TCP 在无线上无法运行</li><li>把无线丢包当拥塞而减小 cwnd</li><li>TCP 序号空间会溢出</li><li>握手变成四次握手</li></ol>
+  <div class="mcq-exp">乘性减被不必要地触发（W06）。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">为什么不「让路由器处理」移动性（路由表通告每台设备的永久地址）？</div>
+  <ol class="mcq-src"><li>需要修改端系统</li><li>扩展不到几百万台设备</li><li>无法保持正在进行的连接</li><li>会泄露用户的位置</li></ol>
+  <div class="mcq-exp">端系统不用改，这恰是它的优点。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">A 和 C 都能和 AP 通信但互相听不到。A 发 RTS，AP 回 CTS(A)。C 此时也想发，C 会？</div>
+  <ol class="mcq-src"><li>听不到 A，所以照常发送</li><li>听到 A 的 RTS 后推迟</li><li>听到 AP 的 CTS 后推迟</li><li>发 RTS 和 A 竞争信道</li></ol>
+  <div class="mcq-exp">C 听不到 RTS 但听得到 CTS，这就是 RTS / CTS 解决隐藏终端的方式。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>CSMA/CA：空闲 DIFS 就发；忙则退避，只在空闲时倒数；没 ACK 扩大退避；SIFS 回 ACK，SIFS &lt; DIFS 让 ACK 优先。</li>
+  <li>不用 CSMA/CD：发时听不到、衰落、隐藏终端。</li>
+  <li>RTS / CTS：短帧预约，CTS 人人听到；没 CTS = RTS 碰撞；减少但不消除碰撞。</li>
+  <li>隐藏终端 → 碰撞；暴露终端 → 浪费。</li>
+  <li>间接：永久地址、透明、三角路由；直接：COA、不透明、锚点 FA。</li>
+  <li>Mobile IP：间接路由 + 代理发现（ICMP 9）+ 注册；隧道封装；有效期可被缩短。</li>
+  <li>HLR ≈ 归属代理，VLR ≈ 外地代理；GSM 切换旧 BSS 发起，先建后拆。</li>
+  <li>阈值、迟滞、驻留定时器防乒乓；4G = EPC 全 IP + OFDM；3G 数据网并行。</li>
+  <li>被动扫描 3 步（AP 先），主动 4 步（主机先）；关联后 DHCP。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Kurose &amp; Ross 第 7 章 7.3–7.7 节</strong>（802.11 的 CSMA/CA 时序图、RTS / CTS 图和 Mobile IP 注册图都是讲义原图）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week11-wifi-mobility.html" target="_blank" rel="noopener">W11 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 11</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

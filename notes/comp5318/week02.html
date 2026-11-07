@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W02 预处理与 kNN</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 02</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W02 数据预处理、相似度与 kNN</h1>
+<p class="subtitle">缩放参数只能用训练集算（两套卷都考）；手算距离；kNN 的加权投票；kNN 为什么预测慢。对应 PE1 Q2、Q3，PE2 Q2、Q3、Q9。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 缩放与数据泄漏</a></td><td class="c"><span class="stars">★★★</span></td><td>参数只从训练集（这一折的训练部分）算</td></tr>
+    <tr><td><a href="#t2">2 手算距离与相似度</a></td><td class="c"><span class="stars">★★★</span></td><td>欧氏、曼哈顿、SMC、Jaccard、余弦</td></tr>
+    <tr><td><a href="#t3">3 kNN 与加权投票</a></td><td class="c"><span class="stars">★★★</span></td><td>$1/d^2$ 加权可能和不加权结论相反</td></tr>
+    <tr><td><a href="#t4">4 其他预处理与特征选择</a></td><td class="c"><span class="stars">★★</span></td><td>One-hot；Filter 最快、暴力最慢</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　缩放与数据泄漏 <span class="stars">★★★</span></h2>
+<p>用距离的算法，数值范围大的特征会主导距离（收入以「元」计，年龄的差别几乎看不到）。缩放让各特征有同样的发言权，<strong>对每一列单独做</strong>。</p>
+<div class="formula">$$\text{min-max：}\ x' = \frac{x - \min}{\max - \min}\qquad \text{标准化：}\ x' = \frac{x - \mu}{\sigma}$$</div>
+<p><strong>必须先缩放</strong>：kNN、k-means、SVM、PCA、神经网络。<strong>决策树不需要</strong>（只比大小）。</p>
+<div class="box method">
+  <span class="box-title">规则</span>
+  <ol>
+    <li>缩放参数（min/max 或 μ/σ）<strong>只用训练集算</strong>。</li>
+    <li>用<strong>同一组参数</strong>缩放训练集和测试集。</li>
+    <li>交叉验证里，每一折<strong>只用这一折的训练部分</strong>拟合；用 pipeline 自动保证。</li>
+    <li>推广：填缺失值的均值、one-hot 的类别表等，凡是「从数据里算出来的」都只能来自训练集。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>训练集年龄最小 20、最大 60，测试样本 70 岁：$(70-20)/(60-20) = 1.25$。超出 [0, 1] 是正常的，<strong>不要</strong>改用测试集的最大值。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">数据泄漏</span>
+  <p>用测试集、或「训练 + 测试」一起算参数，都是让模型偷看了将来的数据，测出的准确率偏高、不可信。先把整个数据集缩放好再切分做 CV 也是泄漏。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q2 · 检查一下">
+  <div class="mcq-q">kNN 流水线用 standard scaler，要在保留测试集上评估，缩放参数应该？</div>
+  <ol class="mcq-src"><li>用测试集算均值和标准差</li><li>用训练集算，同一组数缩放两边</li><li>用训练集 + 测试集一起算</li><li>每个测试样本各自标准化</li></ol>
+  <div class="mcq-exp">A、C 都是泄漏；D 没有意义。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　手算距离与相似度 <span class="stars">★★★</span></h2>
+<div class="formula">$$\text{欧氏 } d = \sqrt{\textstyle\sum(a_i - b_i)^2}\qquad \text{曼哈顿 } d = \textstyle\sum|a_i - b_i|\qquad \text{Minkowski } q=1, 2$$</div>
+<p>欧氏 ≤ 曼哈顿（两点之间直线最短）。$A = [1,3,5]$，$B = [1,6,9]$：差 0、3、4，欧氏 5，曼哈顿 7。</p>
+<h3>0/1 向量：先数四种情况</h3>
+<div class="formula">$$\text{SMC} = \frac{f_{11} + f_{00}}{f_{11} + f_{00} + f_{10} + f_{01}}\qquad \text{Jaccard} = \frac{f_{11}}{f_{11} + f_{10} + f_{01}}$$</div>
+<ul>
+  <li><strong>稀疏数据（购物篮）用 Jaccard</strong>：「两人都没买」太多，会把 SMC 撑高。</li>
+  <li><strong>0 和 1 同样有意义（医学阴 / 阳性）用 SMC</strong>。</li>
+</ul>
+<div class="formula">$$\cos(A, B) = \frac{A\cdot B}{\lVert A\rVert\,\lVert B\rVert}\qquad \text{corr} = \frac{\text{cov}(x, y)}{\text{std}(x)\,\text{std}(y)}$$</div>
+<ul>
+  <li>余弦适合文本（词频向量），和文章长短无关；常配 TF-IDF。</li>
+  <li><strong>相关系数为 0 只说明没有直线关系</strong>：$y = x^2$，$x$ 对称取值时 corr = 0。</li>
+  <li>有序类别（cold / mild / hot）要先编成 0、1、2 再算差。</li>
+</ul>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>$A = [1,1,0,1]$，$B = [1,0,0,1]$：$f_{11} = 2$，$f_{10} = 1$，$f_{01} = 0$，$f_{00} = 1$。SMC $= 3/4 = 0.75$；Jaccard $= 2/3 = 0.667$；余弦 $= 2/(\sqrt3\sqrt2) \approx 0.816$。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q3 · 检查一下">
+  <div class="mcq-q">$x = (1, 4)$，$y = (4, 0)$，曼哈顿距离和欧氏距离分别是？</div>
+  <ol class="mcq-src"><li>5 和 7</li><li>7 和 25</li><li>7 和 5</li><li>1 和 5</li></ol>
+  <div class="mcq-exp">差 3 和 −4：$3 + 4 = 7$，$\sqrt{9 + 16} = 5$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　kNN 与加权投票 <span class="stars">★★★</span></h2>
+<p>训练只存样本（<strong>lazy learner</strong>）；预测时算到<strong>每个</strong>训练样本的距离，取最近 $k$ 个投票（回归取平均）。</p>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li>算新样本到每个训练样本的距离。</li>
+    <li>从近到远排序，取前 $k$ 个。</li>
+    <li>不加权：一个邻居一票。<strong>加权：每个邻居权重 $1/d^2$</strong>，各类加总，大者获胜。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q3）</span>
+  <p>邻居：Red（d = 2），Blue（d = 3），Blue（d = 4）。</p>
+  <p>不加权：Red 1 票，Blue 2 票 → <strong>Blue</strong>。</p>
+  <p>加权：Red $= 1/4 = 0.25$；Blue $= 1/9 + 1/16 = 0.111 + 0.0625 = 0.174$ → <strong>Red</strong>。</p>
+</div>
+<ul>
+  <li><strong>预测慢</strong>：每个样本 $O(mn)$（$m$ 个训练样本、$n$ 个特征），还要存全部数据。加速：KD-tree、Ball tree。</li>
+  <li>$k$ 取奇数避免平票；经验 $k \approx \sqrt m$；$k = 1$ 对噪声敏感；$k = m$ 永远预测多数类。</li>
+  <li>1-NN 的决策边界由 <strong>Voronoi 图</strong>构成。维度灾难：特征太多时距离都差不多。</li>
+</ul>
+<div class="box trap">
+  <span class="box-title">别搞混</span>
+  <p>加权的对象是<strong>邻居</strong>，不是特征。</p>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE2 Q2 · 检查一下">
+  <div class="mcq-q">关于标准 kNN 分类器的预测，最合适的说法是？</div>
+  <ol class="mcq-src"><li>预测很快，因为训练时建好了模型</li><li>预测时只需比较少数支持向量</li><li>预测时间与训练样本数无关</li><li>预测时要搜索所有存储样本，可用索引加速</li></ol>
+  <div class="mcq-exp">基于实例的方法，代价都在预测时。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　其他预处理与特征选择 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>缺失值</strong>：缺得少直接删；类别型填众数（有标签时用同类众数）；数值型用最像的几个样本的平均。</li>
+  <li><strong>噪声</strong>：数值被干扰、假样本（离群点）、不一致与重复。</li>
+  <li><strong>聚合</strong>：数据变小、更稳定，但丢细节。</li>
+  <li><strong>离散化</strong>：等宽、等频、k-means（都不看标签）。</li>
+  <li><strong>One-hot</strong>：Single / Married / Divorced → 三位向量；编成 1、2、3 会让算法以为有大小和距离倍数。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>特征选择</th><th>做法</th><th>速度</th></tr>
+  <tr><td>Brute force</td><td>试所有 $2^n$ 种组合</td><td>最慢</td></tr>
+  <tr><td>Embedded</td><td>训练时顺便选（决策树）</td><td>中等</td></tr>
+  <tr><td><strong>Filter</strong></td><td>训练前用统计量打分，<strong>与算法无关</strong></td><td><strong>最快</strong></td></tr>
+  <tr><td><strong>Wrapper</strong></td><td>用选定算法反复训练不同组合（前向选择 / 后向删除）</td><td>慢</td></tr>
+</table></div>
+<p>要删的特征：<strong>无关的</strong>（最喜欢的颜色）、<strong>冗余的</strong>（年收入元 / 千元 / 月收入）。</p>
+
+<div class="mcq" data-answer="0" data-src="自拟 · 检查一下">
+  <div class="mcq-q">特征选择方法中，训练前用统计量打分、与后续算法无关、最快的是？</div>
+  <ol class="mcq-src"><li>Filter</li><li>Wrapper</li><li>Embedded</li><li>Brute force</li></ol>
+  <div class="mcq-exp">Wrapper 要反复训练；暴力要试 $2^n$ 种。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q9">
+  <div class="mcq-q">5 折交叉验证挑超参数时，某一折里的 standard scaler 应在哪里拟合？</div>
+  <ol class="mcq-src"><li>整个数据集上</li><li>这一折的验证部分上</li><li>这一折的训练部分上</li><li>测试集上</li></ol>
+  <div class="mcq-exp">再用它去缩放这一折的验证部分。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">A 只买了商品 1，B 只买了商品 7 和 10（共 10 种商品）。SMC 和 Jaccard 分别是？</div>
+  <ol class="mcq-src"><li>0 和 0.7</li><li>0.7 和 0</li><li>0.3 和 0</li><li>0.7 和 0.3</li></ol>
+  <div class="mcq-exp">$f_{00} = 7$，$f_{10} = 1$，$f_{01} = 2$，$f_{11} = 0$。没买过相同的东西，Jaccard 是对的。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">下面哪个算法不需要先做特征缩放？</div>
+  <ol class="mcq-src"><li>kNN</li><li>SVM</li><li>k-means</li><li>决策树</li></ol>
+  <div class="mcq-exp">决策树只问「比某个数大还是小」。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">$A = [1, 1, 0]$，$B = [1, 0, 1]$ 的余弦相似度是？</div>
+  <ol class="mcq-src"><li>0.5</li><li>1</li><li>0</li><li>0.707</li></ol>
+  <div class="mcq-exp">点积 1，长度都是 $\sqrt2$，$1/2$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">$x = (-2,-1,0,1,2)$，$y = x^2$。两者的相关系数和关系是？</div>
+  <ol class="mcq-src"><li>1，强线性关系</li><li>0，两者独立</li><li>0，但 y 完全由 x 决定</li><li>−1，反向关系</li></ol>
+  <div class="mcq-exp">相关系数只量直线关系。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">kNN 中 $k$ 取得等于训练样本数 $m$，结果是？</div>
+  <ol class="mcq-src"><li>完美拟合训练集</li><li>永远预测训练集的多数类</li><li>决策边界是 Voronoi 图</li><li>对噪声点非常敏感</li></ol>
+  <div class="mcq-exp">C、D 是 $k = 1$ 的特征。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="自拟">
+  <div class="mcq-q">关于 one-hot 编码，正确的有？</div>
+  <ol class="mcq-src"><li>任意两种取值之间距离相同</li><li>适合有顺序的类别（cold / mild / hot）</li><li>避免算法误以为类别有大小</li><li>把 3 种取值编成 1、2、3</li></ol>
+  <div class="mcq-exp">有序类别应编成 0、1、2 保留顺序。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>训练样本：1 (1,3,1) yes，2 (3,5,2) yes，3 (3,2,2) no，4 (5,2,3) no。新样本 (2,4,2)。用欧氏距离，分别给出 1-NN、3-NN、3-NN 加权（$1/d^2$）的预测。</summary>
+  <div class="sa-ans">
+    <p>距离：到 1 为 $\sqrt3 \approx 1.73$；到 2 为 $\sqrt2 \approx 1.41$；到 3 为 $\sqrt5 \approx 2.24$；到 4 为 $\sqrt{14} \approx 3.74$。</p>
+    <p>排序：2 (yes)、1 (yes)、3 (no)。1-NN → <strong>yes</strong>；3-NN 2:1 → <strong>yes</strong>。</p>
+    <p>加权：yes $= 1/2 + 1/3 = 0.833$；no $= 1/5 = 0.2$ → <strong>yes</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>三个最近邻：A 类 d = 1；B 类 d = 2、2、2（k = 4）。不加权和 $1/d^2$ 加权分别预测什么？</summary>
+  <div class="sa-ans">
+    <p>不加权：A 1 票，B 3 票 → <strong>B</strong>。</p>
+    <p>加权：A $= 1$；B $= 3\times\frac14 = 0.75$ → <strong>A</strong>。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>缩放参数只用训练集（CV 里只用这一折的训练部分）；测试值超出 [0,1] 正常。</li>
+  <li>欧氏 ≤ 曼哈顿；稀疏 0/1 用 Jaccard，0/1 对称有意义用 SMC；corr = 0 只是没有直线关系。</li>
+  <li>加权投票 $1/d^2$，加的是邻居的权；结论可能和不加权相反。</li>
+  <li>kNN 是 lazy learner，预测 $O(mn)$；KD-tree / Ball tree 加速；$k$ 奇数、$\approx\sqrt m$。</li>
+  <li>Filter 最快、Wrapper 慢、暴力最慢；one-hot 避免假顺序。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Tan et al.《Introduction to Data Mining》第 2 章（数据、相似度）与第 5 章 kNN；scikit-learn 文档的 <a href="https://scikit-learn.org/stable/common_pitfalls.html" target="_blank" rel="noopener">Common pitfalls（数据泄漏）</a>。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week02-preprocessing-knn.html" target="_blank" rel="noopener">W02 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 2</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

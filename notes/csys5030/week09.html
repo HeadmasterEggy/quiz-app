@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W09 信息处理与熵率</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 09</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W09 复杂系统中的信息处理与熵率</h1>
+<p class="subtitle">对应 Module 9（讲义 Lec7）。信息动力学的哲学：计算 = 存储 + 传递 + 修改；第一个量是熵率。这一周没有录音，内容按讲义整理。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 信息动力学的哲学</a></td><td class="c"><span class="stars">★★</span></td><td>记忆 ↔ 存储，信号 ↔ 传递，处理 ↔ 修改</td></tr>
+    <tr><td><a href="#t2">2 记号与核心问题</a></td><td class="c"><span class="stars">★</span></td><td>$\mathbf X_n^{(k)}$ 以 $X_n$ 结尾，预测 $X_{n+1}$</td></tr>
+    <tr><td><a href="#t3">3 熵率</a></td><td class="c"><span class="stars">★★★</span></td><td>已知全部过去后剩下的不确定性；$H(X) = A_X + H_\mu$</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　信息动力学的哲学 <span class="stars">★★</span></h2>
+<p>电脑、鱼群、蚁群、大脑在计算吗？算什么？电脑很容易指出存储和处理在哪；生物系统很难。Mitchell 的对比：</p>
+<div class="table-wrap"><table>
+  <tr><th>问题</th><th>计算机科学</th><th>生物计算</th></tr>
+  <tr><td>什么是信息</td><td>数字的、静态的纸带</td><td>模拟状态；时空中<strong>分布的模式</strong>；统计采样</td></tr>
+  <tr><td>怎么处理</td><td>确定、串行、无差错、集中</td><td><strong>去中心、并行、局部、随机</strong>（利用随机性）</td></tr>
+  <tr><td>意义从哪来</td><td>人类设计者</td><td>自然选择</td></tr>
+</table></div>
+<ul>
+  <li><strong>内禀信息处理</strong>：只要动力学过程把初态 + 输入变成后态 + 输出，就在处理信息。</li>
+  <li>生物计算<strong>分布式</strong>（没有一个读写头）、<strong>持续进行</strong>（不一定停机）。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>计算要素</th><th>信息动力学度量</th><th>周</th></tr>
+  <tr><td>Memory 记忆</td><td><strong>信息存储</strong>（AIS）</td><td>W10</td></tr>
+  <tr><td>Signalling 信号</td><td><strong>信息传递</strong>（TE）</td><td>W11</td></tr>
+  <tr><td>Processing 处理</td><td><strong>信息修改</strong></td><td>本课只提</td></tr>
+</table></div>
+<p>CA 中的猜想：<strong>domain、blinker = 存储；glider、domain wall = 传递；碰撞 = 修改</strong>。信息动力学把它变成可量化的结论。</p>
+
+<div class="mcq" data-answer="2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">信息动力学里，「信号传递（signalling）」对应的是？</div>
+  <ol class="mcq-src"><li>信息存储</li><li>信息修改</li><li>信息传递</li><li>熵率</li></ol>
+  <div class="mcq-exp">记忆 ↔ 存储，信号 ↔ 传递，处理 ↔ 修改。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　记号与核心问题 <span class="stars">★</span></h2>
+<div class="formula">$$\mathbf X_n^{(k)} = \{X_{n-k+1}, \dots, X_{n-1}, X_n\}\quad\text{（以 } X_n \text{ 结尾，预测 } X_{n+1}\text{）}$$</div>
+<p>核心问题：<strong>目标变量下一个值 $x_{n+1}$ 的信息从哪里来？</strong>来自自己过去的有多少（存储），来自其他源的有多少（传递），归因于哪个源，能否分割、会不会重叠。</p>
+<div class="formula">$$H(X_{n+1}) = \underbrace{I(\mathbf X_n^{(k)}; X_{n+1})}_{\text{存储（W10）}} + \underbrace{I(Y_n; X_{n+1}\mid\mathbf X_n^{(k)})}_{\text{传递（W11）}} + \underbrace{H(X_{n+1}\mid\mathbf X_n^{(k)}, Y_n)}_{\text{剩余}}$$</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　熵率 <span class="stars">★★★</span></h2>
+<div class="formula">$$H'_{\mu X} = \lim_{n\to\infty}\frac1n H(X_1, \dots, X_n)\qquad H_{\mu X} = \lim_{n\to\infty} H(X_n \mid X_1, \dots, X_{n-1})$$</div>
+<ul>
+  <li>前者是<strong>块熵 vs n 的渐近斜率</strong>（平均每符号的熵）；后者是<strong>给定过去后下一个值的条件熵</strong>（块熵的增量，链式法则）。</li>
+  <li><strong>平稳过程两者相等。</strong>注意本课撇号和 Cover &amp; Thomas 相反。</li>
+  <li>含义：把<strong>过程自身的过去当第一个信息源</strong>后，<strong>还剩多少不确定性</strong>；每一步真正「新」的信息。</li>
+  <li>编码含义：<strong>有记忆信源</strong>利用全部历史时，每个符号的最小平均码长（英文 th 后 e 很可能）。</li>
+</ul>
+<div class="formula">$$A_X = H(X) - H_{\mu X}\qquad\text{（下一个值的不确定性 = 来自过去的 + 剩下的）}$$</div>
+<div class="table-wrap"><table>
+  <tr><th>过程</th><th class="c">$H(X)$</th><th class="c">$H_\mu$</th><th class="c">$A_X$</th></tr>
+  <tr><td>i.i.d.</td><td class="c">$H(X)$</td><td class="c">$H(X)$</td><td class="c">0</td></tr>
+  <tr><td>周期 0101…</td><td class="c">1</td><td class="c">0</td><td class="c">1</td></tr>
+</table></div>
+<h3>例题：两状态马尔可夫链（W11 heartbeat 的源）</h3>
+<p>$p(1\mid0) = 0.05$，$p(0\mid1) = 0.2$。平稳分布 $p(0) = \frac{0.2}{0.25} = 0.8$，$p(1) = 0.2$。</p>
+<div class="formula">$$H_\mu = 0.8\,H_b(0.05) + 0.2\,H_b(0.2) = 0.8(0.286) + 0.2(0.722) \approx 0.374\ \text{bits}$$</div>
+<p>$H(X) = H_b(0.2) = 0.722$，所以 $A_X \approx 0.348$ bits。</p>
+<p><strong>块熵图</strong>：i.i.d. 是过原点的直线；周期 2 升到 1 bit 后水平；一般过程逐渐逼近斜率 $H_\mu$ 的直线，<strong>渐近线的截距 = excess entropy</strong>（W10）。</p>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">确定性的周期序列 0101…，熵率是？</div>
+  <ol class="mcq-src"><li>1 bit</li><li>0 bits</li><li>0.5 bits</li><li>无穷大</li></ol>
+  <div class="mcq-exp">知道过去后下一个值完全确定。$H(X) = 1$ 全部是存储。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0" data-src="讲义">
+  <div class="mcq-q">i.i.d. 过程的熵率等于？</div>
+  <ol class="mcq-src"><li>$H(X)$</li><li>0</li><li>$\log_2|\mathcal A_X|$</li><li>$2H(X)$</li></ol>
+  <div class="mcq-exp">过去没有帮助，没有存储。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="讲义">
+  <div class="mcq-q">Mitchell 认为生物计算的特点包括？</div>
+  <ol class="mcq-src"><li>去中心、并行、局部</li><li>利用随机性</li><li>确定、串行、无差错</li><li>由人类设计者赋予意义</li></ol>
+  <div class="mcq-exp">C、D 是计算机科学的范式。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">$H'_{\mu X} = \lim\frac1n H(X_1..X_n)$ 与 $H_{\mu X} = \lim H(X_n\mid X_1..X_{n-1})$ 什么时候相等？</div>
+  <ol class="mcq-src"><li>总是相等</li><li>只在 i.i.d. 时</li><li>平稳过程时</li><li>二值过程时</li></ol>
+  <div class="mcq-exp">条件熵单调收敛，块熵 / n 是它的 Cesàro 平均。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲义">
+  <div class="mcq-q">CA 中 glider 被猜想对应哪种信息操作？</div>
+  <ol class="mcq-src"><li>存储</li><li>修改</li><li>熵率</li><li>传递</li></ol>
+  <div class="mcq-exp">domain、blinker 是存储，碰撞是修改。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">熵率的编码含义是？</div>
+  <ol class="mcq-src"><li>独立编码每个符号的平均码长</li><li>利用全部历史时每符号最小平均码长</li><li>编码整个序列的总码长</li><li>最长码字的长度</li></ol>
+  <div class="mcq-exp">A 是 $H(X)$；有记忆信源可以压得更短。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">某过程 $H(X) = 1$ bit，熵率 0.3 bits。AIS（$k\to\infty$）是？</div>
+  <ol class="mcq-src"><li>1.3 bits</li><li>0.3 bits</li><li>0.7 bits</li><li>0 bits</li></ol>
+  <div class="mcq-exp">$A_X = H(X) - H_\mu$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲义">
+  <div class="mcq-q">内禀计算和图灵机相比，一个关键区别是？</div>
+  <ol class="mcq-src"><li>不一定会停机</li><li>必须是确定性的</li><li>只有一个读写头</li><li>只能处理数字信息</li></ol>
+  <div class="mcq-exp">分布式、持续进行。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>两状态马尔可夫链 $p(1\mid0) = 0.1$，$p(0\mid1) = 0.4$。求平稳分布、熵率和 AIS（$k = 1$）。</summary>
+  <div class="sa-ans">
+    <p>$p(0) = \frac{0.4}{0.4 + 0.1} = 0.8$，$p(1) = 0.2$。</p>
+    <p>$H_\mu = 0.8\,H_b(0.1) + 0.2\,H_b(0.4) = 0.8(0.469) + 0.2(0.971) = 0.375 + 0.194 = 0.569$ bits。</p>
+    <p>$H(X) = H_b(0.2) = 0.722$，$A_X = 0.722 - 0.569 = 0.153$ bits（一阶马尔可夫，$k = 1$ 已足够）。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>计算 = 存储（AIS）+ 传递（TE）+ 修改；生物计算分布式、持续、随机。</li>
+  <li>$\mathbf X_n^{(k)}$ 以 $X_n$ 结尾，预测 $X_{n+1}$。</li>
+  <li>熵率：块熵斜率 = 给定过去的条件熵（平稳时）；已知过去后剩下的不确定性。</li>
+  <li>$A_X = H(X) - H_\mu$；i.i.d. 熵率 = $H(X)$；周期过程熵率 0。</li>
+  <li>马尔可夫链：$p(0) = \lambda_0/(\lambda_0 + \lambda_1)$，$H_\mu = \sum_x p(x)H_b(\text{离开 } x)$。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Lizier JIDT 论文附录 A.2–A.3</strong>；熵率的定义与证明见 <strong>Cover &amp; Thomas 第 4 章 4.2 节</strong>（注意撇号相反）；哲学部分见 Mitchell《Complexity: A Guided Tour》第 12 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week09-information-processing.html" target="_blank" rel="noopener">W09 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 9</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

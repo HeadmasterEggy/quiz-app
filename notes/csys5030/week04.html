@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W04 条件互信息</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 04</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W04 条件互信息</h1>
+<p class="subtitle">对应 Module 4（What is Information? II）。条件互信息、冗余与协同、链式法则、数据处理不等式、时序样本怎么配对。样卷简答 Q22（证明）就在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 CMI 定义与证明</a></td><td class="c"><span class="stars">★★★</span></td><td>条件熵都拆成 $H(\cdot) - H(\cdot)$，两边对上</td></tr>
+    <tr><td><a href="#t2">2 冗余 vs 协同</a></td><td class="c"><span class="stars">★★★</span></td><td>拷贝 → 下降；XOR → 0 变 1 bit</td></tr>
+    <tr><td><a href="#t3">3 链式法则与数据处理不等式</a></td><td class="c"><span class="stars">★★</span></td><td>信息回归，顺序无关；$X\to Y\to Z$ ⟹ $I(X;Y)\ge I(X;Z)$</td></tr>
+    <tr><td><a href="#t4">4 时序样本配对</a></td><td class="c"><span class="stars">★★</span></td><td>prev 去尾、next 去头，不跨场次</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　CMI 定义与证明 <span class="stars">★★★</span></h2>
+<div class="formula">$$I(X;Y\mid Z) = H(X\mid Z) + H(Y\mid Z) - H(X,Y\mid Z) = H(X\mid Z) - H(X\mid Y,Z)$$</div>
+<ul>
+  <li>和 MI 完全平行，<strong>每一项都加上「已知 $Z$」</strong>。读法：已知 $Z$ 后，再知道 $Y$ 能额外消除多少关于 $X$ 的不确定性。</li>
+  <li>推导：先固定 $z$ 算 MI，再按 $p(z)$ 平均；$p(z)p(x,y\mid z) = p(x,y,z)$，所以期望对三元联合分布取。</li>
+  <li><strong>$I(X;Y\mid Z) = 0$ ⟺ 给定 $Z$ 条件独立</strong>：$p(x,y\mid z) = p(x\mid z)p(y\mid z)$。</li>
+  <li>逐点版本 $i(x;y\mid z) = \log_2\frac{p(x\mid y,z)}{p(x\mid z)}$，也可以为负。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">证明题套路</span>
+  <ol class="steps">
+    <li>把每个条件熵按 $H(A\mid B) = H(A,B) - H(B)$ 展开成联合熵。</li>
+    <li><strong>把 $(Y,Z)$ 当一个联合变量</strong>：$H(X\mid Y,Z) = H(X,Y,Z) - H(Y,Z)$。</li>
+    <li>两边都化成同一组联合熵，写「两式相同，得证 ∎」。</li>
+  </ol>
+</div>
+<h3>例题（样卷 Q22，5 分）：证明 $I(X;Y\mid Z) = H(X\mid Z) - H(X\mid Y,Z)$</h3>
+<div class="formula">$$\begin{aligned}\text{左边} &= [H(X,Z) - H(Z)] + [H(Y,Z) - H(Z)] - [H(X,Y,Z) - H(Z)]\\ &= H(X,Z) + H(Y,Z) - H(Z) - H(X,Y,Z)\\ \text{右边} &= [H(X,Z) - H(Z)] - [H(X,Y,Z) - H(Y,Z)]\\ &= H(X,Z) + H(Y,Z) - H(Z) - H(X,Y,Z)\end{aligned}$$</div>
+<p>两式相同，得证。∎</p>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　冗余 vs 协同 <span class="stars">★★★</span></h2>
+<div class="box trap">
+  <span class="box-title">最反直觉：条件化可以让互信息变大</span>
+  <p>条件化不是「减去 $Z$」，而是<strong>站在已知 $Z$ 的位置重新看 $X$ 与 $Y$</strong>。有些关系只有知道 $Z$ 才看得见。</p>
+</div>
+<div class="table-wrap"><table>
+  <tr><th>比较</th><th>名称</th><th>典型例子</th><th class="c">$I(X;Y)$</th><th class="c">$I(X;Y\mid Z)$</th></tr>
+  <tr><td>$I(X;Y\mid Z) &lt; I(X;Y)$</td><td><strong>冗余</strong></td><td>$X, Y, Z$ 是同一随机比特的拷贝</td><td class="c">1</td><td class="c">0</td></tr>
+  <tr><td>$I(X;Y\mid Z) &gt; I(X;Y)$</td><td><strong>协同</strong></td><td>$X = Y \oplus Z$，$Y, Z$ 独立均匀</td><td class="c">0</td><td class="c">1</td></tr>
+</table></div>
+<p><strong>XOR</strong>：只看 $Y$，$X$ 仍是 50/50（取决于 $Z$），所以 $I(X;Y) = 0$；知道 $Z$ 后 $Y$ 完全决定 $X$，$I(X;Y\mid Z) = 1$ bit。信息<strong>只在组合里</strong>。</p>
+<p>差值 $I(X;Y\mid Z) - I(X;Y)$ 只是<strong>净效应</strong>：现实数据同时有冗余和协同，会互相抵消。把它们分开是<strong>部分信息分解（PID）</strong>，研究前沿，本课不深入。</p>
+<p>CMI 是<strong>非线性版的偏相关</strong>，但偏相关的「扣掉 $Z$」直觉只在冗余时成立。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">$Y$、$Z$ 是独立均匀比特，$X = Y \oplus Z$。$I(X;Y)$ 和 $I(X;Y\mid Z)$ 分别是？</div>
+  <ol class="mcq-src"><li>1 bit，0 bits</li><li>0 bits，1 bit</li><li>1 bit，1 bit</li><li>0 bits，0 bits</li></ol>
+  <div class="mcq-exp">协同：单独无信息，合起来 1 bit。A 是互为拷贝（冗余）的情形。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　链式法则与数据处理不等式 <span class="stars">★★</span></h2>
+<div class="formula">$$I(X;Y,Z) = I(X;Y) + I(X;Z\mid Y) = I(X;Z) + I(X;Y\mid Z)$$</div>
+<ul>
+  <li><strong>信息回归</strong>：先看第一个变量解释多少，再看第二个在第一个之上额外解释多少。</li>
+  <li><strong>顺序无关</strong>，只要每步条件于已经看过的所有变量；中间项可以差很多，总和相同。</li>
+  <li>也适用于逐点版本、加条件的版本。MI 可以独立公理化，关键公理就是这条可加性。</li>
+</ul>
+<h3>数据处理不等式</h3>
+<p>$X \to Y \to Z$ 是马尔可夫链 ⟺ $I(X;Z\mid Y) = 0$。用链式法则两种展开：</p>
+<div class="formula">$$I(X;Y) + \underbrace{I(X;Z\mid Y)}_{=0} = I(X;Z) + \underbrace{I(X;Y\mid Z)}_{\ge 0}\ \Rightarrow\ I(X;Y) \ge I(X;Z)$$</div>
+<p><strong>处理链上信息只会丢，不会凭空增加。</strong>这条依赖马尔可夫假设；没有条件独立时（如 XOR），条件化可以让 MI 上升。</p>
+<h3>真实数据：Seinfeld 剧本</h3>
+<p>相邻字符 MI ≈ 0.7 bits；隔一个字符、条件于中间字符的 CMI <strong>比 0.7 还大</strong>（协同：有了中间字符的上下文才看得出关系）。用链式法则累加前面各字符的贡献 0.7 + 0.7 + 0.5 + 0.3 + 0.2 + … ≈ <strong>2.5 bits</strong>。</p>
+
+<div class="mcq" data-answer="0" data-src="讲课 · 检查一下">
+  <div class="mcq-q">$X \to Y \to Z$ 构成马尔可夫链，一定成立的是？</div>
+  <ol class="mcq-src"><li>$I(X;Y) \ge I(X;Z)$</li><li>$I(X;Z) \ge I(X;Y)$</li><li>$I(X;Y\mid Z) = 0$</li><li>$I(X;Z) = 0$</li></ol>
+  <div class="mcq-exp">为 0 的是 $I(X;Z\mid Y)$，不是 $I(X;Y\mid Z)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　时序样本配对 <span class="stars">★★</span></h2>
+<p>测「上一步」和「下一步」的关系时，它们是两个变量，样本要<strong>成对</strong>取。某场序列 <code>0 2 1 1 2 0</code>：</p>
+<div class="table-wrap"><table>
+  <tr><th>变量</th><th>取法</th><th>结果</th></tr>
+  <tr><td>previous</td><td><strong>去掉最后一个</strong></td><td><code>0 2 1 1 2</code></td></tr>
+  <tr><td>next</td><td><strong>去掉第一个</strong></td><td><code>2 1 1 2 0</code></td></tr>
+</table></div>
+<p>代码里就是 <code>x[:-1]</code> 和 <code>x[1:]</code>。<strong>绝不跨场次边界</strong>配对（上一场最后一招和下一场第一招对的是不同对手）：<strong>逐场取样本对，再拼起来</strong>统一算概率。</p>
+
+<div class="mcq" data-answer="2" data-src="讲课 · 检查一下">
+  <div class="mcq-q">两场比赛，玩家 1 的出招分别是 <code>0 1 2</code> 和 <code>2 2 0</code>。正确的 (previous, next) 样本对一共几个？</div>
+  <ol class="mcq-src"><li>6</li><li>5</li><li>4</li><li>3</li></ol>
+  <div class="mcq-exp">每场 2 对：(0,1)(1,2) 和 (2,2)(2,0)。B 把 (2,2) 跨场次配进去了。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q19">
+  <div class="mcq-q">（预告 W11）想知道 $Y$ 对 $X$ 的影响，该测成对的 $T_{Y\to X}$ 还是条件于 $Z$ 的 $T_{Y\to X\mid Z}$？</div>
+  <ol class="mcq-src"><li>只测成对的</li><li>只测条件的</li><li>两者都有用</li><li>都不该测</li></ol>
+  <div class="mcq-exp">条件化一边去冗余、一边引入协同；按链式法则两种顺序都会出现。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲课">
+  <div class="mcq-q">关于条件互信息，正确的是？</div>
+  <ol class="mcq-src"><li>$I(X;Y\mid Z) \ge 0$</li><li>$I(X;Y\mid Z) \le I(X;Y)$ 总成立</li><li>为 0 ⟺ 给定 $Z$ 条件独立</li><li>逐点值也一定非负</li></ol>
+  <div class="mcq-exp">协同时会大于 MI；逐点值可负。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">$X$、$Y$、$Z$ 是同一随机比特的三份拷贝，$I(X;Y\mid Z)$ 是？</div>
+  <ol class="mcq-src"><li>1 bit</li><li>0 bits</li><li>2 bits</li><li>0.5 bits</li></ol>
+  <div class="mcq-exp">知道 $Z$ 后 $X$ 已确定，$Y$ 再无新信息：冗余。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">$I(X;Y) = 0.3$，$I(X;Z\mid Y) = 0.5$，$I(X;Z) = 0.6$（bits）。$I(X;Y\mid Z)$ 是？</div>
+  <ol class="mcq-src"><li>0.1 bits</li><li>0.4 bits</li><li>0.2 bits</li><li>0.8 bits</li></ol>
+  <div class="mcq-exp">链式法则：$0.3 + 0.5 = 0.6 + I(X;Y\mid Z)$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">上一题里，$Y$ 和 $Z$ 关于 $X$ 的净效应是？</div>
+  <ol class="mcq-src"><li>净冗余</li><li>净协同</li><li>正好抵消</li><li>无法判断</li></ol>
+  <div class="mcq-exp">$I(X;Y\mid Z) = 0.2 &lt; I(X;Y) = 0.3$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">Seinfeld 剧本里，隔一个字符且条件于中间字符的 CMI 大于相邻字符的 MI。这说明？</div>
+  <ol class="mcq-src"><li>冗余</li><li>协同</li><li>误导信息</li><li>估计偏差</li></ol>
+  <div class="mcq-exp">有了中间字符的上下文才看得出关系。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲课">
+  <div class="mcq-q">链式法则 $I(X;Y,Z) = I(X;Y) + I(X;Z\mid Y)$ 展开时，变量的顺序？</div>
+  <ol class="mcq-src"><li>必须按时间先后</li><li>必须先放 MI 大的</li><li>只能先 $Y$ 后 $Z$</li><li>任意，只要条件于已看过的</li></ol>
+  <div class="mcq-exp">中间项会不同，总和相同。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">CMI 的期望为什么对 $p(x,y,z)$ 取？</div>
+  <ol class="mcq-src"><li>因为 $X$、$Y$、$Z$ 独立</li><li>因为 $p(z)\,p(x,y\mid z) = p(x,y,z)$</li><li>因为公式表这样写</li><li>因为 $Z$ 是均匀分布</li></ol>
+  <div class="mcq-exp">先固定 $z$ 再按 $p(z)$ 平均，两个权重合并。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 讲课 Item 6</span>证明数据处理不等式：若 $X \to Y \to Z$ 是马尔可夫链，则 $I(X;Y) \ge I(X;Z)$。</summary>
+  <div class="sa-ans">
+    <p>马尔可夫：给定 $Y$ 时 $X$、$Z$ 条件独立，$I(X;Z\mid Y) = 0$。</p>
+    <p>链式法则两种展开：$I(X;Y,Z) = I(X;Y) + I(X;Z\mid Y) = I(X;Z) + I(X;Y\mid Z)$。</p>
+    <p>代入 0：$I(X;Y) = I(X;Z) + I(X;Y\mid Z) \ge I(X;Z)$，因为 CMI 非负。∎</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>证明 $I(X;Y,Z) = I(X;Y) + I(X;Z\mid Y)$。</summary>
+  <div class="sa-ans">
+    <p>右边 $= [H(X) - H(X\mid Y)] + [H(X\mid Y) - H(X\mid Y,Z)] = H(X) - H(X\mid Y,Z)$。</p>
+    <p>把 $(Y,Z)$ 看成一个变量，这正是 $I(X;Y,Z)$ 的定义 $H(X) - H(X\mid Y,Z)$。∎</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$I(X;Y\mid Z) = H(X\mid Z) - H(X\mid Y,Z)$；为 0 ⟺ 条件独立；非负，逐点可负。</li>
+  <li>证明题：全部拆成联合熵，$(Y,Z)$ 当一个变量。</li>
+  <li>冗余：CMI &lt; MI（拷贝 1 → 0）；协同：CMI &gt; MI（XOR 0 → 1）；差值只是净效应。</li>
+  <li>链式法则 = 信息回归，顺序无关。</li>
+  <li>DPI：$X\to Y\to Z$ ⟹ $I(X;Y) \ge I(X;Z)$。</li>
+  <li>时序配对：<code>x[:-1]</code> 对 <code>x[1:]</code>，不跨场次。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Cover &amp; Thomas 第 2 章 2.5、2.8 节</strong>（链式法则、数据处理不等式）。冗余与协同可看 Williams &amp; Beer (2010) 关于部分信息分解的论文开头。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week04-conditional-mutual-information.html" target="_blank" rel="noopener">W04 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 4</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

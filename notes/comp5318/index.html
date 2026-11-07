@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 知识点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="../../index.html">← 题库</a>
+  <span>COMP5318</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>COMP5318 知识点与题型</h1>
+<p class="subtitle">每周一页：这一周考什么、每种题型的知识点和解法、陷阱、一道检查题，最后一组混合练习、计算练习和考前速记。选择题点了就判分，多选题勾完点「提交」；计算题点开看参考答案。</p>
+
+<div class="box exam">
+  <span class="box-title">期末</span>
+  <p>11 月 27 日 09:00，Wentworth International Student Lounge。阅读 10 分钟 + 作答 2 小时，闭卷，可带非编程计算器。<strong>30 道选择题各 2 分（60%）+ 4 道计算题各 10 分（40%）</strong>，公式会给出。<strong>Double pass：卷面分必须 ≥ 40%。</strong></p>
+  <p>不考：W10 Transformers、W11 的 transformer notebook、Clustering II（密度 / 网格聚类、聚类评估）。</p>
+  <p>两套 Practice Exam 的 10 分大题：最小二乘（PE2 Q32）、朴素贝叶斯（PE2 Q31）、信息增益（PE1 Q31）、前向传播（PE1 Q32、PE2 Q34）、K-means（PE1 Q33）、层次聚类（PE2 Q33）、HMM 前向算法（PE1 Q34）。</p>
+</div>
+
+<ul class="weeks">
+  <li><a href="week01.html"><span class="wk">W01</span><span class="ttl">学习任务的类型<span class="sub">分类 / 回归 / 聚类 / 强化学习、数据挖掘六步</span></span><span class="n">8 题</span></a></li>
+  <li><a href="week02.html"><span class="wk">W02</span><span class="ttl">预处理、相似度与 kNN<span class="sub">缩放与泄漏、距离、SMC / Jaccard、加权投票</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week03.html"><span class="wk">W03</span><span class="ttl">线性回归、逻辑回归与正则化<span class="sub">最小二乘手算、MAE / MSE、R²、L1 vs L2</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week04.html"><span class="wk">W04</span><span class="ttl">朴素贝叶斯与模型评估<span class="sub">NB 手算、Laplace、交叉验证、P / R / F1</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week05.html"><span class="wk">W05</span><span class="ttl">决策树、规则与集成<span class="sub">信息增益、1R / PRISM、Bagging / RF / Boosting</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week06.html"><span class="wk">W06</span><span class="ttl">SVM 与 PCA<span class="sub">间隔 2/‖w‖、C、核代入、累计方差</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week07.html"><span class="wk">W07</span><span class="ttl">神经网络与反向传播<span class="sub">前向传播大题、感知机更新、梯度下降、Dropout</span></span><span class="n">10 题</span></a></li>
+  <li><a href="week08.html"><span class="wk">W08</span><span class="ttl">CNN、RNN 与 LSTM<span class="sub">输出尺寸、参数个数、池化、门控</span></span><span class="n">11 题</span></a></li>
+  <li><a href="week09.html"><span class="wk">W09</span><span class="ttl">K-means、GMM 与层次聚类<span class="sub">K-means 一轮、责任度、single / complete link</span></span><span class="n">9 题</span></a></li>
+  <li><a href="week10.html"><span class="wk">W10</span><span class="ttl">聚类手算练习<span class="sub">Transformer 不考；只留 Tutorial 10 聚类手算</span></span><span class="n">5 题</span></a></li>
+  <li><a href="week11.html"><span class="wk">W11</span><span class="ttl">马尔可夫链与 HMM<span class="sub">路径概率、前向算法、Viterbi、三大问题</span></span><span class="n">8 题</span></a></li>
+  <li><a href="week12.html"><span class="wk">W12</span><span class="ttl">强化学习、Q-learning 与 DQN<span class="sub">Q 更新一步、期望动作价值、回放、目标网络</span></span><span class="n">9 题</span></a></li>
+</ul>
+
+<div class="box source">
+  <span class="box-title">怎么用</span>
+  <p>先读一页的知识点，做完那一页的混合练习和计算题；第二天再去<a href="../../index.html">题库</a>做同一周的题，隔一天再做一次比连着做两遍记得牢。标「PE1 / PE2」的是两套官方 Practice Exam 的题，标「自拟」的是按考点出的。</p>
+  <p>整卷解析见博客 <a href="https://qiao1.top/posts/comp5318-practice-exam-1-solutions.html" target="_blank" rel="noopener">Practice Exam 1 解析</a>、<a href="https://qiao1.top/posts/comp5318-practice-exam-2-solutions.html" target="_blank" rel="noopener">Practice Exam 2 解析</a>。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

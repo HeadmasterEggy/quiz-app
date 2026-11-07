@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W12 有效网络推断</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 12</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W12 有效网络推断</h1>
+<p class="subtitle">对应 Module 12。三种网络、成对 TE 有向功能网络、多重比较、多变量贪心算法与 IDTxl。样卷 Q20 在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 功能 / 结构 / 有效网络</a></td><td class="c"><span class="stars">★★★</span></td><td>有效 = 有向、能复现并解释时间序列的最小模型</td></tr>
+    <tr><td><a href="#t2">2 成对 TE 网络与多重比较</a></td><td class="c"><span class="stars">★★★</span></td><td>阈值 → p 值；Bonferroni $\alpha / G(G-1)$</td></tr>
+    <tr><td><a href="#t3">3 多变量贪心算法</a></td><td class="c"><span class="stars">★★★</span></td><td>逐个加条件 TE 最大且显著的源，剪枝，整体检验</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　功能 / 结构 / 有效网络 <span class="stars">★★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>类型</th><th class="c">有向</th><th>依据</th><th>局限</th></tr>
+  <tr><td><strong>功能</strong></td><td class="c">✗</td><td>相关系数或 MI</td><td><strong>不解释关系怎么产生</strong></td></tr>
+  <tr><td><strong>结构</strong></td><td class="c">✓</td><td>物理的、因果的连接</td><td>一般要<strong>干预</strong>才能得到；不反映随时间 / 条件变化的交互</td></tr>
+  <tr><td><strong>有效</strong></td><td class="c">✓</td><td>介于两者之间</td><td><strong>能复现并解释节点时间序列的最小模型</strong>；不是因果网络</td></tr>
+</table></div>
+<p>有效网络值得做：可能是<strong>仅凭数据能做到的最好</strong>；反映<strong>动态状态变化</strong>；揭示<strong>涌现的计算结构</strong>。TE 是天然选择（有向、条件于目标过去、能扩展成条件 TE）。</p>
+<div class="box trap">
+  <span class="box-title">样卷 Q20 的陷阱</span>
+  <p>「构建有向网络来表示<strong>成对</strong>统计关系」是<strong>有向功能网络</strong>，不是有效网络。有效网络是<strong>多变量</strong>的最小模型。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q20 · 检查一下">
+  <div class="mcq-q">下面哪个描述是有效网络推断？</div>
+  <ol class="mcq-src"><li>构建无向网络，表示变量之间的相关</li><li>构建有向网络，表示成对的统计关系</li><li>构建有向网络，给出能复现并解释每个节点更新的最小多变量模型</li><li>通过干预实验得到物理接线图</li></ol>
+  <div class="mcq-exp">A 是功能网络，B 是有向功能网络，D 是结构网络。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　成对 TE 网络与多重比较 <span class="stars">★★★</span></h2>
+<ol>
+  <li><strong>TE + 阈值</strong>：算所有对的 TE，保留超过阈值的。问题：$G(G-1)$ 个 TE 计算量大；<strong>阈值没有原则</strong>，不同目标的 TE 量级不同。</li>
+  <li><strong>TE + p 值</strong>（更好）：对每一对求零分布下的 p 值，<strong>对 p 值设阈值</strong>。统计导出，稳健，适合小数据。</li>
+</ol>
+<div class="formula">$$\text{Bonferroni：}\ \alpha' = \frac{\alpha}{M},\quad M = G(G-1)\qquad G = 100 \Rightarrow \alpha' = \frac{0.05}{9900} \approx 5.05\times10^{-6}$$</div>
+<p>不校正的话，若零假设全部为真，9900 次检验预期约 <strong>495 条假连接</strong>。<strong>FDR</strong> 控制被选中连接中假阳性的<strong>比例</strong>，比 Bonferroni 宽松。</p>
+<div class="table-wrap"><table>
+  <tr><th>成对方法的问题</th><th>后果</th></tr>
+  <tr><td>不校正多重比较</td><td>大量假阳性</td></tr>
+  <tr><td>TE 参数设错</td><td>嵌入不够 → 存储算成传递 → 假阳性；延迟错 → 假阴性</td></tr>
+  <tr><td>不处理冗余（共同驱动、路径）</td><td>虚假的 Y → X</td></tr>
+  <tr><td>不处理协同（门控 / XOR）</td><td>漏掉两条真连接</td></tr>
+</table></div>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">50 个节点的网络做全部有向成对 TE 检验，α = 0.05，Bonferroni 校正后的阈值是？</div>
+  <ol class="mcq-src"><li>$0.05/50$</li><li>$0.05/2450$</li><li>$0.05/1225$</li><li>$0.05/2500$</li></ol>
+  <div class="mcq-exp">$M = 50\times49 = 2450$（有向，不含自身）。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　多变量贪心算法 <span class="stars">★★★</span></h2>
+<p><strong>条件于所有其他变量</strong>不行：太容易<strong>欠采样</strong>；会<strong>删掉太多连接</strong>（两个高度冗余的父节点互相条件后都 ≈ 0）。一次推断整个父集合要搜 $2^{G-1}$ 种子集，太难。</p>
+<div class="box method">
+  <span class="box-title">贪心算法（Lizier &amp; Rubinov 2012）</span>
+  <ol>
+    <li>0 先<strong>嵌入目标过去</strong>（处理存储）。</li>
+    <li>1 父集合 $\mathbf P$ 从<strong>空集</strong>开始。</li>
+    <li>2 对每个候选源算<strong>条件于 $\mathbf P$ 的 TE</strong>。</li>
+    <li>3 条件 TE <strong>最大</strong>的候选若 <strong>p 值显著</strong>，加入 $\mathbf P$。</li>
+    <li>4 加入了就回到 2，否则继续。</li>
+    <li>5 <strong>剪枝</strong>：在最终 $\mathbf P$ 的语境下删掉变得多余的早期源。</li>
+    <li>6 对整个 $\mathbf P$ 做统计检验。</li>
+  </ol>
+</div>
+<ul>
+  <li>优点：比暴力搜索高效；<strong>处理冗余</strong>（条件于已选父节点后冗余源 CTE 变小，不被选）和<strong>协同</strong>（条件于搭档后 CTE 变大，被选中）；可做<strong>非均匀嵌入</strong>（选的是某变量在某个滞后的样本）；统计检验是<strong>自动刹车</strong>，防过拟合；最终是集合，<strong>加入顺序无关</strong>。</li>
+  <li>需要控制多重比较：<strong>max statistics</strong>（每轮把最大 CTE 与「所有候选最大值」的零分布比）。</li>
+  <li><strong>IDTxl</strong>：用 JIDT 作引擎的 Python 包，实现贪心算法 + max statistics + 参数 / 非均匀嵌入选择 + 剪枝。</li>
+</ul>
+<h3>Tutorial：CA rule 54 前 100 格</h3>
+<ul>
+  <li><strong>MI 网络</strong>：对称、<strong>块状</strong>（同一 domain 内同步，冗余），远不止左右邻居。</li>
+  <li><strong>TE 网络</strong>（k = 4，异质变量只有约 600 样本/对，撑不起大 k）：集中在对角线两侧，但单一阈值难以处处适用；p 值 + Bonferroni 更有原则，但仍有多余父节点。</li>
+  <li><strong>贪心多变量</strong>：k = 4 时受统计波动、保守阈值影响仍不完美；<strong>k = 1 最接近因果结构</strong>（CA 规则只依赖上一时刻），邻居 CTE ≈ 0.5 bits。</li>
+  <li>结论：建模计算（存储 vs 传递）用较长 k；想复现因果结构用因果上真实的历史长度。<strong>目的不同，参数不同。</strong></li>
+</ul>
+
+<div class="mcq" data-answer="3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">为什么不直接对每个候选源算「条件于所有其他变量」的 TE？</div>
+  <ol class="mcq-src"><li>条件 TE 无法计算</li><li>会漏掉协同关系</li><li>条件 TE 总比成对 TE 大</li><li>欠采样，且会删掉冗余的真父节点</li></ol>
+  <div class="mcq-exp">两个冗余父节点互相条件后都接近 0，都被删掉。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="0" data-src="讲义">
+  <div class="mcq-q">功能网络的主要局限是？</div>
+  <ol class="mcq-src"><li>不解释关系是如何产生的</li><li>只能通过干预得到</li><li>必须是有向的</li><li>不能用 MI 计算</li></ol>
+  <div class="mcq-exp">B 是结构网络的局限。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">TE + p 值相比 TE + 固定阈值的优点是？</div>
+  <ol class="mcq-src"><li>不需要算 TE</li><li>自动处理冗余</li><li>阈值有统计依据</li><li>不需要多重比较校正</li></ol>
+  <div class="mcq-exp">仍然要校正多重比较，也仍然不处理冗余。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">贪心算法第一步之前要做什么？</div>
+  <ol class="mcq-src"><li>把所有变量都加进父集合</li><li>嵌入目标的过去</li><li>算所有变量对的 MI</li><li>对父集合剪枝</li></ol>
+  <div class="mcq-exp">先处理存储，免得被误当作传递。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">贪心多变量方法的优点包括？</div>
+  <ol class="mcq-src"><li>处理父节点之间的冗余和协同</li><li>统计检验像自动刹车</li><li>不需要任何多重比较校正</li><li>最终父集合与加入顺序无关</li></ol>
+  <div class="mcq-exp">需要 max statistics 等校正。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="Tutorial">
+  <div class="mcq-q">CA 上的 MI 功能网络呈现大块状结构，原因是？</div>
+  <ol class="mcq-src"><li>MI 估计器有偏差</li><li>每个格子连接很多邻居</li><li>MI 是有方向的</li><li>同一 domain 内的格子同步变化</li></ol>
+  <div class="mcq-exp">共同的动态状态造成冗余，与是否直接相连无关。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial">
+  <div class="mcq-q">在 CA 上把目标历史长度设成 k = 1，贪心推断最接近真实结构，原因是？</div>
+  <ol class="mcq-src"><li>k = 1 时样本最少</li><li>k = 1 时 Bonferroni 阈值更宽松</li><li>CA 规则只依赖上一时刻的自己和邻居</li><li>k = 1 时 TE 总为零</li></ol>
+  <div class="mcq-exp">更长的 k 会把邻居的部分贡献当成存储吸收掉。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">20 个节点，α = 0.05，不做校正。若所有零假设都为真，预期假连接约几条？</div>
+  <ol class="mcq-src"><li>1</li><li>19</li><li>20</li><li>380</li></ol>
+  <div class="mcq-exp">$20\times19 = 380$ 次检验，$380\times0.05 = 19$。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>说明成对 TE 网络推断的两个问题，并解释多变量贪心算法怎样解决它们。</summary>
+  <div class="sa-ans">
+    <p>（1）冗余：共同驱动 Z→Y、Z→X 或路径 Y→Z→X 时，成对 TE 推断出虚假的 Y→X。（2）协同：Y、Z 门控（XOR）决定 X 时，成对 TE 都约为 0，漏掉两条真连接。另外还有多重比较和参数设置问题。</p>
+    <p>贪心算法：先嵌入目标；父集合从空开始，每轮对候选源算条件于已选父集合的 TE，最大且显著（max statistics 校正）才加入；最后剪枝并整体检验。冗余源条件于已选父节点后 CTE 变小，不被选；协同源条件于搭档后 CTE 变大，被选中。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>功能（无向、不解释机制）、结构（因果、需干预）、有效（有向、复现并解释的最小多变量模型）。</li>
+  <li>「有向 + 成对」是有向功能网络，不是有效网络（Q20）。</li>
+  <li>TE + 阈值 → TE + p 值；Bonferroni $\alpha / G(G-1)$；FDR 控制比例。</li>
+  <li>成对方法：多重比较、参数设错、冗余（共同驱动 / 路径）、协同（门控）。</li>
+  <li>不能条件于全部：欠采样 + 冗余父节点互相抵消。</li>
+  <li>贪心：嵌入目标 → 空集 → 条件 TE 最大且显著则加入 → 循环 → 剪枝 → 整体检验；IDTxl 实现。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Bossomaier et al.《An Introduction to Transfer Entropy》§7.2</strong>；算法见 Lizier &amp; Rubinov (2012)，工具见 Wollstadt et al. (2018) IDTxl。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week12-effective-network-inference.html" target="_blank" rel="noopener">W12 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 12</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

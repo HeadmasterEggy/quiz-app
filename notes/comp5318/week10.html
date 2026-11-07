@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W10 聚类手算练习</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 10</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W10 聚类手算练习（Transformer 不考）</h1>
+<p class="subtitle">本周讲义的 Transformer 整周不考（Ed #187、#212），这页不讲。只保留 Tutorial 10 的聚类手算，是 <a href="week09.html">W09 聚类</a>的配套练习；概念先看 W09。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 只有距离表的 K-means</a></td><td class="c"><span class="stars">★★</span></td><td>只能分配，没有坐标算不出新质心</td></tr>
+    <tr><td><a href="#t2">2 同一张表做 single 和 complete</a></td><td class="c"><span class="stars">★★★</span></td><td>合并顺序可能完全不同；大题按步骤给分</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　只有距离表的 K-means <span class="stars">★★</span></h2>
+<p>步骤和 W09 一样：表里每行（点）找最小的那一列（质心），全部分完再更新。<strong>题目只给距离表时只能做分配</strong>，题目也只会问分配结果。</p>
+<p>下面两题共用这张距离表：</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th class="c">A</th><th class="c">B</th><th class="c">C</th><th class="c">D</th><th class="c">E</th></tr>
+  <tr><td><strong>A</strong></td><td class="c">0</td><td class="c">2</td><td class="c">7</td><td class="c">10</td><td class="c">1</td></tr>
+  <tr><td><strong>B</strong></td><td class="c">2</td><td class="c">0</td><td class="c">3</td><td class="c">4</td><td class="c">6</td></tr>
+  <tr><td><strong>C</strong></td><td class="c">7</td><td class="c">3</td><td class="c">0</td><td class="c">5</td><td class="c">9</td></tr>
+  <tr><td><strong>D</strong></td><td class="c">10</td><td class="c">4</td><td class="c">5</td><td class="c">0</td><td class="c">8</td></tr>
+  <tr><td><strong>E</strong></td><td class="c">1</td><td class="c">6</td><td class="c">9</td><td class="c">8</td><td class="c">0</td></tr>
+</table></div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial T10 Ex.1 · 检查一下">
+  <div class="mcq-q">用上表，初始质心 A 和 B，K-means 第一轮分配结果是？</div>
+  <ol class="mcq-src"><li>{A, C} 和 {B, D, E}</li><li>{A, D, E} 和 {B, C}</li><li>{A, E} 和 {B, C, D}</li><li>{A, B} 和 {C, D, E}</li></ol>
+  <div class="mcq-exp">C：7 vs 3 → B；D：10 vs 4 → B；E：1 vs 6 → A。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　同一张表做 single 和 complete <span class="stars">★★★</span></h2>
+<div class="box method">
+  <span class="box-title">步骤</span>
+  <ol>
+    <li>当前表里找最小值，合并，记高度。</li>
+    <li>新簇到其他簇：single 取原始跨簇点对的 min，complete 取 max（可以用上一步表里的数递推；average 不行，要按点对数加权）。</li>
+    <li>划掉旧行列、写新行列，回到 1。</li>
+  </ol>
+</div>
+<div class="table-wrap"><table>
+  <tr><th>步</th><th>Single link</th><th>Complete link</th></tr>
+  <tr><td>1</td><td>{A, E}，高度 1</td><td>{A, E}，高度 1</td></tr>
+  <tr><td>2</td><td>{A, E, B}，高度 2</td><td>{B, C}，高度 3</td></tr>
+  <tr><td>3</td><td>{A, B, C, E}，高度 3</td><td>{B, C, D}，高度 5</td></tr>
+  <tr><td>4</td><td>全部，高度 4</td><td>全部，高度 10</td></tr>
+</table></div>
+<p>Single link 的树像一条链，每次多加一个点，最后一个大簇加零散点；complete link 先各自形成小簇，簇更紧凑、大小更平均。</p>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <p>complete link 第 2 步：{A,E}–B 更新成 max(2, 6) = <strong>6</strong>，不再是最小值，所以下一个合并是 B–C = 3，而不是 {A,E}–B。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial T10 Ex.4 · 检查一下">
+  <div class="mcq-q">用上表做 complete link，第一次合并 {A, E} 后，{A, E} 到 B 的距离是？</div>
+  <ol class="mcq-src"><li>2</li><li>6</li><li>4</li><li>8</li></ol>
+  <div class="mcq-exp">max(d(A,B), d(E,B)) = max(2, 6)。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+
+<div class="mcq" data-answer="0" data-src="Tutorial T10 Ex.5">
+  <div class="mcq-q">用上表，complete link 最后剩下的两个大簇是？</div>
+  <ol class="mcq-src"><li>{A, E} 和 {B, C, D}</li><li>{A, B, C, E} 和 {D}</li><li>{A, B} 和 {C, D, E}</li><li>{A, E, B} 和 {C, D}</li></ol>
+  <div class="mcq-exp">B 是 single link 的结果。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="Tutorial T10 Ex.2">
+  <div class="mcq-q">用上表做 single link，第二次合并的是？</div>
+  <ol class="mcq-src"><li>B 和 C，高度 3</li><li>C 和 D，高度 5</li><li>{A, E} 和 D，高度 8</li><li>{A, E} 和 B，高度 2</li></ol>
+  <div class="mcq-exp">{A,E}–B = min(2, 6) = 2 是最小。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">为什么 average link 不能像 single / complete 那样直接用上一步表里的数递推？</div>
+  <ol class="mcq-src"><li>average 不是对称的</li><li>average 只能用于一维数据</li><li>两个平均数不能直接再平均，要按点对数加权</li><li>average 要用平方距离</li></ol>
+  <div class="mcq-exp">min 和 max 可以嵌套，平均不行。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · Tutorial T10 Ex.3</span>A(1,1)、B(1,3)、C(4,2)、D(8,6)、E(10,6)，初始质心 A 和 D。做一轮 K-means，并检查第二轮是否收敛。</summary>
+  <div class="sa-ans">
+    <p>到 A / 到 D 的平方距离：A 0 / 74，B 4 / 58，C 10 / 32，D 74 / 0，E 106 / 4 → {A, B, C} 和 {D, E}。</p>
+    <p>新质心 $\mu_1 = (6/3, 6/3) = (2, 2)$，$\mu_2 = (9, 6)$。</p>
+    <p>第二轮：A 2 / 89，B 2 / 73，C 4 / 41，D 52 / 1，E 80 / 1 → 分配不变，<strong>收敛</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · Tutorial T10 Ex.2</span>用上表做 single link，写出每一步合并、高度和更新后的距离。</summary>
+  <div class="sa-ans">
+    <p>① {A, E}，1；{A,E}–B = 2，–C = 7，–D = 8。</p>
+    <p>② {A, E, B}，2；–C = min(7, 3) = 3，–D = min(8, 4) = 4。</p>
+    <p>③ C–D = 5 &gt; 3，合并 {A, B, C, E}，3；–D = min(4, 5) = 4。</p>
+    <p>④ 全部，4。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>只有距离表时 K-means 只能分配。</li>
+  <li>每一步在更新后的表里重新找最小；single 用 min、complete 用 max，可以递推；average 要加权。</li>
+  <li>同一张表 single 和 complete 结果可能完全不同：single 链成大簇，complete 紧凑平均。</li>
+  <li>平局按题目规则（通常字母顺序）。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Tan et al.《Introduction to Data Mining》第 7.3 节（凝聚层次聚类）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week10-transformers.html" target="_blank" rel="noopener">W10 聚类手算笔记</a>，以及题库里的 <a href="../../index.html">COMP5318</a> 聚类题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

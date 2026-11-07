@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W07 Socket 与期中讲评</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 07</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W07 Socket 编程与期中讲评</h1>
+<p class="subtitle">实验周，对应 Kurose &amp; Ross 2.7 节。期末不考写代码，只考 socket 的概念；期中讲评的几道题是 W01–W02 的典型题型。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 TCP vs UDP socket</a></td><td class="c"><span class="stars">★★</span></td><td>欢迎套接字 + 连接套接字；sendto / recvfrom</td></tr>
+    <tr><td><a href="#t2">2 调用对应的 TCP 动作</a></td><td class="c"><span class="stars">★★</span></td><td>connect() 触发握手，accept() 返回新 socket</td></tr>
+    <tr><td><a href="#t3">3 Lab 问题与 Wireshark</a></td><td class="c"><span class="stars">★</span></td><td>先启动服务器；UDP 只有两个数据报</td></tr>
+    <tr><td><a href="#t4">4 期中讲评题型</a></td><td class="c"><span class="stars">★★</span></td><td>存储转发车队、干扰信息、瓶颈、混合均衡</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　TCP socket vs UDP socket <span class="stars">★★</span></h2>
+<p><strong>Socket 是应用进程和传输层之间的门</strong>：门以上由应用开发者控制，门以下（传输层及以下）由操作系统控制。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>TCP socket</th><th>UDP socket</th></tr>
+  <tr><td>创建</td><td><code>socket(AF_INET, SOCK_STREAM)</code></td><td><code>socket(AF_INET, SOCK_DGRAM)</code></td></tr>
+  <tr><td>先建连接</td><td><strong>要</strong>（三次握手）</td><td><strong>不要</strong></td></tr>
+  <tr><td>发送带不带对方地址</td><td>不带：<code>send()</code></td><td><strong>每次都带</strong>：<code>sendto(msg, (ip, port))</code></td></tr>
+  <tr><td>接收</td><td><code>recv(n)</code> 只返回数据</td><td><code>recvfrom(n)</code> 返回 <strong>(数据, 发送方地址)</strong></td></tr>
+  <tr><td>服务器 socket 数</td><td><strong>1 个欢迎套接字 + 每个客户 1 个连接套接字</strong></td><td><strong>1 个</strong>服务所有客户</td></tr>
+  <tr><td>数据形式</td><td>字节流</td><td>数据报</td></tr>
+</table></div>
+<p>这就是 W05「UDP 二元组、TCP 四元组」在代码里的样子。</p>
+
+<div class="box method">
+  <span class="box-title">两种 TCP 套接字的分工</span>
+  <ul>
+    <li><strong>欢迎套接字</strong>（<code>serverSocket</code>）：只「接门铃」，一直 LISTEN，不收发数据。</li>
+    <li><strong>连接套接字</strong>（<code>connectionSocket</code>）：<strong>每个客户一个</strong>，由四元组区分，真正收发数据。关掉它不影响欢迎套接字。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="Lab · 检查一下">
+  <div class="mcq-q">关于 UDP socket 程序，正确的是？</div>
+  <ol class="mcq-src"><li>服务器不需要 listen 和 accept</li><li>客户端每次发送都写服务器地址</li><li>服务器从 recvfrom 得到客户地址</li><li>服务器为每个客户新建 socket</li></ol>
+  <div class="mcq-exp">UDP 服务器一个 socket 服务所有客户。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　调用对应的 TCP 动作 <span class="stars">★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>调用</th><th>谁调</th><th>对应</th></tr>
+  <tr><td><code>bind(('', 12000))</code></td><td>服务器</td><td>定下端口；<code>''</code> 表示本机所有网卡</td></tr>
+  <tr><td><code>listen(1)</code></td><td>服务器</td><td>进入 LISTEN</td></tr>
+  <tr><td><strong><code>connect()</code></strong></td><td>客户端</td><td><strong>发起连接，触发三次握手</strong></td></tr>
+  <tr><td><strong><code>accept()</code></strong></td><td>服务器</td><td>阻塞到有客户<strong>完成握手</strong>，返回<strong>新的连接套接字和客户地址</strong></td></tr>
+  <tr><td><code>close()</code></td><td>双方</td><td>发 FIN；服务器关的是这个客户的连接套接字</td></tr>
+</table></div>
+<ul>
+  <li>客户端<strong>不调用 <code>bind()</code></strong>，操作系统自动分配临时源端口。</li>
+  <li>Python 3 socket 只收发 bytes，字符串要 <code>encode()</code> / <code>decode()</code>。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="Lab · 检查一下">
+  <div class="mcq-q">TCP 服务器调用 <code>accept()</code> 返回的是？</div>
+  <ol class="mcq-src"><li>原来的欢迎套接字</li><li>新的连接套接字和客户地址</li><li>客户端发来的第一段数据</li><li>客户端使用的源端口号</li></ol>
+  <div class="mcq-exp">accept 在握手完成后返回一个专门服务这个客户的新 socket。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　Lab 问题与 Wireshark <span class="stars">★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>问题</th><th>答案</th><th>为什么</th></tr>
+  <tr><td>先运行谁</td><td><strong>服务器</strong></td><td>TCP 客户端一启动就 connect，没人 LISTEN 就握手失败</td></tr>
+  <tr><td>同一台机器 serverName 填</td><td><strong>127.0.0.1</strong></td><td>环回地址（localhost 也行）</td></tr>
+  <tr><td>连别人的机器要改</td><td>客户端里的服务器 IP</td><td>服务器 bind('') 已监听所有网卡</td></tr>
+  <tr><td>服务器没开</td><td>TCP：<code>connect()</code> 立刻失败（对方回 RST）；UDP：<code>sendto</code> 不报错，客户端卡在 recvfrom</td><td>UDP 发出去就不管了</td></tr>
+</table></div>
+
+<h3>Wireshark 看到什么</h3>
+<p>TCP 版（客户端发 aaaaa，服务器回 AAAAA）：</p>
+<ol class="steps">
+  <li>C → S [SYN]，相对序号 Seq = 0</li>
+  <li>S → C [SYN, ACK]，Ack = 1</li>
+  <li>C → S [ACK]，握手完成</li>
+  <li>C → S [PSH, ACK] aaaaa，<strong>Seq = 1，Len = 5</strong>（SYN 占了序号 0）</li>
+  <li>S → C [ACK]，<strong>Ack = 6</strong></li>
+  <li>S → C [PSH, ACK] AAAAA</li>
+  <li>[FIN, ACK]、[ACK] 关闭；服务器回完就 close，往往<strong>服务器先发 FIN</strong></li>
+</ol>
+<p>UDP 版：<strong>只有两个数据报</strong>（请求和回复），没有 SYN / ACK / FIN，没有序号，首部 8 字节。这是「UDP 无连接、首部小」最直接的证据。</p>
+
+<div class="mcq" data-answer="2" data-src="Lab · 检查一下">
+  <div class="mcq-q">Wireshark 显示客户端发了 Seq = 1、Len = 5 的数据段。服务器回的确认号是？</div>
+  <ol class="mcq-src"><li>1</li><li>5</li><li>6</li><li>7</li></ol>
+  <div class="mcq-exp">ACK = 下一个期望字节 = 1 + 5。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　期中讲评题型 <span class="stars">★★</span></h2>
+
+<h3>4.1 存储转发车队</h3>
+<p>20 辆车，收费站每 1 s 服务 1 辆，两站相距 200 km，车速 10 km/s，<strong>车队到齐才开始服务</strong>。第一辆车离开后多久在下一站<strong>开始被服务</strong>？</p>
+<div class="formula">$$\underbrace{19\times1}_{\text{后面 19 辆服务完}} + \underbrace{200/10}_{\text{最后一辆开过去}} = 39\ \text{s}$$</div>
+<p>第一辆车 20 s 就到了，但要等整个车队到齐：这就是<strong>存储转发</strong>。</p>
+
+<h3>4.2 干扰信息</h3>
+<ul>
+  <li>链路 3 km，传播速度 $3\times10^8$ m/s，分组 16000 bit，速率 1000 Mbps。传播时延 $= 3000/3\times10^8 = 1.0\times10^{-5}$ s。分组长度和速率是<strong>干扰</strong>。</li>
+  <li>电路交换每人 20 Mbps、链路 100 Mbps；分组交换传输时 20 Mbps、30% 时间在传。「一个用户<strong>传输时</strong>占链路的比例」两种都是 <strong>0.2</strong>，30% 只影响能支持多少人。</li>
+</ul>
+
+<h3>4.3 瓶颈与利用率</h3>
+<p>4 对共享 R = 300 Mbps，$R_s = 10$，$R_c = 90$。每对 $\min(10, 75, 90) = 10$ Mbps；客户端链路利用率 $10/90 = 0.11$。</p>
+
+<h3>4.4 信道博弈</h3>
+<ul>
+  <li>对称：独占 +16，都发 −8。$E[\text{发}] = 16(1-p_2) - 8p_2 = 16 - 24p_2 &gt; 0 \iff p_2 &lt; 2/3$。</li>
+  <li>不对称：只有 1 发，1 得 24；只有 2 发，2 得 16；都发时 1 得 −8、2 得 −4。<br>
+  让用户 1 无差异：$24(1-p_2) - 8p_2 = 0 \Rightarrow p_2 = 3/4$；让用户 2 无差异：$16(1-p_1) - 4p_1 = 0 \Rightarrow p_1 = 4/5$。<br>
+  <strong>混合均衡 (4/5, 3/4)</strong>；纯策略均衡 (发, 不发)、(不发, 发)。</li>
+</ul>
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <p>$p_1$ 从<strong>用户 2</strong> 的收益解出来，$p_2$ 从<strong>用户 1</strong> 的收益解出来。选项里 (3/4, 4/5) 就是搞反的。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="期中讲评 · 检查一下">
+  <div class="mcq-q">20 辆车的车队，收费站每 1 s 服务 1 辆，两站相距 200 km，车速 10 km/s，车队到齐才服务。第一辆车离开收费站后，多久在下一站开始被服务？</div>
+  <ol class="mcq-src"><li>20 s</li><li>21 s</li><li>39 s</li><li>40 s</li></ol>
+  <div class="mcq-exp">等后面 19 辆服务完（19 s）+ 最后一辆开 20 s。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="Lab">
+  <div class="mcq-q">TCP 客户端调用 <code>connect()</code> 会触发什么？</div>
+  <ol class="mcq-src"><li>发送第一个数据段</li><li>TCP 三次握手</li><li>TCP 四次挥手</li><li>只做一次 DNS 查询</li></ol>
+  <div class="mcq-exp">serverName 是主机名时会先查 DNS，但 connect 对应的 TCP 动作是握手。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="期中讲评">
+  <div class="mcq-q">不对称信道博弈：只有用户 1 发，1 得 24；只有用户 2 发，2 得 16；都发时 1 得 −8、2 得 −4。混合纳什均衡 $(p_1, p_2)$ 是？</div>
+  <ol class="mcq-src"><li>(3/4, 4/5)</li><li>(4/5, 3/4)</li><li>(2/3, 2/3)</li><li>(1, 0)</li></ol>
+  <div class="mcq-exp">A 是搞反了；D 是纯策略均衡之一。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="Lab">
+  <div class="mcq-q">关于 TCP 服务器的套接字，正确的是？</div>
+  <ol class="mcq-src"><li>欢迎套接字一直在等新连接</li><li>每个客户有自己的连接套接字</li><li>数据都从欢迎套接字收发</li><li>关连接套接字不影响欢迎套接字</li></ol>
+  <div class="mcq-exp">欢迎套接字只接门铃，不收发数据。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="期中讲评">
+  <div class="mcq-q">链路长 3 km，传播速度 $3\times10^8$ m/s，分组 16000 bit，速率 1000 Mbps。传播时延是？</div>
+  <ol class="mcq-src"><li>$1.6\times10^{-5}$ s</li><li>$1.0\times10^{-5}$ s</li><li>$2.6\times10^{-5}$ s</li><li>$1.0\times10^{-8}$ s</li></ol>
+  <div class="mcq-exp">A 是传输时延，C 是两者之和。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="Lab">
+  <div class="mcq-q">服务器没有运行时，TCP 客户端和 UDP 客户端分别会怎样？</div>
+  <ol class="mcq-src"><li>TCP connect 失败；UDP 不报错一直等</li><li>两种客户端都会立刻报错</li><li>两种客户端都会一直等回复</li><li>TCP 一直等；UDP 立刻报错</li></ol>
+  <div class="mcq-exp">TCP 握手被 RST 拒绝；UDP 数据报发出去就不管了。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Lab">
+  <div class="mcq-q">用 Wireshark 抓 UDP 版程序的包，能看到什么？</div>
+  <ol class="mcq-src"><li>SYN、SYN/ACK、ACK 三个段</li><li>只有请求和回复两个数据报</li><li>带序号和确认号的数据报</li><li>结束时的 FIN 段</li></ol>
+  <div class="mcq-exp">UDP 无连接，没有握手和序号。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="期中讲评">
+  <div class="mcq-q">4 对服务器-客户端共享 300 Mbps 的中间链路，服务器链路 10 Mbps，客户端链路 90 Mbps。客户端链路利用率约为？</div>
+  <ol class="mcq-src"><li>0.03</li><li>0.11</li><li>0.83</li><li>1.00</li></ol>
+  <div class="mcq-exp">每对 10 Mbps，$10/90 = 0.11$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">一个 TCP 服务器同时服务 5 个客户，它一共有几个 socket（含欢迎套接字）？</div>
+  <ol class="mcq-src"><li>1</li><li>5</li><li>6</li><li>10</li></ol>
+  <div class="mcq-exp">1 个欢迎套接字 + 5 个连接套接字。换成 UDP 就是 1 个。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>TCP 服务器：1 欢迎套接字 + 每客户 1 连接套接字；UDP 服务器 1 个。</li>
+  <li><code>connect()</code> 触发握手；<code>accept()</code> 在握手完成后返回新的连接套接字。</li>
+  <li>UDP <code>sendto</code> / <code>recvfrom</code> 每次带地址；TCP <code>send</code> / <code>recv</code>。</li>
+  <li>先启动服务器；本机用 127.0.0.1；客户端不 bind。</li>
+  <li>Wireshark：TCP 数据从 Seq 1 开始（SYN 占 0）；UDP 只有两个数据报。</li>
+  <li>车队到齐才服务：$(n-1) \times$ 服务时间 + 路程；传播时延与分组长度无关；混合均衡「让对方无差异」。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>最值得读的是 <strong>Kurose &amp; Ross 第 2 章 2.7 节「Socket Programming」</strong>，Lab 的 TCPServer / UDPServer 代码就出自这里。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week07-socket-lab.html" target="_blank" rel="noopener">W07 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 07</a> 和 Midterm Quiz 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

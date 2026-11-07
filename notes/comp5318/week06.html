@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W06 SVM 与 PCA</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 06</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W06 SVM 与 PCA</h1>
+<p class="subtitle">间隔 $2/\lVert\mathbf w\rVert$；核函数代入；软间隔里 C 的作用；PCA 保留多少方差；PCA 前为什么要缩放。对应 PE1 Q14–17，PE2 Q14–17。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 线性 SVM 与间隔</a></td><td class="c"><span class="stars">★★★</span></td><td>整个间隔 $2/\lVert\mathbf w\rVert$，不是 $1/\lVert\mathbf w\rVert$</td></tr>
+    <tr><td><a href="#t2">2 软间隔与 C</a></td><td class="c"><span class="stars">★★</span></td><td>C 大 = 违例罚得重 = 马路窄</td></tr>
+    <tr><td><a href="#t3">3 核技巧与代入</a></td><td class="c"><span class="stars">★★★</span></td><td>先算点积（或距离平方），再套公式</td></tr>
+    <tr><td><a href="#t4">4 PCA</a></td><td class="c"><span class="stars">★★★</span></td><td>累计方差比例逐个加；先缩放；转坐标不是挑列</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　线性 SVM 与间隔 <span class="stars">★★★</span></h2>
+<p>在两类之间修一条<strong>尽量宽的马路</strong>：中线是决策边界 $\mathbf w\cdot\mathbf x + b = 0$，两条边线 $\mathbf w\cdot\mathbf x + b = \pm1$，碰在边线上的点是<strong>支持向量</strong>。马路宽，留给新数据偏差的空间大。</p>
+<div class="formula">$$\text{中线到一边} = \frac{1}{\lVert\mathbf w\rVert}\qquad \text{整个间隔} = \frac{2}{\lVert\mathbf w\rVert}\qquad \text{点到中线} = \frac{|\mathbf w\cdot\mathbf x + b|}{\lVert\mathbf w\rVert}$$</div>
+<div class="formula">$$\min\ \tfrac12\lVert\mathbf w\rVert^2\quad\text{s.t. } y_i(\mathbf w\cdot\mathbf x_i + b) \ge 1\ \ \text{（硬间隔）}$$</div>
+<ul>
+  <li>分类：$\mathbf w\cdot\mathbf x + b$ 正 → +1，负 → −1。</li>
+  <li>解 $\mathbf w = \sum\alpha_i y_i\mathbf x_i$，<strong>只有支持向量的 $\alpha_i \ne 0$</strong>：删掉其他点重训，边界不变。</li>
+  <li>数据只以<strong>点积</strong>形式出现 → 核技巧的基础。</li>
+</ul>
+<div class="box example">
+  <span class="box-title">例题</span>
+  <p>$\mathbf w = (3, 4)$，$\lVert\mathbf w\rVert = 5$：整个间隔 0.4，半条 0.2。$b = -10$，$\mathbf x = (2, 3)$：$6 + 12 - 10 = 8 &gt; 0$ → +1，距中线 $8/5 = 1.6$。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <p>问「两个支持平面之间的距离」答 0.2：那是半条马路。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q14 · 检查一下">
+  <div class="mcq-q">硬间隔 SVM，$\mathbf w = (3, 4)$。两个支持平面之间的距离是？</div>
+  <ol class="mcq-src"><li>0.20</li><li>0.40</li><li>5.00</li><li>2.50</li></ol>
+  <div class="mcq-exp">$2/5$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　软间隔与 C <span class="stars">★★</span></h2>
+<p>数据有噪声、分不开，或者一个噪声点让马路被迫很窄。给每个点松弛变量 $\xi_i$：0 在马路外；(0, 1) 进了马路但仍在正确一侧；&gt; 1 被分错。</p>
+<div class="formula">$$\min\ \tfrac12\lVert\mathbf w\rVert^2 + C\sum_i\xi_i$$</div>
+<div class="table-wrap"><table>
+  <tr><th>C</th><th>效果</th></tr>
+  <tr><td><strong>大</strong></td><td>违例罚得重 → 马路窄、贴数据 → 易<strong>过拟合</strong>（有限的 C 仍允许少数违例）</td></tr>
+  <tr><td><strong>小</strong></td><td>违例便宜 → 马路宽、模型简单 → 可能<strong>欠拟合</strong></td></tr>
+</table></div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q15 · 检查一下">
+  <div class="mcq-q">软间隔 SVM 把 C 调大，目标函数有什么变化？</div>
+  <ol class="mcq-src"><li>对间隔违例的惩罚更重</li><li>间隔一定变宽</li><li>不再允许任何违例</li><li>核函数变得更平滑</li></ol>
+  <div class="mcq-exp">只要 C 有限，仍允许一些违例。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　核技巧与代入 <span class="stars">★★★</span></h2>
+<p>一维 +类 {−3, −2, 2, 3}、−类 {−1, 0, 1} 分不开；加特征 $x^2$ 后一条水平线 $x^2 = 2.5$ 就分开，回到原空间边界是 $|x| = 1.58$（非线性）。</p>
+<div class="formula">$$K(\mathbf u, \mathbf v) = \phi(\mathbf u)\cdot\phi(\mathbf v)$$</div>
+<p>SVM 只用点积，所以不需要算（存）高维坐标，核函数直接在原空间给出点积。例：$\phi(x_1, x_2) = (x_1^2, \sqrt2x_1x_2, x_2^2)$，$\mathbf u = (1, 2)$，$\mathbf v = (3, 1)$：升维点积 $9 + 12 + 4 = 25$；核 $(\mathbf u\cdot\mathbf v)^2 = 5^2 = 25$。</p>
+<div class="table-wrap"><table>
+  <tr><th>核</th><th>公式</th><th>说明</th></tr>
+  <tr><td>线性</td><td>$\mathbf x\cdot\mathbf y$</td><td>先试它</td></tr>
+  <tr><td>多项式</td><td>$(\mathbf x\cdot\mathbf y + 1)^p$</td><td>p 大边界更弯</td></tr>
+  <tr><td><strong>RBF</strong></td><td>$e^{-\gamma\lVert\mathbf x - \mathbf y\rVert^2}$</td><td>sklearn 默认；无穷维</td></tr>
+  <tr><td>tanh</td><td>$\tanh(\kappa\,\mathbf x\cdot\mathbf y + c)$</td><td>只有部分参数满足 Mercer</td></tr>
+</table></div>
+<ul>
+  <li>RBF 的 $\gamma$ 大 → 每个点影响范围小 → 边界绕单个点 → 过拟合。</li>
+  <li>训练 100%、测试差：<strong>减小 C 或减小 γ</strong>。</li>
+  <li>SVM 对数值大小敏感，训练前要缩放。</li>
+</ul>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q14 · 检查一下">
+  <div class="mcq-q">$\mathbf x = (1, 2)$，$\mathbf y = (3, 1)$，$K = (\mathbf x^T\mathbf y + 2)^2$。K 等于？</div>
+  <ol class="mcq-src"><li>25</li><li>27</li><li>49</li><li>36</li></ol>
+  <div class="mcq-exp">点积 5，$(5 + 2)^2$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　PCA <span class="stars">★★★</span></h2>
+<p>身高、体重沿一条斜线分布：把坐标轴转到沿斜线方向，第二根轴方差很小可以丢掉，两个数变一个数。</p>
+<ul>
+  <li>主成分<strong>两两正交</strong>；PC1 是方差最大的方向；每个 PC 是<strong>所有原始特征的线性组合</strong>。</li>
+  <li>PCA <strong>无监督</strong>（不看标签）、<strong>线性</strong>。</li>
+  <li>PCA <strong>不是挑列</strong>（那是特征选择），是转坐标系后保留前几个方向。</li>
+</ul>
+<div class="formula">$$\text{前 }k\text{ 个累计比例} = \frac{\lambda_1 + \cdots + \lambda_k}{\sum_i\lambda_i}$$</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q17）</span>
+  <p>方差 9、5、4、2，总和 20，要 ≥ 85%：前 1 个 45%，前 2 个 70%，<strong>前 3 个 90%</strong> → 3 个。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">为什么先缩放</span>
+  <p>PCA 只看方差。收入以元计方差上亿，PC1 几乎就是收入方向，只因为单位让数字大；换单位主成分就变。<strong>先标准化</strong>；缩放参数和 PCA 都只在训练集上拟合。</p>
+</div>
+<ul>
+  <li>SVD：$X = U\Sigma V^T$，$V$ 的列是主成分方向，奇异值平方 ∝ 方差，$U\Sigma$ 是新坐标。</li>
+  <li>保留 k 个要存 $k(1 + n + m)$ 个数，压缩比 $k(1 + n + m)/(nm)$。</li>
+  <li>用途：降维、提特征（人脸 1-NN 像素 27% → PCA 100 维 36%）、压缩、画图。</li>
+</ul>
+
+<div class="mcq" data-answer="3" data-src="PE2 Q16 · 检查一下">
+  <div class="mcq-q">有同学说「PCA 就是挑出几列原始特征」。最准确的纠正是？</div>
+  <ol class="mcq-src"><li>PCA 挑的是方差最大的几列</li><li>PCA 会用标签挑选特征</li><li>PCA 是非线性变换</li><li>PCA 是线性坐标变换，再保留部分新方向</li></ol>
+  <div class="mcq-exp">每个新特征都混合了所有原始特征。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q15">
+  <div class="mcq-q">核 SVM 为什么可以不显式存下每个映射后的特征向量？</div>
+  <ol class="mcq-src"><li>映射后的向量都是零</li><li>只用到点积，核函数直接给出点积</li><li>只存支持向量就够了</li><li>核函数会自动降维</li></ol>
+  <div class="mcq-exp">核技巧的核心。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q16">
+  <div class="mcq-q">两个特征单位差别很大，为什么 PCA 前缩不缩放会改变 PC1？</div>
+  <ol class="mcq-src"><li>PCA 由方差决定，换单位改变方差相对大小</li><li>PCA 要用类别标签</li><li>缩放会改变特征之间的相关性符号</li><li>PCA 只能处理 [0, 1] 内的数据</li></ol>
+  <div class="mcq-exp">PCA 不用标签。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q17">
+  <div class="mcq-q">3 个主成分方差 12、6、2，要保留至少 90%，最少几个？</div>
+  <ol class="mcq-src"><li>1</li><li>3</li><li>2</li><li>无法达到</li></ol>
+  <div class="mcq-exp">前 2 个 18/20 = 90%，正好达到。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">把所有非支持向量删掉，重新训练硬间隔 SVM，边界会？</div>
+  <ol class="mcq-src"><li>变宽</li><li>变窄</li><li>方向反转</li><li>不变</li></ol>
+  <div class="mcq-exp">非支持向量的 α 本来就是 0。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">$\mathbf x = (1, 0)$，$\mathbf y = (0, 1)$，RBF 核 $\gamma = 0.5$，K 约为？</div>
+  <ol class="mcq-src"><li>0.368</li><li>0.607</li><li>0.135</li><li>1</li></ol>
+  <div class="mcq-exp">距离平方 2，$e^{-1}$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">RBF-SVM 训练 100%、测试很差，应该？</div>
+  <ol class="mcq-src"><li>增大 C 或增大 γ</li><li>减小 C 或减小 γ</li><li>增大 C、减小 γ</li><li>去掉特征缩放</li></ol>
+  <div class="mcq-exp">过拟合，让边界更平滑。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">$\mathbf w = (1, -1)$，$b = 0.5$，点 (2, 1) 的类别和到边界距离是？</div>
+  <ol class="mcq-src"><li>−1 类，1.06</li><li>+1 类，1.5</li><li>+1 类，1.06</li><li>−1 类，1.5</li></ol>
+  <div class="mcq-exp">$2 - 1 + 0.5 = 1.5 &gt; 0$；$1.5/\sqrt2$。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>(a) $\mathbf w = (6, 8)$，求整个间隔；(b) $\mathbf x = (2, 1)$，$\mathbf y = (1, 3)$，求 $K = (\mathbf x\cdot\mathbf y + 1)^2$；(c) 主成分方差 10、6、3、1，保留 ≥ 95% 需要几个？</summary>
+  <div class="sa-ans">
+    <p>(a) $\lVert\mathbf w\rVert = 10$，间隔 $2/10 = 0.2$。</p>
+    <p>(b) 点积 $2 + 3 = 5$，$K = 36$。</p>
+    <p>(c) 总和 20：50%、80%、95% → <strong>3 个</strong>（正好 95%）。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>间隔 $2/\lVert\mathbf w\rVert$，半条 $1/\lVert\mathbf w\rVert$；只有支持向量决定边界。</li>
+  <li>C 大：违例罚重、易过拟合；C 小：马路宽、易欠拟合。</li>
+  <li>核：先点积 / 距离平方再套；只用点积所以不用存高维向量；过拟合减小 C、γ。</li>
+  <li>PCA：正交、方差最大、线性组合、无监督；累计比例逐个加；先缩放；不是挑列。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Géron《Hands-On Machine Learning》第 5 章（SVM）与第 8 章（降维）；James et al.《ISLR》第 9 章、第 12.2 节。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week06-svm-pca.html" target="_blank" rel="noopener">W06 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 6</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

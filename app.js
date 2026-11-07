@@ -191,6 +191,13 @@ function renderQuestionTags(q) {
     const el = $('qTags');
     if (!el) return;
     el.innerHTML = '';
+    if (q.selfWritten) {
+        const tag = document.createElement('span');
+        tag.className = 'q-tag';
+        tag.textContent = '自拟题 Self-written';
+        tag.title = 'Written from the weekly exam points, not taken from official course material.';
+        el.appendChild(tag);
+    }
     if (q.unofficialAnswer) {
         const tag = document.createElement('span');
         tag.className = 'q-tag q-tag-warn';

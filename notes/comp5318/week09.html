@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W09 聚类</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 09</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W09 K-means、GMM 与层次聚类</h1>
+<p class="subtitle">分量很重：K-means 一轮大题（PE1 Q33）、层次聚类大题（PE2 Q33），各 10 分；GMM 隶属概率；簇间距离。对应 PE1 Q24、25、33，PE2 Q24、25、33。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 K-means 一轮</a></td><td class="c"><span class="stars">★★★</span></td><td>平方距离表 → 全部分配完 → 求平均</td></tr>
+    <tr><td><a href="#t2">2 GMM 责任度</a></td><td class="c"><span class="stars">★★</span></td><td>先验 × 似然，再除以总和；软分配</td></tr>
+    <tr><td><a href="#t3">3 簇间距离</a></td><td class="c"><span class="stars">★★★</span></td><td>所有跨簇点对：single 最小、complete 最大、average 平均</td></tr>
+    <tr><td><a href="#t4">4 层次聚类合并顺序</a></td><td class="c"><span class="stars">★★★</span></td><td>找最小合并 → 回原始点对更新 → 再找最小</td></tr>
+  </table></div>
+  <p>不考：基于密度、基于网格的聚类，以及聚类评估（Clustering II，Ed #225）。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　K-means 一轮 <span class="stars">★★★</span></h2>
+<p>无监督：簇内近、簇间远。<strong>质心</strong> = 坐标平均（不一定是真实点）；<strong>medoid</strong> = 到其他点距离和最小的真实点（类别数据用）。K-means 最小化</p>
+<div class="formula">$$\text{SSE} = \sum_{\text{簇}}\sum_{\text{点}}\lVert\mathbf x - \boldsymbol\mu\rVert^2$$</div>
+<p>平方距离下，让一组点距离平方和最小的位置正好是<strong>平均值</strong>（1、2、6：选 3 得 14，选 2 得 17）。</p>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li>列每个点到每个质心的<strong>平方距离</strong>（不用开方，大小顺序不变）。</li>
+    <li>每个点分给最近的质心；<strong>用当前质心分配完所有点，中途不更新</strong>。</li>
+    <li>每个簇每个坐标分别求平均 → 新质心。</li>
+    <li>分配不变就收敛（SSE 单调不增，只保证局部最优）。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q33）</span>
+  <p>A(0,1)、B(2,1)、C(6,3)、D(8,3)，初始 $\mu_1 = A$，$\mu_2 = D$。</p>
+  <div class="table-wrap"><table>
+    <tr><th class="c">点</th><th class="c">到 μ₁</th><th class="c">到 μ₂</th><th class="c">分给</th></tr>
+    <tr><td class="c">A</td><td class="c">0</td><td class="c">68</td><td class="c">1</td></tr>
+    <tr><td class="c">B</td><td class="c">4</td><td class="c">40</td><td class="c">1</td></tr>
+    <tr><td class="c">C</td><td class="c">40</td><td class="c">4</td><td class="c">2</td></tr>
+    <tr><td class="c">D</td><td class="c">68</td><td class="c">0</td><td class="c">2</td></tr>
+  </table></div>
+  <p>新质心 $\mu_1 = (1, 1)$，$\mu_2 = (7, 3)$；再分配不变，收敛。</p>
+</div>
+<ul>
+  <li><strong>对初始化敏感</strong>：多跑几次取 SSE 最小（<code>n_init</code>）；<strong>K-means++</strong>（被选概率 ∝ 到最近已选质心的距离平方）；二分 K-means（反复拆 SSE 最大的簇）。</li>
+  <li>要事先给 k；对离群点敏感；只适合<strong>球形、大小密度相近</strong>的簇（硬分配，边界是垂直平分线）；可能出现空簇。复杂度 $O(nkid)$。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="PE1 Q24 · 检查一下">
+  <div class="mcq-q">用平方欧氏距离时，哪个代表点让固定簇内的距离平方和最小？</div>
+  <ol class="mcq-src"><li>簇内各坐标的中位数</li><li>簇内各坐标的平均值</li><li>离原点最近的点</li><li>簇内任意一个真实点</li></ol>
+  <div class="mcq-exp">质心。中位数是绝对距离下的最优。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　GMM 责任度 <span class="stars">★★</span></h2>
+<p>数据由 k 个正态分布混合生成，每个分量有均值 $\mu_j$、方差 $\sigma_j^2$、权重 $\pi_j$（和为 1）。</p>
+<div class="formula">$$\gamma_j = \frac{\pi_j f_j(x)}{\sum_l\pi_l f_l(x)}$$</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q25）</span>
+  <p>$\pi = (0.3, 0.7)$，$f_1 = 0.4$，$f_2 = 0.2$：分子 0.12、0.14，总和 0.26，$\gamma_1 = 0.462$。</p>
+  <p>别选 0.12（没归一化）或 0.538（分量 2）。</p>
+</div>
+<ul>
+  <li>两分量中心 0 和 4，$\sigma = 1$，权重各半：$x = 2$ 正好中间，责任度各 0.5（K-means 会硬分一边）。</li>
+  <li><strong>EM</strong>：E 步算责任度（软分配）；M 步按责任度加权重估 $\mu, \sigma, \pi$。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th></th><th>K-means</th><th>GMM</th></tr>
+  <tr><td>分配</td><td>硬</td><td><strong>软（概率）</strong></td></tr>
+  <tr><td>形状</td><td>球形</td><td>可以是椭圆</td></tr>
+  <tr><td>关系</td><td>GMM 的特例</td><td>K-means 的推广</td></tr>
+</table></div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q24 · 检查一下">
+  <div class="mcq-q">想得到每个点属于每个分量的概率，而不只是硬分配，选？</div>
+  <ol class="mcq-src"><li>K-means</li><li>K-means++</li><li>GMM</li><li>在树状图上切一刀</li></ol>
+  <div class="mcq-exp">其余都是硬分配。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　簇间距离 <span class="stars">★★★</span></h2>
+<p>列出<strong>所有跨簇点对</strong>（一个来自簇 1，一个来自簇 2）的距离，然后：</p>
+<div class="table-wrap"><table>
+  <tr><th>方法</th><th>取</th><th>特点</th></tr>
+  <tr><td><strong>Single</strong></td><td>最小值</td><td>能找细长簇，但容易被一串噪声「链」成一片</td></tr>
+  <tr><td><strong>Complete</strong></td><td>最大值</td><td>紧凑、大小均衡</td></tr>
+  <tr><td><strong>Average</strong></td><td>平均值</td><td>介于两者之间</td></tr>
+  <tr><td>Ward</td><td>合并后 SSE 增量</td><td>和 K-means 目标一致</td></tr>
+</table></div>
+<div class="box example">
+  <span class="box-title">例题（PE2 Q25）</span>
+  <p>A = {0, 2}，B = {6, 8}：跨簇距离 6、8、4、6。Single 4，complete 8，average 6。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q25 · 检查一下">
+  <div class="mcq-q">一维簇 A = {0, 2}，B = {6, 8}，绝对距离。single-link 和 average-link 距离是？</div>
+  <ol class="mcq-src"><li>4 和 6</li><li>6 和 4</li><li>4 和 8</li><li>2 和 6</li></ol>
+  <div class="mcq-exp">最小 4，平均 24/4。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　层次聚类合并顺序 <span class="stars">★★★</span></h2>
+<div class="box method">
+  <span class="box-title">凝聚式（自底向上）</span>
+  <ol>
+    <li>每个点一簇，填两两距离表。</li>
+    <li>合并表中距离最小的两簇，记合并高度。</li>
+    <li>新簇到其他簇的距离：<strong>回到原始点对距离</strong>取 min（single）/ max（complete）。</li>
+    <li>在<strong>更新后的表</strong>里再找最小，直到只剩一簇。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE2 Q33）</span>
+  <p>A = 0，B = 3，C = 8，D = 10。距离：AB 3，AC 8，AD 10，BC 5，BD 7，CD 2。</p>
+  <p>Complete：先合并 {C, D}（2）；{C,D}–A = max(8, 10) = 10，{C,D}–B = max(5, 7) = 7；再合并 {A, B}（3）。</p>
+  <p>{A,B} 与 {C,D}：single = 5（B–C），complete = 10（A–D）。</p>
+</div>
+<ul>
+  <li><strong>树状图</strong>：竖直高度 = 合并距离；<strong>不需要事先给簇数</strong>，在某个高度横切。上例在高度 4 切得两簇，在 2.5 切得 {A}、{B}、{C, D}。</li>
+  <li>缺点：空间 $O(n^2)$、简单实现时间 $O(n^3)$；合并不能撤销；对噪声敏感。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q25">
+  <div class="mcq-q">GMM：$\pi_1 = 0.3$，$\pi_2 = 0.7$，$f_1(x) = 0.4$，$f_2(x) = 0.2$。分量 1 的后验隶属概率？</div>
+  <ol class="mcq-src"><li>0.120</li><li>0.538</li><li>0.300</li><li>0.462</li></ol>
+  <div class="mcq-exp">$0.12/0.26$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">K-means++ 选第 2 个初始质心时，每个点被选中的概率？</div>
+  <ol class="mcq-src"><li>相等</li><li>正比于到第 1 个质心的距离平方</li><li>反比于到第 1 个质心的距离</li><li>正比于它所在簇的大小</li></ol>
+  <div class="mcq-exp">远处的点更容易被选中，初始质心分散。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">数据是两个月牙形的簇。下面哪个最可能分不开？</div>
+  <ol class="mcq-src"><li>single-link 层次聚类</li><li>按密度连接的方法</li><li>K-means</li><li>人工检查</li></ol>
+  <div class="mcq-exp">K-means 只适合球形簇；single link 能沿着链找细长簇。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">做 K-means 的一轮时，正确的顺序是？</div>
+  <ol class="mcq-src"><li>用当前质心分配完全部点，再更新质心</li><li>每分配一个点就更新一次质心</li><li>先更新质心再分配</li><li>只分配离质心最近的那个点</li></ol>
+  <div class="mcq-exp">分配和更新分开。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">层次聚类相比 K-means 的一个优点是？</div>
+  <ol class="mcq-src"><li>时间复杂度更低</li><li>合并后可以撤销</li><li>对噪声不敏感</li><li>不需要事先给簇数</li></ol>
+  <div class="mcq-exp">在树状图上任意高度横切。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">簇 {1, 4} 和 {6, 10} 的 complete-link 距离是？</div>
+  <ol class="mcq-src"><li>2</li><li>9</li><li>5.5</li><li>6</li></ol>
+  <div class="mcq-exp">跨簇距离 5、9、2、6，最大 9。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>一维点 1、2、9、10、11，k = 2，初始质心 1 和 2。做 K-means 直到收敛。</summary>
+  <div class="sa-ans">
+    <p>第 1 轮：{1} 和 {2, 9, 10, 11}，新质心 1 和 8。</p>
+    <p>第 2 轮：2 到 1 距离 1、到 8 距离 6 → {1, 2} 和 {9, 10, 11}，新质心 <strong>1.5 和 10</strong>。</p>
+    <p>第 3 轮：分配不变，收敛。注意初始质心挤在一起，第 1 轮很不平衡。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>一维点 A = 0，B = 1，C = 5，D = 7，E = 15。用 single link 给出完整的合并顺序和每次合并高度。</summary>
+  <div class="sa-ans">
+    <p>距离：AB 1，CD 2，BC 4，……，DE 8。</p>
+    <p>① {A, B} 高度 1；② {C, D} 高度 2；③ {A,B}–{C,D} single = min(5, 7, 4, 6) = 4，{C,D}–E = 8，{A,B}–E = 14 → 合并 {A,B,C,D} 高度 4；④ 与 E 的 single = min(15, 14, 10, 8) = 8，高度 8。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>K-means：平方距离表 → 分配完 → 求平均 → 不变就停；局部最优；K-means++ 按距离平方选初始。</li>
+  <li>平方距离下最优代表点是平均值；K-means 偏好球形、对初始化和离群点敏感。</li>
+  <li>GMM：$\gamma = \pi f/\sum\pi f$，软分配；EM = E 算责任度、M 重估参数。</li>
+  <li>Single 最小、complete 最大、average 平均，都对所有跨簇点对；更新时回原始距离。</li>
+  <li>层次聚类不需要 k，在树状图上横切；$O(n^2)$ 空间。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Tan et al.《Introduction to Data Mining》第 7 章（K-means、凝聚层次聚类）与第 8 章（GMM / EM）；Géron《Hands-On Machine Learning》第 9 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week09-clustering-kmeans-gmm-hierarchical.html" target="_blank" rel="noopener">W09 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 9</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

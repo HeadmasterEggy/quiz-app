@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W01 不确定性与熵 I</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 01</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W01 不确定性与熵 I</h1>
+<p class="subtitle">对应 Module 1。整门课的起点：Shannon 信息量 $h(x)$ 和熵 $H(X)$。样卷 Q1、Q3、Q4、Q10 都在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 算 Shannon 信息量</a></td><td class="c"><span class="stars">★★★</span></td><td>$h(x) = -\log_2 p(x)$，越不可能越惊讶</td></tr>
+    <tr><td><a href="#t2">2 算熵与边界情形</a></td><td class="c"><span class="stars">★★★</span></td><td>平均惊讶；确定 0，均匀 $\log_2 n$</td></tr>
+    <tr><td><a href="#t3">3 单位与「你在问哪个问题」</a></td><td class="c"><span class="stars">★★</span></td><td>bits / nats；「是什么数」≠「是不是 1」</td></tr>
+    <tr><td><a href="#t4">4 概念：信息、bit、复杂系统</a></td><td class="c"><span class="stars">★★</span></td><td>信息 = 不确定性的减少；50/50 问题最好</td></tr>
+  </table></div>
+  <p>考试：Section A 20 道选择题（每题 1 分），Section B 3 道简答题（共 20 分），<strong>给公式表</strong>，非编程计算器。<strong>答案必须写单位</strong>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　算 Shannon 信息量 <span class="stars">★★★</span></h2>
+<p>Shannon 信息量是<strong>某一个具体取值</strong>（小写 $x$）的量，理解为<strong>看到这个值时有多惊讶</strong>。其他所有量都从它搭起来。</p>
+<div class="formula">$$h(x) = \log_2\frac{1}{p(x)} = -\log_2 p(x)\quad\text{bits}$$</div>
+<ul>
+  <li><strong>恒非负</strong>；<strong>$p = 1$ 时 $h = 0$</strong>（必然发生，不惊讶）。</li>
+  <li><strong>越不可能越惊讶</strong>：$p$ 越小 $h$ 越大；$p \to 0$ 时 $h \to \infty$。</li>
+  <li>唯一性来自三条公理：<strong>单调</strong>（概率降、惊讶升）、<strong>连续</strong>（无跳变）、<strong>独立事件可加</strong>。剩下能选的只有对数底，也就是单位。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>找到这个取值的概率 $p(x)$；注意题目问的是哪个变量（见题型 3）。</li>
+    <li>$h = \log_2(1/p)$。计算器没有 $\log_2$ 就用 $\ln(1/p)/\ln 2$ 或 $\log_{10}(1/p)/0.301$。</li>
+    <li>写单位 bits。</li>
+  </ol>
+</div>
+<h3>例题（Module 1 Item 5）</h3>
+<div class="table-wrap"><table>
+  <tr><th>事件</th><th class="c">$p$</th><th class="c">$h$（bits）</th></tr>
+  <tr><td>公平硬币正面</td><td class="c">1/2</td><td class="c">1</td></tr>
+  <tr><td>六面骰掷出 1</td><td class="c">1/6</td><td class="c">2.585</td></tr>
+  <tr><td>六面骰<strong>不是</strong> 1</td><td class="c">5/6</td><td class="c">0.263</td></tr>
+  <tr><td>二十面骰掷出 1</td><td class="c">1/20</td><td class="c">4.322</td></tr>
+  <tr><td>二十面骰不是 1</td><td class="c">19/20</td><td class="c">0.074</td></tr>
+</table></div>
+<p>记住几个整数：$p = 1/2, 1/4, 1/8, 1/16$ → 1、2、3、4 bits。样卷 Q4：$p = 0.125$ → <strong>3 bits</strong>。</p>
+
+<div class="mcq" data-answer="1" data-src="样卷 Q1 · 检查一下">
+  <div class="mcq-q">掷一个六面骰子后告诉我结果，给了我多少信息？</div>
+  <ol class="mcq-src"><li>0.77 bits</li><li>2.58 bits</li><li>2 bits</li><li>信息不足</li></ol>
+  <div class="mcq-exp">按公平骰子：$\log_2 6 \approx 2.585$ bits。（这题没官方答案；严格说依赖分布，默认按均匀。）</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　算熵与边界情形 <span class="stars">★★★</span></h2>
+<p>熵是<strong>随机变量</strong>（大写 $X$）的量：把每个取值的信息量按概率加权平均。</p>
+<div class="formula">$$H(X) = \sum_x p(x)\log_2\frac{1}{p(x)} = \langle h(x)\rangle$$</div>
+<ul>
+  <li>两种读法：看到值<strong>之前</strong>是「不确定性」，看到值<strong>之后</strong>是「平均惊讶」。老师更喜欢后者。</li>
+  <li><strong>$p\log(1/p) \to 0$（$p \to 0$）</strong>：永不发生的取值对熵没有贡献，往字母表里加多少个零概率符号都不改变熵。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>情形</th><th class="c">$H(X)$</th></tr>
+  <tr><td>有一个取值 $p = 1$</td><td class="c"><strong>0</strong></td></tr>
+  <tr><td>二值 50/50</td><td class="c"><strong>1 bit</strong></td></tr>
+  <tr><td>$n$ 个等概率取值</td><td class="c"><strong>$\log_2 n$</strong>（这也是上界）</td></tr>
+</table></div>
+<div class="formula">$$0 \le H(X) \le \log_2|\mathcal{A}_X|$$</div>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>列出每个取值的 $p$ 和 $h = \log_2(1/p)$。</li>
+    <li>逐项乘 $p \cdot h$，相加；$p = 0$ 的项记 0。</li>
+    <li>检查：结果在 $0$ 到 $\log_2 n$ 之间。</li>
+  </ol>
+</div>
+<h3>例题（样卷 Q5）</h3>
+<p>$p = (0.1, 0.25, 0.4, 0.25)$：$0.1 \times 3.32 + 2 \times 0.25 \times 2 + 0.4 \times 1.32 = 0.332 + 1.0 + 0.529 = $ <strong>1.86 bits</strong>（上界 2）。</p>
+
+<div class="box trap">
+  <span class="box-title">陷阱：已知部分概率时的熵下界（样卷 Q6）</span>
+  <p>字母表 {0,1,2,3}，只知 $p(x{=}1) = 0.5$。剩下 0.5 的概率怎么分熵最小？<strong>全放在一个符号上</strong>：$H = 0.5 \times 1 + 0.5 \times 1 = 1$ bit。所以 $H(X) \ge 1$ bit。</p>
+</div>
+
+<div class="mcq" data-answer="3" data-src="样卷 Q5 · 检查一下">
+  <div class="mcq-q">$p = (0.1, 0.25, 0.4, 0.25)$ 的熵约为？</div>
+  <ol class="mcq-src"><li>1.00 bits</li><li>1.50 bits</li><li>2.00 bits</li><li>1.86 bits</li></ol>
+  <div class="mcq-exp">0.332 + 0.5 + 0.5 + 0.529。2 bits 是均匀时的上界。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　单位与「你在问哪个问题」 <span class="stars">★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>底数</th><th>单位</th><th>换算</th></tr>
+  <tr><td>2</td><td><strong>bits</strong>（本课默认）</td><td></td></tr>
+  <tr><td>$e$</td><td><strong>nats</strong></td><td>1 nat = 1.443 bits；1 bit = 0.693 nats</td></tr>
+  <tr><td>10</td><td>dits</td><td></td></tr>
+</table></div>
+<p>底数<strong>只决定单位</strong>，就像厘米和英寸（样卷 Q3：「<strong>nats</strong> 之于 bits，就像厘米之于英寸」）。<strong>答案一定写单位</strong>。</p>
+<div class="box trap">
+  <span class="box-title">「骰子是什么数」和「是不是 1」是两个变量</span>
+  <p>前者字母表大小 6，后者 2（{是 1, 不是 1}）。同样掷出 1，两个变量的 $h$ 都是 $\log_2 6$；但掷出 3 时，前者 $h = \log_2 6$，后者 $h = \log_2(6/5) = 0.263$。<strong>先想清楚问的是哪个问题。</strong></p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="样卷 Q3 · 检查一下">
+  <div class="mcq-q">____ 之于 bits，就像厘米之于英寸。</div>
+  <ol class="mcq-src"><li>nats</li><li>熵</li><li>概率</li><li>字母表</li></ol>
+  <div class="mcq-exp">同一个量的两种单位（ln vs log₂）。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　概念：信息、bit、复杂系统 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>信息 = 一个变量减少我们对另一个变量的不确定性的量</strong>（Information reduces uncertainty）。信息<strong>总是关于某件事</strong>；熵可以不关于任何事。</li>
+  <li><strong>1 bit</strong> = 一个<strong>等概率是非问题</strong>的不确定性；50/50 问题的答案给 1 bit。</li>
+  <li>信息论最初回答两个问题：<strong>极限压缩率</strong>、<strong>信道最大传输速率</strong>。</li>
+  <li><strong>Guess Who 的最佳问题是 50/50 的</strong>：无论是或否都排除一半。问「是 Bob 吗」几乎得不到信息；只剩男性时问「是男的吗」，$p = 1$，零信息。</li>
+  <li>剩 $N$ 个角色时，最优是非问题个数下界 $\log_2 N$（样卷 Q10：16 个 → <strong>4</strong>）。</li>
+  <li><strong>复杂系统</strong>：一大群实体，整体行为是个体<strong>因交互</strong>产生的非平凡结果（大脑、萤火虫、元胞自动机、鸟群、蚁群）。</li>
+  <li><strong>自组织 = 秩序随时间增加；涌现 = 秩序随尺度增加。</strong></li>
+  <li>信息是<strong>相对观察者</strong>的：是最终不确定性相对初始不确定性的减少。</li>
+</ul>
+
+<div class="mcq" data-answer="3" data-src="样卷 Q10 · 检查一下">
+  <div class="mcq-q">Guess Who 已缩小到 16 个角色，确定对方角色所需是/否问题个数的下界是？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>8</li><li>4</li></ol>
+  <div class="mcq-exp">$\log_2 16 = 4$，每个 50/50 问题最多给 1 bit。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="3" data-src="样卷 Q4">
+  <div class="mcq-q">$p(x{=}1) = 0.125$，$h(x{=}1)$ 是多少？</div>
+  <ol class="mcq-src"><li>0.125 bits</li><li>0.375 bits</li><li>8 bits</li><li>3 bits</li></ol>
+  <div class="mcq-exp">$-\log_2(1/8) = 3$。B 是 $p\,h$，是对熵的贡献。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q6">
+  <div class="mcq-q">字母表 {0,1,2,3}，只知道 $p(x{=}1) = 0.5$。以下哪项一定成立？①$h(x{=}1) = 1$ bit　②$H(X) \ge 1$ bit</div>
+  <ol class="mcq-src"><li>只有 ①</li><li>只有 ②</li><li>① 和 ② 都对</li><li>都不一定</li></ol>
+  <div class="mcq-exp">剩余 0.5 全放一个符号时熵最小，正好 1 bit。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Module 1">
+  <div class="mcq-q">二十面骰掷出的数「不是 1」，这个结果的信息量约为？</div>
+  <ol class="mcq-src"><li>4.322 bits</li><li>0.074 bits</li><li>0.263 bits</li><li>1.000 bits</li></ol>
+  <div class="mcq-exp">$\log_2(20/19)$。C 是六面骰。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="Module 1">
+  <div class="mcq-q">关于 Shannon 信息量 $h(x)$，正确的是？</div>
+  <ol class="mcq-src"><li>恒非负</li><li>$p(x) = 1$ 时为 0</li><li>描述的是随机变量本身</li><li>独立事件的信息量相加</li></ol>
+  <div class="mcq-exp">$h$ 描述具体取值；描述变量的是熵。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Module 1">
+  <div class="mcq-q">一个变量有 8 个等概率取值，它的熵是？</div>
+  <ol class="mcq-src"><li>8 bits</li><li>3 bits</li><li>1 bit</li><li>0.125 bits</li></ol>
+  <div class="mcq-exp">$\log_2 8$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Module 1">
+  <div class="mcq-q">往 Guess Who 的发色字母表里加一个「蓝色」（没有人是蓝发），熵会？</div>
+  <ol class="mcq-src"><li>增加</li><li>减少</li><li>不变</li><li>变成无穷</li></ol>
+  <div class="mcq-exp">$\lim_{p\to0} p\log(1/p) = 0$，零概率取值不贡献。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="Module 1">
+  <div class="mcq-q">Guess Who 里只剩 5 个角色且全是男性，这时问「你的角色是男的吗」得到多少信息？</div>
+  <ol class="mcq-src"><li>0 bits</li><li>1 bit</li><li>$\log_2 5$ bits</li><li>无法确定</li></ol>
+  <div class="mcq-exp">答案必然是 yes，$p = 1$，$h = 0$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Module 1">
+  <div class="mcq-q">「自组织」和「涌现」在课上的区别是？</div>
+  <ol class="mcq-src"><li>前者随尺度、后者随时间</li><li>前者随时间、后者随尺度</li><li>两者都随时间增加秩序</li><li>两者都随尺度增加秩序</li></ol>
+  <div class="mcq-exp">自组织 = 秩序随时间增加；涌现 = 秩序随尺度增加。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="Module 1">
+  <div class="mcq-q">信息论最初要回答的问题是？</div>
+  <ol class="mcq-src"><li>数据的极限压缩率</li><li>信道的最大传输速率</li><li>信息有什么意义</li><li>系统是否有因果</li></ol>
+  <div class="mcq-exp">信息论只度量「量」，不管意义。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">二值变量 $p = (0.9, 0.1)$ 的熵约为？</div>
+  <ol class="mcq-src"><li>0.10 bits</li><li>0.90 bits</li><li>0.47 bits</li><li>1.00 bits</li></ol>
+  <div class="mcq-exp">$0.9 \times 0.152 + 0.1 \times 3.32 = 0.137 + 0.332$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">某量是 2 nats，换成 bits 约为？</div>
+  <ol class="mcq-src"><li>1.39 bits</li><li>2.89 bits</li><li>2.00 bits</li><li>0.72 bits</li></ol>
+  <div class="mcq-exp">1 nat = 1/ln 2 ≈ 1.443 bits。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>Guess Who 里 24 个角色有 5 个戴帽子。分别算「对方戴帽子」和「对方不戴帽子」这两个答案的信息量，以及「戴不戴帽子」这个问题的熵。为什么它不是一个好问题？</summary>
+  <div class="sa-ans">
+    <p>$h(\text{戴}) = \log_2(24/5) = 2.263$ bits；$h(\text{不戴}) = \log_2(24/19) = 0.337$ bits。</p>
+    <p>$H = \frac{5}{24}(2.263) + \frac{19}{24}(0.337) = 0.471 + 0.267 = 0.738$ bits。</p>
+    <p>好问题应接近 50/50（1 bit）。这个问题多数时候答「不戴」，只排除 5 人，平均只给 0.74 bits。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$h(x) = -\log_2 p(x)$：具体取值的惊讶；非负，$p = 1$ 时为 0，越不可能越大。</li>
+  <li>$H(X) = \langle h(x)\rangle$：变量的平均惊讶 / 不确定性；$0 \le H \le \log_2 n$。</li>
+  <li>确定 0，50/50 1 bit，$n$ 个等概率 $\log_2 n$；零概率取值不贡献。</li>
+  <li>bits（log₂），nats（ln），1 nat = 1.443 bits；必须写单位。</li>
+  <li>三条公理：单调、连续、独立可加。</li>
+  <li>信息 = 不确定性的减少；1 bit = 一个 50/50 问题；剩 N 个最少 $\log_2 N$ 问。</li>
+  <li>自组织随时间，涌现随尺度；先想清楚问的是哪个变量。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>MacKay《Information Theory, Inference, and Learning Algorithms》第 2 章 2.1–2.4 节</strong>（Shannon 信息量和熵的定义），或 Bossomaier et al. 第 2 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week01-uncertainty-entropy-1.html" target="_blank" rel="noopener">W01 周笔记</a>、<a href="https://qiao1.top/posts/csys5030-sample-exam-solutions.html" target="_blank" rel="noopener">样卷解析</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 1</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

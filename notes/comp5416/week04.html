@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W04 DNS、Socket 与 P2P</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 04</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W04 DNS、Socket 与 P2P</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 2.4–2.5、2.7 节。样卷 Q3 整整 15 分都是 DNS 迭代查询。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 DNS 迭代 / 递归查询</a></td><td class="c"><span class="stars">★★★</span></td><td>本地 → 根 → TLD → 权威 → A 记录</td></tr>
+    <tr><td><a href="#t2">2 DNS 记录类型</a></td><td class="c"><span class="stars">★★★</span></td><td>A 给 IP，NS 给服务器名，CNAME 给真名，MX 给邮件服务器</td></tr>
+    <tr><td><a href="#t3">3 文件分发时间 C/S vs P2P</a></td><td class="c"><span class="stars">★★★</span></td><td>P2P 第一项是 $F/u_s$，不是 $NF/u_s$</td></tr>
+    <tr><td><a href="#t4">4 BitTorrent</a></td><td class="c"><span class="stars">★★</span></td><td>rarest first；前 4 名每 10 s；乐观疏通每 30 s</td></tr>
+    <tr><td><a href="#t5">5 DHT 后继</a></td><td class="c"><span class="stars">★★</span></td><td>≥ key 的最小 ID，没有就绕回</td></tr>
+    <tr><td><a href="#t6">6 DNS 基础与 Socket 概念</a></td><td class="c"><span class="stars">★★</span></td><td>为什么不集中、本地 DNS、TCP 服务器 socket 数</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　DNS 迭代 / 递归查询 <span class="stars">★★★</span></h2>
+
+<h3>层次结构</h3>
+<div class="table-wrap"><table>
+  <tr><th>服务器</th><th>管什么</th></tr>
+  <tr><td><strong>根</strong></td><td>顶端，知道各 TLD 服务器在哪。逻辑上 13 个（a–m），每个在全球有很多镜像</td></tr>
+  <tr><td><strong>TLD</strong></td><td>com、org、edu、net 和国家域 uk、au，知道每个域的权威服务器在哪</td></tr>
+  <tr><td><strong>权威</strong></td><td>组织自己的 DNS 服务器，存本组织主机的「名字 → IP」</td></tr>
+  <tr><td><strong>本地</strong></td><td>每个 ISP 都有，也叫<strong>默认名字服务器</strong>。主机的查询<strong>先发给它</strong>，它代为去问。<strong>严格来说不属于层次结构</strong></td></tr>
+</table></div>
+
+<h3>迭代查询：8 步（主机 cis.poly.edu 查 gaia.cs.umass.edu）</h3>
+<ol class="steps">
+  <li>主机 → 本地 DNS：问 gaia.cs.umass.edu</li>
+  <li>本地 → <strong>根</strong></li>
+  <li>根 → 本地：「去问 .edu 的 <strong>TLD</strong>」</li>
+  <li>本地 → TLD</li>
+  <li>TLD → 本地：「去问<strong>权威</strong> dns.cs.umass.edu」</li>
+  <li>本地 → 权威</li>
+  <li>权威 → 本地：<strong>A 记录</strong>（IP 地址）</li>
+  <li>本地 → 主机：返回 IP</li>
+</ol>
+<p><strong>递归查询</strong>：每一级替你往下问，答案逐级传回（主机 → 本地 → 根 → TLD → 权威，再原路返回），也是 8 条消息，但根和 TLD 要一直参与并等结果，<strong>上层负担重</strong>。</p>
+
+<div class="table-wrap"><table>
+  <tr><th></th><th>迭代</th><th>递归</th></tr>
+  <tr><td>被问的服务器</td><td>指路：「去问它」</td><td>跑腿：替你问到底</td></tr>
+  <tr><td>谁跑来跑去</td><td>本地 DNS</td><td>层次里的每一级</td></tr>
+  <tr><td>上层负载</td><td>低</td><td><strong>高</strong></td></tr>
+  <tr><td>最佳实践</td><td><strong>是</strong>（样卷 Q3.5）</td><td>否</td></tr>
+</table></div>
+<p>实际常见做法：主机 → 本地是递归（主机只要答案），本地 → 层次结构是迭代。</p>
+
+<h3>缓存与 TTL</h3>
+<p>服务器学到映射就缓存，<strong>TTL</strong> 到期删掉。本地 DNS 常缓存 TLD 地址，所以<strong>根很少被访问</strong>。缓存可能<strong>过时</strong>：主机换了 IP，TTL 到期前别人可能还拿着旧地址。</p>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q3.1 · 检查一下">
+  <div class="mcq-q">迭代查询中，本地 DNS 收到主机的查询且缓存里没有，它先去问谁？</div>
+  <ol class="mcq-src"><li>发起查询的用户主机</li><li>另一台本地 DNS</li><li>根 DNS 服务器</li><li>权威 DNS 服务器</li></ol>
+  <div class="mcq-exp">本地 → 根 → TLD → 权威。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　DNS 记录类型 <span class="stars">★★★</span></h2>
+<p>记录格式 <strong>(name, value, type, ttl)</strong>：</p>
+<div class="table-wrap"><table>
+  <tr><th class="c">类型</th><th>name</th><th>value</th><th>例子</th></tr>
+  <tr><td class="c"><strong>A</strong></td><td>主机名</td><td><strong>IP 地址</strong></td><td>(gaia.cs.umass.edu, 128.119.245.12, A)</td></tr>
+  <tr><td class="c"><strong>NS</strong></td><td>域名</td><td>该域<strong>权威服务器的主机名</strong></td><td>(umass.edu, dns.umass.edu, NS)</td></tr>
+  <tr><td class="c"><strong>CNAME</strong></td><td>别名</td><td><strong>规范名（真名）</strong></td><td>(www.ibm.com, servereast.backup2.ibm.com, CNAME)</td></tr>
+  <tr><td class="c"><strong>MX</strong></td><td>域名</td><td><strong>邮件服务器</strong>名</td><td>(umass.edu, mail.umass.edu, MX)</td></tr>
+</table></div>
+
+<div class="box method">
+  <span class="box-title">解法：看 value 是什么</span>
+  <p>value 是 IP → A；是这个域的 DNS 服务器名 → NS；是同一台主机的真名 → CNAME；是邮件服务器 → MX。</p>
+</div>
+
+<div class="box trap">
+  <span class="box-title">陷阱：NS 和 A 成对出现</span>
+  <p>NS 只给了权威服务器的<strong>名字</strong>，连不上，所以 TLD 同时给一条这个服务器的 <strong>A 记录</strong>（胶水记录）。注册 networkutopia.com 时，注册商往 .com TLD 插入两条：<code>(networkutopia.com, dns1.networkutopia.com, NS)</code> 和 <code>(dns1.networkutopia.com, 212.212.212.1, A)</code>。所以「本地 DNS 问 TLD 得到几条记录」答 <strong>2</strong>。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">记录 <code>(www.ibm.com, servereast.backup2.ibm.com, ?)</code> 的类型是？</div>
+  <ol class="mcq-src"><li>A</li><li>NS</li><li>CNAME</li><li>MX</li></ol>
+  <div class="mcq-exp">别名 → 规范名，是 CNAME。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　文件分发时间：C/S vs P2P <span class="stars">★★★</span></h2>
+
+<p>把大小 $F$ 的文件从一台服务器分发给 $N$ 个用户。$u_s$ 是服务器上传速率，$u_i$ 是用户 $i$ 的上传速率，$d_{\min}$ 是最慢的下载速率。</p>
+
+<div class="formula">$$D_{cs} \ge \max\left\{\frac{NF}{u_s},\ \frac{F}{d_{\min}}\right\}$$</div>
+<ul>
+  <li>$NF/u_s$：服务器要<strong>亲自发 $N$ 份</strong>。随 $N$ 线性增长，没有上限。</li>
+  <li>$F/d_{\min}$：最慢的用户下完一份。</li>
+</ul>
+
+<div class="formula">$$D_{P2P} \ge \max\left\{\frac{F}{u_s},\ \frac{F}{d_{\min}},\ \frac{NF}{u_s + \sum u_i}\right\}$$</div>
+<ul>
+  <li>$F/u_s$：服务器<strong>至少发出一份</strong>（不是 $N$ 份，其余由用户互传）。</li>
+  <li>$NF/(u_s + \sum u_i)$：总共要收 $NF$ 比特，全系统总上传能力是服务器加所有用户。</li>
+</ul>
+<p><strong>为什么 P2P 能扩展</strong>：每来一个用户也多一份上传能力。所有人上传都是 $u$ 时，$N \to \infty$ 时 $\dfrac{NF}{u_s + Nu} \to \dfrac{F}{u}$，趋于常数；C/S 是一条一直往上的直线。</p>
+
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>把每一项都算出来（统一单位：Mbit 和 Mbps，或 Gbit 和 Gbps）。</li>
+    <li>取最大的那一项，它就是答案，也是瓶颈。</li>
+    <li>瓶颈判断：$NF/u_s$ → 服务器上传；$F/d_{\min}$ → 最慢下载；第三项 → 全系统上传能力。</li>
+  </ol>
+</div>
+
+<h3>例题（Midterm 练习）</h3>
+<p>$F = 2400$ Mbit，$N = 12$，$u_s = 90$ Mbps，$\sum u_i = 190$ Mbps，$d_{\min} = 25$ Mbps。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>各项</th><th>答案</th></tr>
+  <tr><td>C/S</td><td>$12\times2400/90 = 320$；$2400/25 = 96$</td><td><strong>320 s</strong>（服务器上传）</td></tr>
+  <tr><td>P2P</td><td>$2400/90 = 26.7$；$96$；$28800/280 = 102.9$</td><td><strong>102.9 s</strong>（总上传能力）</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">最常见的错</span>
+  <p>P2P 第一项写成 $NF/u_s$。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">$F = 1$ Gbit，$N = 20$，$u_s = 50$ Mbps，每个用户上传 10 Mbps、下载 100 Mbps。P2P 最短分发时间约为？</div>
+  <ol class="mcq-src"><li>20 s</li><li>80 s</li><li>400 s</li><li>10 s</li></ol>
+  <div class="mcq-exp">$F/u_s = 1000/50 = 20$；$F/d_{\min} = 10$；$NF/(u_s+\sum u_i) = 20000/(50+200) = 80$。取最大 80 s。C 是 C/S 的 $NF/u_s$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　BitTorrent <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>torrent</strong>：交换同一文件分块的一群用户；<strong>tracker</strong>：只记录有哪些用户。文件切成 <strong>256 KB</strong> 分块。</li>
+  <li>新用户向 tracker 注册，拿到用户列表，和一部分邻居连接；边下边传；用户随时来去（<strong>churn</strong>）。</li>
+</ul>
+<div class="table-wrap"><table>
+  <tr><th>策略</th><th>规则</th><th>为什么</th></tr>
+  <tr><td><strong>rarest first</strong>（请求）</td><td>先要邻居里最少人有的块</td><td>稀有块持有者一走就拼不出文件</td></tr>
+  <tr><td><strong>tit-for-tat</strong>（发送）</td><td>只给当前给我发得最快的 <strong>4 个人</strong>发，其余 choked；<strong>每 10 秒</strong>重评</td><td>激励多上传</td></tr>
+  <tr><td><strong>optimistic unchoke</strong></td><td><strong>每 30 秒</strong>随机挑一个人发</td><td>新用户还没东西可传，进不了前 4；给他起步机会，也发现更好的伙伴</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <p>10 秒是重评前 4 名，30 秒是乐观疏通，别弄反。tracker 不存分块。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">乐观疏通（optimistic unchoke）的主要作用是？</div>
+  <ol class="mcq-src"><li>加快最稀缺分块在网络中的复制</li><li>让新用户得到块，也发现更好的伙伴</li><li>防止 tracker 因请求过多而过载</li><li>减小每个分块的大小以加快下载</li></ol>
+  <div class="mcq-exp">新用户还没有块可上传，靠 tit-for-tat 永远进不了别人的前 4 名。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　DHT 后继 <span class="stars">★★</span></h2>
+<p><strong>DHT</strong>：分散在很多用户上的 (key, value) 数据库。key 哈希成 $[0, 2^n - 1]$ 的整数，节点也有这个范围里的 ID。</p>
+<div class="box method">
+  <span class="box-title">规则：立即后继</span>
+  <p>key 存在 <strong>ID ≥ key 的最小节点</strong>上；没有比 key 大的节点就<strong>绕回最小的节点</strong>（环形）。</p>
+</div>
+<p>例：节点 1、3、4、5、8、10、12、14（$n = 4$）。</p>
+<div class="table-wrap"><table>
+  <tr><th class="c">key</th><th class="c">存在</th><th>原因</th></tr>
+  <tr><td class="c">2</td><td class="c">3</td><td>≥ 2 的最小 ID</td></tr>
+  <tr><td class="c">13</td><td class="c"><strong>14</strong></td><td>12 数值上更近，但不是后继</td></tr>
+  <tr><td class="c">15</td><td class="c"><strong>1</strong></td><td>没有 ≥ 15 的节点，绕回</td></tr>
+</table></div>
+<ul>
+  <li><strong>查询</strong>：只知道后继时沿环传，平均 $O(N)$ 条消息；加<strong>捷径</strong>后每节点 $O(\log N)$ 个邻居、查询 $O(\log N)$ 条消息（Chord）。</li>
+  <li><strong>节点离开</strong>：每个节点记<strong>两个</strong>后继并定期 ping。立即后继走了，就把第二后继升为立即后继，再问它的后继作为新的第二后继。只记一个的话环会断。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="讲义 · 检查一下">
+  <div class="mcq-q">DHT 节点 ID 为 1、3、4、5、8、10、12、14。key 13 和 key 15 分别存在哪个节点？</div>
+  <ol class="mcq-src"><li>12，14</li><li>14，1</li><li>14，14</li><li>12，1</li></ol>
+  <div class="mcq-exp">13 的后继是 14；15 没有后继，绕回 1。A 把「最接近」当成数值最近。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t6">题型 6　DNS 基础与 Socket 概念 <span class="stars">★★</span></h2>
+
+<h3>DNS 基础</h3>
+<ul>
+  <li>DNS 既是<strong>分布式数据库</strong>，也是<strong>应用层协议</strong>。端口 <strong>53</strong>，一般查询用 UDP，响应过大或区域传送用 TCP，所以「用哪个」答<strong>两者都用</strong>。</li>
+  <li>额外服务：<strong>主机别名</strong>、<strong>邮件服务器别名</strong>、<strong>负载分配</strong>（一个名字对应一组 IP，轮换返回顺序）。</li>
+  <li><strong>为什么不集中</strong>：单点故障、离远处用户时延高、扩展不了（课本还有：维护量太大）。</li>
+</ul>
+
+<h3>Socket（不考代码，考概念）</h3>
+<p>socket 是应用进程和传输层之间的门：门以上由<strong>开发者</strong>控制，门以下由<strong>操作系统</strong>控制。<code>SOCK_DGRAM</code> = UDP，<code>SOCK_STREAM</code> = TCP。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>UDP socket</th><th>TCP socket</th></tr>
+  <tr><td>连接</td><td>不建立，直接发</td><td>客户 <code>connect()</code>，服务器 <code>accept()</code></td></tr>
+  <tr><td>目的地址</td><td><strong>每个分组都带</strong>（<code>sendto</code>）</td><td>建连时给一次</td></tr>
+  <tr><td>收</td><td><code>recvfrom()</code> 同时拿到发送方地址</td><td><code>recv()</code></td></tr>
+  <tr><td>服务器 socket 数</td><td><strong>1 个</strong>，所有客户共用</td><td><strong>1 个欢迎 socket + 每个客户 1 个连接 socket</strong></td></tr>
+</table></div>
+
+<h3>本周 Tutorial（Wireshark 看 HTTP）</h3>
+<ul>
+  <li>清空缓存后第一次 GET 没有 <code>If-Modified-Since</code>，回 200；第二次带上，回 <strong>304</strong>，不带内容。</li>
+  <li>HTTP Basic 认证：先回 <strong>401</strong>；再请求时带 <code>Authorization: Basic ...</code>。这串只是 <strong>Base64 编码</strong>，解码就是 <code>用户名:密码</code>。<strong>编码不是加密</strong>，所以需要 TLS。</li>
+</ul>
+
+<div class="mcq" data-answer="2" data-src="Midterm 练习 · 检查一下">
+  <div class="mcq-q">TCP 服务器在欢迎端口 6950 上接受了 3 条连接（来自两台主机）。服务器因此新建了几个 socket（不含欢迎 socket）？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>3</li><li>4</li></ol>
+  <div class="mcq-exp">每条连接一个连接 socket，和主机数无关。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="3" data-src="样卷 Q3.3">
+  <div class="mcq-q">迭代查询中，TLD 服务器没有要找的 IP，它让本地 DNS 去问谁？</div>
+  <ol class="mcq-src"><li>本地 DNS</li><li>根 DNS</li><li>另一台 TLD</li><li>权威 DNS</li></ol>
+  <div class="mcq-exp">TLD 知道每个域的权威服务器在哪。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="Midterm 练习">
+  <div class="mcq-q">文件 2400 Mbit 分发给 12 个用户；服务器上传 90 Mbps；最慢下载 25 Mbps。客户/服务器方式的最短分发时间是？</div>
+  <ol class="mcq-src"><li>26.7 s</li><li>96 s</li><li>102.9 s</li><li>320 s</li></ol>
+  <div class="mcq-exp">$\max(12\times2400/90,\ 2400/25) = \max(320, 96) = 320$ s。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">记录 <code>(umass.edu, dns.umass.edu, ?)</code> 的类型是？</div>
+  <ol class="mcq-src"><li>A</li><li>NS</li><li>CNAME</li><li>MX</li></ol>
+  <div class="mcq-exp">value 是该域权威服务器的主机名。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于递归查询，正确的是？</div>
+  <ol class="mcq-src"><li>把解析负担交给被问的服务器</li><li>层次结构上层的负载会很重</li><li>被问的服务器只回答「去问谁」</li><li>本例中消息数和迭代一样是 8 条</li></ol>
+  <div class="mcq-exp">C 描述的是迭代。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义">
+  <div class="mcq-q">关于 BitTorrent，正确的是？</div>
+  <ol class="mcq-src"><li>先请求邻居中最稀缺的分块</li><li>只给最快的 4 人发，每 10 s 重评</li><li>每 30 s 随机乐观疏通一个用户</li><li>tracker 上存有文件的全部分块</li></ol>
+  <div class="mcq-exp">tracker 只记录有哪些用户。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Midterm 练习">
+  <div class="mcq-q">TLD 上有 <code>(www.enterprise.com, dns.enterprise.com, NS)</code> 和 <code>(dns.enterprise.com, 146.54.20.201, A)</code>。本地 DNS 问 TLD 时会得到几条记录？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>3</li><li>4</li></ol>
+  <div class="mcq-exp">NS 加上它的 A（胶水记录）。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">所有用户上传速率都是 $u$，$N$ 趋于无穷时，P2P 分发时间趋于？</div>
+  <ol class="mcq-src"><li>$0$</li><li>$F/u$</li><li>$NF/u_s$</li><li>$\infty$</li></ol>
+  <div class="mcq-exp">$NF/(u_s + Nu) \to F/u$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">每个 DHT 节点都记录两个后继，目的是？</div>
+  <ol class="mcq-src"><li>让查询复杂度降到 $O(\log N)$</li><li>立即后继离开时环不会断开</li><li>把数据存两份，互相备份</li><li>减少哈希函数产生的冲突</li></ol>
+  <div class="mcq-exp">$O(\log N)$ 靠的是捷径，不是两个后继。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Midterm 练习">
+  <div class="mcq-q">UDP 服务器用同一个 socket（端口 5300）和两个客户通信，客户乙端口 8200。服务器发给乙的段的（源端口，目的端口）是？</div>
+  <ol class="mcq-src"><li>(8200, 5300)</li><li>(5300, 8200)</li><li>(5300, 5300)</li><li>(8200, 8200)</li></ol>
+  <div class="mcq-exp">源是服务器自己的端口，目的是乙的端口。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义">
+  <div class="mcq-q">关于本地 DNS 服务器，正确的是？</div>
+  <ol class="mcq-src"><li>严格来说不属于 DNS 层次结构</li><li>也叫默认名字服务器</li><li>存有所有域的权威记录</li><li>会缓存映射，缓存可能过时</li></ol>
+  <div class="mcq-exp">权威记录在各组织的权威服务器上。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Midterm 练习">
+  <div class="mcq-q">DNS 使用哪种传输层协议？</div>
+  <ol class="mcq-src"><li>只用 TCP</li><li>只用 UDP</li><li>两者都用</li><li>两者都不用</li></ol>
+  <div class="mcq-exp">一般查询 UDP，响应过大或区域传送 TCP。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">抓包看到 <code>Authorization: Basic d2lyZXNoYXJrLXN0dWRlbnRzOm5ldHdvcms=</code>，正确的是？</div>
+  <ol class="mcq-src"><li>密码经过了加密，无法还原</li><li>Base64 编码，解码得用户名密码</li><li>这是密码经过哈希后的值</li><li>这是 TLS 的会话密钥</li></ol>
+  <div class="mcq-exp">编码不是加密，抓包就能看到密码。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="讲义">
+  <div class="mcq-q">关于 socket，正确的是？</div>
+  <ol class="mcq-src"><li><code>SOCK_STREAM</code> 对应 TCP</li><li>UDP 每次发送都要指明目的地址</li><li>传输层由应用开发者控制</li><li>UDP 服务器要 listen 和 accept</li></ol>
+  <div class="mcq-exp">传输层由操作系统控制；UDP 没有 listen / accept。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>迭代 8 步：本地 → 根 → TLD → 权威 → A 记录；迭代是最佳实践，递归上层负载重。</li>
+  <li>A 给 IP；NS 给服务器名（配一条 A，TLD 回 2 条）；CNAME 给真名；MX 给邮件服务器。</li>
+  <li>C/S $\max(NF/u_s, F/d_{\min})$；P2P $\max(F/u_s, F/d_{\min}, NF/(u_s+\sum u_i))$；P2P 趋于 $F/u$。</li>
+  <li>本地 DNS 不属于层次结构；不集中的原因：单点故障、时延、扩展；DNS 端口 53，UDP 和 TCP 都用。</li>
+  <li>BitTorrent：rarest first；前 4 名每 10 s；乐观疏通每 30 s；tracker 只记用户。</li>
+  <li>DHT：≥ key 的最小 ID，绕回；$O(N)$ → 捷径 $O(\log N)$；记两个后继防断环。</li>
+  <li>TCP 服务器：1 欢迎 socket + 每连接 1 个；UDP 服务器 1 个 socket，每个分组带地址。</li>
+  <li>Basic 认证只是 Base64 编码；401 要认证。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>最值得读的是 <strong>Kurose &amp; Ross 第 2 章 2.4 节（DNS）和 2.5 节（P2P）</strong>，迭代查询的那张 8 步图就是样卷 Q3 的原型；socket 看 2.7 节。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week04-dns-p2p.html" target="_blank" rel="noopener">W04 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 04</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

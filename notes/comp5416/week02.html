@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W02 网络性能</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 02</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W02 网络性能：时延、交换、吞吐量</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 第 1 章 1.2–1.4 节。期末全是选择题，这一周几乎每题都是「先算出一个数，再去选项里找」。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 电路交换 vs 分组交换：能接几人</a></td><td class="c"><span class="stars">★★★</span></td><td>样卷 Q1 占 24/50 分，全卷最大的一题</td></tr>
+    <tr><td><a href="#t2">2 四种时延计算</a></td><td class="c"><span class="stars">★★★</span></td><td>传输 $L/R$ 和传播 $d/s$ 别搞混</td></tr>
+    <tr><td><a href="#t3">3 Caravan 车队</a></td><td class="c"><span class="stars">★★★</span></td><td>最后一辆车决定什么时候排好</td></tr>
+    <tr><td><a href="#t4">4 吞吐量与利用率</a></td><td class="c"><span class="stars">★★</span></td><td>看最细的那段水管</td></tr>
+    <tr><td><a href="#t5">5 存储转发与分段</a></td><td class="c"><span class="stars">★★</span></td><td>$(N+P-1)\,L/R$</td></tr>
+    <tr><td><a href="#t6">6 流量强度与丢包</a></td><td class="c"><span class="stars">★★</span></td><td>$La/R$ 和 1 比</td></tr>
+    <tr><td><a href="#t7">7 概念判断题</a></td><td class="c"><span class="stars">★</span></td><td>端系统、routing vs forwarding、FDM/TDM、接入网</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>（W12 老师原话），没把握的选项别勾。最后有一组<a href="#practice">混合练习</a>，打乱了题型顺序，用来检验你能不能自己认出题型。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　电路交换 vs 分组交换：能接几人 <span class="stars">★★★</span></h2>
+
+<h3>先搞懂两种交换</h3>
+<p><strong>电路交换（circuit switching）</strong>：通话开始前，沿途每条链路给你<strong>预留</strong>一份固定带宽，整个通话期间只归你用，你不说话它也空着。传统电话网就是这样。所以链路容量 $C$、每人要 $r$ 时：</p>
+<div class="formula">$$N_{\text{电路}} = \left\lfloor \frac{C}{r} \right\rfloor$$</div>
+<p><strong>一定向下取整</strong>，零头不够再接一个人。</p>
+
+<p><strong>分组交换（packet switching）</strong>：不预留，谁有数据谁发。每个用户只有比例 $p$ 的时间在发（比如 20%）。只有<strong>同时在发的人数</strong>超过 $m = \lfloor C/r \rfloor$ 时链路才过载。只要过载概率很小，就能接远多于 $m$ 的人，这叫<strong>统计复用</strong>。</p>
+
+<h3>核心工具：二项分布</h3>
+<p>$n$ 个用户各自<strong>独立</strong>以概率 $p$ 在发，恰好 $k$ 个在发的概率：</p>
+<div class="formula">$$P(X = k) = \binom{n}{k}\, p^{k}\, (1-p)^{n-k}, \qquad \binom{n}{k} = \frac{n!}{k!\,(n-k)!}$$</div>
+<ul>
+  <li>$p^k (1-p)^{n-k}$：<strong>已经指定好的</strong> $k$ 个人在发、其余都不发的概率。</li>
+  <li>$\binom{n}{k}$：从 $n$ 人里挑这 $k$ 个人有几种挑法。</li>
+</ul>
+
+<div class="box trap">
+  <span class="box-title">本周第一大陷阱：乘不乘组合数</span>
+  <div class="table-wrap"><table>
+    <tr><th>题目原文</th><th>意思</th><th class="c">乘 $\binom{n}{k}$？</th></tr>
+    <tr><td><strong>a given / a specific / user A</strong></td><td>人已经定了</td><td class="c">不乘</td></tr>
+    <tr><td><strong>any one / any k / exactly k users</strong></td><td>谁都行</td><td class="c">要乘</td></tr>
+  </table></div>
+  <p>样卷 Q1.3 和 Q1.4 同一组数：不乘得 0.014，乘 13 得 0.18。两个数都会出现在选项里。</p>
+</div>
+
+<h3>「过载」= 超过 $m$ 人在发</h3>
+<div class="formula">$$P(X > m) = \sum_{k=m+1}^{n} \binom{n}{k}\, p^{k}\, (1-p)^{n-k}$$</div>
+<p>考场上<strong>只算前两项</strong>：每一项都比前一项小很多，选项之间通常差 10 倍，前两项就能定数量级。</p>
+
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>先算 $m = \lfloor C/r \rfloor$：这是电路交换的人数，也是分组交换「不过载」的上限。</li>
+    <li>圈出关键词：given/specific（不乘）还是 any（乘）？「恰好 k 人」还是「超过 k 人」？</li>
+    <li>「恰好」直接代公式；「超过 $m$」从 $k = m+1$ 开始算两项相加。</li>
+    <li>和选项比数量级。$0.8^{12}$ 这种幂次在考场上用计算器按，别心算。</li>
+  </ol>
+</div>
+
+<h3>例题：样卷 Q1 那组数</h3>
+<p>150 Mbps 链路，每人发时要 20 Mbps，分组交换下有 13 个用户，每人 20% 的时间在发。</p>
+<div class="table-wrap"><table>
+  <tr><th>问</th><th>算</th><th>答</th></tr>
+  <tr><td>电路交换最多几人</td><td>$\lfloor 150/20 \rfloor = \lfloor 7.5 \rfloor$</td><td><strong>7</strong></td></tr>
+  <tr><td><strong>指定的</strong>某人在发、其余 12 人不发</td><td>$0.2 \times 0.8^{12} = 0.2 \times 0.0687$</td><td><strong>0.014</strong></td></tr>
+  <tr><td><strong>任意一个</strong>人在发、其余不发</td><td>$13 \times 0.0137$</td><td><strong>0.18</strong></td></tr>
+  <tr><td>任意 8 人在发、其余 5 人不发</td><td>$\binom{13}{8} 0.2^8 0.8^5 = 1287 \times 2.56{\times}10^{-6} \times 0.328$</td><td><strong>0.0011</strong></td></tr>
+  <tr><td>超过 7 人在发</td><td>$k{=}8$：0.00108；$k{=}9$：$715 \times 0.2^9 \times 0.8^4 = 0.00015$</td><td><strong>0.0012</strong></td></tr>
+</table></div>
+<p>官方样卷 Q1.4 和 Q1.7 的答案框印错了（印成 0.005 和 0.000073），以官方解题文字里的 0.18 和 0.0012 为准。</p>
+
+<div class="box trap">
+  <span class="box-title">第二个陷阱：「平均够用」≠「几乎总是够用」</span>
+  <p>讲义例子：1 Gbps 链路，每人发时要 100 Mbps，10% 时间在发。电路交换 10 人。分组交换接 35 人时，$P(X>10) \approx 0.00033 + 0.00007 \approx 0.0004$，几乎总是够用。</p>
+  <p>但「每人平均只用 10 Mbps，所以能接 100 人」是错的：100 人时平均需求正好等于容量，大约 42% 的时间在过载。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">10 个分组交换用户，每人 10% 的时间在发。<strong>用户 A</strong> 在发、其余 9 人都不发的概率是？</div>
+  <ol class="mcq-src">
+    <li>$10 \times 0.1 \times 0.9^9 \approx 0.387$</li>
+    <li>$0.1 \times 0.9^9 \approx 0.0387$</li>
+    <li>$0.1^9 \times 0.9 \approx 9{\times}10^{-10}$</li>
+    <li>$0.1 \approx 0.1000$</li>
+  </ol>
+  <div class="mcq-exp">指定了用户 A，人已经定了，不乘 $\binom{10}{1}$。A 是「任意一个用户」的答案。D 忘了其余 9 人也要「不发」。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　四种时延计算 <span class="stars">★★★</span></h2>
+
+<p>一个分组在一个路由器上花的时间：</p>
+<div class="formula">$$d_{\text{nodal}} = d_{\text{proc}} + d_{\text{queue}} + d_{\text{trans}} + d_{\text{prop}}$$</div>
+<div class="table-wrap"><table>
+  <tr><th>时延</th><th>在干什么</th><th>只取决于</th><th>公式 / 量级</th></tr>
+  <tr><td><strong>处理</strong> proc</td><td>查比特错误、查表定输出口</td><td>路由器性能</td><td>微秒级，常忽略</td></tr>
+  <tr><td><strong>排队</strong> queue</td><td>在输出口缓冲区里等</td><td>拥塞程度（唯一随负载变）</td><td>0 到很大</td></tr>
+  <tr><td><strong>传输</strong> trans</td><td>把整个分组的比特推上链路</td><td><strong>分组长度 $L$、链路速率 $R$</strong></td><td>$L/R$</td></tr>
+  <tr><td><strong>传播</strong> prop</td><td>一个比特沿线跑到对面</td><td><strong>链路长度 $d$、信号速度 $s$</strong></td><td>$d/s$，$s \approx 2{\sim}3 \times 10^8$ m/s</td></tr>
+</table></div>
+
+<div class="box trap">
+  <span class="box-title">本周最容易混：传输 vs 传播</span>
+  <ul>
+    <li>传输时延<strong>跟距离无关</strong>：100 m 和 1000 km 的 100 Mbps 链路，推 1500 字节一样快。</li>
+    <li>传播时延<strong>跟分组大小、链路速率无关</strong>：提高带宽不会让信号跑得更快。</li>
+  </ul>
+  <p>选项里常见的错误说法：「把链路速率翻倍，传播时延减半」。</p>
+</div>
+
+<div class="box trap">
+  <span class="box-title">单位坑</span>
+  <ul>
+    <li>网络里 k / M / G 是 $10^3 / 10^6 / 10^9$，不是 1024。</li>
+    <li><strong>B 是字节，b 是比特</strong>，1 B = 8 b。题目说 1500 bytes，先乘 8 得 12000 bits。</li>
+    <li>km 换成 m，ms 和 s 别混。</li>
+  </ul>
+</div>
+
+<div class="box method">
+  <span class="box-title">多段链路端到端时延：解法步骤</span>
+  <ol class="steps">
+    <li>列一张表，每段链路一行：$L/R$ 和 $d/s$ 各算一个。</li>
+    <li>存储转发下每段都要完整推一遍、再跑一遍，所以<strong>全部相加</strong>（不考虑处理和排队时）。</li>
+    <li>检查：长链路通常被传播时延主导，短链路被传输时延主导。</li>
+  </ol>
+</div>
+
+<h3>例题（Midterm 练习）</h3>
+<p>3 段链路，分组 8000 bits，$s = 3\times10^8$ m/s：</p>
+<div class="table-wrap"><table>
+  <tr><th class="c">链路</th><th class="c">速率</th><th class="c">长度</th><th class="c">$L/R$</th><th class="c">$d/s$</th></tr>
+  <tr><td class="c">1</td><td class="c">20 Mbps</td><td class="c">2 km</td><td class="c">0.4 ms</td><td class="c">0.0067 ms</td></tr>
+  <tr><td class="c">2</td><td class="c">500 Mbps</td><td class="c">4000 km</td><td class="c">0.016 ms</td><td class="c">13.33 ms</td></tr>
+  <tr><td class="c">3</td><td class="c">50 Mbps</td><td class="c">5 km</td><td class="c">0.16 ms</td><td class="c">0.0167 ms</td></tr>
+</table></div>
+<p>合计 $\approx$ <strong>13.93 ms</strong>。链路 2 最快，却贡献了 95% 的时间，因为它最长。只把三个 $L/R$ 加起来得 0.58 ms，这是选项里的陷阱。</p>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">一个 1500 字节的分组在 12 Mbps、3000 km 的链路上发送，$s = 2\times10^8$ m/s。传输时延和传播时延分别是？</div>
+  <ol class="mcq-src">
+    <li>0.125 ms 和 15 ms</li>
+    <li>1 ms 和 1.5 ms</li>
+    <li>1 ms 和 15 ms</li>
+    <li>15 ms 和 1 ms</li>
+  </ol>
+  <div class="mcq-exp">传输：$1500 \times 8 / (12\times10^6) = 12000/12\times10^6 = 1$ ms。传播：$3\times10^6 / 2\times10^8 = 0.015$ s = 15 ms。A 是忘了字节乘 8；D 是两者弄反。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　Caravan 车队 <span class="stars">★★★</span></h2>
+
+<p>把分组想成车队：<strong>一辆车 = 一个比特，车队 = 一个分组，收费站 = 路由器</strong>。收费站放行一辆车 = 推一个比特上链路（传输），车在两站之间开 = 传播。</p>
+
+<div class="box method">
+  <span class="box-title">解法：盯住最后一辆车</span>
+  <ol class="steps">
+    <li><strong>传输</strong>：所有车过第 1 个收费站 = 车数 × 每辆放行时间。</li>
+    <li><strong>传播</strong>：最后一辆车从第 1 站开到第 2 站 = 距离 ÷ 车速。</li>
+    <li>两者相加。不要每辆车各算一遍：前面的车在路上开时，后面的车同时在过收费站，时间是重叠的。</li>
+  </ol>
+</div>
+
+<h3>例题（讲义 + W13 复习课）</h3>
+<p>10 辆车，每辆放行 12 s，两站相距 100 km，车速 100 km/h。车队在第 2 站前排好要多久？</p>
+<p>传输 $10 \times 12 = 120$ s = 2 min；传播 $100/100 = 1$ h = 60 min；合计 <strong>62 min</strong>。</p>
+
+<h3>变形：第 1 辆车到了，后面还剩几辆</h3>
+<p>车速改成 1000 km/h，每辆放行 1 min。第 1 辆车：放行 1 min + 开 $100/1000$ h = 6 min，<strong>第 7 min 到达</strong>第 2 站。这时第 1 站才放行了 7 辆，<strong>还剩 3 辆</strong>。这就是「分组的第一个比特已经到下一个路由器，最后的比特还没离开上一个」。</p>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">5 辆车，收费站每辆放行 30 s，两站相距 60 km，车速 120 km/h。车队在第 2 个收费站前全部排好要多久？</div>
+  <ol class="mcq-src">
+    <li>30.0 min</li>
+    <li>32.5 min</li>
+    <li>35.0 min</li>
+    <li>150 min</li>
+  </ol>
+  <div class="mcq-exp">传输 $5 \times 30 = 150$ s = 2.5 min；传播 $60/120$ h = 30 min；合计 32.5 min。D 是每辆车各算一遍传播的错误做法。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　吞吐量与利用率 <span class="stars">★★</span></h2>
+
+<p><strong>吞吐量</strong>：每秒实际送到接收方的比特数。路径像串起来的水管，水流只能按<strong>最细的那段</strong>走，这段叫<strong>瓶颈链路</strong>：</p>
+<div class="formula">$$\text{吞吐量} = \min(R_s,\ R_c) \qquad\text{多个连接平分主干 } R：\ \min\!\left(R_s,\ R_c,\ \frac{R}{n}\right)$$</div>
+<p><strong>利用率</strong> = 这条链路上实际跑的速率 ÷ 它的容量。瓶颈链路的利用率一定是 1。</p>
+
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>共享链路<strong>先除以连接数</strong>，再和其他链路取最小值，得到每个连接的吞吐量 $x$。</li>
+    <li>某条链路的利用率：这条链路上跑了几个连接就乘几，$n x / R$；只跑一个连接的就是 $x / R_s$。</li>
+    <li>文件传输时间 = 文件比特数 ÷ 吞吐量。文件大小给的是字节就先乘 8。</li>
+  </ol>
+</div>
+
+<h3>例题（Midterm 练习）</h3>
+<p>4 对服务器和客户共享 $R = 120$ Mbps 的主干，$R_s = 80$，$R_c = 15$ Mbps。每对吞吐量 $\min(80, 15, 30) = 15$ Mbps，瓶颈是 $R_c$。利用率：$R_s$ 为 $15/80 = 0.1875$，$R_c$ 为 1，主干为 $4 \times 15 / 120 = 0.5$。问主干时，0.1875 就是陷阱选项。</p>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">5 个连接平分一条 50 Mbps 的主干，每个连接的服务器出口 $R_s = 20$ Mbps、客户入口 $R_c = 30$ Mbps。每个连接的吞吐量是？</div>
+  <ol class="mcq-src">
+    <li>50 Mbps</li>
+    <li>20 Mbps</li>
+    <li>10 Mbps</li>
+    <li>30 Mbps</li>
+  </ol>
+  <div class="mcq-exp">$\min(20, 30, 50/5) = \min(20, 30, 10) = 10$ Mbps。B 是忘了先把主干除以 5。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　存储转发与分段 <span class="stars">★★</span></h2>
+
+<p><strong>存储转发</strong>：路由器必须把整个分组完整收下来，才开始往下一段发。所以一个分组经过 $N$ 段速率为 $R$ 的链路，只算传输时延是 $N \cdot L/R$。</p>
+<p><strong>把报文切成 $P$ 个小分组</strong>，几段链路能同时干活，像流水线：</p>
+<div class="formula">$$T = (N + P - 1)\cdot \frac{L}{R}$$</div>
+<p>来历：第 1 个分组走完 $N$ 段花 $N \cdot L/R$；之后其余 $P-1$ 个每隔 $L/R$ 到一个。</p>
+
+<h3>例题（Lab 2）</h3>
+<p>报文 $8\times10^6$ bits，3 段 2 Mbps 链路。不切：每段 4 s，共 <strong>12 s</strong>。切成 800 个 $10^4$ bits：每个每段 5 ms，$(3 + 800 - 1) \times 5$ ms = <strong>4.01 s</strong>。切得越细越接近只走一段的 4 s，但永远到不了。</p>
+
+<div class="mcq" data-answer="0" data-src="自拟 · 检查一下">
+  <div class="mcq-q">一个 $10^6$ bits 的报文切成 100 个分组，经过 4 段 1 Mbps 的链路（存储转发，忽略传播）。端到端时间是？</div>
+  <ol class="mcq-src">
+    <li>1.03 s</li>
+    <li>1.00 s</li>
+    <li>4.00 s</li>
+    <li>4.03 s</li>
+  </ol>
+  <div class="mcq-exp">每个分组 $10^4$ bits，每段 $10^4/10^6 = 10$ ms。$(4 + 100 - 1) \times 10$ ms = 1.03 s。C 是不切分的时间。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t6">题型 6　流量强度与丢包 <span class="stars">★★</span></h2>
+
+<p>分组到得比链路发得快时，在输出口缓冲区<strong>排队</strong>；缓冲区满了，新来的分组被<strong>丢弃</strong>。拥塞程度用流量强度衡量（$a$ = 每秒平均到达的分组数）：</p>
+<div class="formula">$$\text{流量强度} = \frac{L \cdot a}{R}$$</div>
+<div class="table-wrap"><table>
+  <tr><th class="c">流量强度</th><th>排队时延</th></tr>
+  <tr><td class="c">接近 0</td><td>很小</td></tr>
+  <tr><td class="c">接近 1</td><td>急剧增大</td></tr>
+  <tr><td class="c">大于 1</td><td>来的比走的多，队列无限增长，<strong>必然丢包</strong></td></tr>
+</table></div>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">链路 $R = 10$ Mbps，分组长 1000 bits，平均每秒到达 12000 个分组。下列说法正确的是？</div>
+  <ol class="mcq-src">
+    <li>流量强度 0.12，排队时延很小</li>
+    <li>流量强度 1.2，队列增长并丢包</li>
+    <li>流量强度 12，排队时延为零</li>
+    <li>条件不足，无法判断流量强度</li>
+  </ol>
+  <div class="mcq-exp">$La/R = 1000 \times 12000 / 10^7 = 1.2 &gt; 1$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t7">题型 7　概念判断题 <span class="stars">★</span></h2>
+<p>不用算，考「下列哪些说法正确」。逐条记住判断依据就够。</p>
+
+<h3>网络由什么组成</h3>
+<ul>
+  <li><strong>端系统（host / end system）</strong>：跑应用的设备，手机、笔记本、服务器。<strong>路由器和交换机不是端系统</strong>，它们是分组交换机。</li>
+  <li><strong>Internet 是网络的网络</strong>：接入网 → 区域 ISP → tier-1 ISP，ISP 之间在 <strong>IXP</strong> 互联；Google 等内容提供商自建网络，绕开 tier-1。不让所有 ISP 两两直连，是因为要 $N(N-1)/2$ 条线，$O(N^2)$ 扩展不了。</li>
+  <li><strong>协议三要素</strong>：消息格式、消息顺序、收发时的动作。规范叫 <strong>RFC</strong>，由 <strong>IETF</strong> 发布。</li>
+</ul>
+
+<h3>Routing vs forwarding</h3>
+<div class="table-wrap"><table>
+  <tr><th></th><th>Forwarding 转发</th><th>Routing 路由</th></tr>
+  <tr><td>范围</td><td><strong>本地</strong>：一个路由器内</td><td><strong>全局</strong>：整个网络</td></tr>
+  <tr><td>做什么</td><td>查转发表，把分组从输入口挪到输出口</td><td>算源到目的的路径，更新各路由器的转发表</td></tr>
+  <tr><td>类比</td><td>到了路口决定左转还是右转</td><td>GPS 规划整条路线</td></tr>
+</table></div>
+
+<h3>FDM vs TDM（电路交换的两种切法）</h3>
+<div class="table-wrap"><table>
+  <tr><th></th><th>FDM 频分</th><th>TDM 时分</th></tr>
+  <tr><td>按什么切</td><td>频率</td><td>时间</td></tr>
+  <tr><td>每个用户</td><td><strong>一直</strong>能发，但只用自己那条<strong>窄</strong>频带</td><td>只在<strong>自己的时隙</strong>发，但用<strong>整条</strong>频带</td></tr>
+</table></div>
+
+<h3>分组交换 vs 电路交换优缺点</h3>
+<div class="table-wrap"><table>
+  <tr><th>分组交换</th><th>电路交换</th></tr>
+  <tr><td>适合<strong>突发</strong>数据；资源共享不浪费；不用建立呼叫</td><td>性能有保证，不排队</td></tr>
+  <tr><td>可能拥塞、排队、丢包；需要可靠传输和拥塞控制协议</td><td>空闲时预留资源也空着，<strong>别人用不了</strong></td></tr>
+</table></div>
+
+<h3>接入网与物理介质</h3>
+<div class="table-wrap"><table>
+  <tr><th>接入方式</th><th>判断要点</th></tr>
+  <tr><td>Cable / HFC</td><td>用 FDM 分信道；<strong>多户共享</strong>到 CMTS 的线路</td></tr>
+  <tr><td>DSL</td><td>复用<strong>现有电话线</strong>到 DSLAM；<strong>每户专用</strong></td></tr>
+  <tr><td>NBN FTTN / FTTC / FTTP</td><td>光纤铺到节点 / 路边 / 家里；剩下的铜线是瓶颈，FTTP 最好</td></tr>
+  <tr><td>Wi-Fi 802.11 b/g/n</td><td>约 30 m；11 / 54 / 450 Mbps</td></tr>
+  <tr><td>卫星（地球同步）</td><td>端到端时延约 <strong>270 ms</strong></td></tr>
+</table></div>
+<ul>
+  <li><strong>上下行不对称</strong>：家庭用户主要在下载，所以下行给更多带宽。</li>
+  <li><strong>光纤</strong>：误码率低、不受电磁干扰、适合长距离；铜线越长损耗越大。光纤是玻璃，不能随意弯折。</li>
+  <li><strong>无线电</strong>：会受反射、遮挡、干扰影响。</li>
+</ul>
+
+<div class="mcq" data-answer="0,1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">下列哪些是端系统（end system）？</div>
+  <ol class="mcq-src">
+    <li>笔记本电脑</li>
+    <li>Web 服务器</li>
+    <li>核心路由器</li>
+    <li>链路层交换机</li>
+  </ol>
+  <div class="mcq-exp">路由器和交换机是分组交换机，在网络中间负责转发，不是端系统。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。先判断是哪个题型，再动笔算。来源标「样卷」「讲义」「Lab」「Midterm 练习」的是课程材料里的原题或原数据，标「自拟」的是我按考点出的。</p>
+
+<div class="mcq" data-answer="1" data-src="样卷 Q1.1">
+  <div class="mcq-q">150 Mbps 链路，每个电路交换用户要 20 Mbps。最多支持几个用户？</div>
+  <ol class="mcq-src"><li>1</li><li>7</li><li>10</li><li>100</li></ol>
+  <div class="mcq-exp">$\lfloor 150/20 \rfloor = \lfloor 7.5 \rfloor = 7$，向下取整。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Midterm 练习">
+  <div class="mcq-q">3 段链路，分组 8000 bits，$s = 3\times10^8$ m/s；链路 1：20 Mbps、2 km；链路 2：500 Mbps、4000 km；链路 3：50 Mbps、5 km。端到端时延（传输 + 传播）约为？</div>
+  <ol class="mcq-src"><li>0.58 ms</li><li>4.07 ms</li><li>13.93 ms</li><li>40.00 ms</li></ol>
+  <div class="mcq-exp">逐段 $L/R + d/s$ 相加，见题型 2 的表格。A 只算了传输时延。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="样卷 Q1.4">
+  <div class="mcq-q">分组交换，13 个用户，每人 20% 的时间在发。<strong>任意一个</strong>用户在发、其余都不发的概率？</div>
+  <ol class="mcq-src"><li>0.18</li><li>0.018</li><li>0.0018</li><li>0.00018</li></ol>
+  <div class="mcq-exp">任意一个，乘 13：$13 \times 0.2 \times 0.8^{12} = 13 \times 0.0137 = 0.18$。官方答案框误印成 0.005，以官方解题文字为准。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="复习课 Caravan">
+  <div class="mcq-q">10 辆车，收费站每车 12 s，两站相距 100 km，车速 100 km/h。整个车队在第 2 个收费站前排好要多久？</div>
+  <ol class="mcq-src"><li>60 min</li><li>62 min</li><li>80 min</li><li>120 min</li></ol>
+  <div class="mcq-exp">传输 2 min + 传播 60 min = 62 min。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="Kurose 交互题型">
+  <div class="mcq-q">下列关于时延的说法正确的是？</div>
+  <ol class="mcq-src">
+    <li>传播时延与分组长度无关</li>
+    <li>传输时延与链路长度无关</li>
+    <li>排队时延与拥塞程度有关</li>
+    <li>速率翻倍，传播时延减半</li>
+  </ol>
+  <div class="mcq-exp">D 错：速率只影响传输时延，传播时延只看距离和信号速度。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="Midterm 练习">
+  <div class="mcq-q">4 对服务器和客户共享 $R = 120$ Mbps 主干；$R_s = 80$ Mbps，$R_c = 15$ Mbps。主干 $R$ 的利用率是？</div>
+  <ol class="mcq-src"><li>0.1875</li><li>0.125</li><li>1.00</li><li>0.50</li></ol>
+  <div class="mcq-exp">每对 $\min(80, 15, 30) = 15$；主干 $4 \times 15 / 120 = 0.5$。A 是 $R_s$ 的利用率。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="样卷 Q1.7">
+  <div class="mcq-q">13 个分组交换用户，每人 20% 时间在发，链路最多撑 7 人同时发。超过 7 人同时在发的概率？</div>
+  <ol class="mcq-src"><li>0.012</li><li>0.0012</li><li>0.00012</li><li>0.000012</li></ol>
+  <div class="mcq-exp">$k{=}8$：$1287 \times 0.2^8 \times 0.8^5 = 0.00108$；$k{=}9$：$715 \times 0.2^9 \times 0.8^4 = 0.00015$；合计约 0.0012。官方答案框误印 0.000073。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Lab 2">
+  <div class="mcq-q">报文 $8\times10^6$ bits 经过 3 段 2 Mbps 链路（存储转发），切成 800 个 $10^4$ bits 的分组。端到端时延？</div>
+  <ol class="mcq-src"><li>4.00 s</li><li>4.01 s</li><li>12.00 s</li><li>12.01 s</li></ol>
+  <div class="mcq-exp">$(3 + 800 - 1) \times 5$ ms = 4.01 s。C 是不切分。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Midterm 练习">
+  <div class="mcq-q">100 Mbps 链路，8 个分组交换用户，每人发时要 25 Mbps，15% 的时间在发。<strong>任意一个</strong>用户在发、其余沉默的概率约为？</div>
+  <ol class="mcq-src"><li>0.048</li><li>0.385</li><li>0.150</li><li>0.663</li></ol>
+  <div class="mcq-exp">$8 \times 0.15 \times 0.85^7 = 8 \times 0.15 \times 0.3206 = 0.385$。A 是漏乘 8。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">路径上三段链路 500 kbps、2 Mbps、1 Mbps。传一个 4 MB 的文件大约要多久？</div>
+  <ol class="mcq-src"><li>2 s</li><li>16 s</li><li>32 s</li><li>64 s</li></ol>
+  <div class="mcq-exp">瓶颈 500 kbps；$4 \times 8 \times 10^6 = 3.2\times10^7$ bits；$3.2\times10^7 / 5\times10^5 = 64$ s。B 是忘了字节乘 8。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Caravan 变形">
+  <div class="mcq-q">车速 1000 km/h，收费站每车 1 min，两站相距 100 km，共 10 辆车。第 1 辆车到达第 2 站时，第 1 站还剩几辆没放行？</div>
+  <ol class="mcq-src"><li>0</li><li>3</li><li>6</li><li>7</li></ol>
+  <div class="mcq-exp">第 1 辆车 1 min 放行 + 6 min 路程 = 第 7 min 到达；此时放行了 7 辆，还剩 3 辆。</div>
+</div>
+
+<div class="mcq" data-answer="1,2,3" data-src="自拟">
+  <div class="mcq-q">关于电路交换和分组交换，下列说法正确的是？</div>
+  <ol class="mcq-src">
+    <li>电路交换空闲时资源可给别人</li>
+    <li>TDM 用户在自己时隙用整条频带</li>
+    <li>分组交换适合突发性的数据</li>
+    <li>分组交换需要额外拥塞控制</li>
+  </ol>
+  <div class="mcq-exp">A 错：电路交换的预留资源在空闲时也空着，别人用不了。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">forwarding（转发）和 routing（路由）的区别，正确的是？</div>
+  <ol class="mcq-src">
+    <li>转发是全局动作，路由是本地动作</li>
+    <li>转发查表送到输出口，路由算路径更新表</li>
+    <li>两者只是同一件事的不同叫法</li>
+    <li>路由只在端系统上进行，不在路由器</li>
+  </ol>
+  <div class="mcq-exp">转发 = 本地查表；路由 = 全局算路径并更新转发表。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>电路交换人数 $\lfloor C/r \rfloor$，<strong>向下取整</strong>。</li>
+  <li>二项分布：指定的人不乘 $\binom{n}{k}$，任意的人要乘；「超过 $m$」算前两项。</li>
+  <li>传输 $L/R$ 与距离无关；传播 $d/s$ 与分组大小、速率无关；多段逐段相加。字节先乘 8。</li>
+  <li>Caravan：传输（车数 × 放行时间）+ 传播（最后一辆车的路程），62 min。</li>
+  <li>吞吐量 $\min(R_s, R_c, R/n)$；瓶颈利用率 1；问哪条链路就算哪条。</li>
+  <li>分段流水线 $(N+P-1)\,L/R$。</li>
+  <li>流量强度 $La/R$：接近 1 排队剧增，大于 1 必然丢包。</li>
+  <li>端系统不含路由器；转发本地、路由全局；FDM 一直用窄带、TDM 轮流用整带。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>最值得读的是课本 <strong>Kurose &amp; Ross, <em>Computer Networking: A Top-Down Approach</em> 第 1 章 1.3–1.4 节</strong>（分组交换、电路交换、时延、吞吐量），讲义的例子都出自这里。作者网站的 <a href="https://gaia.cs.umass.edu/kurose_ross/interactive/" target="_blank" rel="noopener">交互练习题</a> 会随机换数字，适合反复练题型 2 和题型 4（老师在 Ed #71 推荐过）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week02-performance.html" target="_blank" rel="noopener">W02 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 02</a> 和 Sample Exam 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

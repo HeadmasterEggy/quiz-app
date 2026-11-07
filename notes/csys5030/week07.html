@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSYS5030 W07 统计显著性</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← CSYS5030 目录</a>
+  <span>Week 07</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W07 统计显著性与欠采样</h1>
+<p class="subtitle">对应 Module 7（以及 Module 6 Item 8C）。估计值是否「与 0 一致」：surrogate、p 值、χ² 解析检验、样本量、自相关和非平稳。样卷 Q18 的自相关题在这一周。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 Surrogate 与 p 值</a></td><td class="c"><span class="stars">★★★</span></td><td>打乱 / 旋转源：保边际、破联合</td></tr>
+    <tr><td><a href="#t2">2 解析 χ² vs bootstrap</a></td><td class="c"><span class="stars">★★</span></td><td>Discrete、Gaussian 有；KSG 没有</td></tr>
+    <tr><td><a href="#t3">3 样本量与「不显著」</a></td><td class="c"><span class="stars">★★★</span></td><td>N ≥ 3×（最好 10×）状态配置数；不显著 ≠ 无关</td></tr>
+    <tr><td><a href="#t4">4 自相关与非平稳</a></td><td class="c"><span class="stars">★★★</span></td><td>KSG 加 Theiler window；非平稳取 log 差分</td></tr>
+    <tr><td><a href="#t5">5 多个滞后都有 MI：用 CMI 区分</a></td><td class="c"><span class="stars">★★</span></td><td>CMI = 0 冗余；&gt; 0 独有或协同</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　Surrogate 与 p 值 <span class="stars">★★★</span></h2>
+<p>理论上 $I = 0$ ⟺ 独立，但有限样本即使独立也几乎总测出非零值。问题是：这个值<strong>与 0 一致吗</strong>？</p>
+<div class="formula">$$H_0:\ X \perp Y\qquad p = P\big(I_{\text{surr}} \ge I_{\text{meas}} \mid H_0\big)\qquad p &lt; \alpha = 0.05 \Rightarrow \text{拒绝 } H_0$$</div>
+<div class="box method">
+  <span class="box-title">生成 surrogate 分布</span>
+  <ol class="steps">
+    <li>原配对算实测值 $I_{\text{meas}}$。</li>
+    <li><strong>打乱源 $Y$</strong>：保留 $Y$ 的边际分布，破坏 $X$、$Y$ 的联合依赖；算一次 MI。</li>
+    <li>重复 $S$ 次得到零分布（噪声底）。</li>
+    <li>p 值 = surrogate 中 ≥ 实测值的比例。</li>
+  </ol>
+</div>
+<ul>
+  <li><strong>时间序列</strong>：打乱会破坏自相关，改用<strong>旋转（循环平移）</strong>一条序列。</li>
+  <li><strong>CMI 检验</strong>：打乱源，<strong>保持目标和条件变量在一起</strong>。</li>
+  <li><strong>偏差修正</strong>：$I_{\text{corr}} = I_{\text{meas}} - \langle I_{\text{surr}}\rangle$。离散时也有人除以熵把 MI 归一化到 [0, 1]。</li>
+  <li>JIDT 默认 <strong>100 个 surrogate，太少</strong>；<strong>bootstrap 的 p 值本身是随机的</strong>，弱关系时会跳。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="讲课 · 检查一下">
+  <div class="mcq-q">打乱源变量 $Y$ 来生成 surrogate，目的是？</div>
+  <ol class="mcq-src"><li>同时保留边际和联合依赖</li><li>保留边际分布、破坏联合依赖</li><li>破坏边际分布、保留联合依赖</li><li>减少样本数加快计算</li></ol>
+  <div class="mcq-exp">得到「若独立会测到什么」的分布。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　解析 χ² vs bootstrap <span class="stars">★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th></th><th>Bootstrap（surrogate）</th><th>解析（χ²）</th></tr>
+  <tr><td>谁能用</td><td>所有估计器</td><td><strong>Discrete</strong>（自由度看字母表大小）、<strong>Gaussian</strong>（看维数）；<strong>KSG 没有</strong></td></tr>
+  <tr><td>速度</td><td>慢</td><td><strong>快</strong></td></tr>
+  <tr><td>随机性</td><td>p 值随机</td><td><strong>确定</strong></td></tr>
+  <tr><td>准确</td><td>surrogate 够多时最准</td><td><strong>近似</strong>；小样本、时间序列时不准</td></tr>
+</table></div>
+<p>原理（不用背）：$H_0$ 下 $2N \cdot I$（nats）近似 χ²；离散自由度 $(|\mathcal A_X|-1)(|\mathcal A_Y|-1)$，Gaussian $d_X d_Y$。单变量 Gaussian 零分布均值 ≈ $1/(2N)$：<strong>样本多 10 倍，零分布缩到约 1/10</strong>。</p>
+
+<div class="mcq" data-answer="2" data-src="讲课 · 检查一下">
+  <div class="mcq-q">JIDT 里哪个估计器不能勾选「解析显著性」？</div>
+  <ol class="mcq-src"><li>Discrete</li><li>Gaussian</li><li>KSG</li><li>三个都能</li></ol>
+  <div class="mcq-exp">KSG 的零分布没有已知解析形式。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　样本量与「不显著」 <span class="stars">★★★</span></h2>
+<p>「需要多少样本」要先说清楚问什么：</p>
+<ul>
+  <li><strong>检测到显著关系</strong>：取决于<strong>关系多强</strong>，越弱越要多。</li>
+  <li><strong>避免欠采样</strong>：取决于<strong>估计器</strong>，Gaussian 比 KSG 要的少（model-based）。</li>
+</ul>
+<div class="formula">$$\text{离散启发式：}\ N \ge 3 \times \text{状态配置数（下限）},\quad N \ge 10\times\text{（像样）},\quad \text{状态配置数} = \prod_i |\mathcal{A}_i|$$</div>
+<p>假设各配置大致等可能；分布偏斜要更多。Seinfeld 27 个字符：前 1 个 → 下一个是 $27^2 = 729$ 个配置，10× 约 7 300；前 2 个 → $27^3 = 19\,683$，约 20 万。<strong>每往回多看一个，指数增长</strong>。</p>
+<p>连续：kernel width 大致<strong>不超过标准差</strong>；15 个样本用任何连续估计器都不会好。</p>
+<h3>surrogate 实验（Item 4）</h3>
+<div class="table-wrap"><table>
+  <tr><th>设置</th><th>结果</th></tr>
+  <tr><td>N 100 → 1000（无耦合）</td><td>零分布<strong>窄了约 10 倍</strong></td></tr>
+  <tr><td>N = 1000，耦合 0.01</td><td>p = 0.12，<strong>不显著，但确实有弱耦合</strong></td></tr>
+  <tr><td>N = 10 000，耦合 0.05</td><td>远在零分布之外，强显著</td></tr>
+  <tr><td>KSG，N = 1000</td><td>零分布<strong>以 0 为中心、可负、宽得多</strong>（±0.06 vs Gaussian &lt; 0.01）</td></tr>
+</table></div>
+<div class="box trap">
+  <span class="box-title">不显著 ≠ 没有关系</span>
+  <p>只能说「现有样本量下<strong>无法拒绝</strong>零假设」。样本多了，实测值更稳、零分布更窄，弱关系更容易冒出来。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课 · 检查一下">
+  <div class="mcq-q">$X$、$Y$ 各有 4 个取值，用离散估计 MI。按「10×」的启发式，大约需要多少样本？</div>
+  <ol class="mcq-src"><li>40</li><li>80</li><li>160</li><li>16</li></ol>
+  <div class="mcq-exp">状态配置数 4 × 4 = 16，×10。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　自相关与非平稳 <span class="stars">★★★</span></h2>
+<p>自相关让样本<strong>不独立</strong>，而独立是估计器、尤其显著性检验的前提：</p>
+<ul>
+  <li><strong>Gaussian 解析检验</strong>：把 N 当独立样本数，自相关时失真。</li>
+  <li><strong>KSG</strong>：时间相邻的样本在联合空间也挨得近 → 近邻被它们占据 → 盒子变小 → 边际计数变少 → <strong>MI 被人为抬高</strong>。</li>
+  <li><strong>Surrogate</strong>：打乱破坏了源的自相关。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">修正步骤</span>
+  <ol class="steps">
+    <li>画自相关图，看自相关到第几个滞后才进入显著性带内（或第一次过零）。</li>
+    <li>取两个变量里<strong>最长的自相关长度</strong>，设 <strong><code>DYN_CORR_EXCL</code>（Theiler window）</strong>：找近邻时忽略时间上太近的样本。</li>
+    <li>重新估计，看 MI 是否下降、是否仍显著。神经数据（尤其 fMRI）几乎总要加。</li>
+  </ol>
+</div>
+<div class="box trap">
+  <span class="box-title">非平稳</span>
+  <p>股价这类严重非平稳的数据，样本不来自同一过程，<strong>Theiler window 也救不了</strong>。先取<strong>差分或 log 差分（log returns）</strong>变平稳，这同时把问题变成「每日变化之间的关系」。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="样卷 Q18 · 检查一下">
+  <div class="mcq-q">某变量自相关在滞后 1 约 0.95，平滑衰减，到滞后约 15 仍显著。可以推出？①用 KSG 应设 dynamic correlation exclusion　②应预期显著的 AIS</div>
+  <ol class="mcq-src"><li>只有 ①</li><li>只有 ②</li><li>① 和 ② 都对</li><li>都不对</li></ol>
+  <div class="mcq-exp">① Theiler window ≈ 15；② 强自相关意味着过去能预测下一个值（W10 的信息存储）。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　多个滞后都有 MI：用 CMI 区分 <span class="stars">★★</span></h2>
+<p>心率 → 呼吸的 KSG MI 在多个滞后都不小，最大在 lag 7 ≈ 0.144 nats。两种可能：只有一个机制但<strong>自相关</strong>造成相邻滞后的假象；或真有多个机制。</p>
+<div class="formula">$$I\big(\text{breath}_t;\ \text{heart}_{t-l}\ \big|\ \text{heart}_{t-7}\big)$$</div>
+<ul>
+  <li>CMI = 0（显著性检验后）：lag $l$ 没有新信息，<strong>冗余</strong>。</li>
+  <li>CMI &gt; 0：额外信息可能是<strong>独有的</strong>，也可能是<strong>协同的</strong>，或两者都有（条件化去冗余、加协同）。</li>
+  <li>两个源一起：$I(X;Y,Z) = I(X;Y) + I(X;Z\mid Y)$。</li>
+  <li>局部 MI：<code>computeLocalOfPreviousObservations()</code>，顺序和输入样本一致；高局部 MI 集中在心率高（85–92）的区域。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">N = 1000、弱耦合，MI = 0.0011 nats，p = 0.12。正确的结论是？</div>
+  <ol class="mcq-src"><li>证明了两变量独立</li><li>现有样本下无法拒绝独立</li><li>关系显著但很弱</li><li>估计器偏差太大</li></ol>
+  <div class="mcq-exp">不显著 ≠ 没有关系。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲课">
+  <div class="mcq-q">为什么时间序列的 surrogate 更适合用旋转而不是打乱？</div>
+  <ol class="mcq-src"><li>旋转保留源的自相关</li><li>旋转计算更快</li><li>旋转能保留联合依赖</li><li>旋转能消除非平稳</li></ol>
+  <div class="mcq-exp">打乱破坏了时间结构，零分布就不代表同样的序列。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">做 CMI $I(X;Y\mid Z)$ 的显著性检验，应该？</div>
+  <ol class="mcq-src"><li>三个变量都打乱</li><li>打乱目标 $X$</li><li>打乱源 $Y$，$X$ 与 $Z$ 保持在一起</li><li>打乱条件 $Z$</li></ol>
+  <div class="mcq-exp">保留目标与条件之间的关系。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="讲课">
+  <div class="mcq-q">样本数增加时，下面哪些会发生？</div>
+  <ol class="mcq-src"><li>零分布变窄</li><li>实测值波动变小</li><li>真实 MI 变大</li><li>p 值一定变大</li></ol>
+  <div class="mcq-exp">真值不随样本变；弱关系更容易被检测到，p 值通常变小。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲课">
+  <div class="mcq-q">强自相关的数据直接用 KSG，MI 估计会？</div>
+  <ol class="mcq-src"><li>被低估</li><li>被人为抬高</li><li>不受影响</li><li>变成负数</li></ol>
+  <div class="mcq-exp">近邻被时间相邻的样本占据，盒子过小。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="讲课">
+  <div class="mcq-q">分析两只股票的价格关系，最合适的预处理是？</div>
+  <ol class="mcq-src"><li>直接用原始价格</li><li>设很大的 Theiler window</li><li>把价格分成 4 个箱</li><li>取相邻两天的 log 差分</li></ol>
+  <div class="mcq-exp">原始价格严重非平稳，exclusion 窗口救不了。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲课">
+  <div class="mcq-q">JIDT 默认用 100 个 surrogate 算 p 值。下列说法正确的是？</div>
+  <ol class="mcq-src"><li>100 个足够精确</li><li>p 值每次都相同</li><li>要精确应加大 surrogate 数</li><li>surrogate 越多 p 越小</li></ol>
+  <div class="mcq-exp">100 只是为了生成代码时跑得快；bootstrap 的 p 值是随机的。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">实测 MI = 0.05，1000 个 surrogate 里有 30 个 ≥ 0.05。p 值和结论是？</div>
+  <ol class="mcq-src"><li>0.30，不显著</li><li>0.03，在 α = 0.05 下显著</li><li>0.97，显著</li><li>0.05，正好临界</li></ol>
+  <div class="mcq-exp">30/1000。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="讲课">
+  <div class="mcq-q">同一个线性高斯关系，KSG 比 Gaussian 需要更多样本才显著，主要因为？</div>
+  <ol class="mcq-src"><li>KSG 零分布更宽</li><li>KSG 没有偏差修正</li><li>KSG 只看线性</li><li>KSG 输出单位不同</li></ol>
+  <div class="mcq-exp">对任何关系都敏感，统计波动影响更大。</div>
+</div>
+
+<h3>简答练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>你用 KSG 测两个 EEG 通道之间的 MI，得到 0.08 nats。写出你接下来要做的两项检查，各自为什么要做。</summary>
+  <div class="sa-ans">
+    <p>1. <strong>统计显著性</strong>：用（旋转的）surrogate 生成零分布，算 p 值。有限样本下即使独立也会测到非零值，要判断 0.08 是否与 0 一致。</p>
+    <p>2. <strong>自相关</strong>：神经数据几乎总是强自相关，画自相关图，把最长自相关长度设为 <code>DYN_CORR_EXCL</code> 重算；否则近邻被时间相邻样本占据，MI 被抬高，检验也失真。（也可答：检查平稳性。）</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">简答 · 自拟</span>心率在滞后 3 和滞后 7 都对呼吸有显著 MI。怎样判断滞后 3 是否提供了滞后 7 之外的信息？如果有，可能是哪种信息？</summary>
+  <div class="sa-ans">
+    <p>算 $I(\text{breath}_t; \text{heart}_{t-3}\mid\text{heart}_{t-7})$ 并做显著性检验（打乱源，保持目标与条件在一起）。</p>
+    <p>不显著：滞后 3 的信息与滞后 7 冗余（可能只是自相关）。显著：提供了额外信息，可能是独有信息，也可能是两者合起来才有的协同信息，或都有。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$H_0$ 独立；p = surrogate ≥ 实测的比例；打乱保边际破联合；时间序列用旋转；CMI 保目标与条件在一起。</li>
+  <li>偏差修正 $I - \langle I_s\rangle$；默认 100 个 surrogate 太少；bootstrap p 值随机。</li>
+  <li>χ² 解析：Discrete、Gaussian 有，KSG 没有；快、确定、近似。</li>
+  <li>N ≥ 3×（最好 10×）状态配置数，配置数指数增长；不显著 ≠ 无关。</li>
+  <li>样本多 → 零分布窄、实测稳；KSG 零分布以 0 为中心、更宽。</li>
+  <li>自相关 → <code>DYN_CORR_EXCL</code> = 最长自相关长度；非平稳 → log 差分。</li>
+  <li>多滞后都有 MI：用 CMI，= 0 冗余，&gt; 0 独有或协同。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>读 <strong>Lizier JIDT 论文附录 A.5「Statistical significance testing」</strong>（本周主要参考）；学完 W11 后再看 Bossomaier et al. §4.5.1。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/csys5030-week07-statistical-significance.html" target="_blank" rel="noopener">W07 周笔记</a>，以及题库里的 <a href="../../index.html">CSYS5030 Week 7</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

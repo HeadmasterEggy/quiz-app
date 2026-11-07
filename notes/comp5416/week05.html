@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W05 传输层与可靠传输</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 05</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W05 传输层与可靠数据传输</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 3.1–3.4 节。W13 复习课专门用 N = 4、pkt2 丢失的例子对比了 GBN 和 SR。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 GBN vs Selective Repeat</a></td><td class="c"><span class="stars">★★★</span></td><td>丢 pkt2：GBN 重传 4 个，SR 重传 1 个</td></tr>
+    <tr><td><a href="#t2">2 停等利用率</a></td><td class="c"><span class="stars">★★★</span></td><td>$U = \frac{L/R}{RTT + L/R}$，流水线乘 $N$</td></tr>
+    <tr><td><a href="#t3">3 多路分解：UDP 二元组 vs TCP 四元组</a></td><td class="c"><span class="stars">★★★</span></td><td>问「进几个 socket」</td></tr>
+    <tr><td><a href="#t4">4 Internet 校验和</a></td><td class="c"><span class="stars">★★</span></td><td>相加、回卷、取反</td></tr>
+    <tr><td><a href="#t5">5 rdt 1.0 → 3.0</a></td><td class="c"><span class="stars">★★</span></td><td>每一版加了什么</td></tr>
+    <tr><td><a href="#t6">6 UDP 与传输层概念</a></td><td class="c"><span class="stars">★★</span></td><td>为什么要 UDP；首部 8 字节</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　GBN vs Selective Repeat <span class="stars">★★★</span></h2>
+
+<p>两种<strong>流水线</strong>协议：发送方最多 $N$ 个已发未确认的分组在路上。区别在接收方怎么回 ACK、发送方怎么重传。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>Go-Back-N</th><th>Selective Repeat</th></tr>
+  <tr><td>ACK</td><td><strong>累积</strong>：ACK(n) = n 及以前全收到</td><td><strong>每个分组单独</strong> ACK</td></tr>
+  <tr><td>收到乱序分组</td><td><strong>丢掉不缓存</strong>，重发最后按序收到的 ACK</td><td><strong>缓存</strong>，回这个分组自己的 ACK</td></tr>
+  <tr><td>定时器</td><td><strong>一个</strong>，给最老的未确认分组</td><td><strong>每个</strong>未确认分组一个</td></tr>
+  <tr><td>超时重传</td><td>这个分组<strong>及其后所有已发出的</strong></td><td><strong>只重传超时的那一个</strong></td></tr>
+  <tr><td>序号空间至少</td><td>$N + 1$</td><td>$2N$</td></tr>
+  <tr><td>特点</td><td>接收方简单，浪费带宽</td><td>接收方要窗口和缓存，省带宽</td></tr>
+</table></div>
+
+<h3>走一遍：N = 4，发 pkt0–5，pkt2 丢了</h3>
+<div class="table-wrap"><table>
+  <tr><th>时刻</th><th>GBN</th><th>SR</th></tr>
+  <tr><td>收到 pkt0、1</td><td>回 ack0、ack1</td><td>回 ack0、ack1</td></tr>
+  <tr><td>发送方收 ack0、1</td><td>窗口滑动，发 pkt4、5</td><td>同左</td></tr>
+  <tr><td>收到 pkt3、4、5</td><td><strong>全丢掉，每次重发 ack1</strong></td><td><strong>缓存</strong>，回 ack3、ack4、ack5</td></tr>
+  <tr><td>pkt2 超时</td><td>重传 <strong>pkt2、3、4、5</strong></td><td>只重传 <strong>pkt2</strong></td></tr>
+  <tr><td>之后</td><td>依次交付，回 ack2–5</td><td>收到 pkt2，<strong>一次交付 2–5</strong>，回 ack2；窗口最左端直接滑到 6</td></tr>
+</table></div>
+
+<div class="box method">
+  <span class="box-title">解法</span>
+  <ol class="steps">
+    <li>GBN 重传数 = 从丢的那个起，到已经发出的最后一个，共几个。</li>
+    <li>SR 只重传丢的那个；接收方回的 ACK 序号就是它收到的分组序号。</li>
+    <li>GBN 接收方收到乱序分组时回的是<strong>最后一个按序收到的</strong>序号（这里是 ack1）。</li>
+  </ol>
+</div>
+
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <ul>
+    <li>SR 接收方收到<strong>已经交付过的旧分组</strong>（序号在 $[\text{rcvbase}-N, \text{rcvbase}-1]$），<strong>仍要回 ACK</strong>：说明发送方没收到之前的 ACK，不回的话发送方窗口动不了。</li>
+    <li>SR 序号空间要 $2N$：太少的话分不清新分组和上一轮的重传。</li>
+    <li>TCP 是混合：累积 ACK、一个定时器（像 GBN），但接收方缓存乱序段、超时只重传一个段（像 SR）。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="2" data-src="复习课 · 检查一下">
+  <div class="mcq-q">GBN，N = 4，发送方发了 pkt0–pkt5，pkt2 丢失、其余都到。pkt2 超时后发送方重传哪些分组？</div>
+  <ol class="mcq-src"><li>只重传 pkt2</li><li>pkt2 和 pkt3</li><li>pkt2、3、4、5</li><li>pkt0 到 pkt5</li></ol>
+  <div class="mcq-exp">GBN 重传超时分组及其后所有已发出的分组。换成 SR 就只重传 pkt2。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　停等利用率与流水线 <span class="stars">★★★</span></h2>
+<p><strong>利用率</strong>：发送方真正在发数据的时间占一个周期的比例。一个周期从发第一个比特，到 ACK 回来，共 $RTT + L/R$；发送方只在前 $L/R$ 里忙：</p>
+<div class="formula">$$U_{\text{停等}} = \frac{L/R}{RTT + L/R}\qquad U_{\text{流水线}} = \frac{N\cdot L/R}{RTT + L/R}$$</div>
+
+<h3>例题（讲义）</h3>
+<p>1 Gbps，RTT 30 ms，分组 8000 bits。</p>
+<ol class="steps">
+  <li>$L/R = 8000/10^9 = 8\ \mu s = 0.008$ ms</li>
+  <li>$U = 0.008/30.008 = 0.00027$</li>
+  <li>吞吐量：每 30.008 ms 发 1 KB，约 <strong>33 kB/s</strong>。1 Gbps 的链路只跑出 33 kB/s：<strong>协议限制了物理资源的使用</strong>。</li>
+  <li>流水线 $N = 3$：$U = 0.0008$。占满链路要 $N = 30.008/0.008 \approx 3751$。</li>
+</ol>
+
+<div class="box trap">
+  <span class="box-title">单位坑</span>
+  <p>$L/R$ 算出来是微秒级，RTT 是毫秒级，先统一单位再除。链路越快、RTT 越大，停等越浪费。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟 · 检查一下">
+  <div class="mcq-q">100 Mbps 链路，RTT = 10 ms，分组 1000 bytes，停等协议。发送方利用率约为？</div>
+  <ol class="mcq-src"><li>0.0010</li><li>0.0079</li><li>0.0800</li><li>0.0741</li></ol>
+  <div class="mcq-exp">$L/R = 8000/10^8 = 0.08$ ms；$U = 0.08/10.08 = 0.0079$。A 是忘了字节乘 8：$0.01/10.01$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　多路分解：UDP 二元组 vs TCP 四元组 <span class="stars">★★★</span></h2>
+<p><strong>多路复用</strong>（发送方）：收集多个 socket 的数据，加上含源 / 目的端口（各 16 位）的首部交给网络层。<strong>多路分解</strong>（接收方）：按首部把段交给正确的 socket。</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th>UDP</th><th>TCP</th></tr>
+  <tr><td>socket 标识</td><td><strong>二元组</strong>：目的 IP + 目的端口</td><td><strong>四元组</strong>：源 IP + 源端口 + 目的 IP + 目的端口</td></tr>
+  <tr><td>不同来源、同一目的端口</td><td><strong>进同一个</strong> socket</td><td><strong>进不同的</strong> socket</td></tr>
+  <tr><td>服务器</td><td>一个 socket 服务所有客户；回复时把收到的源端口填成目的端口</td><td>每条连接一个 socket；非持久 HTTP 每个请求新开一个</td></tr>
+</table></div>
+
+<h3>例题（讲义）</h3>
+<p>三个段都发往 (B, 80)：① 来自 (A, 9157)；② 来自 (C, 5775)；③ 来自 (C, 9157)。</p>
+<ul>
+  <li>TCP：三个四元组都不同 → <strong>3 个</strong> socket。② 和 ③ 只有源端口不同，也分开。</li>
+  <li>UDP：只看 (B, 80) → <strong>1 个</strong> socket。</li>
+</ul>
+
+<div class="mcq" data-answer="0" data-src="讲义 · 检查一下">
+  <div class="mcq-q">上面三个段，如果服务器用 UDP 且端口为 80，进入几个 socket？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>3</li><li>无法判断</li></ol>
+  <div class="mcq-exp">UDP 只看目的 IP 和目的端口。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　Internet 校验和 <span class="stars">★★</span></h2>
+
+<div class="box method">
+  <span class="box-title">算法</span>
+  <ol class="steps">
+    <li>把段内容（含首部）看成一串 16 位整数，全部相加。</li>
+    <li>最高位产生的进位<strong>加回最低位</strong>（回卷，wraparound）。</li>
+    <li>按位<strong>取反</strong>，得到校验和。</li>
+    <li>接收方：所有 16 位字 + 校验和相加（回卷），没错时得<strong>全 1</strong>，取反为全 0。</li>
+  </ol>
+</div>
+
+<h3>例题（讲义）</h3>
+<div class="table-wrap"><table>
+  <tr><td>字 1</td><td><code>1110 0110 0110 0110</code></td></tr>
+  <tr><td>字 2</td><td><code>1101 0101 0101 0101</code></td></tr>
+  <tr><td>相加（17 位）</td><td><code>1 1011 1011 1011 1011</code></td></tr>
+  <tr><td>回卷：进位加到末位</td><td><code>1011 1011 1011 1100</code>（和）</td></tr>
+  <tr><td>取反</td><td><code>0100 0100 0100 0011</code>（校验和）</td></tr>
+</table></div>
+
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <ul>
+    <li>最容易丢分：<strong>忘了回卷</strong>。选项里会有「没回卷直接取反」的 <code>0100 0100 0100 0100</code>，也会有「只算到和、没取反」的结果。</li>
+    <li>校验和<strong>只能检测、不能纠正</strong>，也<strong>检测不出所有错误</strong>（两个比特翻转互相抵消时和不变）。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">两个 16 位字 <code>1000 0000 0000 0001</code> 和 <code>1000 0000 0000 0010</code> 的 Internet 校验和是？</div>
+  <ol class="mcq-src"><li><code>0000 0000 0000 0011</code></li><li><code>1111 1111 1111 1100</code></li><li><code>1111 1111 1111 1011</code></li><li><code>0000 0000 0000 0100</code></li></ol>
+  <div class="mcq-exp">相加得 <code>1 0000 0000 0000 0011</code>，回卷得 <code>0000 0000 0000 0100</code>（D 是和），取反得 C。B 是没回卷直接取反。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　rdt 1.0 → 3.0 <span class="stars">★★</span></h2>
+<p>在不可靠的 IP 上搭出可靠传输。每一版只解决一个新问题：</p>
+<div class="table-wrap"><table>
+  <tr><th>版本</th><th>信道问题</th><th>新增机制</th></tr>
+  <tr><td><strong>1.0</strong></td><td>无</td><td>直接发</td></tr>
+  <tr><td><strong>2.0</strong></td><td>比特翻转</td><td><strong>校验和</strong> + <strong>ACK / NAK</strong> + 收到 NAK 重传</td></tr>
+  <tr><td><strong>2.1</strong></td><td>ACK / NAK 本身也会坏</td><td>分组加<strong>序号</strong>（0、1 两个就够）</td></tr>
+  <tr><td><strong>2.2</strong></td><td>同上</td><td><strong>去掉 NAK</strong>，只用带序号的 ACK</td></tr>
+  <tr><td><strong>3.0</strong></td><td>还会<strong>丢包</strong></td><td><strong>倒计时定时器</strong>，超时重传</td></tr>
+</table></div>
+<ul>
+  <li><strong>2.1 为什么 0、1 就够</strong>：停等协议同一时刻只有一个分组在路上，只要区分「新的」和「上一个的重复」。收到重复分组：丢掉不交付，<strong>但仍回 ACK</strong>。</li>
+  <li><strong>2.2</strong>：对最后一个正确收到的分组回 ACK。等 ACK0 却收到 ACK1，相当于 NAK，重传 pkt0。这就是<strong>重复 ACK</strong>，TCP 快速重传用它（W06）。</li>
+  <li><strong>3.0 的四种情况</strong>：数据丢 → 超时重传；ACK 丢 → 超时重传，接收方发现重复、丢掉、再回 ACK；ACK 只是来晚（过早超时）→ 重传，发送方会收到两个同号 ACK，第二个忽略。</li>
+</ul>
+
+<div class="mcq" data-answer="0,1,3" data-src="讲义 · 检查一下">
+  <div class="mcq-q">rdt 各版本与新增机制的对应，正确的是？</div>
+  <ol class="mcq-src"><li>rdt 2.0：校验和 + ACK/NAK</li><li>rdt 2.1：给分组加上序号</li><li>rdt 2.2：在 2.1 上增加 NAK</li><li>rdt 3.0：加入超时定时器</li></ol>
+  <div class="mcq-exp">rdt 2.2 是<strong>去掉</strong> NAK，用带序号的 ACK 代替。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t6">题型 6　UDP 与传输层概念 <span class="stars">★★</span></h2>
+<ul>
+  <li>传输层提供<strong>进程到进程</strong>的逻辑通信，<strong>只跑在端系统上</strong>，路由器不管传输层。网络层是主机到主机，尽力而为。</li>
+  <li>传输层数据单元叫 <strong>segment</strong>。TCP 和 UDP <strong>都不保证时延和带宽</strong>。</li>
+  <li><strong>UDP</strong>：无修饰，可能丢、可能乱序；无连接。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">为什么要 UDP（四个理由）</span>
+  <ol class="steps">
+    <li>不建连接，少一次握手的时延。</li>
+    <li>简单，收发双方不维护连接状态。</li>
+    <li>首部小：<strong>8 字节</strong>（TCP 至少 20）。</li>
+    <li>没有拥塞控制，想发多快发多快。</li>
+  </ol>
+  <p>用途：流媒体、DNS。要可靠就在应用层自己做（QUIC，W12）。</p>
+</div>
+<p><strong>UDP 首部</strong>：源端口、目的端口、length（含首部的段长，最小 8）、checksum，各 16 位。</p>
+
+<div class="mcq" data-answer="0,1,2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">为什么有些应用选择 UDP？</div>
+  <ol class="mcq-src"><li>不需要建立连接，时延小</li><li>首部只有 8 个字节</li><li>没有拥塞控制，发送速率自定</li><li>UDP 保证按序交付数据</li></ol>
+  <div class="mcq-exp">UDP 不保证按序，也不保证可靠。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">1 Gbps 链路，RTT 30 ms，分组 8000 bits，停等协议的发送方利用率约为？</div>
+  <ol class="mcq-src"><li>0.027</li><li>0.0027</li><li>0.00027</li><li>0.27</li></ol>
+  <div class="mcq-exp">$0.008/30.008 = 0.00027$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="复习课">
+  <div class="mcq-q">GBN，N = 4，发了 pkt0–5，pkt2 丢失。接收方收到 pkt3、4、5 时会？</div>
+  <ol class="mcq-src"><li>缓存并分别回 ack3、ack4、ack5</li><li>丢弃它们，每次都重发 ack1</li><li>丢弃它们，不发出任何 ACK</li><li>缓存它们并且只回一个 ack5</li></ol>
+  <div class="mcq-exp">GBN 接收方不缓存，重发最后按序收到的 ack1。A 是 SR 的行为。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Kurose 交互题型">
+  <div class="mcq-q">计算 <code>1110011001100110</code> 和 <code>1101010101010101</code> 的 Internet 校验和。</div>
+  <ol class="mcq-src"><li><code>1011101110111011</code></li><li><code>1011101110111100</code></li><li><code>0100010001000011</code></li><li><code>0100010001000100</code></li></ol>
+  <div class="mcq-exp">回卷得 B（和），取反得 C。A 没回卷，D 是对 A 取反。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="讲义">
+  <div class="mcq-q">主机 A（端口 9157）和主机 C（端口 5775、9157）各发段到服务器 B 的 80 端口，服务器用 TCP。进入几个 socket？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>3</li><li>无法判断</li></ol>
+  <div class="mcq-exp">四元组都不同。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="复习课">
+  <div class="mcq-q">同样 N = 4、pkt2 丢失，换成 Selective Repeat，pkt2 超时后重传哪些？</div>
+  <ol class="mcq-src"><li>只重传 pkt2</li><li>pkt2 和 pkt3</li><li>pkt2、3、4、5</li><li>pkt0 到 pkt5</li></ol>
+  <div class="mcq-exp">SR 只重传超时的那一个。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">rdt 2.1 为什么只需要 0 和 1 两个序号？</div>
+  <ol class="mcq-src"><li>信道中的分组很少会丢</li><li>停等时只有一个分组在路上</li><li>接收方有足够的缓存</li><li>校验和能区分重复分组</li></ol>
+  <div class="mcq-exp">只需区分「新的」和「上一个的重复」。</div>
+</div>
+
+<div class="mcq" data-answer="0,2,3" data-src="讲义">
+  <div class="mcq-q">关于 GBN 和 SR，正确的是？</div>
+  <ol class="mcq-src"><li>GBN 使用累积 ACK</li><li>GBN 接收方缓存乱序分组</li><li>SR 每个未确认分组一个定时器</li><li>SR 对已交付的旧分组仍回 ACK</li></ol>
+  <div class="mcq-exp">GBN 接收方不缓存乱序分组。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">SR 窗口大小为 4，序号空间至少要多大？</div>
+  <ol class="mcq-src"><li>4</li><li>5</li><li>8</li><li>16</li></ol>
+  <div class="mcq-exp">SR 要 $2N = 8$；GBN 是 $N + 1 = 5$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">rdt 3.0 中 ack1 丢失，发送方超时重传 pkt1。接收方会？</div>
+  <ol class="mcq-src"><li>把 pkt1 再交给上层一次</li><li>识别重复，丢弃，再回 ack1</li><li>向发送方回一个 NAK</li><li>什么都不做，静默丢弃</li></ol>
+  <div class="mcq-exp">不再回 ACK 的话，发送方会一直重传。</div>
+</div>
+
+<div class="mcq" data-answer="0,3" data-src="讲义">
+  <div class="mcq-q">关于 Internet 校验和，正确的是？</div>
+  <ol class="mcq-src"><li>能检测出一部分比特错误</li><li>能纠正检测到的比特错误</li><li>一定能检测出所有比特错误</li><li>相加时最高位进位要加回结果</li></ol>
+  <div class="mcq-exp">只检测不纠正，两个比特翻转互相抵消时检测不出。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">UDP 首部有多少字节？</div>
+  <ol class="mcq-src"><li>4</li><li>8</li><li>16</li><li>20</li></ol>
+  <div class="mcq-exp">4 个 16 位字段。20 是 TCP 的最小首部。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲义">
+  <div class="mcq-q">关于传输层，正确的是？</div>
+  <ol class="mcq-src"><li>提供进程到进程的逻辑通信</li><li>路由器上也运行传输层协议</li><li>传输层数据单元叫 segment</li><li>TCP 能够保证时延的上限</li></ol>
+  <div class="mcq-exp">传输层只跑在端系统上；TCP 不保证时延。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>GBN：累积 ACK、丢乱序、一个定时器、重传后面全部；SR：单独 ACK、缓存、每包定时器、只重传一个。N = 4 丢 pkt2：GBN 重传 4 个，SR 1 个。</li>
+  <li>SR 对已交付旧分组仍回 ACK；序号空间 停等 2、GBN $N+1$、SR $2N$。</li>
+  <li>$U = \frac{L/R}{RTT+L/R}$，流水线乘 $N$；1 Gbps、30 ms、8000 bits → 0.00027。</li>
+  <li>UDP 二元组（目的 IP + 端口），TCP 四元组。</li>
+  <li>校验和：相加、回卷、取反；接收方得全 1；只检测不纠正。</li>
+  <li>rdt：2.0 校验和 + ACK/NAK；2.1 序号；2.2 去掉 NAK；3.0 定时器。</li>
+  <li>UDP：不建连、无状态、8 字节首部、无拥塞控制；TCP、UDP 都不保证时延和带宽。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>最值得读的是 <strong>Kurose &amp; Ross 第 3 章 3.1–3.4 节</strong>，rdt 的状态机和 GBN / SR 的时序图都在 3.4。作者网站有 <a href="https://gaia.cs.umass.edu/kurose_ross/interactive/" target="_blank" rel="noopener">GBN、SR 和校验和的交互练习</a>。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week05-transport.html" target="_blank" rel="noopener">W05 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 05</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

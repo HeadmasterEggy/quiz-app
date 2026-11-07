@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W09 流媒体起播与卡顿</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 09</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W09 流媒体起播与卡顿（Tutorial）</h1>
+<p class="subtitle">W09 讲课是 SDN / SKA 嘉宾讲座，<strong>不考</strong>（Ed #45）。要考的是这周 tutorial 的流媒体计算，W13 复习课也专门讲了播放缓冲。基础概念见 <a href="week08.html#t1">W08 题型 1</a>。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 按块播放：几块按时、缓冲几块、最小起播</a></td><td class="c"><span class="stars">★★★</span></td><td>第 k 块在 $s + (k-1)\Delta$ 播</td></tr>
+    <tr><td><a href="#t2">2 HTTP 流：播放 / 卡顿时长</a></td><td class="c"><span class="stars">★★★</span></td><td>$Q/(r-x)$ 和 $Q/x$，占比 $x/r$</td></tr>
+    <tr><td><a href="#t3">3 HTTP 流：缓冲填满时间</a></td><td class="c"><span class="stars">★★</span></td><td>$Q/x + (B-Q)/(x-r)$</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　按块播放：几块按时、缓冲几块、最小起播 <span class="stars">★★★</span></h2>
+<p>视频固定码率，每块播放时长 Δ。服务器在 $t_0, t_0+\Delta, \dots$ 依次发出各块，网络时延会变，到达时间不规则。开播后每块在前一块之后 Δ 播放。</p>
+<div class="formula">$$\text{从 } s \text{ 起播：第 } k \text{ 块播放时刻} = s + (k-1)\Delta\qquad \text{按时} \iff \text{到达} \le \text{播放时刻}$$</div>
+
+<div class="box method">
+  <span class="box-title">三类问题的做法</span>
+  <div class="table-wrap"><table>
+    <tr><th>问题</th><th>做法</th></tr>
+    <tr><td>从 s 起播，几块按时</td><td>每块比较「到达时间」和 $s + (k-1)\Delta$</td></tr>
+    <tr><td>缓冲里最多几块</td><td>在每个播放时刻数「<strong>已到达、还没轮到播放</strong>」的块</td></tr>
+    <tr><td>最小起播时刻</td><td>每块算「到达时间 − $(k-1)\Delta$」，<strong>取最大值</strong></td></tr>
+  </table></div>
+</div>
+
+<h3>例题：Tutorial Exercise 1（官方答案）</h3>
+<div class="table-wrap"><table>
+  <tr><th class="c">块</th><th>到达时间区间</th></tr>
+  <tr><td class="c">1</td><td>$t_1$</td></tr>
+  <tr><td class="c">2</td><td>$(t_1+\Delta,\ t_1+2\Delta)$</td></tr>
+  <tr><td class="c">3</td><td>$(t_1+2\Delta,\ t_1+3\Delta)$</td></tr>
+  <tr><td class="c">4</td><td>$(t_1+2\Delta,\ t_1+3\Delta)$</td></tr>
+  <tr><td class="c">5</td><td>$(t_1+3\Delta,\ t_1+4\Delta)$</td></tr>
+  <tr><td class="c">6</td><td>$(t_1+4\Delta,\ t_1+5\Delta)$</td></tr>
+  <tr><td class="c">7</td><td>$(t_1+9\Delta,\ t_1+10\Delta)$</td></tr>
+</table></div>
+
+<p><strong>Q1：$t_1$ 就开播</strong>，第 k 块在 $t_1 + (k-1)\Delta$ 播：</p>
+<div class="table-wrap"><table>
+  <tr><th class="c">块</th><th>播放时刻</th><th class="c">按时？</th></tr>
+  <tr><td class="c">1</td><td>$t_1$</td><td class="c">✓</td></tr>
+  <tr><td class="c">2</td><td>$t_1+\Delta$（还没到）</td><td class="c">✗</td></tr>
+  <tr><td class="c">3</td><td>$t_1+2\Delta$（还没到）</td><td class="c">✗</td></tr>
+  <tr><td class="c">4</td><td>$t_1+3\Delta$</td><td class="c">✓</td></tr>
+  <tr><td class="c">5</td><td>$t_1+4\Delta$</td><td class="c">✓</td></tr>
+  <tr><td class="c">6</td><td>$t_1+5\Delta$</td><td class="c">✓</td></tr>
+  <tr><td class="c">7</td><td>$t_1+6\Delta$</td><td class="c">✗</td></tr>
+</table></div>
+<p>答案：<strong>4 块（1、4、5、6）</strong>。</p>
+
+<p><strong>Q2：推迟到 $t_1 + \Delta$</strong>，第 k 块在 $t_1 + k\Delta$ 播：块 1–6 都按时，只有块 7（$t_1+7\Delta$ 播，$t_1+9\Delta$ 后才到）迟到。答案：<strong>6 块</strong>。</p>
+
+<p><strong>Q3：Q2 的情形下缓冲最多几块</strong>：</p>
+<div class="table-wrap"><table>
+  <tr><th>时刻</th><th>缓冲里的块</th><th class="c">数量</th></tr>
+  <tr><td>$t_1+\Delta$</td><td>1</td><td class="c">1</td></tr>
+  <tr><td>$t_1+2\Delta$</td><td>2</td><td class="c">1</td></tr>
+  <tr><td>$t_1+3\Delta$</td><td>3、4</td><td class="c"><strong>2</strong></td></tr>
+  <tr><td>$t_1+4\Delta$</td><td>4、5</td><td class="c"><strong>2</strong></td></tr>
+  <tr><td>$t_1+5\Delta$</td><td>5、6</td><td class="c"><strong>2</strong></td></tr>
+</table></div>
+<p>答案：<strong>最多 2 块</strong>。</p>
+
+<p><strong>Q4：所有块都按时的最小起播时刻</strong>：只差块 7，在 Q2 方案里差 3Δ。<strong>官方答案 $t_1 + 3\Delta$</strong>。</p>
+<div class="box trap">
+  <span class="box-title">注意官方答案</span>
+  <p>按表里的区间严格算，块 7 可能到 $t_1+10\Delta$ 才到，起播要 $t_1 + 4\Delta$（$t_1+\Delta$ 再推 3Δ）。官方和补充解答都写 $t_1 + 3\Delta$，可能原图里块 7 在 $t_1+9\Delta$ 前后就到了。选项里只有官方答案对得上时选 $t_1 + 3\Delta$；题图不同时用上面的公式自己算。</p>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial · 检查一下">
+  <div class="mcq-q">用上面的到达时间表，推迟到 $t_1 + \Delta$ 开始播放，几块能按时？</div>
+  <ol class="mcq-src"><li>4</li><li>5</li><li>6</li><li>7</li></ol>
+  <div class="mcq-exp">只有块 7 迟到。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　HTTP 流：播放与卡顿时长 <span class="stars">★★★</span></h2>
+<div class="table-wrap"><table>
+  <tr><th>符号</th><th>意思</th></tr>
+  <tr><td>B</td><td>客户端应用缓冲<strong>总容量</strong></td></tr>
+  <tr><td>Q</td><td><strong>开播前要先缓冲的比特数</strong>（起播门槛，不是容量）</td></tr>
+  <tr><td>r</td><td>视频消耗速率</td></tr>
+  <tr><td>x</td><td>服务器发送速率（恒定，缓冲没满就一直发）</td></tr>
+</table></div>
+<p>播放时缓冲净变化率 = x − r。<strong>x &lt; r 时播放和卡顿交替</strong>：</p>
+<div class="formula">$$T_{\text{play}} = \frac{Q}{r - x}\qquad T_{\text{freeze}} = \frac{Q}{x}\qquad \text{播放占比} = \frac{x}{r}$$</div>
+<ul>
+  <li>播放期：缓冲从 Q 以 r − x 减少，到 0 就卡。</li>
+  <li>卡顿期：缓冲以 x 重新攒到 Q 再播。</li>
+  <li>播放占比<strong>和 Q 无关</strong>：加大 Q 只让每次播放、每次卡顿都更长。</li>
+</ul>
+<p>例：Q = 1 Mb，r = 2 Mbps，x = 1.5 Mbps → 播放 <strong>2 s</strong>，卡顿 <strong>0.67 s</strong>，占比 75%。</p>
+
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <p>Q 和 B 别混：播放 / 卡顿时长只用 Q；B 只在算「什么时候填满」时用。卡顿时长分母是 x，不是 r − x。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial · 检查一下">
+  <div class="mcq-q">HTTP 流，Q = 1 Mb，r = 2 Mbps，x = 1.5 Mbps。每次卡顿多久？</div>
+  <ol class="mcq-src"><li>0.50 s</li><li>0.67 s</li><li>1.00 s</li><li>2.00 s</li></ol>
+  <div class="mcq-exp">$Q/x = 1/1.5$。D 是播放时长 $Q/(r-x)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　HTTP 流：缓冲填满时间 <span class="stars">★★</span></h2>
+<p><strong>x &gt; r</strong>，缓冲初始为空：</p>
+<div class="formula">$$t_f = \frac{Q}{x} + \frac{B - Q}{x - r}$$</div>
+<ol class="steps">
+  <li>先以 x 攒到 Q：$Q/x$。</li>
+  <li>开播后以净速度 x − r 填剩下的 B − Q。</li>
+  <li>填满后服务器停发，实际发送速率降到 r。</li>
+</ol>
+<p>例：B = 4 Mb，Q = 1 Mb，x = 3 Mbps，r = 2 Mbps → $1/3 + 3/1 \approx$ <strong>3.33 s</strong>。</p>
+
+<div class="mcq" data-answer="2" data-src="Tutorial · 检查一下">
+  <div class="mcq-q">HTTP 流，B = 4 Mb，Q = 1 Mb，x = 3 Mbps，r = 2 Mbps，缓冲初始为空。缓冲什么时候填满？</div>
+  <ol class="mcq-src"><li>1.33 s</li><li>2.00 s</li><li>3.33 s</li><li>4.00 s</li></ol>
+  <div class="mcq-exp">$1/3 + (4-1)/(3-2)$。A 是 $4/3$，忘了开播后净速度只有 1。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>前 4 题用题型 1 的到达时间表。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">块 1 一到（$t_1$）就开始播放，哪些块能按时播放？</div>
+  <ol class="mcq-src"><li>只有块 1</li><li>块 1、4、5、6</li><li>块 1–6</li><li>全部 7 块</li></ol>
+  <div class="mcq-exp">块 2、3 来晚，块 7 严重迟到。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">在 $t_1 + \Delta$ 开播的情况下，缓冲里最多同时有几块在等待播放？</div>
+  <ol class="mcq-src"><li>1</li><li>2</li><li>3</li><li>4</li></ol>
+  <div class="mcq-exp">$t_1 + 3\Delta$ 到 $t_1 + 5\Delta$ 时各有 2 块。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial">
+  <div class="mcq-q">在 $t_1 + \Delta$ 开播的情况下，块 5 的播放时刻是？</div>
+  <ol class="mcq-src"><li>$t_1 + 4\Delta$</li><li>$t_1 + 5\Delta$</li><li>$t_1 + 6\Delta$</li><li>$t_1 + 3\Delta$</li></ol>
+  <div class="mcq-exp">$s + (k-1)\Delta = t_1 + \Delta + 4\Delta$。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="Tutorial">
+  <div class="mcq-q">关于推迟起播时刻，正确的是？</div>
+  <ol class="mcq-src"><li>能让更多的块按时播放</li><li>缓冲里同时等待的块可能更多</li><li>用户要等更久才开始看</li><li>能让平均填充速率变大</li></ol>
+  <div class="mcq-exp">网络送数据的速率不会因为起播晚而变。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Tutorial">
+  <div class="mcq-q">HTTP 流，Q = 1 Mb，r = 2 Mbps，x = 1.5 Mbps。每次连续播放多久？</div>
+  <ol class="mcq-src"><li>0.50 s</li><li>0.67 s</li><li>2.00 s</li><li>4.00 s</li></ol>
+  <div class="mcq-exp">$Q/(r-x) = 1/0.5$。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="自拟">
+  <div class="mcq-q">x &lt; r 时，把起播门槛 Q 加倍，会怎样？</div>
+  <ol class="mcq-src"><li>每次连续播放时间加倍</li><li>每次卡顿时间加倍</li><li>播放时间占比保持不变</li><li>从此不再发生卡顿</li></ol>
+  <div class="mcq-exp">占比是 x/r，与 Q 无关。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">x &lt; r 时，播放时间占总时间的比例是？</div>
+  <ol class="mcq-src"><li>$r/x$</li><li>$x/r$</li><li>$(r-x)/r$</li><li>$Q/B$</li></ol>
+  <div class="mcq-exp">$\frac{Q/(r-x)}{Q/(r-x) + Q/x} = x/r$。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">每块 Δ = 1 s，块 1–4 分别在 0、1.5、3.2、3.5 s 到达。要让所有块都按时，最早什么时候开始播放块 1？</div>
+  <ol class="mcq-src"><li>0.0 s</li><li>0.5 s</li><li>1.0 s</li><li>1.2 s</li></ol>
+  <div class="mcq-exp">到达 − (k−1)Δ：0、0.5、1.2、0.5，取最大 1.2 s。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>第 k 块播放时刻 = 起播 + (k−1)Δ；按时 ⟺ 到达 ≤ 播放时刻。</li>
+  <li>最小起播 = max(到达 − (k−1)Δ)；推迟起播让更多块按时，缓冲可能更满。</li>
+  <li>缓冲里的块 = 已到达、还没播放的块。</li>
+  <li>x &lt; r：播放 Q/(r−x)，卡顿 Q/x，占比 x/r 与 Q 无关。</li>
+  <li>x &gt; r：填满 Q/x + (B−Q)/(x−r)。Q 是门槛，B 是容量。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>以 <strong>W9 tutorial 题目和官方解答</strong>为准；背景读 <strong>Kurose &amp; Ross「Multimedia Networking」章的客户端缓冲一节</strong>（第 7 版 9.2）。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week09-sdn-p4.html" target="_blank" rel="noopener">W09 流媒体 Tutorial 解答</a>，以及 <a href="week08.html">W08 多媒体</a>页。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W05 决策树与集成</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 05</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W05 决策树、规则学习与集成</h1>
+<p class="subtitle">熵与信息增益手算（PE1 Q31，10 分大题）；路径是 AND 规则；Bagging、Boosting、随机森林各自最关键的操作。对应 PE1 Q4、Q11–13、Q31，PE2 Q4、Q11–13。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 熵与信息增益手算</a></td><td class="c"><span class="stars">★★★</span></td><td>父熵 − 按子组大小加权的子熵</td></tr>
+    <tr><td><a href="#t2">2 建树细节与剪枝</a></td><td class="c"><span class="stars">★★</span></td><td>增益偏爱多值特征 → 增益率；后剪枝看验证集</td></tr>
+    <tr><td><a href="#t3">3 规则学习：1R 与 PRISM</a></td><td class="c"><span class="stars">★★</span></td><td>路径 = AND；1R 只用一个特征；PRISM 加条件更纯</td></tr>
+    <tr><td><a href="#t4">4 集成方法</a></td><td class="c"><span class="stars">★★★</span></td><td>Bagging 有放回抽样；AdaBoost 加重错样本；GB 拟合残差</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　熵与信息增益手算 <span class="stars">★★★</span></h2>
+<div class="formula">$$H = -\sum_i p_i\log_2 p_i\qquad \text{Gain} = H(\text{父}) - \sum_{\text{子}}\frac{n_{\text{子}}}{n_{\text{父}}}H(\text{子})$$</div>
+<p>计算器：$\log_2 x = \ln x / \ln 2$。$0\log 0$ 记 0。每一步选<strong>增益最大</strong>的特征；同一父节点上，<strong>加权子熵越小增益越大</strong>。</p>
+<div class="table-wrap"><table>
+  <tr><th>两类比例</th><th class="c">熵</th><th>两类比例</th><th class="c">熵</th></tr>
+  <tr><td>1/2, 1/2</td><td class="c">1</td><td>9/14, 5/14</td><td class="c">0.940</td></tr>
+  <tr><td>3/4, 1/4</td><td class="c">0.811</td><td>2/5, 3/5</td><td class="c">0.971</td></tr>
+  <tr><td>5/8, 3/8</td><td class="c">0.954</td><td>全同一类</td><td class="c">0</td></tr>
+</table></div>
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol>
+    <li>数父节点各类个数，算父熵。</li>
+    <li>按特征分组，每组算熵。</li>
+    <li>每组熵乘「组大小 / 父大小」，加起来。</li>
+    <li>父熵减去它。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q31）</span>
+  <p>父 4 正 4 负，$H = 1$。L 3 正 1 负，R 1 正 3 负，熵都是 0.811。</p>
+  <p>加权子熵 $= \frac48(0.811) + \frac48(0.811) = 0.811$；<strong>Gain = 0.189 bits</strong>。</p>
+</div>
+<div class="box example">
+  <span class="box-title">例题（天气数据选根）</span>
+  <p>父 9 yes 5 no，0.940。outlook：sunny 2/3（0.971，5/14）、overcast 4/0（0，4/14）、rainy 3/2（0.971，5/14）。加权 0.693，Gain = 0.247；humidity 0.152，windy 0.048，temperature 0.029 → 根选 outlook。overcast 直接成叶子，sunny、rainy 各自<strong>只用自己那 5 天</strong>递归。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q11 · 检查一下">
+  <div class="mcq-q">同一个父节点上，划分 X 的加权子熵比 Y 低，能得出什么？</div>
+  <ol class="mcq-src"><li>X 的信息增益更高</li><li>Y 的信息增益更高</li><li>X 的子节点更多</li><li>无法比较</li></ol>
+  <div class="mcq-exp">父熵相同，减去的越小，增益越大。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　建树细节与剪枝 <span class="stars">★★</span></h2>
+<ul>
+  <li><strong>数值特征</strong>：排序，在<strong>类别变化</strong>的相邻样本之间取中点作候选切分点（71 no、72 yes → 71.5），选增益最大的。</li>
+  <li><strong>增益偏爱取值多的特征</strong>：ID 编号把 14 天切成 14 组，每组熵 0，增益 0.940 最大但完全没用。修正：<strong>Gain ratio = Gain / SplitInfo</strong>，SplitInfo = 子组比例的熵（ID 为 $\log_2 14 = 3.807$；outlook 为 1.577，增益率 0.157）。</li>
+  <li><strong>Gini</strong>：$1 - \sum p_i^2$，CART 用；纯为 0，各半为 0.5。</li>
+  <li><strong>预剪枝</strong>：max_depth、叶子最少样本数，可能停得太早。<strong>后剪枝</strong>（更常用）：长满后从下往上，<strong>换成叶子后验证集准确率不降就剪</strong>。</li>
+</ul>
+
+<div class="mcq" data-answer="2" data-src="自拟 · 检查一下">
+  <div class="mcq-q">「ID 编号」特征的信息增益最大，但不该选它。用什么修正？</div>
+  <ol class="mcq-src"><li>改用 Gini 指数</li><li>预剪枝限制深度</li><li>增益率（除以 SplitInfo）</li><li>Laplace 平滑</li></ol>
+  <div class="mcq-exp">SplitInfo 惩罚把数据切得很碎的特征。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　规则学习：1R 与 PRISM <span class="stars">★★</span></h2>
+<ul>
+  <li>决策树从根到叶子的路径是一条规则，条件之间是 <strong>AND</strong>：IF outlook = sunny AND humidity = high THEN no。</li>
+  <li><strong>1R</strong>：每个特征的每个取值预测多数类，数总错误；<strong>选错误最少的那一个特征</strong>。最终只用一个特征（天气数据 outlook 和 humidity 都错 4，平局任选）。</li>
+  <li><strong>PRISM（覆盖算法）</strong>：一类一类生成规则；从空规则开始，每次加让正确比例最高的条件；还混着别的类就<strong>再加条件</strong>（覆盖更少但更纯）；纯了就移走覆盖的样本再生成下一条。</li>
+  <li>决策树「分而治之」同时照顾所有类；覆盖算法一次只照顾一类。</li>
+</ul>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q11 · 检查一下">
+  <div class="mcq-q">只有 Colour = green 并且 Size = small 才到达 Yes 叶子。对应规则是？</div>
+  <ol class="mcq-src"><li>IF green OR small THEN Yes</li><li>IF green AND small THEN Yes</li><li>IF green THEN Yes</li><li>IF NOT small THEN Yes</li></ol>
+  <div class="mcq-exp">OR 会把不在这条路径上的样本也包进来。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　集成方法 <span class="stars">★★★</span></h2>
+<p>25 个独立分类器各自错 35%，多数投票错的概率约 <strong>6%</strong>。前提：<strong>每个比瞎猜好</strong>（二分类错误率 &lt; 50%）；<strong>彼此不同（多样）</strong>。</p>
+<div class="table-wrap"><table>
+  <tr><th>方法</th><th>最关键的操作</th><th>组合</th><th>训练</th></tr>
+  <tr><td><strong>Bagging</strong></td><td><strong>有放回抽样</strong>（bootstrap）得到不同训练集</td><td>平等投票 / 平均</td><td>并行</td></tr>
+  <tr><td><strong>随机森林</strong></td><td>Bagging + <strong>每次分裂只在随机一部分特征里选</strong>；树不剪枝</td><td>多数投票</td><td>并行</td></tr>
+  <tr><td><strong>AdaBoost</strong></td><td>一个接一个，<strong>提高分错样本的相对权重</strong></td><td>按准确率加权投票</td><td>串行</td></tr>
+  <tr><td><strong>Gradient Boosting</strong></td><td>新树拟合<strong>残差 $y - \hat y$</strong>（平方损失的负梯度）</td><td>预测相加</td><td>串行</td></tr>
+</table></div>
+<ul>
+  <li>Bootstrap 中每个原样本至少被抽到一次的概率 ≈ $1 - e^{-1} = 63.2\%$。</li>
+  <li>Bagging 对<strong>不稳定</strong>模型（深树、神经网络）最有效；kNN 这种稳定的帮助不大。</li>
+  <li>随机森林随机选特征是为了不让几个强特征让所有树长得一样。</li>
+  <li>Boosting 能把 decision stump 这种弱模型组合得很强，但不能并行、更容易拟合噪声。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">AdaBoost 权重更新</span>
+  <ol>
+    <li>算加权错误率 $e$。</li>
+    <li><strong>分对</strong>的样本权重乘 $e/(1-e)$（&lt; 1），分错的不变。</li>
+    <li>归一化（除以总和）。</li>
+  </ol>
+  <p>4 个样本各 0.25，错 1 个：$e = 0.25$，分对的乘 1/3 → 0.0833；总和 0.5；归一化后分对 <strong>1/6</strong>、分错 <strong>1/2</strong>。</p>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q12 · 检查一下">
+  <div class="mcq-q">Bagging 最关键的训练数据操作是？</div>
+  <ol class="mcq-src"><li>只用上一个模型分错的样本训练</li><li>每次分裂随机选一部分特征</li><li>让新模型拟合残差</li><li>在有放回抽样的 bootstrap 样本上分别训练</li></ol>
+  <div class="mcq-exp">A 是 boosting 思路，B 是随机森林的额外随机化，C 是 GB。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q13">
+  <div class="mcq-q">平方损失下，后一棵回归树要纠正当前集成没解释的部分。它的训练目标是？</div>
+  <ol class="mcq-src"><li>当前预测 − 真实值</li><li>真实值本身</li><li>真实值 − 当前集成预测</li><li>上一棵树的预测</li></ol>
+  <div class="mcq-exp">用「预测 − 真实」会把误差越放越大。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="PE2 Q12">
+  <div class="mcq-q">随机森林除了 bootstrap，还常用什么随机化让树更不一样？</div>
+  <ol class="mcq-src"><li>每次分裂只在随机一部分特征里选</li><li>随机给样本加权</li><li>随机剪掉一半的叶子</li><li>随机改变类别标签</li></ol>
+  <div class="mcq-exp">防止几个强特征主导所有树。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q13">
+  <div class="mcq-q">AdaBoost 训练完一个弱分类器后，下一轮样本权重怎么调整？</div>
+  <ol class="mcq-src"><li>所有样本权重保持相等</li><li>分错的样本相对权重变大</li><li>分对的样本相对权重变大</li><li>删除分错的样本</li></ol>
+  <div class="mcq-exp">让下一个分类器更关注难样本。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q4">
+  <div class="mcq-q">PRISM 为 Yes 类生成规则，当前规则同时覆盖 Yes 和 No。再加一个条件是为了？</div>
+  <ol class="mcq-src"><li>覆盖更多 Yes 样本</li><li>把规则改为预测 No</li><li>降低规则的长度</li><li>让覆盖的样本更纯地属于 Yes</li></ol>
+  <div class="mcq-exp">缩小覆盖范围，排除混进来的 No。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q4">
+  <div class="mcq-q">1R 分类器的最终模型有什么特点？</div>
+  <ol class="mcq-src"><li>把所有特征用 AND 连起来</li><li>每个特征生成一条规则后投票</li><li>只用错误最少的那一个特征</li><li>是一棵完整的决策树</li></ol>
+  <div class="mcq-exp">One Rule：一个特征的一套规则。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">25 个分类器每个错误率 60%，彼此独立，多数投票。结果会？</div>
+  <ol class="mcq-src"><li>比单个更差</li><li>降到约 6%</li><li>保持 60%</li><li>降到 35%</li></ol>
+  <div class="mcq-exp">前提「比瞎猜好」不成立。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">下列集成方法中可以并行训练各个模型的是？</div>
+  <ol class="mcq-src"><li>AdaBoost</li><li>随机森林</li><li>Gradient Boosting</li><li>以上都可以</li></ol>
+  <div class="mcq-exp">Boosting 后一个要等前一个。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>8 个样本 5 正 3 负。按 shape 划分：circle 3 正 0 负，square 2 正 2 负，triangle 0 正 1 负。求 Gain(shape)。</summary>
+  <div class="sa-ans">
+    <p>父熵 0.954。子熵：circle 0，square 1，triangle 0。</p>
+    <p>加权 $= \frac38(0) + \frac48(1) + \frac18(0) = 0.5$；<strong>Gain = 0.454</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>AdaBoost：5 个样本权重各 0.2，第一个分类器分错 2 个。更新并归一化后各样本权重是多少？</summary>
+  <div class="sa-ans">
+    <p>$e = 0.4$。分对的 3 个乘 $0.4/0.6 = 2/3$ → 0.133；分错的 2 个 0.2。总和 0.8。</p>
+    <p>归一化：分对的各 <strong>1/6</strong>，分错的各 <strong>1/4</strong>。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>父节点 6 正 2 负。划分 A：左 4 正 0 负，右 2 正 2 负。求 Gain(A)。</summary>
+  <div class="sa-ans">
+    <p>父熵 $H(3/4, 1/4) = 0.811$。左 0，右 1。加权 $= \frac48(0) + \frac48(1) = 0.5$。<strong>Gain = 0.311</strong>。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>Gain = 父熵 − 加权子熵；常用熵 0.811、0.940、0.971、0.954。</li>
+  <li>增益偏爱多值特征 → 增益率；Gini $1 - \sum p^2$；后剪枝看验证集。</li>
+  <li>路径 = AND；1R 只用一个特征；PRISM 加条件让规则更纯。</li>
+  <li>Bagging 有放回抽样（63.2%）；RF 再随机选特征；AdaBoost 分对乘 $e/(1-e)$ 再归一化；GB 拟合 $y - \hat y$。</li>
+  <li>集成前提：比瞎猜好 + 多样；Bagging/RF 可并行，Boosting 串行。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>教材：Witten, Frank &amp; Hall《Data Mining》第 4.1、4.3、4.4 节（1R、决策树、覆盖算法）与第 12 章（集成）；Géron《Hands-On Machine Learning》第 6、7 章。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week05-decision-trees-ensembles.html" target="_blank" rel="noopener">W05 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 5</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

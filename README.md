@@ -34,15 +34,52 @@ A browser-based quiz app for USYD course revision.
 | Week 10 – Linear programming & randomized rounding | 10 |
 | Week 11 – Distribution learning & testing | 10 |
 | Week 12 – Learning from experts | 10 |
-| COMP5318 total | 60 |
+| COMP5318 total | 132 |
+| Week 01 – Introduction (exam points) | 4 |
+| Week 02 – Data Preprocessing & kNN (exam points) | 8 |
+| Week 03 – Linear & Logistic Regression (exam points) | 6 |
+| Week 04 – Naive Bayes & Evaluation (exam points) | 7 |
+| Week 05 – Decision Trees & Ensembles (exam points) | 6 |
+| Week 06 – SVM & PCA (exam points) | 8 |
+| Week 07 – Neural Networks & Backpropagation (exam points) | 8 |
+| Week 08 – CNN, RNN & LSTM (exam points) | 6 |
+| Week 09 – Clustering I (k-means, GMM, hierarchical) (exam points) | 6 |
+| Week 11 – Markov Models & HMM (exam points) | 6 |
+| Week 12 – Reinforcement Learning (exam points) | 7 |
 | Practice Exam 1 (official key) | 30 |
 | Practice Exam 2 (official key) | 30 |
-| COMP5416 total | 37 |
+| COMP5416 total | 137 |
+| Week 01 – Introduction & Game Theory (exam points) | 8 |
+| Week 02 – Performance (exam points) | 9 |
+| Week 03 – Applications (HTTP, FTP, Email) (exam points) | 10 |
+| Week 04 – DNS, Sockets & P2P (exam points) | 9 |
+| Week 05 – Transport Layer & rdt (exam points) | 8 |
+| Week 06 – TCP (exam points) | 10 |
+| Week 07 – Socket Programming Lab (exam points) | 2 |
+| Week 08 – Multimedia Networking (exam points) | 8 |
+| Week 10 – SIP, QoS & Wireless (exam points) | 7 |
+| Week 11 – WiFi, Cellular & Mobility (exam points) | 7 |
+| Week 12 – 5G, Bluetooth, Satellites & QUIC (exam points) | 8 |
+| Sample Exam (official key; two misprinted answer boxes corrected from the official working) | 14 |
 | Week 07 Midterm Quiz (official feedback) | 3 |
 | Textbook Practice (Kurose & Ross problem types, unofficial answers; calculation questions get new numbers each run) | 34 |
-| CSYS5030 total | 20 |
+| CSYS5030 total | 117 |
+| Week 01 – Uncertainty & Entropy I (exam points) | 9 |
+| Week 02 – Uncertainty & Entropy II (exam points) | 9 |
+| Week 03 – Mutual Information (exam points) | 8 |
+| Week 04 – Conditional Mutual Information (exam points) | 8 |
+| Week 05 – JIDT Software (exam points) | 6 |
+| Week 06 – Information-Theoretic Estimators (exam points) | 9 |
+| Week 07 – Statistical Significance (exam points) | 9 |
+| Week 08 – Self-Organisation (exam points) | 8 |
+| Week 09 – Information Processing & Entropy Rate (exam points) | 7 |
+| Week 10 – Active Information Storage (exam points) | 8 |
+| Week 11 – Transfer Entropy (exam points) | 8 |
+| Week 12 – Effective Network Inference (exam points) | 8 |
 | Sample Exam (unofficial answers) | 20 |
-| **Total** | **411** |
+| **Total** | **680** |
+
+Weekly *exam points* questions are generated from `tools/kp/*.py`; run `python3 tools/kp/build.py` to rebuild `data/questions.json` and `data/questions.js`.
 
 ## ✨ Features
 

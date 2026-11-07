@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5318 W12 强化学习</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5318 目录</a>
+  <span>Week 12</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W12 强化学习、Q-learning 与 DQN</h1>
+<p class="subtitle">每套 Practice Exam 最后 3 道选择题都考这一周：Q-learning 更新一步、期望动作价值、经验回放、目标网络、折扣因子、为什么用 DQN。对应 PE1 Q28–30，PE2 Q28–30。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 回报、折扣与期望动作价值</a></td><td class="c"><span class="stars">★★★</span></td><td>每个结果「r + γV」再按概率加权</td></tr>
+    <tr><td><a href="#t2">2 Q-learning 更新一步</a></td><td class="c"><span class="stars">★★★</span></td><td>目标值 → 误差 → 旧值 + α×误差；终点目标只有 r</td></tr>
+    <tr><td><a href="#t3">3 DQN 的两个技巧</a></td><td class="c"><span class="stars">★★★</span></td><td>经验回放打破相关性；目标网络稳定目标值</td></tr>
+  </table></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　回报、折扣与期望动作价值 <span class="stars">★★★</span></h2>
+<p>没有正确答案，只有<strong>奖励</strong>（常常延迟）；动作会影响之后看到的数据。目标：<strong>最大化未来累积奖励的期望</strong>（奖励假设）。MDP = 状态、动作、奖励、转移概率、折扣 γ，满足马尔可夫性。</p>
+<div class="table-wrap"><table>
+  <tr><th>组成</th><th>是什么</th></tr>
+  <tr><td>策略 $\pi$</td><td>每个状态选什么动作</td></tr>
+  <tr><td>价值函数</td><td>状态（或状态 + 动作）长远看有多好</td></tr>
+  <tr><td>模型</td><td>对环境的预测；Q-learning 不需要</td></tr>
+</table></div>
+<div class="formula">$$G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots\qquad Q^*(s, a) = E\big[r + \gamma\max_{a'}Q^*(s', a')\big]$$</div>
+<ul>
+  <li>$r = (1, 0, 2)$，$\gamma = 0.5$：$G_0 = 1 + 0 + 0.25\times2 = 1.5$。</li>
+  <li>打折：远处更不确定；无限任务也有限。<strong>γ 小 = 短视</strong>，γ ≈ 1 = 看重长远。</li>
+  <li>$V^\pi(s)$：从 s 出发按 π 的期望回报；$Q^\pi(s, a)$：先做 a 再按 π。有了 Q，选 Q 最大的动作。</li>
+</ul>
+<div class="box method">
+  <span class="box-title">期望动作价值</span>
+  <ol>
+    <li>每种结果算「奖励 + γ × 到达状态的价值」。</li>
+    <li>按每种结果的概率加权平均。</li>
+  </ol>
+  <p>PE2 Q30：0.4 概率 (r = 2，V = 6)，0.6 概率 (r = 0，V = 2)，γ = 0.5：$0.4\times5 + 0.6\times1 = $ <strong>2.6</strong>。</p>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q28 · 检查一下">
+  <div class="mcq-q">奖励和转移不变，只减小折扣因子，直接影响是？</div>
+  <ol class="mcq-src"><li>环境的转移概率改变</li><li>远期奖励相对即时奖励的权重下降</li><li>即时奖励的权重下降</li><li>学习率自动变大</li></ol>
+  <div class="mcq-exp">环境本身没有任何变化。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　Q-learning 更新一步 <span class="stars">★★★</span></h2>
+<div class="formula">$$Q(s, a) \leftarrow Q(s, a) + \alpha\Big[\underbrace{r + \gamma\max_{a'}Q(s', a')}_{\text{目标值}} - Q(s, a)\Big]$$</div>
+<div class="box method">
+  <span class="box-title">三步</span>
+  <ol>
+    <li>目标值 $= r + \gamma\max Q(s', \cdot)$；<strong>下一状态是终点时目标值 = r</strong>。</li>
+    <li>误差（TD error）= 目标值 − 旧值。</li>
+    <li>新值 = 旧值 + α × 误差（α = 1 时新值就是目标值）。</li>
+  </ol>
+</div>
+<div class="box example">
+  <span class="box-title">例题（PE1 Q30）</span>
+  <p>$Q = 1$，$\alpha = 0.5$，$r = 2$，$\gamma = 0.8$，$\max Q' = 5$：目标 6，误差 5，新值 <strong>3.5</strong>。</p>
+  <p>终止：$Q = 4$，$r = 10$，$\alpha = 0.1$，「$\max Q' = 20$」是干扰项：$4 + 0.1\times6 = 4.6$。</p>
+</div>
+<div class="box trap">
+  <span class="box-title">常见错法</span>
+  <p>选 6.00（目标值本身，相当于 α = 1）；终止状态还加 γ max Q。</p>
+</div>
+<ul>
+  <li><strong>off-policy</strong>：用下一状态的最大 Q，不管实际下一步选了什么。</li>
+  <li><strong>ε-greedy</strong>：概率 ε 随机探索，否则利用；ε 随训练减小。</li>
+  <li>Q 表只适合状态、动作都少且离散（Taxi-v3：25 × 5 × 4 = 500 状态，6 动作）。</li>
+</ul>
+
+<div class="mcq" data-answer="2" data-src="PE1 Q30 · 检查一下">
+  <div class="mcq-q">非终止：$Q_{\text{旧}} = 1$，$\alpha = 0.5$，$r = 2$，$\gamma = 0.8$，$\max_{a'}Q(s', a') = 5$。新值？</div>
+  <ol class="mcq-src"><li>6.00</li><li>2.50</li><li>3.50</li><li>5.00</li></ol>
+  <div class="mcq-exp">$1 + 0.5\times(6 - 1)$。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　DQN 的两个技巧 <span class="stars">★★★</span></h2>
+<p>状态是像素时 Q 表存不下，没见过的画面也没有估计。用神经网络 $Q(s, a; w)$ 近似：<strong>参数共享</strong>，相似画面输出相似，能泛化。Atari：输入最近 4 帧，一次输出所有动作的 Q 值。</p>
+<div class="formula">$$L = \Big(r + \gamma\max_{a'}Q(s', a'; \hat w) - Q(s, a; w)\Big)^2$$</div>
+<div class="table-wrap"><table>
+  <tr><th>问题</th><th>对策</th></tr>
+  <tr><td>连续样本高度相关，梯度偏向同一方向</td><td><strong>经验回放</strong>：存 $(s, a, r, s')$，随机抽小批；还能重复利用</td></tr>
+  <tr><td>目标值用同一个网络算，靶子一直在动</td><td><strong>目标网络</strong> $\hat w$：固定若干步再复制在线参数；在线网络照常更新</td></tr>
+  <tr><td>取 max 导致高估</td><td><strong>Double DQN</strong>：当前网络选动作，旧网络打分</td></tr>
+  <tr><td>重要经历抽得太少</td><td><strong>Prioritized replay</strong>：误差大的更常抽</td></tr>
+</table></div>
+<p>AlphaGo：策略网络减少搜索<strong>宽度</strong>，价值网络减少搜索<strong>深度</strong>；AlphaZero 纯自我对弈，同一算法学会围棋、国际象棋、将棋。</p>
+
+<div class="mcq" data-answer="0" data-src="PE1 Q28 · 检查一下">
+  <div class="mcq-q">DQN 从存储的转移中随机抽样，而不是只用最新的连续转移，主要减少的是？</div>
+  <ol class="mcq-src"><li>相邻训练样本的时间相关性</li><li>目标值的变化速度</li><li>Q 值的高估</li><li>探索的次数</li></ol>
+  <div class="mcq-exp">B 是目标网络，C 是 Double DQN。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自 Practice Exam。</p>
+
+<div class="mcq" data-answer="3" data-src="PE1 Q29">
+  <div class="mcq-q">DQN 把目标网络参数固定若干步，主要好处是？</div>
+  <ol class="mcq-src"><li>在线网络停止学习</li><li>增加探索</li><li>减少样本相关性</li><li>让自举目标值更稳定</li></ol>
+  <div class="mcq-exp">在线网络仍在学；探索和相关性是别的机制。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="PE2 Q29">
+  <div class="mcq-q">状态是图像时，DQN 比 Q 表更合适，是因为？</div>
+  <ol class="mcq-src"><li>DQN 不需要奖励</li><li>用共享参数估计 Q，不必为每张图存一个值</li><li>DQN 不需要探索</li><li>Q 表无法处理离散动作</li></ol>
+  <div class="mcq-exp">函数近似 + 泛化。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="PE2 Q30">
+  <div class="mcq-q">动作以 0.4 概率得 r = 2、到达价值 6；否则 r = 0、到达价值 2。γ = 0.5，期望动作价值？</div>
+  <ol class="mcq-src"><li>3.2</li><li>2.0</li><li>2.6</li><li>5.0</li></ol>
+  <div class="mcq-exp">$0.4\times5 + 0.6\times1$。</div>
+</div>
+
+<div class="mcq" data-answer="0" data-src="自拟">
+  <div class="mcq-q">终止转移：$Q = 4$，$r = 10$，$\alpha = 0.1$，$\gamma = 0.9$，$\max Q(s', \cdot) = 20$。新值？</div>
+  <ol class="mcq-src"><li>4.6</li><li>6.4</li><li>10.0</li><li>5.8</li></ol>
+  <div class="mcq-exp">终点目标值只有 r = 10。B 是错加了 0.9 × 20。</div>
+</div>
+
+<div class="mcq" data-answer="3" data-src="自拟">
+  <div class="mcq-q">奖励 $r_0 = 1$，$r_1 = 0$，$r_2 = 2$，γ = 0.5，$G_0$ 是？</div>
+  <ol class="mcq-src"><li>3.0</li><li>2.0</li><li>1.25</li><li>1.5</li></ol>
+  <div class="mcq-exp">$1 + 0 + 0.25\times2$。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">Q-learning 被称为 off-policy，是因为？</div>
+  <ol class="mcq-src"><li>不需要奖励</li><li>更新用下一状态的最大 Q，不管实际选了什么</li><li>不需要折扣因子</li><li>只能离线训练</li></ol>
+  <div class="mcq-exp">目标策略是贪心，行为策略可以是 ε-greedy。</div>
+</div>
+
+<h3>计算练习</h3>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>同一格连续更新两次：初始 Q = 0，α = 0.5，γ = 0.9，两次都是 r = 1、下一状态最大 Q = 2。两次之后 Q 是多少？</summary>
+  <div class="sa-ans">
+    <p>目标值都是 $1 + 1.8 = 2.8$。第 1 次 $0 + 0.5\times2.8 = 1.4$；第 2 次 $1.4 + 0.5\times1.4 = 2.1$。每次往目标靠近一半。</p>
+  </div>
+</details>
+<details class="sa">
+  <summary><span class="sa-tag">计算 · 自拟</span>状态 s 有两个动作。a₁：确定得 r = 1，到达价值 4 的状态。a₂：0.5 概率 r = 5、到达终点（价值 0）；0.5 概率 r = 0、到达价值 2 的状态。γ = 0.9，哪个动作更好？</summary>
+  <div class="sa-ans">
+    <p>a₁：$1 + 0.9\times4 = 4.6$。</p>
+    <p>a₂：$0.5\times(5 + 0) + 0.5\times(0 + 0.9\times2) = 2.5 + 0.9 = 3.4$。</p>
+    <p>选 <strong>a₁</strong>。</p>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>$G_t = \sum\gamma^k r_{t+k}$；γ 小 = 短视；减小 γ 只降低远期奖励的权重。</li>
+  <li>期望动作价值：每个结果 $r + \gamma V$ 再按概率加权。</li>
+  <li>Q-learning：目标值 → 误差 → 旧 + α×误差；终点目标 = r；别把目标值当答案。</li>
+  <li>DQN：共享参数近似 Q；经验回放 = 打破相关性；目标网络 = 稳定目标值；Double DQN = 防高估。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>Sutton &amp; Barto《Reinforcement Learning: An Introduction》第 3 章（MDP、回报）与第 6.5 节（Q-learning），<a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank" rel="noopener">作者免费公开版</a>；Mnih et al. (2015) Nature DQN 论文。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5318-week12-reinforcement-learning.html" target="_blank" rel="noopener">W12 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5318 Week 12</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>

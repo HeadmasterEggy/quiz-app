@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP5416 W01 分层与博弈论</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../assets/notes.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../assets/notes.js"></script>
+</head>
+<body>
+<main class="page">
+
+<nav class="topbar">
+  <a href="index.html">← COMP5416 目录</a>
+  <span>Week 01</span>
+  <span class="spacer"></span>
+  <button class="theme-btn" id="themeBtn" type="button">☀️ 浅色</button>
+</nav>
+
+<h1>W01 分层模型与信道竞争的博弈论</h1>
+<p class="subtitle">对应 Kurose &amp; Ross 1.5 节（协议分层）和讲义的博弈论部分（Tutorial 1）。题型一是「这句话说的是哪一层」，题型二是「给一张收益表，求均衡」。</p>
+
+<div class="box exam">
+  <span class="box-title">这一周考什么</span>
+  <div class="table-wrap"><table>
+    <tr><th>题型</th><th class="c">分量</th><th>一句话</th></tr>
+    <tr><td><a href="#t1">1 描述 → 哪一层</a></td><td class="c"><span class="stars">★★★</span></td><td>相邻 = link，主机到主机 = network，进程到进程 = transport</td></tr>
+    <tr><td><a href="#t2">2 纯策略纳什均衡</a></td><td class="c"><span class="stars">★★★</span></td><td>逐格问「单方面改有没有好处」</td></tr>
+    <tr><td><a href="#t3">3 混合策略均衡</a></td><td class="c"><span class="stars">★★★</span></td><td>提出 $p_1$，令系数为 0</td></tr>
+    <tr><td><a href="#t4">4 合作最优 vs 自私均衡</a></td><td class="c"><span class="stars">★★</span></td><td>合作概率是均衡的一半</td></tr>
+    <tr><td><a href="#t5">5 协议归层与 OSI</a></td><td class="c"><span class="stars">★</span></td><td>presentation、session 并入应用层</td></tr>
+  </table></div>
+  <p>多选题<strong>勾错一个会抵消勾对的一个</strong>。最后有一组<a href="#practice">混合练习</a>。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t1">题型 1　描述 → 哪一层 <span class="stars">★★★</span></h2>
+
+<h3>为什么要分层</h3>
+<p>从「手机上点一下」到「光纤里的光脉冲」，中间要做的事太多。分层把大问题拆成小问题：<strong>每层只用下一层的服务，只给上一层提供服务</strong>。好处是每层可以单独换：把 Wi-Fi 换成以太网（换下面两层），浏览器完全不用改。越往下越具体（电压、光），越往上越抽象（用户看到的服务）。</p>
+
+<h3>五层协议栈</h3>
+<div class="table-wrap"><table>
+  <tr><th>层</th><th>回答的问题</th><th>数据单元</th><th>典型协议</th></tr>
+  <tr><td><strong>Application</strong></td><td>怎样提供网络应用</td><td>message</td><td>HTTP、SMTP、DNS、FTP、P2P、SIP、RTP</td></tr>
+  <tr><td><strong>Transport</strong></td><td>不同设备上<strong>程序之间</strong>的端到端传输</td><td>segment</td><td>TCP、UDP、MPTCP</td></tr>
+  <tr><td><strong>Network</strong></td><td>把消息送到<strong>不相邻</strong>的节点（跨多跳）</td><td>datagram</td><td>IP、路由协议</td></tr>
+  <tr><td><strong>Link</strong></td><td><strong>相邻</strong>节点之间的数据传输</td><td>frame</td><td>以太网、Wi-Fi</td></tr>
+  <tr><td><strong>Physical</strong></td><td>把<strong>比特</strong>从一台设备传到另一台</td><td>bit</td><td>铜线电压、光脉冲</td></tr>
+</table></div>
+
+<div class="box method">
+  <span class="box-title">解法：抓关键词</span>
+  <div class="table-wrap"><table>
+    <tr><th>描述里出现</th><th>选</th></tr>
+    <tr><td><strong>frame</strong>、<strong>adjacent</strong> node、某种介质</td><td>Link</td></tr>
+    <tr><td><strong>datagram</strong>、<strong>source host → destination host</strong>、路由</td><td>Network</td></tr>
+    <tr><td><strong>segment</strong>、<strong>process-to-process</strong>、可靠或不可靠交付、socket</td><td>Transport</td></tr>
+    <tr><td>各种网络<strong>应用</strong>的消息</td><td>Application</td></tr>
+    <tr><td><strong>bits</strong> on the wire</td><td>Physical</td></tr>
+  </table></div>
+</div>
+
+<h3>每层再多一点</h3>
+<ul>
+  <li><strong>Link 的三件事</strong>：① <strong>比特错误检测</strong>（发 010101 收到 010100 要能发现）；② <strong>介质访问控制 MAC</strong>（两台设备同时发怎么办，本周博弈论就是这个问题）；③ <strong>链路层寻址</strong>（确认这一帧是发给我的）。</li>
+  <li><strong>Network</strong>：路由 + 转发，核心是怎么构造路由表。</li>
+  <li><strong>Transport</strong>：一台机器跑很多程序，transport 把数据交给正确的那个进程；进程通过 <strong>socket</strong> 收发。TCP 可靠，UDP 不可靠。</li>
+</ul>
+
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <ul>
+    <li>Network 是<strong>主机到主机</strong>，Transport 是<strong>进程到进程</strong>。选项常把两者互换。</li>
+    <li>「端到端可靠传输」是 Transport（TCP），<strong>不是</strong> Link 的功能。</li>
+  </ul>
+</div>
+
+<div class="mcq" data-answer="2" data-src="Midterm 练习 · 检查一下">
+  <div class="mcq-q">「把数据报从源主机送到目的主机」对应哪一层？</div>
+  <ol class="mcq-src"><li>链路层</li><li>传输层</li><li>网络层</li><li>应用层</li></ol>
+  <div class="mcq-exp">datagram + host to host → 网络层。传输层是段、进程到进程。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t2">题型 2　纯策略纳什均衡 <span class="stars">★★★</span></h2>
+
+<h3>问题</h3>
+<p>两个用户用同一个无线信道发给 AP。一个发、一个不发：发的人成功。<strong>两人同时发：碰撞，谁都不成功</strong>，还白耗电。没有中央调度者，用户各自决定，而且都<strong>自私</strong>：自己能多得就一定换做法。博弈论分析他们最后停在哪里。</p>
+<p>讲义收益表，格子里是（用户 1，用户 2）：</p>
+<div class="table-wrap"><table>
+  <tr><th></th><th class="c">用户 1 发</th><th class="c">用户 1 不发</th></tr>
+  <tr><th>用户 2 发</th><td class="c">(−5, −5)</td><td class="c">(0, 10)</td></tr>
+  <tr><th>用户 2 不发</th><td class="c">(10, 0)</td><td class="c">(0, 0)</td></tr>
+</table></div>
+
+<h3>纳什均衡的定义</h3>
+<p>一个策略组合，<strong>任何一方单方面改变自己的策略都得不到好处</strong>。「单方面」= 只有自己改，对方不变。</p>
+
+<div class="box method">
+  <span class="box-title">解法：每个格子问两次</span>
+  <ol class="steps">
+    <li>用户 1 换个做法（用户 2 不变），自己的收益变大吗？</li>
+    <li>用户 2 换个做法（用户 1 不变），自己的收益变大吗？</li>
+    <li>两次都「不会」，这一格才是纳什均衡。</li>
+  </ol>
+</div>
+
+<div class="table-wrap"><table>
+  <tr><th>格子</th><th class="c">均衡？</th><th>理由</th></tr>
+  <tr><td>都发 (−5, −5)</td><td class="c">否</td><td>任一方改不发：−5 → 0</td></tr>
+  <tr><td>1 发 2 不发 (10, 0)</td><td class="c"><strong>是</strong></td><td>1 改不发 10 → 0；2 改发 0 → −5，都更差</td></tr>
+  <tr><td>1 不发 2 发 (0, 10)</td><td class="c"><strong>是</strong></td><td>对称</td></tr>
+  <tr><td>都不发 (0, 0)</td><td class="c">否</td><td>任一方改发：0 → 10</td></tr>
+</table></div>
+<p>两个纯策略均衡都要求「一个人永远不发」，对被牺牲的人不公平，对等的设备也没法商量谁牺牲，所以要用<a href="#t3">混合策略</a>。</p>
+
+<h3>囚徒困境：均衡 ≠ 最好</h3>
+<p>两人分开关押。都坦白各判 5 年；都沉默各判 1 年；一个坦白一个沉默，坦白的放走、沉默的判 10 年。收益用负刑期：</p>
+<div class="table-wrap"><table>
+  <tr><th>(A, B)</th><th class="c">A 坦白</th><th class="c">A 沉默</th></tr>
+  <tr><th>B 坦白</th><td class="c">(−5, −5)</td><td class="c">(−10, 0)</td></tr>
+  <tr><th>B 沉默</th><td class="c">(0, −10)</td><td class="c">(−1, −1)</td></tr>
+</table></div>
+<ul>
+  <li>(坦白, 坦白)：任一方改沉默 −5 → −10，更差 → <strong>纳什均衡</strong>。</li>
+  <li>(沉默, 沉默)：总刑期最短，但 A 改坦白 −1 → 0 更好 → <strong>不是均衡</strong>。</li>
+</ul>
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <p>「纳什均衡一定是对双方整体最好的结果」是<strong>错</strong>的，囚徒困境就是反例。</p>
+</div>
+
+<div class="mcq" data-answer="1,2" data-src="讲义 · 检查一下">
+  <div class="mcq-q">收益：独占发送 +10，碰撞各 −5，不发 0。哪些是纯策略纳什均衡？</div>
+  <ol class="mcq-src"><li>两人都发</li><li>用户 1 发、用户 2 不发</li><li>用户 1 不发、用户 2 发</li><li>两人都不发</li></ol>
+  <div class="mcq-exp">都发时任一方改不发能 −5 → 0；都不发时任一方改发能 0 → 10，所以 A、D 都不是。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t3">题型 3　混合策略均衡 <span class="stars">★★★</span></h2>
+
+<p>每人像掷一枚不均匀的硬币：用户 1 以概率 $p_1$ 发，用户 2 以 $p_2$ 发，两人独立。用户 1 的期望收益 = 每种情况的收益 × 概率之和（不发的情况收益为 0，直接省掉）：</p>
+<div class="formula">$$U_1 = -5\,p_1p_2 + 10\,p_1(1-p_2) = p_1\,(10 - 15\,p_2)$$</div>
+<p>关键一步是<strong>把 $p_1$ 提出来</strong>。括号 $(10 - 15p_2)$ 是斜率：</p>
+<ul>
+  <li>斜率 &gt; 0（$p_2 &lt; 2/3$）：用户 1 一直发最好。</li>
+  <li>斜率 &lt; 0（$p_2 &gt; 2/3$）：用户 1 不发最好。</li>
+  <li>斜率 = 0（$p_2 = 2/3$）：$p_1$ 取多少 $U_1$ 都是 0，用户 1 <strong>没有理由改</strong>。</li>
+</ul>
+<p>令斜率为 0 得 $p_2 = 2/3$，对称地 $p_1 = 2/3$。<strong>混合均衡 $p_1 = p_2 = 2/3$，收益 (0, 0)</strong>：自私的用户发得太多，好处全被碰撞吃掉。</p>
+
+<div class="formula">$$\text{一般形式（成功 } v\text{，碰撞 } {-c}\text{）：}\quad U_1 = p_1\big[v - (v+c)\,p_2\big] \;\Rightarrow\; p^* = \frac{v}{v+c},\quad \text{均衡收益} = 0$$</div>
+
+<div class="box method">
+  <span class="box-title">解法步骤</span>
+  <ol class="steps">
+    <li>写出 $U_1$（只写非零收益的情况），提出 $p_1$。</li>
+    <li>令括号为 0，解出的是 <strong>$p_2$</strong>（让用户 1 无所谓的对方概率）。</li>
+    <li>同样写 $U_2$，提出 $p_2$，解出 $p_1$。</li>
+    <li>均衡收益：把解代回，括号为 0，所以收益为 0（当「不发」收益为 0 时）。</li>
+  </ol>
+</div>
+
+<div class="box trap">
+  <span class="box-title">最容易搞反：我的概率由对手的收益决定</span>
+  <p>令 $U_1$ 的系数为 0 解出来的是 $p_2$，不是 $p_1$。对称题看不出来，<strong>不对称题</strong>（Tutorial 1 Ex 2）一定会考。</p>
+  <p>例：只有 1 发得 +20、只有 2 发得 +12；碰撞时 1 得 −4、2 得 −6。<br>
+  $U_1 = p_1(20 - 24p_2) \Rightarrow p_2 = 5/6$；$U_2 = p_2(12 - 18p_1) \Rightarrow p_1 = 2/3$。<br>
+  均衡是 $(p_1, p_2) = (2/3, 5/6)$，答成 $(5/6, 2/3)$ 就是搞反了。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="Tutorial 1 Ex 1 · 检查一下">
+  <div class="mcq-q">独占发送收益改成 +15，碰撞仍 −5，不发 0。对称混合均衡的发送概率和合作最优的发送概率分别是？</div>
+  <ol class="mcq-src"><li>3/4，3/8</li><li>2/3，1/3</li><li>3/4，3/4</li><li>3/8，3/4</li></ol>
+  <div class="mcq-exp">$p^* = 15/(15+5) = 3/4$；合作最优是它的一半，3/8（见题型 4）。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t4">题型 4　合作最优 vs 自私均衡 <span class="stars">★★</span></h2>
+
+<p>如果两人<strong>合作</strong>，一起选同一个 $p$ 让收益最大。令 $p_1 = p_2 = p$：</p>
+<div class="formula">$$U = p(10 - 15p) = 10p - 15p^2,\qquad \frac{dU}{dp} = 10 - 30p = 0 \Rightarrow p = \frac13$$</div>
+<p>代回：$U = -5\cdot\frac19 + 10\cdot\frac13\cdot\frac23 = -\frac59 + \frac{20}9 = \frac53$。</p>
+<div class="formula">$$\text{一般形式：}\quad p^{\text{opt}} = \frac{v}{2(v+c)} = \frac{p^*}{2},\qquad U^{\text{opt}} = \frac{v^2}{4(v+c)}$$</div>
+<div class="table-wrap"><table>
+  <tr><th></th><th class="c">发送概率</th><th class="c">每人收益</th></tr>
+  <tr><td>自私（纳什均衡）</td><td class="c">2/3</td><td class="c">0</td></tr>
+  <tr><td>合作（最优）</td><td class="c">1/3</td><td class="c">5/3</td></tr>
+</table></div>
+<p><strong>结论</strong>：自私导致发得太多、碰撞太多。<strong>少发一点、随机地发</strong>，双方都赚。Wi-Fi 的 CSMA/CA 随机退避就是这个思路（W10–W11）。</p>
+
+<div class="box trap">
+  <span class="box-title">陷阱</span>
+  <p>问「混合纳什均衡」时，选项会放合作最优的 (1/3, 5/3)。均衡收益是 0，不是 5/3。</p>
+</div>
+
+<div class="mcq" data-answer="0" data-src="Tutorial 1 Ex 2 · 检查一下">
+  <div class="mcq-q">不对称收益：只有 1 发得 +20，只有 2 发得 +12，碰撞时 1 得 −4、2 得 −6。三个均衡（1 发 2 不发、1 不发 2 发、混合）中，两人收益之和最大的是？</div>
+  <ol class="mcq-src"><li>用户 1 发、用户 2 不发</li><li>用户 1 不发、用户 2 发</li><li>混合策略纳什均衡</li><li>三者的总收益相同</li></ol>
+  <div class="mcq-exp">总收益分别是 20、12、0。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="t5">题型 5　协议归层与 OSI <span class="stars">★</span></h2>
+<ul>
+  <li><strong>ISO/OSI 七层</strong>：application、<strong>presentation</strong>、<strong>session</strong>、transport、network、link、physical。本课把 presentation 和 session <strong>并入应用层</strong>，剩五层。有的教材是四层（连 physical 也省），本课<strong>保留 physical</strong>。做题按五层答。</li>
+  <li><strong>QUIC</strong> 一般算应用层（跑在 UDP 上），但因为它做可靠传输和拥塞控制，<strong>有时也被当成传输层</strong>（W12）。</li>
+  <li><strong>多媒体和无线是跨层主题</strong>，不只属于某一层。</li>
+  <li>常见归层：DNS、HTTP、SMTP、FTP、SIP、RTP → 应用层；TCP、UDP → 传输层；IP → 网络层；以太网、Wi-Fi → 链路层。</li>
+</ul>
+
+<div class="mcq" data-answer="0,1,3" data-src="自拟 · 检查一下">
+  <div class="mcq-q">下列协议与层的对应，正确的是？</div>
+  <ol class="mcq-src"><li>DNS — 应用层</li><li>UDP — 传输层</li><li>HTTP — 传输层</li><li>SMTP — 应用层</li></ol>
+  <div class="mcq-exp">HTTP 是应用层协议，它跑在 TCP（传输层）之上。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="practice">混合练习</h2>
+<p>题型打乱了。标「自拟」的是按考点出的，其余来自课程材料。</p>
+
+<div class="mcq" data-answer="1" data-src="讲义">
+  <div class="mcq-q">收益：独占 +10，碰撞 −5，不发 0。对称混合纳什均衡中，每人的发送概率和收益是？</div>
+  <ol class="mcq-src"><li>1/3，5/3</li><li>2/3，0</li><li>1/2，0</li><li>2/3，5/3</li></ol>
+  <div class="mcq-exp">$U_1 = p_1(10 - 15p_2)$，令系数为 0 得 2/3，收益 0。A 是合作最优。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">「把帧从一个节点经某种介质传到相邻节点」对应哪一层？</div>
+  <ol class="mcq-src"><li>物理层</li><li>链路层</li><li>网络层</li><li>传输层</li></ol>
+  <div class="mcq-exp">帧 + 相邻 → 链路层。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="Tutorial 1 Ex 2">
+  <div class="mcq-q">只有用户 1 发得 +20，只有用户 2 发得 +12；碰撞时用户 1 得 −4、用户 2 得 −6；不发得 0。混合纳什均衡 $(p_1, p_2)$ 是？</div>
+  <ol class="mcq-src"><li>(5/6, 2/3)</li><li>(2/3, 5/6)</li><li>(1/2, 1/2)</li><li>(5/6, 5/6)</li></ol>
+  <div class="mcq-exp">$U_1 = p_1(20 - 24p_2) \Rightarrow p_2 = 5/6$；$U_2 = p_2(12 - 18p_1) \Rightarrow p_1 = 2/3$。A 是搞反了。</div>
+</div>
+
+<div class="mcq" data-answer="0,1,2" data-src="自拟">
+  <div class="mcq-q">下列哪些属于链路层的功能？</div>
+  <ol class="mcq-src"><li>比特错误检测</li><li>介质访问控制</li><li>链路层寻址</li><li>端到端可靠传输</li></ol>
+  <div class="mcq-exp">D 是传输层 TCP 的事。</div>
+</div>
+
+<div class="mcq" data-answer="0,2" data-src="讲义">
+  <div class="mcq-q">关于囚徒困境，正确的是？</div>
+  <ol class="mcq-src"><li>(坦白, 坦白) 是纳什均衡</li><li>(沉默, 沉默) 是纳什均衡</li><li>(沉默, 沉默) 总刑期最短</li><li>均衡一定是整体最好结果</li></ol>
+  <div class="mcq-exp">B 错：一方改坦白能 −1 → 0。D 错：囚徒困境就是反例。</div>
+</div>
+
+<div class="mcq" data-answer="0,1" data-src="自拟">
+  <div class="mcq-q">本课五层模型相比 ISO/OSI 七层，并入应用层的是？</div>
+  <ol class="mcq-src"><li>presentation</li><li>session</li><li>transport</li><li>physical</li></ol>
+  <div class="mcq-exp">本课保留 physical；transport 是独立的一层。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">混合策略纳什均衡的含义是？</div>
+  <ol class="mcq-src"><li>双方收益之和达到最大</li><li>双方都用对方能接受的最低概率</li><li>给定对方概率，自己怎么调都不能提高期望收益</li><li>双方的发送概率必须相同</li></ol>
+  <div class="mcq-exp">这就是纳什均衡定义在混合策略上的版本。D 只在对称收益时成立。</div>
+</div>
+
+<div class="mcq" data-answer="1" data-src="自拟">
+  <div class="mcq-q">成功收益 $v = 8$，碰撞收益 $-2$，不发 0。对称混合均衡下每人的发送概率是？</div>
+  <ol class="mcq-src"><li>0.4</li><li>0.8</li><li>0.2</li><li>0.5</li></ol>
+  <div class="mcq-exp">$p^* = v/(v+c) = 8/10 = 0.8$。A 是合作最优 $0.8/2$。</div>
+</div>
+
+<div class="mcq" data-answer="2" data-src="自拟">
+  <div class="mcq-q">「进程到进程」的数据交付、通过 socket 收发，属于哪一层？</div>
+  <ol class="mcq-src"><li>应用层</li><li>网络层</li><li>传输层</li><li>链路层</li></ol>
+  <div class="mcq-exp">网络层是主机到主机，传输层再把数据交给正确的进程。</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="recap">考前速记</h2>
+<ol>
+  <li>Link 相邻 / frame；Network 主机到主机 / datagram；Transport 进程到进程 / segment；Physical bits。</li>
+  <li>Link 三件事：错误检测、介质访问控制、链路层寻址。</li>
+  <li>纳什均衡：任何一方<strong>单方面</strong>改都没好处；2×2 表逐格问两次。</li>
+  <li>混合均衡：$U_1 = p_1[v - (v+c)p_2]$，令系数为 0 解出<strong>对方</strong>的概率；$p^* = v/(v+c)$，收益 0。</li>
+  <li>合作最优 $p = v/(2(v+c))$，是均衡的一半；讲义例 1/3、收益 5/3。</li>
+  <li>囚徒困境：(坦白, 坦白) 是均衡，(沉默, 沉默) 最好但不是均衡。</li>
+  <li>OSI 的 presentation、session 并入应用层；QUIC 归层有争议；多媒体、无线跨层。</li>
+</ol>
+
+<div class="box source">
+  <span class="box-title">原始资料</span>
+  <p>分层读 <strong>Kurose &amp; Ross 第 1 章 1.5 节「Protocol Layers and Their Service Models」</strong>。博弈论部分以讲义和 <strong>Tutorial 1</strong> 为准，课本不讲。</p>
+  <p>也可以对照博客上的 <a href="https://qiao1.top/posts/comp5416-week01-introduction.html" target="_blank" rel="noopener">W01 周笔记</a>，以及题库里的 <a href="../../index.html">COMP5416 Week 01</a> 题组。</p>
+</div>
+
+<p class="footer">哪一步没看懂、哪道题想换个数字再练，直接在对话里问 Claude。</p>
+
+</main>
+</body>
+</html>
