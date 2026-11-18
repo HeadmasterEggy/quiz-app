@@ -8787,6 +8787,113 @@ window.QUIZ_DATA = {
       ]
     },
     {
+      "question": "Store-and-forward analogy: a caravan of 20 cars (a 20-bit packet) is served by a tollbooth (link) at one car per 1 second. After service, each car drives to the next tollbooth 200 km away at 10 km/s. The first car of a caravan must wait at the entrance of a tollbooth until the whole caravan has arrived and lined up behind it before service starts. Once the first car leaves the tollbooth, how long in seconds does it take until it enters service at the next tollbooth?",
+      "options": [
+        "19",
+        "20",
+        "39",
+        "40"
+      ],
+      "correct": 2,
+      "explanation": "Official answer: 39 s (fill-in question in the quiz; options added here). After the first car leaves, the other 19 cars still need 19 × 1 s of service, and the last car then drives 200 km / 10 km/s = 20 s. The first car cannot start service at the next booth until the last car arrives: 19 + 20 = 39 s.",
+      "id": 692,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Queueing: caravan analogy, store-and-forward · W7 Midterm Quiz",
+      "lectureWeek": "Week 02",
+      "explanationZh": "官方答案 39 秒（原题是填空题，这里补了选项）。第一辆车离开后，后面 19 辆车还要各服务 1 秒，共 19 秒；最后一辆车再开 200 km ÷ 10 km/s = 20 秒到下一个收费站。整个车队到齐后第一辆车才能开始服务：19 + 20 = 39 秒。",
+      "optionNotes": [
+        "Only the remaining service time; forgets the 20 s drive of the last car.",
+        "Only the first car's own drive; ignores waiting for the rest of the caravan (store-and-forward).",
+        "19 × 1 s (remaining cars served) + 200/10 s (last car drives) = 39 s.",
+        "Counts 20 cars of service, but the first car has already been served when the clock starts."
+      ],
+      "steps": [
+        "Remaining service at booth 1: $(20-1)\\times 1\\text{ s} = 19\\text{ s}$",
+        "Last car's drive: $200\\text{ km} / 10\\text{ km/s} = 20\\text{ s}$",
+        "First car enters service when the whole caravan has arrived: $19 + 20 = 39\\text{ s}$"
+      ],
+      "questionZh": "存储转发的类比：一个 20 辆车的车队（相当于 20 bit 的包）在收费站（链路）处被服务，速率是每秒 1 辆车。服务完的车以 10 km/s 的速度开往 200 km 外的下一个收费站。车队第一辆车到达收费站后，必须在入口等到整个车队都到齐、排在它后面，才能开始服务。从第一辆车离开收费站算起，到它在下一个收费站开始接受服务，需要多少秒？",
+      "optionsZh": [
+        "19",
+        "20",
+        "39",
+        "40"
+      ]
+    },
+    {
+      "question": "Consider two scenarios: (1) circuit switching, where $N_{cs}$ users, each requiring 20 Mbps, share a 100 Mbps link; (2) packet switching, where $N_{ps}$ users share a 100 Mbps link, each again requiring 20 Mbps when transmitting but transmitting only 30% of the time. When one user is transmitting, what fraction of the link capacity is used by this user? (Round to one decimal after leading zeros.)",
+      "options": [
+        "0.06",
+        "0.2",
+        "0.3",
+        "0.6"
+      ],
+      "correct": 1,
+      "explanation": "Official answer: 0.2 in both scenarios (fill-in question in the quiz; options added here). While transmitting, the user sends at 20 Mbps over a 100 Mbps link: 20/100 = 0.2. The 30% activity only matters for averages or for how many users packet switching can support, not for the fraction used while busy.",
+      "id": 693,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W2 Performance / Circuit vs packet switching: fraction of link capacity · W7 Midterm Quiz",
+      "lectureWeek": "Week 02",
+      "explanationZh": "官方答案 0.2，两种场景都一样（原题是填空题，这里补了选项）。用户在发送时速率是 20 Mbps，链路容量 100 Mbps，所以占 20/100 = 0.2。30% 的发送时间只影响平均占用或分组交换能支持多少用户，不影响发送时的占比。",
+      "optionNotes": [
+        "0.2 × 0.3 = 0.06 is the long-run average share, not the share while transmitting.",
+        "20 Mbps / 100 Mbps = 0.2 while the user is transmitting, in both scenarios.",
+        "0.3 is the probability that the user is active, not a fraction of capacity.",
+        "Not derived from the given numbers."
+      ],
+      "steps": [
+        "Rate while transmitting: $20\\text{ Mbps}$",
+        "Fraction $= 20 / 100 = 0.2$ (same for circuit and packet switching)",
+        "The 30% activity factor is irrelevant when one user is already transmitting"
+      ],
+      "questionZh": "考虑两个场景：(1) 电路交换：$N_{cs}$ 个用户，每人需要 20 Mbps，共享一条 100 Mbps 的链路；(2) 分组交换：$N_{ps}$ 个用户共享一条 100 Mbps 链路，每人发送时同样需要 20 Mbps，但只有 30% 的时间在发送。当一个用户正在发送时，这个用户占用链路容量的比例是多少？（四舍五入到前导零之后一位小数。）",
+      "optionsZh": [
+        "0.06",
+        "0.2",
+        "0.3",
+        "0.6"
+      ]
+    },
+    {
+      "question": "Two users share a wireless channel and choose, in each slot, whether to transmit or stay silent. The utilities are asymmetric: if only user 1 transmits, user 1 gets +24 and user 2 gets 0; if only user 2 transmits, user 2 gets +16 and user 1 gets 0; if both transmit (collision), user 1 gets −8 and user 2 gets −4; if neither transmits, both get 0. Let $p_1$ (resp. $p_2$) be the probability that user 1 (resp. user 2) transmits. Which probabilities $(p_1, p_2)$ among these are mixed-strategy Nash equilibria? (Select all that apply.)",
+      "options": [
+        "(4/5, 4/5)",
+        "(3/4, 4/5)",
+        "(3/4, 3/4)",
+        "(4/5, 3/4)"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Official answer: (4/5, 3/4). In the quiz the question said 'pure-strategy', which was a typo for 'mixed-strategy', so every student got full marks. In a mixed NE each user is indifferent: user 1 needs 24(1 − p₂) − 8p₂ = 0 ⇒ p₂ = 3/4; user 2 needs 16(1 − p₁) − 4p₁ = 0 ⇒ p₁ = 4/5. (The pure-strategy NE are (1, 0) and (0, 1), which are not among the options.)",
+      "id": 694,
+      "week": "Week 07 Midterm Quiz",
+      "course": "COMP5416",
+      "knowledgeLocation": "W1 Introduction & Game Theory / Collisions: mixed-strategy Nash equilibrium · W7 Midterm Quiz",
+      "lectureWeek": "Week 01",
+      "explanationZh": "官方答案 (4/5, 3/4)。原题写的是 pure-strategy，其实是 mixed-strategy 的笔误，所以全体同学都给了满分。混合策略纳什均衡要求双方都无差异：用户 1 无差异需要 24(1−p₂) − 8p₂ = 0 ⇒ p₂ = 3/4；用户 2 无差异需要 16(1−p₁) − 4p₁ = 0 ⇒ p₁ = 4/5。（纯策略纳什均衡是 (1,0) 和 (0,1)，不在选项里。）",
+      "optionNotes": [
+        "p₂ = 4/5 does not make user 1 indifferent (24 − 32·4/5 < 0).",
+        "Swaps the two probabilities: p₁ comes from user 2's payoffs and vice versa.",
+        "p₁ = 3/4 does not make user 2 indifferent (16 − 20·3/4 = 1 > 0).",
+        "p₁ = 4/5 makes user 2 indifferent and p₂ = 3/4 makes user 1 indifferent."
+      ],
+      "steps": [
+        "User 1 indifferent: $24(1-p_2) - 8p_2 = 0 \\Rightarrow 24 = 32p_2 \\Rightarrow p_2 = 3/4$",
+        "User 2 indifferent: $16(1-p_1) - 4p_1 = 0 \\Rightarrow 16 = 20p_1 \\Rightarrow p_1 = 4/5$",
+        "Mixed NE: $(p_1, p_2) = (4/5, 3/4)$; each user's $p$ is set by the other user's payoffs"
+      ],
+      "questionZh": "两个用户共享一个无线信道，在每个时隙选择发送或保持静默。收益不对称：只有用户 1 发送时，用户 1 得 +24，用户 2 得 0；只有用户 2 发送时，用户 2 得 +16，用户 1 得 0；两人都发送（碰撞）时，用户 1 得 −8，用户 2 得 −4；都不发送时都得 0。设 $p_1$（相应地 $p_2$）为用户 1（相应地用户 2）发送的概率。下列哪些 $(p_1, p_2)$ 是混合策略纳什均衡？（多选）",
+      "optionsZh": [
+        "(4/5, 4/5)",
+        "(3/4, 4/5)",
+        "(3/4, 3/4)",
+        "(4/5, 3/4)"
+      ]
+    },
+    {
       "question": "A router sends a packet of L = 12,000 bits onto a link with transmission rate R = 100 Mbps. What is the transmission delay, in seconds?",
       "options": [
         "1.20E-5",
@@ -17774,6 +17881,7 @@ window.QUIZ_DATA = {
       "Week 10",
       "Week 11",
       "Week 12",
+      "Week 07 Midterm Quiz",
       "Sample Exam",
       "Textbook Practice (Kurose & Ross)"
     ],
