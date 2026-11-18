@@ -41,7 +41,16 @@ def shuffled(item, rng):
 def main():
     data = json.load(open(DATA, encoding="utf-8"))
     kept = [q for q in data["questions"] if q.get("source") != "kp"]
-    next_id = max(q["id"] for q in kept) + 1
+    old_kp = [q["id"] for q in data["questions"] if q.get("source") == "kp"]
+    total = sum(len(m.QUESTIONS) for m in MODULES)
+    kept_ids = {q["id"] for q in kept}
+    # Reuse the old kp id range when it is still free, so ids (and the
+    # per-question stats saved in browsers) don't shift when static
+    # questions with higher ids are added.
+    start = min(old_kp) if old_kp else None
+    if start is None or any(start <= i < start + total for i in kept_ids):
+        start = max(kept_ids) + 1
+    next_id = start
     new = []
     for mod in MODULES:
         rng = random.Random(mod.COURSE)
@@ -73,8 +82,14 @@ def main():
                 weeks.append(week)
         weekly = sorted(w for w in weeks if w.startswith("Week "))
         sets = [w for w in weeks if not w.startswith("Week ")]
-        old = [w for w in data["weeksByCourse"].get(mod.COURSE, []) if not w.startswith("Week ") and w not in sets]
-        data["weeksByCourse"][mod.COURSE] = weekly + sets + old
+        # Keep every other set label of this course (e.g. "Week 07 Midterm Quiz",
+        # which starts with "Week " but is not a kp week) so it stays selectable.
+        static = {q["week"] for q in kept if q.get("course") == mod.COURSE and q.get("week")}
+        old = [w for w in data["weeksByCourse"].get(mod.COURSE, [])
+               if w not in weekly and w not in sets and (not w.startswith("Week ") or w in static)]
+        old += sorted(w for w in static if w not in weekly and w not in sets and w not in old)
+        exams = [w for w in old if w.startswith("Week ")]
+        data["weeksByCourse"][mod.COURSE] = weekly + exams + sets + [w for w in old if w not in exams]
         print(f"{mod.COURSE}: {len(mod.QUESTIONS)} questions in {len(weeks)} weeks")
     data["questions"] = kept + new
     weeks_all = []

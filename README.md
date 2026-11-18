@@ -48,7 +48,7 @@ A browser-based quiz app for USYD course revision.
 | Week 12 – Reinforcement Learning (exam points) | 7 |
 | Practice Exam 1 (official key) | 30 |
 | Practice Exam 2 (official key) | 30 |
-| COMP5416 total | 137 |
+| COMP5416 total | 140 |
 | Week 01 – Introduction & Game Theory (exam points) | 8 |
 | Week 02 – Performance (exam points) | 9 |
 | Week 03 – Applications (HTTP, FTP, Email) (exam points) | 10 |
@@ -61,7 +61,7 @@ A browser-based quiz app for USYD course revision.
 | Week 11 – WiFi, Cellular & Mobility (exam points) | 7 |
 | Week 12 – 5G, Bluetooth, Satellites & QUIC (exam points) | 8 |
 | Sample Exam (official key; two misprinted answer boxes corrected from the official working) | 14 |
-| Week 07 Midterm Quiz (official feedback) | 3 |
+| Week 07 Midterm Quiz (official feedback) | 6 |
 | Textbook Practice (Kurose & Ross problem types, unofficial answers; calculation questions get new numbers each run) | 34 |
 | CSYS5030 total | 117 |
 | Week 01 – Uncertainty & Entropy I (exam points) | 9 |
