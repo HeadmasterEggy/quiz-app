@@ -11314,6 +11314,952 @@
       ]
     },
     {
+      "question": "A hospital learns from records labelled Readmitted or Not readmitted and predicts one of these labels for a new patient. What task is this?",
+      "options": [
+        "Reinforcement learning from action rewards.",
+        "Unsupervised clustering.",
+        "Supervised regression of a continuous outcome.",
+        "Supervised classification."
+      ],
+      "correct": 3,
+      "explanation": "The target is a known discrete label supplied for the training observations, so this is supervised classification.",
+      "id": 715,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W1 Introduction / Learning tasks · Practice Exam 3 Q1",
+      "lectureWeek": "Week 01",
+      "explanationZh": "训练数据有标签，目标是两个离散类别（再入院 / 未再入院）→ 有监督分类。",
+      "optionNotes": [
+        "RL learns from rewards received for actions, not from labelled records.",
+        "Clustering uses no labels; here every record is labelled.",
+        "Regression predicts a continuous number; the target here is one of two classes.",
+        "Labelled examples with a discrete two-class target: supervised classification."
+      ],
+      "questionZh": "医院用标注了「再入院 / 未再入院」的病历学习，并为新病人预测这两个标签之一。这是什么任务？",
+      "optionsZh": [
+        "根据动作奖励进行强化学习。",
+        "无监督聚类。",
+        "对连续结果做有监督回归。",
+        "有监督分类。"
+      ]
+    },
+    {
+      "question": "On a noisy classification dataset, a 1-NN model fits the training examples closely but has unstable predictions. What is a plausible effect of increasing k moderately?",
+      "options": [
+        "A requirement that features no longer need comparable scales.",
+        "A smoother decision boundary that can reduce sensitivity to individual noisy examples.",
+        "A guarantee of zero error on every future test set.",
+        "A guarantee that every training point still receives its original label."
+      ],
+      "correct": 1,
+      "explanation": "Larger neighbourhoods average over more examples and can reduce variance. The resulting boundary may have more bias, so validation should guide k.",
+      "id": 716,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Choosing k · Practice Exam 3 Q2",
+      "lectureWeek": "Week 02",
+      "explanationZh": "1-NN 方差大、易被单个噪声点带偏；k 变大相当于在更大邻域里平均 → 方差下降、偏差上升，边界更平滑。k 取多少仍要用验证集选。",
+      "optionNotes": [
+        "k-NN is distance-based for every k, so features still need comparable scales.",
+        "Averaging over more neighbours lowers variance and smooths the boundary.",
+        "No choice of k guarantees zero test error.",
+        "With k > 1, neighbours can outvote a training point's own label."
+      ],
+      "questionZh": "在有噪声的分类数据上，1-NN 把训练样本拟合得很好，但预测不稳定。适度增大 k 可能带来什么效果？",
+      "optionsZh": [
+        "特征不再需要可比的尺度。",
+        "决策边界更平滑，可降低对单个噪声样本的敏感度。",
+        "保证在任何未来测试集上误差为 0。",
+        "保证每个训练点仍得到它原来的标签。"
+      ]
+    },
+    {
+      "question": "Three neighbours have (class, distance) pairs (A, 1), (B, 2) and (B, 2). Voting uses $w = 1/d^2$. What is the total vote for each class and the resulting prediction?",
+      "options": [
+        "A: 1.00; B: 0.50; predict A.",
+        "A: 1.00; B: 2.00; predict B.",
+        "A: 1.00; B: 1.00; tie.",
+        "A: 0.50; B: 1.00; predict B."
+      ],
+      "correct": 0,
+      "explanation": "The A vote is 1/1² = 1. Each B vote is 1/2² = 0.25, giving 0.50 in total. Weighted voting therefore selects A.",
+      "id": 717,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Weighted k-NN · Practice Exam 3 Q3",
+      "lectureWeek": "Week 02",
+      "explanationZh": "A：1/1² = 1；B：1/2² + 1/2² = 0.5 → 预测 A。不加权时 B 以 2:1 赢，加权正是为了纠正这种情况。",
+      "optionNotes": [
+        "A = 1, B = 0.25 + 0.25 = 0.5, so A wins.",
+        "Uses the distance d as the weight instead of 1/d².",
+        "Uses 1/d (0.5 + 0.5 = 1) instead of 1/d².",
+        "Miscomputes A's weight: 1/1² = 1, not 0.5."
+      ],
+      "steps": [
+        "A: $1/1^2 = 1$",
+        "B: $1/2^2 + 1/2^2 = 0.25 + 0.25 = 0.5$",
+        "$1 > 0.5$ → predict A"
+      ],
+      "questionZh": "三个邻居的（类别, 距离）为 (A, 1)、(B, 2)、(B, 2)。投票权重 $w = 1/d^2$。各类总票数和预测结果是什么？",
+      "optionsZh": [
+        "A：1.00；B：0.50；预测 A。",
+        "A：1.00；B：2.00；预测 B。",
+        "A：1.00；B：1.00；平票。",
+        "A：0.50；B：1.00；预测 B。"
+      ]
+    },
+    {
+      "question": "PRISM completes a pure rule for class Yes, but other Yes examples remain uncovered. What should happen next for that class?",
+      "options": [
+        "Discard every remaining Yes example permanently.",
+        "Keep adding conditions to the completed pure rule to broaden its coverage.",
+        "Stop because one pure rule must cover all Yes examples.",
+        "Remove the examples covered by the completed rule and grow another rule for the remaining Yes examples."
+      ],
+      "correct": 3,
+      "explanation": "Separate-and-conquer rule induction learns further rules after removing examples covered by a completed rule. Adding conjunctions cannot broaden a rule.",
+      "id": 718,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / PRISM · Practice Exam 3 Q4",
+      "lectureWeek": "Week 02",
+      "explanationZh": "PRISM 是分离-征服（covering）：得到一条纯规则后，删掉它覆盖的样本，再为剩下的 Yes 样本生长下一条规则，直到该类全部覆盖。加条件只会让规则更窄。",
+      "optionNotes": [
+        "Discarding them would leave those Yes examples with no rule.",
+        "Adding conditions (conjunctions) narrows a rule; it can never broaden it.",
+        "One pure rule rarely covers a whole class; PRISM keeps learning rules.",
+        "Separate-and-conquer: remove covered examples, then grow the next rule."
+      ],
+      "questionZh": "PRISM 已经为 Yes 类得到一条纯规则，但还有 Yes 样本未被覆盖。接下来对这个类应该做什么？",
+      "optionsZh": [
+        "永久丢弃剩下的所有 Yes 样本。",
+        "继续给这条纯规则加条件以扩大覆盖。",
+        "停止，因为一条纯规则必须覆盖所有 Yes 样本。",
+        "移除这条规则覆盖的样本，再为剩下的 Yes 样本生长另一条规则。"
+      ]
+    },
+    {
+      "question": "A very restrictive model has poor training and validation performance. Which diagnosis is most consistent with these observations?",
+      "options": [
+        "Perfect generalisation because both scores are similar.",
+        "Underfitting; the model may be too inflexible to capture the signal.",
+        "Test-set leakage proved by the low validation score.",
+        "Overfitting proved solely by the low training score."
+      ],
+      "correct": 1,
+      "explanation": "Poor performance even on training data suggests high bias or another learning problem. Similar poor scores do not establish good generalisation.",
+      "id": 719,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Underfitting · Practice Exam 3 Q5",
+      "lectureWeek": "Week 03",
+      "explanationZh": "训练和验证都差 → 欠拟合（高偏差），模型太简单。过拟合是训练好、验证差。",
+      "optionNotes": [
+        "Similar scores can be similarly bad; that is not good generalisation.",
+        "Poor on training data too: high bias, the model is too inflexible.",
+        "Leakage usually makes validation scores look too good, not poor.",
+        "Overfitting shows a good training score with a poor validation score."
+      ],
+      "questionZh": "一个限制很强的模型在训练集和验证集上表现都很差。哪个诊断最符合这些观察？",
+      "optionsZh": [
+        "泛化完美，因为两个分数相近。",
+        "欠拟合；模型可能太不灵活，抓不住信号。",
+        "验证分数低证明存在测试集泄漏。",
+        "仅凭训练分数低就证明了过拟合。"
+      ]
+    },
+    {
+      "question": "Why is feature scaling often relevant before applying a coefficient penalty in linear regression?",
+      "options": [
+        "Scaling guarantees that every coefficient becomes zero.",
+        "Feature units affect coefficient magnitudes, so penalties can otherwise act unevenly across features.",
+        "A regularisation penalty is independent of coefficient magnitudes.",
+        "Scaling makes validation unnecessary when selecting penalty strength."
+      ],
+      "correct": 1,
+      "explanation": "Rescaling a feature changes the coefficient needed for the same prediction. A penalty on raw coefficients therefore depends on the feature units.",
+      "id": 720,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Regularisation and scaling · Practice Exam 3 Q6",
+      "lectureWeek": "Week 03",
+      "explanationZh": "单位会改变系数大小（米换成千米，系数要大 1000 倍），而 Ridge/Lasso 惩罚的是系数大小，不缩放就会对各特征惩罚不均。",
+      "optionNotes": [
+        "Scaling does not zero coefficients.",
+        "Coefficient size depends on units, so an unscaled penalty is uneven.",
+        "Ridge/Lasso penalties are functions of coefficient magnitude.",
+        "The penalty strength still has to be chosen on validation data."
+      ],
+      "questionZh": "为什么在线性回归中加系数惩罚之前，通常需要做特征缩放？",
+      "optionsZh": [
+        "缩放保证每个系数都变为 0。",
+        "特征单位会影响系数大小，不缩放的话惩罚对各特征的作用不均匀。",
+        "正则化惩罚与系数大小无关。",
+        "缩放后选择惩罚强度时不再需要验证。"
+      ]
+    },
+    {
+      "question": "A logistic-regression model has score $z = 0.8x - 1.2$. For $x = 1.5$ and a decision threshold of 0.5, what are its positive-class probability and predicted class? Use class 1 when the probability is at least 0.5.",
+      "options": [
+        "Probability 0.00; class 0.",
+        "Probability 0.50; class 0.",
+        "Probability 1.00; class 1.",
+        "Probability 0.50; class 1."
+      ],
+      "correct": 3,
+      "explanation": "The score is z = 0.8×1.5 − 1.2 = 0. A sigmoid at zero equals 1/(1+1) = 0.5, which meets the stated threshold for class 1.",
+      "id": 721,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression · Practice Exam 3 Q7",
+      "lectureWeek": "Week 03",
+      "explanationZh": "z = 0.8×1.5 − 1.2 = 0，σ(0) = 0.5。题目规定「≥ 0.5 判类 1」，所以是类 1。",
+      "optionNotes": [
+        "Treats z = 0 as the probability; σ(0) = 0.5.",
+        "Right probability, but 0.5 meets the '≥ 0.5' rule, so class 1.",
+        "σ(z) = 1 only as z → ∞; here z = 0.",
+        "z = 0, σ(0) = 0.5 ≥ 0.5 → class 1."
+      ],
+      "steps": [
+        "$z = 0.8\\times1.5 - 1.2 = 0$",
+        "$\\sigma(0) = \\dfrac{1}{1+e^{0}} = 0.5$",
+        "$0.5 \\ge 0.5$ → class 1"
+      ],
+      "questionZh": "逻辑回归模型的得分为 $z = 0.8x - 1.2$。当 $x = 1.5$、决策阈值为 0.5 时，正类概率和预测类别是什么？概率至少为 0.5 时判为类 1。",
+      "optionsZh": [
+        "概率 0.00；类 0。",
+        "概率 0.50；类 0。",
+        "概率 1.00；类 1。",
+        "概率 0.50；类 1。"
+      ]
+    },
+    {
+      "question": "Naive Bayes gives unnormalised class scores $s_A$ and $s_B$ for an observation. Why can the larger score be used directly for classification?",
+      "options": [
+        "The larger likelihood always wins even if the class priors differ.",
+        "The common normalising denominator does not change which posterior is larger.",
+        "The class priors can never influence the scores.",
+        "The two class scores must always sum to one before normalisation."
+      ],
+      "correct": 1,
+      "explanation": "Both posterior probabilities are obtained by dividing their nonnegative class scores by the same evidence term. The argmax is unchanged.",
+      "id": 722,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes scores · Practice Exam 3 Q8",
+      "lectureWeek": "Week 04",
+      "explanationZh": "两个类的后验都等于得分除以同一个 P(x)，除完谁大谁小不变。得分里已含先验 P(c)；归一化之前两个得分不一定和为 1。",
+      "optionNotes": [
+        "Priors matter: the score is prior × likelihood.",
+        "Dividing both scores by the same P(x) keeps the argmax.",
+        "Each score s_c includes the prior P(c).",
+        "Scores only sum to one after normalisation."
+      ],
+      "questionZh": "朴素贝叶斯为一个样本给出未归一化的类得分 $s_A$ 和 $s_B$。为什么可以直接用较大的得分来分类？",
+      "optionsZh": [
+        "即使先验不同，似然较大的总会胜出。",
+        "共同的归一化分母不会改变哪个后验更大。",
+        "类先验永远不会影响得分。",
+        "归一化之前两个类的得分之和必须为 1。"
+      ]
+    },
+    {
+      "question": "A rare positive class forms 2% of observations. Why can accuracy alone conceal poor detection of positives?",
+      "options": [
+        "High accuracy guarantees high positive-class F1.",
+        "Recall must equal accuracy on imbalanced data.",
+        "A classifier predicting every observation as negative can still achieve 98% accuracy.",
+        "Accuracy is mathematically undefined whenever classes are imbalanced."
+      ],
+      "correct": 2,
+      "explanation": "Correctly classifying the majority class can dominate accuracy. Positive-class precision, recall and F1 reveal aspects of performance that accuracy can obscure.",
+      "id": 723,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Imbalanced data · Practice Exam 3 Q9",
+      "lectureWeek": "Week 04",
+      "explanationZh": "全判负类也有 98% 准确率，但 TP = 0，正类 recall 和 F1 都是 0。不平衡数据要看正类的 precision / recall / F1。",
+      "optionNotes": [
+        "The all-negative classifier has high accuracy but F1 = 0.",
+        "Recall and accuracy are different quantities.",
+        "All-negative gives 98% accuracy with zero positives found.",
+        "Accuracy is always defined; it is just misleading here."
+      ],
+      "questionZh": "罕见正类只占样本的 2%。为什么只看准确率会掩盖正类检测得很差的问题？",
+      "optionsZh": [
+        "准确率高保证正类 F1 也高。",
+        "在不平衡数据上召回率必然等于准确率。",
+        "把所有样本都判为负类的分类器仍可获得 98% 的准确率。",
+        "类别不平衡时准确率在数学上没有定义。"
+      ]
+    },
+    {
+      "question": "A binary classifier has TP = 9, FN = 3, FP = 6 and TN = 42. What are accuracy and positive-class F1?",
+      "options": [
+        "Accuracy 0.85; F1 approximately 0.667.",
+        "Accuracy 0.85; F1 0.850.",
+        "Accuracy 0.70; F1 approximately 0.667.",
+        "Accuracy 0.75; F1 0.750."
+      ],
+      "correct": 0,
+      "explanation": "There are 60 observations and 51 correct predictions, so accuracy = 51/60 = 0.85. F1 = 18/(18+6+3) = 18/27 ≈ 0.667.",
+      "id": 724,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Classification metrics · Practice Exam 3 Q10",
+      "lectureWeek": "Week 04",
+      "explanationZh": "准确率 (9+42)/60 = 0.85；precision 9/15 = 0.6，recall 9/12 = 0.75，F1 = 2TP/(2TP+FP+FN) = 18/27 ≈ 0.667。",
+      "optionNotes": [
+        "Accuracy 51/60 = 0.85 and F1 = 18/27 ≈ 0.667.",
+        "Copies the accuracy into F1.",
+        "Accuracy is 51/60 = 0.85, not 0.70.",
+        "0.75 is the recall (9/12), not accuracy or F1."
+      ],
+      "steps": [
+        "$\\text{Acc} = \\dfrac{9+42}{60} = 0.85$",
+        "$P = 9/15 = 0.6,\\quad R = 9/12 = 0.75$",
+        "$F_1 = \\dfrac{2TP}{2TP+FP+FN} = \\dfrac{18}{27} \\approx 0.667$"
+      ],
+      "questionZh": "某二分类器 TP = 9，FN = 3，FP = 6，TN = 42。准确率和正类 F1 是多少？",
+      "optionsZh": [
+        "准确率 0.85；F1 约 0.667。",
+        "准确率 0.85；F1 0.850。",
+        "准确率 0.70；F1 约 0.667。",
+        "准确率 0.75；F1 0.750。"
+      ]
+    },
+    {
+      "question": "A fully grown tree performs better on training data but worse on validation data than a pruned tree. What is the most plausible explanation?",
+      "options": [
+        "Pruning reduced overfitting by simplifying the fitted tree.",
+        "Training accuracy alone proves the larger tree is preferable.",
+        "Pruning must have increased the number of leaf nodes.",
+        "The validation observations were necessarily added to training."
+      ],
+      "correct": 0,
+      "explanation": "A simpler tree may trade some training fit for better generalisation. The pattern is consistent with overfitting by the larger tree.",
+      "id": 725,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Tree pruning · Practice Exam 3 Q11",
+      "lectureWeek": "Week 05",
+      "explanationZh": "完整树把噪声也拟合了（过拟合）；剪枝牺牲一点训练拟合，换来更好的泛化。",
+      "optionNotes": [
+        "Better on training, worse on validation = the full tree overfits; pruning helps.",
+        "Training accuracy alone cannot show which tree generalises better.",
+        "Pruning removes branches, so it reduces the number of leaves.",
+        "Nothing suggests the validation data was used for training."
+      ],
+      "questionZh": "与剪枝后的树相比，完整生长的树在训练集上更好、在验证集上更差。最合理的解释是什么？",
+      "optionsZh": [
+        "剪枝通过简化树减少了过拟合。",
+        "仅凭训练准确率就能证明大树更好。",
+        "剪枝一定增加了叶节点数。",
+        "验证样本必然被加进了训练集。"
+      ]
+    },
+    {
+      "question": "Two ensembles have the same number of individually accurate classifiers. Why might an ensemble whose members make different errors perform better under voting?",
+      "options": [
+        "The number of classifiers is the only property that affects voting.",
+        "Copying one fitted classifier creates independent errors.",
+        "Less correlated errors give voting a greater opportunity to correct individual mistakes.",
+        "Disagreement guarantees every majority prediction is correct."
+      ],
+      "correct": 2,
+      "explanation": "Voting benefits from useful diversity. If all members make the same error, adding identical copies cannot correct it.",
+      "id": 726,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensemble diversity · Practice Exam 3 Q12",
+      "lectureWeek": "Week 05",
+      "explanationZh": "成员错得不一样，投票时其他多数成员才能纠正个别成员的错；如果都错在同一处（如复制同一个模型），加多少个都没用。",
+      "optionNotes": [
+        "Diversity of errors matters, not just the count.",
+        "Copies make exactly the same errors (perfectly correlated).",
+        "Less correlated errors let the majority outvote individual mistakes.",
+        "Diversity helps but never guarantees every vote is right."
+      ],
+      "questionZh": "两个集成里单个准确的分类器数量相同。为什么成员犯不同错误的那个集成在投票时可能表现更好？",
+      "optionsZh": [
+        "分类器数量是影响投票的唯一因素。",
+        "复制同一个已训练的分类器会产生相互独立的错误。",
+        "错误相关性越低，投票越有机会纠正个别错误。",
+        "意见分歧保证每个多数预测都正确。"
+      ]
+    },
+    {
+      "question": "Which statement best contrasts the usual construction of boosting with bagging?",
+      "options": [
+        "Boosting builds learners sequentially using the current ensemble's errors; bagging trains on bootstrap resamples.",
+        "Boosting always uses identical copied learners; bagging never uses resampling.",
+        "Both methods must produce exactly the same fitted ensemble.",
+        "Bagging requires each learner's predictions before the next training set can be weighted."
+      ],
+      "correct": 0,
+      "explanation": "Boosting uses sequential corrections, such as reweighting errors or fitting residuals. Bagging creates bootstrap training sets and can train learners independently.",
+      "id": 727,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Boosting vs bagging · Practice Exam 3 Q13",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Boosting 串行训练，每个新模型针对当前集成的错误（加权错分样本或拟合残差）；Bagging 在 bootstrap 重抽样数据上独立（可并行）训练。",
+      "optionNotes": [
+        "Boosting is sequential on errors; bagging uses bootstrap resamples.",
+        "Boosting learners differ; bagging is built on resampling.",
+        "They are different procedures and give different ensembles.",
+        "This describes boosting, not bagging."
+      ],
+      "questionZh": "下面哪项最能对比 Boosting 与 Bagging 的常见构造方式？",
+      "optionsZh": [
+        "Boosting 根据当前集成的错误按顺序构建学习器；Bagging 在 bootstrap 重抽样数据上训练。",
+        "Boosting 总是使用完全相同的复制学习器；Bagging 从不重抽样。",
+        "两种方法必须得到完全相同的集成。",
+        "Bagging 需要前一个学习器的预测结果才能给下一个训练集加权。"
+      ]
+    },
+    {
+      "question": "An SVM decision score is $g(\\mathbf{x}) = \\mathbf{w}^T\\mathbf{x} + b$, with $\\mathbf{w} = (1, -2)$, $b = 0.5$ and $\\mathbf{x} = (3, 1)$. Predict class +1 if $g(\\mathbf{x})$ is positive, otherwise class −1. What are the score and prediction?",
+      "options": [
+        "Score 1.5; class +1.",
+        "Score −1.5; class −1.",
+        "Score 0.5; class −1.",
+        "Score 5.5; class +1."
+      ],
+      "correct": 0,
+      "explanation": "The score is 1×3 − 2×1 + 0.5 = 1.5. It is positive, so the model predicts class +1.",
+      "id": 728,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / Linear SVM decision · Practice Exam 3 Q14",
+      "lectureWeek": "Week 06",
+      "explanationZh": "g = 1×3 + (−2)×1 + 0.5 = 1.5 > 0 → 判 +1。",
+      "optionNotes": [
+        "1×3 − 2×1 + 0.5 = 1.5 > 0 → +1.",
+        "Sign error: the score is +1.5.",
+        "Drops the w·x term or miscomputes it; 3 − 2 + 0.5 = 1.5.",
+        "Uses +2 instead of −2 for the second weight."
+      ],
+      "steps": [
+        "$g = 1\\times3 + (-2)\\times1 + 0.5 = 1.5$",
+        "$1.5 > 0$ → class +1"
+      ],
+      "questionZh": "SVM 决策得分为 $g(\\mathbf{x}) = \\mathbf{w}^T\\mathbf{x} + b$，其中 $\\mathbf{w} = (1, -2)$，$b = 0.5$，$\\mathbf{x} = (3, 1)$。$g(\\mathbf{x})$ 为正时预测 +1，否则预测 −1。得分和预测是什么？",
+      "optionsZh": [
+        "得分 1.5；类 +1。",
+        "得分 −1.5；类 −1。",
+        "得分 0.5；类 −1。",
+        "得分 5.5；类 +1。"
+      ]
+    },
+    {
+      "question": "In a separable hard-margin SVM, which observations are the support vectors?",
+      "options": [
+        "Every observation in the test set.",
+        "All points farther from the decision plane than every other training point.",
+        "Only observations with the largest raw feature values.",
+        "Training points on the canonical support planes that determine the maximum-margin solution."
+      ],
+      "correct": 3,
+      "explanation": "For the hard-margin formulation, support vectors lie at the margin constraints and determine the fitted separating hyperplane.",
+      "id": 729,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / Support vectors · Practice Exam 3 Q15",
+      "lectureWeek": "Week 06",
+      "explanationZh": "支持向量是落在 $w^\\top x + b = \\pm1$ 两个支持平面上的训练点，它们决定最大间隔超平面；是离边界最近的点，不是最远的。",
+      "optionNotes": [
+        "Support vectors come from the training data, not the test set.",
+        "Reversed: support vectors are the closest points to the boundary.",
+        "Raw feature size is irrelevant.",
+        "They lie on w·x + b = ±1 and determine the max-margin hyperplane."
+      ],
+      "questionZh": "在线性可分的硬间隔 SVM 中，哪些样本是支持向量？",
+      "optionsZh": [
+        "测试集中的每个样本。",
+        "比其他所有训练点都更远离决策面的点。",
+        "只有原始特征值最大的样本。",
+        "落在标准支持平面上、决定最大间隔解的训练点。"
+      ]
+    },
+    {
+      "question": "PCA retains directions with high input variance. Why might retaining only the first component harm classification?",
+      "options": [
+        "PCA cannot be applied to labelled datasets even if labels are ignored.",
+        "A lower-variance direction may contain information important for separating the classes.",
+        "The first component is always the direction that best separates class labels.",
+        "PCA maximises classification accuracy by definition."
+      ],
+      "correct": 1,
+      "explanation": "PCA is unsupervised and does not optimise class separation. High-variance structure can be unrelated to the target labels.",
+      "id": 730,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / PCA and labels · Practice Exam 3 Q16",
+      "lectureWeek": "Week 06",
+      "explanationZh": "PCA 是无监督的，只找方差大的方向、不看标签。区分两类的信息可能恰好在方差小的方向上，丢掉就分不开了。",
+      "optionNotes": [
+        "PCA works on any data once the labels are ignored.",
+        "Class-separating information can sit in a low-variance direction.",
+        "PC1 maximises variance, not class separation.",
+        "PCA does not use labels, so it does not optimise accuracy."
+      ],
+      "questionZh": "PCA 保留输入方差大的方向。为什么只保留第一主成分可能会损害分类？",
+      "optionsZh": [
+        "即使忽略标签，PCA 也不能用于有标签的数据集。",
+        "方差较小的方向可能含有区分类别的重要信息。",
+        "第一主成分总是最能区分类别的方向。",
+        "按定义 PCA 最大化分类准确率。"
+      ]
+    },
+    {
+      "question": "Exactly four principal components have variances 7, 4, 3 and 2. What is the smallest number of leading components needed to retain at least 80% of the total variance? Here d = 4; the total is the sum of all four variances.",
+      "options": [
+        "Three components, retaining 87.5%.",
+        "Two components, retaining 68.75%.",
+        "Four components, retaining 100%.",
+        "Three components, retaining 80%."
+      ],
+      "correct": 0,
+      "explanation": "The total is 16. The first two give 11/16 = 68.75%; the first three give 14/16 = 87.5%. Three is the smallest number meeting 80%.",
+      "id": 731,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / PCA retained variance · Practice Exam 3 Q17",
+      "lectureWeek": "Week 06",
+      "explanationZh": "总方差 16：前 2 个 11/16 = 68.75%，前 3 个 14/16 = 87.5% ≥ 80% → 最少 3 个，保留 87.5%。",
+      "optionNotes": [
+        "14/16 = 87.5% is the first cumulative share ≥ 80%.",
+        "68.75% is below 80%.",
+        "Four works but is not the smallest number.",
+        "Right count, but three components retain 87.5%, not exactly 80%."
+      ],
+      "steps": [
+        "Total $= 7+4+3+2 = 16$",
+        "$7/16 = 43.75\\%$, $11/16 = 68.75\\%$",
+        "$14/16 = 87.5\\% \\ge 80\\%$ → 3 components"
+      ],
+      "questionZh": "恰好有四个主成分，方差分别为 7、4、3、2。要保留至少 80% 的总方差，最少需要几个前导主成分？这里 d = 4，总方差为四个方差之和。",
+      "optionsZh": [
+        "3 个，保留 87.5%。",
+        "2 个，保留 68.75%。",
+        "4 个，保留 100%。",
+        "3 个，保留 80%。"
+      ]
+    },
+    {
+      "question": "A network contains multiple affine layers but no nonlinear activations. What can be said about the overall input-output mapping?",
+      "options": [
+        "It can represent every nonlinear function simply by adding more affine layers.",
+        "Its outputs must always be zero.",
+        "It can still be represented as one affine mapping.",
+        "Its parameters cannot be learned by gradient descent."
+      ],
+      "correct": 2,
+      "explanation": "Composing affine maps gives another affine map. Nonlinear activations are needed for the usual nonlinear representational benefit of multilayer networks.",
+      "id": 732,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Nonlinear activations · Practice Exam 3 Q18",
+      "lectureWeek": "Week 07",
+      "explanationZh": "W₂(W₁x + b₁) + b₂ = (W₂W₁)x + (W₂b₁ + b₂)：叠多少层仍是一个仿射映射，必须加非线性激活。",
+      "optionNotes": [
+        "Stacking affine layers stays affine, so it cannot become nonlinear.",
+        "Nothing forces the output to be zero.",
+        "A composition of affine maps is a single affine map.",
+        "Gradient descent still trains it; it just stays affine."
+      ],
+      "questionZh": "一个网络有多个仿射层，但没有非线性激活。关于整体输入-输出映射可以得出什么结论？",
+      "optionsZh": [
+        "只要增加仿射层就能表示任何非线性函数。",
+        "输出必然总是 0。",
+        "它仍可表示为一个仿射映射。",
+        "其参数无法用梯度下降学习。"
+      ]
+    },
+    {
+      "question": "A perceptron has $\\mathbf{w} = (-0.1, 0.3)$, $b = -0.6$ and $\\eta = 0.1$. For $\\mathbf{x} = (1, 2)$, its supplied actual output is $a = 0$ and target is $t = 1$. What are the updated weights and bias?",
+      "options": [
+        "w = (−0.2, 0.1); b = −0.7.",
+        "w = (−0.1, 0.3); b = −0.5.",
+        "w = (0.0, 0.5); b = −0.5.",
+        "w = (0.0, 0.5); b = −0.6."
+      ],
+      "correct": 2,
+      "explanation": "η(t−a) = 0.1. Add 0.1(1,2) to the weights, giving (0,0.5), and add 0.1 to the bias, giving −0.5.",
+      "id": 733,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron update · Practice Exam 3 Q19",
+      "lectureWeek": "Week 07",
+      "explanationZh": "η(t−a) = 0.1×(1−0) = 0.1；w = (−0.1, 0.3) + 0.1×(1, 2) = (0.0, 0.5)，b = −0.6 + 0.1 = −0.5。权重和偏置都要更新。",
+      "optionNotes": [
+        "Subtracts the update; t − a = +1, so add.",
+        "Updates the bias but forgets the weights.",
+        "w + 0.1·(1,2) = (0, 0.5) and b + 0.1 = −0.5.",
+        "Updates the weights but forgets the bias."
+      ],
+      "steps": [
+        "$\\eta(t-a) = 0.1\\times(1-0) = 0.1$",
+        "$\\mathbf{w} = (-0.1, 0.3) + 0.1\\times(1, 2) = (0.0, 0.5)$",
+        "$b = -0.6 + 0.1 = -0.5$"
+      ],
+      "questionZh": "感知机 $\\mathbf{w} = (-0.1, 0.3)$，$b = -0.6$，$\\eta = 0.1$。对 $\\mathbf{x} = (1, 2)$，给定实际输出 $a = 0$，目标 $t = 1$。更新后的权重和偏置是多少？",
+      "optionsZh": [
+        "w = (−0.2, 0.1)；b = −0.7。",
+        "w = (−0.1, 0.3)；b = −0.5。",
+        "w = (0.0, 0.5)；b = −0.5。",
+        "w = (0.0, 0.5)；b = −0.6。"
+      ]
+    },
+    {
+      "question": "A later CNN layer combines several edge-like features from an earlier layer. What does this illustrate?",
+      "options": [
+        "Convolutional filters must remain fixed before training begins.",
+        "Hierarchical construction of more complex features from simpler learned features.",
+        "Each added layer necessarily reduces the effective receptive field.",
+        "Every later layer discards the earlier feature maps and starts from raw labels."
+      ],
+      "correct": 1,
+      "explanation": "Successive CNN layers combine earlier features and often integrate information over larger effective receptive fields.",
+      "id": 734,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN representations · Practice Exam 3 Q20",
+      "lectureWeek": "Week 08",
+      "explanationZh": "CNN 逐层组合特征：边缘 → 纹理 → 部件 → 物体，越往后有效感受野越大。",
+      "optionNotes": [
+        "Filters are learned during training, not fixed.",
+        "Later layers build complex features from simpler earlier ones.",
+        "Reversed: deeper layers usually see a larger receptive field.",
+        "Later layers take earlier feature maps as input."
+      ],
+      "questionZh": "CNN 的后层把前层若干类似边缘的特征组合起来。这说明了什么？",
+      "optionsZh": [
+        "卷积滤波器在训练开始前必须保持固定。",
+        "由较简单的已学特征层级式地构建更复杂的特征。",
+        "每增加一层必然缩小有效感受野。",
+        "每个后层都丢弃前面的特征图，从原始标签重新开始。"
+      ]
+    },
+    {
+      "question": "A simple RNN is unrolled over ten time steps and then over twenty time steps, with the same input and hidden dimensions. What happens to its recurrent parameter count?",
+      "options": [
+        "It becomes zero because states replace parameters.",
+        "It doubles because every time step has independent recurrent weights.",
+        "It stays the same because the recurrent weights are shared across time.",
+        "It depends only on the number of training labels."
+      ],
+      "correct": 2,
+      "explanation": "Unrolling shows repeated uses of the same recurrent mapping. More time steps add computations and states, not independent copies of the learned matrices.",
+      "id": 735,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / RNN weight sharing · Practice Exam 3 Q21",
+      "lectureWeek": "Week 08",
+      "explanationZh": "每个时间步用的是同一组 W_xh、W_hh、b；展开更长只是多算几次、多几个隐状态，参数量不变。",
+      "optionNotes": [
+        "Hidden states are activations, not parameters.",
+        "Common mistake: the weights are shared, not copied per step.",
+        "Same W_xh, W_hh, b at every step, so the count is unchanged.",
+        "The parameter count depends on layer sizes, not labels."
+      ],
+      "questionZh": "一个简单 RNN 先展开 10 个时间步，再展开 20 个时间步，输入和隐藏维度不变。它的循环参数数量会怎样？",
+      "optionsZh": [
+        "变为 0，因为状态取代了参数。",
+        "翻倍，因为每个时间步都有独立的循环权重。",
+        "保持不变，因为循环权重在时间上共享。",
+        "只取决于训练标签的数量。"
+      ]
+    },
+    {
+      "question": "A convolutional layer has three 5 × 5 filters, one input channel and one bias per filter. How many trainable parameters are there?",
+      "options": [
+        "150.",
+        "26.",
+        "78.",
+        "75."
+      ],
+      "correct": 2,
+      "explanation": "Each filter has 5×5×1 = 25 weights plus one bias. Three filters contain 3×26 = 78 parameters.",
+      "id": 736,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN parameters · Practice Exam 3 Q22",
+      "lectureWeek": "Week 08",
+      "explanationZh": "每个滤波器 5×5×1 = 25 个权重 + 1 个偏置 = 26；3 个滤波器共 78。通式 (k_h·k_w·C_in + 1)·C_out。",
+      "optionNotes": [
+        "Double-counts: 3 × 50 is not the formula.",
+        "Only one filter's parameters (25 + 1).",
+        "(5·5·1 + 1) × 3 = 78.",
+        "Forgets the three biases."
+      ],
+      "steps": [
+        "Per filter: $5\\times5\\times1 + 1 = 26$",
+        "Three filters: $3\\times26 = 78$"
+      ],
+      "questionZh": "某卷积层有三个 5 × 5 滤波器，一个输入通道，每个滤波器一个偏置。可训练参数共有多少个？",
+      "optionsZh": [
+        "150。",
+        "26。",
+        "78。",
+        "75。"
+      ]
+    },
+    {
+      "question": "A network's training loss keeps decreasing while validation loss has begun to increase. Which action is consistent with early stopping?",
+      "options": [
+        "Retain the checkpoint with the best validation performance.",
+        "Choose the final epoch using the reserved test labels.",
+        "Delete the validation set and report training loss as generalisation performance.",
+        "Always keep training until training loss is exactly zero."
+      ],
+      "correct": 0,
+      "explanation": "Early stopping treats validation performance as a guide to training duration. A later checkpoint with lower training loss may generalise worse.",
+      "id": 737,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Early stopping · Practice Exam 3 Q23",
+      "lectureWeek": "Week 07",
+      "explanationZh": "早停：监控验证损失，开始上升（过拟合）就停，并回到验证表现最好的那个检查点。",
+      "optionNotes": [
+        "Keep the weights from the best validation epoch.",
+        "Using test labels to choose the epoch leaks the test set.",
+        "Training loss does not measure generalisation.",
+        "Training to zero loss is what early stopping avoids."
+      ],
+      "questionZh": "网络的训练损失持续下降，而验证损失已开始上升。哪种做法符合早停？",
+      "optionsZh": [
+        "保留验证表现最好的检查点。",
+        "用预留的测试标签选择最终 epoch。",
+        "删除验证集，把训练损失当作泛化性能报告。",
+        "一直训练到训练损失恰好为 0。"
+      ]
+    },
+    {
+      "question": "An agglomerative hierarchical algorithm begins with each observation in its own cluster. What is its basic next operation?",
+      "options": [
+        "Split the largest cluster into two equal-sized subsets.",
+        "Fit a sigmoid output to each cluster label.",
+        "Assign each observation an independent new random class.",
+        "Merge the closest pair of current clusters according to the selected linkage rule."
+      ],
+      "correct": 3,
+      "explanation": "Agglomerative methods repeatedly merge clusters. The linkage definition determines how distances between the current clusters are calculated.",
+      "id": 738,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Agglomerative clustering · Practice Exam 3 Q24",
+      "lectureWeek": "Week 09",
+      "explanationZh": "凝聚式（自底向上）每轮合并最近的两个簇，簇间距离由链接方式（single / complete / average）定义。",
+      "optionNotes": [
+        "Splitting is divisive (top-down), not agglomerative.",
+        "Sigmoid outputs belong to classifiers, not clustering.",
+        "Random relabelling is not part of hierarchical clustering.",
+        "Bottom-up: merge the closest pair under the chosen linkage."
+      ],
+      "questionZh": "凝聚式层次聚类算法开始时每个样本自成一簇。它下一步的基本操作是什么？",
+      "optionsZh": [
+        "把最大的簇分成两个大小相等的子集。",
+        "为每个簇标签拟合一个 sigmoid 输出。",
+        "给每个样本分配一个独立的新随机类别。",
+        "按选定的链接规则合并当前最近的一对簇。"
+      ]
+    },
+    {
+      "question": "Clusters A = {1, 5} and B = {8, 11} contain one-dimensional points. Using absolute point-to-point distance, what are complete-link and single-link distances, respectively?",
+      "options": [
+        "Complete-link 3; single-link 10.",
+        "Complete-link 10; single-link 6.5.",
+        "Complete-link 10; single-link 3.",
+        "Complete-link 6.5; single-link 3."
+      ],
+      "correct": 2,
+      "explanation": "Cross-cluster distances are 7, 10, 3 and 6. Complete-link takes the maximum, 10, while single-link takes the minimum, 3.",
+      "id": 739,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical linkage · Practice Exam 3 Q25",
+      "lectureWeek": "Week 09",
+      "explanationZh": "跨簇距离 7、10、3、6。完全链取最大 = 10，单链取最小 = 3；6.5 是平均链。",
+      "optionNotes": [
+        "Swapped: complete-link is the maximum.",
+        "6.5 is average linkage, not single-link.",
+        "Complete = max = 10, single = min = 3.",
+        "6.5 is average linkage, not complete-link."
+      ],
+      "steps": [
+        "Cross pairs: $|1-8|=7,\\ |1-11|=10,\\ |5-8|=3,\\ |5-11|=6$",
+        "Complete-link $= \\max = 10$",
+        "Single-link $= \\min = 3$"
+      ],
+      "questionZh": "簇 A = {1, 5} 和 B = {8, 11} 是一维点。用点间绝对距离，完全链和单链距离分别是多少？",
+      "optionsZh": [
+        "完全链 3；单链 10。",
+        "完全链 10；单链 6.5。",
+        "完全链 10；单链 3。",
+        "完全链 6.5；单链 3。"
+      ]
+    },
+    {
+      "question": "In a first-order Markov chain, what does conditioning on the current state imply about earlier states when predicting the next state?",
+      "options": [
+        "The chain must remain in its current state forever.",
+        "All possible next states become equally probable.",
+        "The next state becomes independent of the current state as well.",
+        "Earlier states add no predictive information once the current state is known."
+      ],
+      "correct": 3,
+      "explanation": "The first-order Markov assumption makes the next-state distribution conditionally independent of the more distant past given the current state.",
+      "id": 740,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Markov assumption · Practice Exam 3 Q26",
+      "lectureWeek": "Week 11",
+      "explanationZh": "P(q_{t+1} | q_t, q_{t−1}, …) = P(q_{t+1} | q_t)：已知当前状态后，更早的状态不再提供信息。",
+      "optionNotes": [
+        "The chain still moves according to its transition probabilities.",
+        "Next-state probabilities come from the transition matrix, not uniform.",
+        "Reversed: the next state depends on the current state.",
+        "Given the current state, the past adds nothing."
+      ],
+      "questionZh": "在一阶马尔可夫链中，预测下一状态时，以当前状态为条件对更早的状态意味着什么？",
+      "optionsZh": [
+        "链必须永远停留在当前状态。",
+        "所有可能的下一状态变得等概率。",
+        "下一状态也与当前状态独立。",
+        "已知当前状态后，更早的状态不再提供预测信息。"
+      ]
+    },
+    {
+      "question": "Forward probabilities at time 1 are $f_1(A) = 0.2$ and $f_1(B) = 0.3$. Transitions into A are $P(A|A) = 0.6$ and $P(A|B) = 0.4$. The next observation has emission probability 0.5 in A. What is $f_2(A)$? ($a_{jk}$ is the transition from j to k; $e_k(o_t)$ is the emission likelihood in state k.)",
+      "options": [
+        "0.06.",
+        "0.25.",
+        "0.24.",
+        "0.12."
+      ],
+      "correct": 3,
+      "explanation": "Forward sums predecessor contributions: 0.2×0.6 + 0.3×0.4 = 0.24. Multiplying by the emission probability 0.5 gives 0.12.",
+      "id": 741,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 3 Q27",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₂(A) = e_A(o₂) · Σ_j f₁(j)·a_jA = 0.5 × (0.2×0.6 + 0.3×0.4) = 0.5 × 0.24 = 0.12。",
+      "optionNotes": [
+        "Only the path from A (0.2·0.6·0.5); Forward sums both.",
+        "Not a valid combination of the given numbers.",
+        "Forgets to multiply by the emission 0.5.",
+        "0.5 × (0.12 + 0.12) = 0.12."
+      ],
+      "steps": [
+        "$\\sum_j f_1(j)\\,a_{jA} = 0.2\\times0.6 + 0.3\\times0.4 = 0.24$",
+        "$f_2(A) = e_A(o_2)\\times0.24 = 0.5\\times0.24 = 0.12$"
+      ],
+      "questionZh": "时刻 1 的前向概率为 $f_1(A) = 0.2$、$f_1(B) = 0.3$。转入 A 的转移概率为 $P(A|A) = 0.6$、$P(A|B) = 0.4$。下一个观测在 A 中的发射概率为 0.5。$f_2(A)$ 是多少？（$a_{jk}$ 为从 j 到 k 的转移；$e_k(o_t)$ 为状态 k 的发射似然。）",
+      "optionsZh": [
+        "0.06。",
+        "0.25。",
+        "0.24。",
+        "0.12。"
+      ]
+    },
+    {
+      "question": "Under an epsilon-greedy action rule, why does the agent sometimes choose a random action?",
+      "options": [
+        "To guarantee the greedy action has a known optimal value.",
+        "To make all Q-values remain constant during training.",
+        "To explore actions that may otherwise be overlooked by the current value estimates.",
+        "To remove the need to observe any rewards."
+      ],
+      "correct": 2,
+      "explanation": "Exploration collects information about actions beyond the one currently estimated to be best. Epsilon-greedy balances such exploration with exploitation.",
+      "id": 742,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / Exploration · Practice Exam 3 Q28",
+      "lectureWeek": "Week 12",
+      "explanationZh": "以概率 ε 随机选（探索），否则选当前 Q 最大的（利用）。当前估计可能不准，不探索就发现不了被低估的动作。",
+      "optionNotes": [
+        "Exploration gives no guarantee about the greedy action's value.",
+        "Q-values keep changing as the agent learns.",
+        "Random actions gather information on actions the estimates undervalue.",
+        "Rewards are still needed to update Q."
+      ],
+      "questionZh": "在 ε-greedy 动作规则下，智能体为什么有时会选择随机动作？",
+      "optionsZh": [
+        "为了保证贪心动作的最优价值已知。",
+        "为了让所有 Q 值在训练中保持不变。",
+        "为了探索那些可能被当前价值估计忽略的动作。",
+        "为了不再需要观察任何奖励。"
+      ]
+    },
+    {
+      "question": "Which pairing correctly matches two standard DQN stabilisation techniques to their roles?",
+      "options": [
+        "Replay sampling fixes the target weights; a target network samples stored transitions.",
+        "Both techniques guarantee that training loss decreases after every update.",
+        "Both techniques replace Q-values with class probabilities.",
+        "Replay sampling reduces temporal correlation; a target network slows changes in bootstrap targets."
+      ],
+      "correct": 3,
+      "explanation": "Replay and target networks address distinct sources of training instability: correlated data and rapidly moving bootstrap targets.",
+      "id": 743,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / DQN stabilisation · Practice Exam 3 Q29",
+      "lectureWeek": "Week 12",
+      "explanationZh": "经验回放：随机抽取存储的转移，打破样本的时间相关性；目标网络：用定期同步的旧网络算目标，让 bootstrap 目标变化变慢。",
+      "optionNotes": [
+        "Roles swapped between replay and the target network.",
+        "Neither guarantees a lower loss after every update.",
+        "DQN still estimates Q-values, not class probabilities.",
+        "Replay breaks correlation; the target network stabilises targets."
+      ],
+      "questionZh": "下面哪组正确地把两种标准 DQN 稳定技巧与其作用对应起来？",
+      "optionsZh": [
+        "经验回放固定目标权重；目标网络对存储的转移进行采样。",
+        "两种技巧都保证每次更新后训练损失下降。",
+        "两种技巧都用类别概率取代 Q 值。",
+        "经验回放降低时间相关性；目标网络减缓 bootstrap 目标的变化。"
+      ]
+    },
+    {
+      "question": "A transition ends the episode. $Q_{\\text{old}}(s,a) = 4$, reward $r = 2$ and $\\alpha = 0.25$. The terminal state has zero future return. What is the updated Q-value?",
+      "options": [
+        "4.50.",
+        "3.50.",
+        "1.50.",
+        "2.00."
+      ],
+      "correct": 1,
+      "explanation": "For a terminal transition the target is just r = 2. Hence Q_new = 4 + 0.25(2−4) = 3.5; there is no bootstrap contribution.",
+      "id": 744,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / Terminal Q-learning · Practice Exam 3 Q30",
+      "lectureWeek": "Week 12",
+      "explanationZh": "终止转移没有后续回报，目标就是 r = 2：Q_new = 4 + 0.25 × (2 − 4) = 3.5。",
+      "optionNotes": [
+        "Sign of the TD error flipped.",
+        "Target r = 2: 4 + 0.25(2 − 4) = 3.5.",
+        "Not a valid update of these numbers.",
+        "Replaces Q with the reward (α = 1)."
+      ],
+      "steps": [
+        "Terminal: target $= r = 2$ (no $\\gamma\\max Q$ term)",
+        "$Q_{\\text{new}} = 4 + 0.25\\times(2-4) = 3.5$"
+      ],
+      "questionZh": "某转移结束了回合。$Q_{\\text{old}}(s,a) = 4$，奖励 $r = 2$，$\\alpha = 0.25$。终止状态的未来回报为 0。更新后的 Q 值是多少？",
+      "optionsZh": [
+        "4.50。",
+        "3.50。",
+        "1.50。",
+        "2.00。"
+      ]
+    },
+    {
       "question": "Which statement best matches the course definition of a complex system?",
       "options": [
         "Many entities whose global behaviour is a non-trivial result of their interactions",
@@ -18483,6 +19429,7 @@
     "Mock Exam 1",
     "Practice Exam 1",
     "Practice Exam 2",
+    "Practice Exam 3",
     "Textbook Practice (Kurose & Ross)",
     "Sample Exam"
   ],
@@ -18528,7 +19475,8 @@
       "Week 11",
       "Week 12",
       "Practice Exam 1",
-      "Practice Exam 2"
+      "Practice Exam 2",
+      "Practice Exam 3"
     ],
     "COMP5416": [
       "Week 01",
