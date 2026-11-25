@@ -11314,6 +11314,1847 @@
       ]
     },
     {
+      "question": "A hospital learns from records labelled Readmitted or Not readmitted and predicts one of these labels for a new patient. What task is this?",
+      "options": [
+        "Reinforcement learning from action rewards.",
+        "Unsupervised clustering.",
+        "Supervised regression of a continuous outcome.",
+        "Supervised classification."
+      ],
+      "correct": 3,
+      "explanation": "The target is a known discrete label supplied for the training observations, so this is supervised classification.",
+      "id": 715,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W1 Introduction / Learning tasks · Practice Exam 3 Q1",
+      "lectureWeek": "Week 01",
+      "explanationZh": "训练数据有标签，目标是两个离散类别（再入院 / 未再入院）→ 有监督分类。",
+      "optionNotes": [
+        "RL learns from rewards received for actions, not from labelled records.",
+        "Clustering uses no labels; here every record is labelled.",
+        "Regression predicts a continuous number; the target here is one of two classes.",
+        "Labelled examples with a discrete two-class target: supervised classification."
+      ],
+      "questionZh": "医院用标注了「再入院 / 未再入院」的病历学习，并为新病人预测这两个标签之一。这是什么任务？",
+      "optionsZh": [
+        "根据动作奖励进行强化学习。",
+        "无监督聚类。",
+        "对连续结果做有监督回归。",
+        "有监督分类。"
+      ]
+    },
+    {
+      "question": "On a noisy classification dataset, a 1-NN model fits the training examples closely but has unstable predictions. What is a plausible effect of increasing k moderately?",
+      "options": [
+        "A requirement that features no longer need comparable scales.",
+        "A smoother decision boundary that can reduce sensitivity to individual noisy examples.",
+        "A guarantee of zero error on every future test set.",
+        "A guarantee that every training point still receives its original label."
+      ],
+      "correct": 1,
+      "explanation": "Larger neighbourhoods average over more examples and can reduce variance. The resulting boundary may have more bias, so validation should guide k.",
+      "id": 716,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Choosing k · Practice Exam 3 Q2",
+      "lectureWeek": "Week 02",
+      "explanationZh": "1-NN 方差大、易被单个噪声点带偏；k 变大相当于在更大邻域里平均 → 方差下降、偏差上升，边界更平滑。k 取多少仍要用验证集选。",
+      "optionNotes": [
+        "k-NN is distance-based for every k, so features still need comparable scales.",
+        "Averaging over more neighbours lowers variance and smooths the boundary.",
+        "No choice of k guarantees zero test error.",
+        "With k > 1, neighbours can outvote a training point's own label."
+      ],
+      "questionZh": "在有噪声的分类数据上，1-NN 把训练样本拟合得很好，但预测不稳定。适度增大 k 可能带来什么效果？",
+      "optionsZh": [
+        "特征不再需要可比的尺度。",
+        "决策边界更平滑，可降低对单个噪声样本的敏感度。",
+        "保证在任何未来测试集上误差为 0。",
+        "保证每个训练点仍得到它原来的标签。"
+      ]
+    },
+    {
+      "question": "Three neighbours have (class, distance) pairs (A, 1), (B, 2) and (B, 2). Voting uses $w = 1/d^2$. What is the total vote for each class and the resulting prediction?",
+      "options": [
+        "A: 1.00; B: 0.50; predict A.",
+        "A: 1.00; B: 2.00; predict B.",
+        "A: 1.00; B: 1.00; tie.",
+        "A: 0.50; B: 1.00; predict B."
+      ],
+      "correct": 0,
+      "explanation": "The A vote is 1/1² = 1. Each B vote is 1/2² = 0.25, giving 0.50 in total. Weighted voting therefore selects A.",
+      "id": 717,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / Weighted k-NN · Practice Exam 3 Q3",
+      "lectureWeek": "Week 02",
+      "explanationZh": "A：1/1² = 1；B：1/2² + 1/2² = 0.5 → 预测 A。不加权时 B 以 2:1 赢，加权正是为了纠正这种情况。",
+      "optionNotes": [
+        "A = 1, B = 0.25 + 0.25 = 0.5, so A wins.",
+        "Uses the distance d as the weight instead of 1/d².",
+        "Uses 1/d (0.5 + 0.5 = 1) instead of 1/d².",
+        "Miscomputes A's weight: 1/1² = 1, not 0.5."
+      ],
+      "steps": [
+        "A: $1/1^2 = 1$",
+        "B: $1/2^2 + 1/2^2 = 0.25 + 0.25 = 0.5$",
+        "$1 > 0.5$ → predict A"
+      ],
+      "questionZh": "三个邻居的（类别, 距离）为 (A, 1)、(B, 2)、(B, 2)。投票权重 $w = 1/d^2$。各类总票数和预测结果是什么？",
+      "optionsZh": [
+        "A：1.00；B：0.50；预测 A。",
+        "A：1.00；B：2.00；预测 B。",
+        "A：1.00；B：1.00；平票。",
+        "A：0.50；B：1.00；预测 B。"
+      ]
+    },
+    {
+      "question": "PRISM completes a pure rule for class Yes, but other Yes examples remain uncovered. What should happen next for that class?",
+      "options": [
+        "Discard every remaining Yes example permanently.",
+        "Keep adding conditions to the completed pure rule to broaden its coverage.",
+        "Stop because one pure rule must cover all Yes examples.",
+        "Remove the examples covered by the completed rule and grow another rule for the remaining Yes examples."
+      ],
+      "correct": 3,
+      "explanation": "Separate-and-conquer rule induction learns further rules after removing examples covered by a completed rule. Adding conjunctions cannot broaden a rule.",
+      "id": 718,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W2 Data Preprocessing & k-NN / PRISM · Practice Exam 3 Q4",
+      "lectureWeek": "Week 02",
+      "explanationZh": "PRISM 是分离-征服（covering）：得到一条纯规则后，删掉它覆盖的样本，再为剩下的 Yes 样本生长下一条规则，直到该类全部覆盖。加条件只会让规则更窄。",
+      "optionNotes": [
+        "Discarding them would leave those Yes examples with no rule.",
+        "Adding conditions (conjunctions) narrows a rule; it can never broaden it.",
+        "One pure rule rarely covers a whole class; PRISM keeps learning rules.",
+        "Separate-and-conquer: remove covered examples, then grow the next rule."
+      ],
+      "questionZh": "PRISM 已经为 Yes 类得到一条纯规则，但还有 Yes 样本未被覆盖。接下来对这个类应该做什么？",
+      "optionsZh": [
+        "永久丢弃剩下的所有 Yes 样本。",
+        "继续给这条纯规则加条件以扩大覆盖。",
+        "停止，因为一条纯规则必须覆盖所有 Yes 样本。",
+        "移除这条规则覆盖的样本，再为剩下的 Yes 样本生长另一条规则。"
+      ]
+    },
+    {
+      "question": "A very restrictive model has poor training and validation performance. Which diagnosis is most consistent with these observations?",
+      "options": [
+        "Perfect generalisation because both scores are similar.",
+        "Underfitting; the model may be too inflexible to capture the signal.",
+        "Test-set leakage proved by the low validation score.",
+        "Overfitting proved solely by the low training score."
+      ],
+      "correct": 1,
+      "explanation": "Poor performance even on training data suggests high bias or another learning problem. Similar poor scores do not establish good generalisation.",
+      "id": 719,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Underfitting · Practice Exam 3 Q5",
+      "lectureWeek": "Week 03",
+      "explanationZh": "训练和验证都差 → 欠拟合（高偏差），模型太简单。过拟合是训练好、验证差。",
+      "optionNotes": [
+        "Similar scores can be similarly bad; that is not good generalisation.",
+        "Poor on training data too: high bias, the model is too inflexible.",
+        "Leakage usually makes validation scores look too good, not poor.",
+        "Overfitting shows a good training score with a poor validation score."
+      ],
+      "questionZh": "一个限制很强的模型在训练集和验证集上表现都很差。哪个诊断最符合这些观察？",
+      "optionsZh": [
+        "泛化完美，因为两个分数相近。",
+        "欠拟合；模型可能太不灵活，抓不住信号。",
+        "验证分数低证明存在测试集泄漏。",
+        "仅凭训练分数低就证明了过拟合。"
+      ]
+    },
+    {
+      "question": "Why is feature scaling often relevant before applying a coefficient penalty in linear regression?",
+      "options": [
+        "Scaling guarantees that every coefficient becomes zero.",
+        "Feature units affect coefficient magnitudes, so penalties can otherwise act unevenly across features.",
+        "A regularisation penalty is independent of coefficient magnitudes.",
+        "Scaling makes validation unnecessary when selecting penalty strength."
+      ],
+      "correct": 1,
+      "explanation": "Rescaling a feature changes the coefficient needed for the same prediction. A penalty on raw coefficients therefore depends on the feature units.",
+      "id": 720,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Regularisation and scaling · Practice Exam 3 Q6",
+      "lectureWeek": "Week 03",
+      "explanationZh": "单位会改变系数大小（米换成千米，系数要大 1000 倍），而 Ridge/Lasso 惩罚的是系数大小，不缩放就会对各特征惩罚不均。",
+      "optionNotes": [
+        "Scaling does not zero coefficients.",
+        "Coefficient size depends on units, so an unscaled penalty is uneven.",
+        "Ridge/Lasso penalties are functions of coefficient magnitude.",
+        "The penalty strength still has to be chosen on validation data."
+      ],
+      "questionZh": "为什么在线性回归中加系数惩罚之前，通常需要做特征缩放？",
+      "optionsZh": [
+        "缩放保证每个系数都变为 0。",
+        "特征单位会影响系数大小，不缩放的话惩罚对各特征的作用不均匀。",
+        "正则化惩罚与系数大小无关。",
+        "缩放后选择惩罚强度时不再需要验证。"
+      ]
+    },
+    {
+      "question": "A logistic-regression model has score $z = 0.8x - 1.2$. For $x = 1.5$ and a decision threshold of 0.5, what are its positive-class probability and predicted class? Use class 1 when the probability is at least 0.5.",
+      "options": [
+        "Probability 0.00; class 0.",
+        "Probability 0.50; class 0.",
+        "Probability 1.00; class 1.",
+        "Probability 0.50; class 1."
+      ],
+      "correct": 3,
+      "explanation": "The score is z = 0.8×1.5 − 1.2 = 0. A sigmoid at zero equals 1/(1+1) = 0.5, which meets the stated threshold for class 1.",
+      "id": 721,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression · Practice Exam 3 Q7",
+      "lectureWeek": "Week 03",
+      "explanationZh": "z = 0.8×1.5 − 1.2 = 0，σ(0) = 0.5。题目规定「≥ 0.5 判类 1」，所以是类 1。",
+      "optionNotes": [
+        "Treats z = 0 as the probability; σ(0) = 0.5.",
+        "Right probability, but 0.5 meets the '≥ 0.5' rule, so class 1.",
+        "σ(z) = 1 only as z → ∞; here z = 0.",
+        "z = 0, σ(0) = 0.5 ≥ 0.5 → class 1."
+      ],
+      "steps": [
+        "$z = 0.8\\times1.5 - 1.2 = 0$",
+        "$\\sigma(0) = \\dfrac{1}{1+e^{0}} = 0.5$",
+        "$0.5 \\ge 0.5$ → class 1"
+      ],
+      "questionZh": "逻辑回归模型的得分为 $z = 0.8x - 1.2$。当 $x = 1.5$、决策阈值为 0.5 时，正类概率和预测类别是什么？概率至少为 0.5 时判为类 1。",
+      "optionsZh": [
+        "概率 0.00；类 0。",
+        "概率 0.50；类 0。",
+        "概率 1.00；类 1。",
+        "概率 0.50；类 1。"
+      ]
+    },
+    {
+      "question": "Naive Bayes gives unnormalised class scores $s_A$ and $s_B$ for an observation. Why can the larger score be used directly for classification?",
+      "options": [
+        "The larger likelihood always wins even if the class priors differ.",
+        "The common normalising denominator does not change which posterior is larger.",
+        "The class priors can never influence the scores.",
+        "The two class scores must always sum to one before normalisation."
+      ],
+      "correct": 1,
+      "explanation": "Both posterior probabilities are obtained by dividing their nonnegative class scores by the same evidence term. The argmax is unchanged.",
+      "id": 722,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes scores · Practice Exam 3 Q8",
+      "lectureWeek": "Week 04",
+      "explanationZh": "两个类的后验都等于得分除以同一个 P(x)，除完谁大谁小不变。得分里已含先验 P(c)；归一化之前两个得分不一定和为 1。",
+      "optionNotes": [
+        "Priors matter: the score is prior × likelihood.",
+        "Dividing both scores by the same P(x) keeps the argmax.",
+        "Each score s_c includes the prior P(c).",
+        "Scores only sum to one after normalisation."
+      ],
+      "questionZh": "朴素贝叶斯为一个样本给出未归一化的类得分 $s_A$ 和 $s_B$。为什么可以直接用较大的得分来分类？",
+      "optionsZh": [
+        "即使先验不同，似然较大的总会胜出。",
+        "共同的归一化分母不会改变哪个后验更大。",
+        "类先验永远不会影响得分。",
+        "归一化之前两个类的得分之和必须为 1。"
+      ]
+    },
+    {
+      "question": "A rare positive class forms 2% of observations. Why can accuracy alone conceal poor detection of positives?",
+      "options": [
+        "High accuracy guarantees high positive-class F1.",
+        "Recall must equal accuracy on imbalanced data.",
+        "A classifier predicting every observation as negative can still achieve 98% accuracy.",
+        "Accuracy is mathematically undefined whenever classes are imbalanced."
+      ],
+      "correct": 2,
+      "explanation": "Correctly classifying the majority class can dominate accuracy. Positive-class precision, recall and F1 reveal aspects of performance that accuracy can obscure.",
+      "id": 723,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Imbalanced data · Practice Exam 3 Q9",
+      "lectureWeek": "Week 04",
+      "explanationZh": "全判负类也有 98% 准确率，但 TP = 0，正类 recall 和 F1 都是 0。不平衡数据要看正类的 precision / recall / F1。",
+      "optionNotes": [
+        "The all-negative classifier has high accuracy but F1 = 0.",
+        "Recall and accuracy are different quantities.",
+        "All-negative gives 98% accuracy with zero positives found.",
+        "Accuracy is always defined; it is just misleading here."
+      ],
+      "questionZh": "罕见正类只占样本的 2%。为什么只看准确率会掩盖正类检测得很差的问题？",
+      "optionsZh": [
+        "准确率高保证正类 F1 也高。",
+        "在不平衡数据上召回率必然等于准确率。",
+        "把所有样本都判为负类的分类器仍可获得 98% 的准确率。",
+        "类别不平衡时准确率在数学上没有定义。"
+      ]
+    },
+    {
+      "question": "A binary classifier has TP = 9, FN = 3, FP = 6 and TN = 42. What are accuracy and positive-class F1?",
+      "options": [
+        "Accuracy 0.85; F1 approximately 0.667.",
+        "Accuracy 0.85; F1 0.850.",
+        "Accuracy 0.70; F1 approximately 0.667.",
+        "Accuracy 0.75; F1 0.750."
+      ],
+      "correct": 0,
+      "explanation": "There are 60 observations and 51 correct predictions, so accuracy = 51/60 = 0.85. F1 = 18/(18+6+3) = 18/27 ≈ 0.667.",
+      "id": 724,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Classification metrics · Practice Exam 3 Q10",
+      "lectureWeek": "Week 04",
+      "explanationZh": "准确率 (9+42)/60 = 0.85；precision 9/15 = 0.6，recall 9/12 = 0.75，F1 = 2TP/(2TP+FP+FN) = 18/27 ≈ 0.667。",
+      "optionNotes": [
+        "Accuracy 51/60 = 0.85 and F1 = 18/27 ≈ 0.667.",
+        "Copies the accuracy into F1.",
+        "Accuracy is 51/60 = 0.85, not 0.70.",
+        "0.75 is the recall (9/12), not accuracy or F1."
+      ],
+      "steps": [
+        "$\\text{Acc} = \\dfrac{9+42}{60} = 0.85$",
+        "$P = 9/15 = 0.6,\\quad R = 9/12 = 0.75$",
+        "$F_1 = \\dfrac{2TP}{2TP+FP+FN} = \\dfrac{18}{27} \\approx 0.667$"
+      ],
+      "questionZh": "某二分类器 TP = 9，FN = 3，FP = 6，TN = 42。准确率和正类 F1 是多少？",
+      "optionsZh": [
+        "准确率 0.85；F1 约 0.667。",
+        "准确率 0.85；F1 0.850。",
+        "准确率 0.70；F1 约 0.667。",
+        "准确率 0.75；F1 0.750。"
+      ]
+    },
+    {
+      "question": "A fully grown tree performs better on training data but worse on validation data than a pruned tree. What is the most plausible explanation?",
+      "options": [
+        "Pruning reduced overfitting by simplifying the fitted tree.",
+        "Training accuracy alone proves the larger tree is preferable.",
+        "Pruning must have increased the number of leaf nodes.",
+        "The validation observations were necessarily added to training."
+      ],
+      "correct": 0,
+      "explanation": "A simpler tree may trade some training fit for better generalisation. The pattern is consistent with overfitting by the larger tree.",
+      "id": 725,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Tree pruning · Practice Exam 3 Q11",
+      "lectureWeek": "Week 05",
+      "explanationZh": "完整树把噪声也拟合了（过拟合）；剪枝牺牲一点训练拟合，换来更好的泛化。",
+      "optionNotes": [
+        "Better on training, worse on validation = the full tree overfits; pruning helps.",
+        "Training accuracy alone cannot show which tree generalises better.",
+        "Pruning removes branches, so it reduces the number of leaves.",
+        "Nothing suggests the validation data was used for training."
+      ],
+      "questionZh": "与剪枝后的树相比，完整生长的树在训练集上更好、在验证集上更差。最合理的解释是什么？",
+      "optionsZh": [
+        "剪枝通过简化树减少了过拟合。",
+        "仅凭训练准确率就能证明大树更好。",
+        "剪枝一定增加了叶节点数。",
+        "验证样本必然被加进了训练集。"
+      ]
+    },
+    {
+      "question": "Two ensembles have the same number of individually accurate classifiers. Why might an ensemble whose members make different errors perform better under voting?",
+      "options": [
+        "The number of classifiers is the only property that affects voting.",
+        "Copying one fitted classifier creates independent errors.",
+        "Less correlated errors give voting a greater opportunity to correct individual mistakes.",
+        "Disagreement guarantees every majority prediction is correct."
+      ],
+      "correct": 2,
+      "explanation": "Voting benefits from useful diversity. If all members make the same error, adding identical copies cannot correct it.",
+      "id": 726,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Ensemble diversity · Practice Exam 3 Q12",
+      "lectureWeek": "Week 05",
+      "explanationZh": "成员错得不一样，投票时其他多数成员才能纠正个别成员的错；如果都错在同一处（如复制同一个模型），加多少个都没用。",
+      "optionNotes": [
+        "Diversity of errors matters, not just the count.",
+        "Copies make exactly the same errors (perfectly correlated).",
+        "Less correlated errors let the majority outvote individual mistakes.",
+        "Diversity helps but never guarantees every vote is right."
+      ],
+      "questionZh": "两个集成里单个准确的分类器数量相同。为什么成员犯不同错误的那个集成在投票时可能表现更好？",
+      "optionsZh": [
+        "分类器数量是影响投票的唯一因素。",
+        "复制同一个已训练的分类器会产生相互独立的错误。",
+        "错误相关性越低，投票越有机会纠正个别错误。",
+        "意见分歧保证每个多数预测都正确。"
+      ]
+    },
+    {
+      "question": "Which statement best contrasts the usual construction of boosting with bagging?",
+      "options": [
+        "Boosting builds learners sequentially using the current ensemble's errors; bagging trains on bootstrap resamples.",
+        "Boosting always uses identical copied learners; bagging never uses resampling.",
+        "Both methods must produce exactly the same fitted ensemble.",
+        "Bagging requires each learner's predictions before the next training set can be weighted."
+      ],
+      "correct": 0,
+      "explanation": "Boosting uses sequential corrections, such as reweighting errors or fitting residuals. Bagging creates bootstrap training sets and can train learners independently.",
+      "id": 727,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Boosting vs bagging · Practice Exam 3 Q13",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Boosting 串行训练，每个新模型针对当前集成的错误（加权错分样本或拟合残差）；Bagging 在 bootstrap 重抽样数据上独立（可并行）训练。",
+      "optionNotes": [
+        "Boosting is sequential on errors; bagging uses bootstrap resamples.",
+        "Boosting learners differ; bagging is built on resampling.",
+        "They are different procedures and give different ensembles.",
+        "This describes boosting, not bagging."
+      ],
+      "questionZh": "下面哪项最能对比 Boosting 与 Bagging 的常见构造方式？",
+      "optionsZh": [
+        "Boosting 根据当前集成的错误按顺序构建学习器；Bagging 在 bootstrap 重抽样数据上训练。",
+        "Boosting 总是使用完全相同的复制学习器；Bagging 从不重抽样。",
+        "两种方法必须得到完全相同的集成。",
+        "Bagging 需要前一个学习器的预测结果才能给下一个训练集加权。"
+      ]
+    },
+    {
+      "question": "An SVM decision score is $g(\\mathbf{x}) = \\mathbf{w}^T\\mathbf{x} + b$, with $\\mathbf{w} = (1, -2)$, $b = 0.5$ and $\\mathbf{x} = (3, 1)$. Predict class +1 if $g(\\mathbf{x})$ is positive, otherwise class −1. What are the score and prediction?",
+      "options": [
+        "Score 1.5; class +1.",
+        "Score −1.5; class −1.",
+        "Score 0.5; class −1.",
+        "Score 5.5; class +1."
+      ],
+      "correct": 0,
+      "explanation": "The score is 1×3 − 2×1 + 0.5 = 1.5. It is positive, so the model predicts class +1.",
+      "id": 728,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / Linear SVM decision · Practice Exam 3 Q14",
+      "lectureWeek": "Week 06",
+      "explanationZh": "g = 1×3 + (−2)×1 + 0.5 = 1.5 > 0 → 判 +1。",
+      "optionNotes": [
+        "1×3 − 2×1 + 0.5 = 1.5 > 0 → +1.",
+        "Sign error: the score is +1.5.",
+        "Drops the w·x term or miscomputes it; 3 − 2 + 0.5 = 1.5.",
+        "Uses +2 instead of −2 for the second weight."
+      ],
+      "steps": [
+        "$g = 1\\times3 + (-2)\\times1 + 0.5 = 1.5$",
+        "$1.5 > 0$ → class +1"
+      ],
+      "questionZh": "SVM 决策得分为 $g(\\mathbf{x}) = \\mathbf{w}^T\\mathbf{x} + b$，其中 $\\mathbf{w} = (1, -2)$，$b = 0.5$，$\\mathbf{x} = (3, 1)$。$g(\\mathbf{x})$ 为正时预测 +1，否则预测 −1。得分和预测是什么？",
+      "optionsZh": [
+        "得分 1.5；类 +1。",
+        "得分 −1.5；类 −1。",
+        "得分 0.5；类 −1。",
+        "得分 5.5；类 +1。"
+      ]
+    },
+    {
+      "question": "In a separable hard-margin SVM, which observations are the support vectors?",
+      "options": [
+        "Every observation in the test set.",
+        "All points farther from the decision plane than every other training point.",
+        "Only observations with the largest raw feature values.",
+        "Training points on the canonical support planes that determine the maximum-margin solution."
+      ],
+      "correct": 3,
+      "explanation": "For the hard-margin formulation, support vectors lie at the margin constraints and determine the fitted separating hyperplane.",
+      "id": 729,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / Support vectors · Practice Exam 3 Q15",
+      "lectureWeek": "Week 06",
+      "explanationZh": "支持向量是落在 $w^\\top x + b = \\pm1$ 两个支持平面上的训练点，它们决定最大间隔超平面；是离边界最近的点，不是最远的。",
+      "optionNotes": [
+        "Support vectors come from the training data, not the test set.",
+        "Reversed: support vectors are the closest points to the boundary.",
+        "Raw feature size is irrelevant.",
+        "They lie on w·x + b = ±1 and determine the max-margin hyperplane."
+      ],
+      "questionZh": "在线性可分的硬间隔 SVM 中，哪些样本是支持向量？",
+      "optionsZh": [
+        "测试集中的每个样本。",
+        "比其他所有训练点都更远离决策面的点。",
+        "只有原始特征值最大的样本。",
+        "落在标准支持平面上、决定最大间隔解的训练点。"
+      ]
+    },
+    {
+      "question": "PCA retains directions with high input variance. Why might retaining only the first component harm classification?",
+      "options": [
+        "PCA cannot be applied to labelled datasets even if labels are ignored.",
+        "A lower-variance direction may contain information important for separating the classes.",
+        "The first component is always the direction that best separates class labels.",
+        "PCA maximises classification accuracy by definition."
+      ],
+      "correct": 1,
+      "explanation": "PCA is unsupervised and does not optimise class separation. High-variance structure can be unrelated to the target labels.",
+      "id": 730,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / PCA and labels · Practice Exam 3 Q16",
+      "lectureWeek": "Week 06",
+      "explanationZh": "PCA 是无监督的，只找方差大的方向、不看标签。区分两类的信息可能恰好在方差小的方向上，丢掉就分不开了。",
+      "optionNotes": [
+        "PCA works on any data once the labels are ignored.",
+        "Class-separating information can sit in a low-variance direction.",
+        "PC1 maximises variance, not class separation.",
+        "PCA does not use labels, so it does not optimise accuracy."
+      ],
+      "questionZh": "PCA 保留输入方差大的方向。为什么只保留第一主成分可能会损害分类？",
+      "optionsZh": [
+        "即使忽略标签，PCA 也不能用于有标签的数据集。",
+        "方差较小的方向可能含有区分类别的重要信息。",
+        "第一主成分总是最能区分类别的方向。",
+        "按定义 PCA 最大化分类准确率。"
+      ]
+    },
+    {
+      "question": "Exactly four principal components have variances 7, 4, 3 and 2. What is the smallest number of leading components needed to retain at least 80% of the total variance? Here d = 4; the total is the sum of all four variances.",
+      "options": [
+        "Three components, retaining 87.5%.",
+        "Two components, retaining 68.75%.",
+        "Four components, retaining 100%.",
+        "Three components, retaining 80%."
+      ],
+      "correct": 0,
+      "explanation": "The total is 16. The first two give 11/16 = 68.75%; the first three give 14/16 = 87.5%. Three is the smallest number meeting 80%.",
+      "id": 731,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W6 SVM & PCA / PCA retained variance · Practice Exam 3 Q17",
+      "lectureWeek": "Week 06",
+      "explanationZh": "总方差 16：前 2 个 11/16 = 68.75%，前 3 个 14/16 = 87.5% ≥ 80% → 最少 3 个，保留 87.5%。",
+      "optionNotes": [
+        "14/16 = 87.5% is the first cumulative share ≥ 80%.",
+        "68.75% is below 80%.",
+        "Four works but is not the smallest number.",
+        "Right count, but three components retain 87.5%, not exactly 80%."
+      ],
+      "steps": [
+        "Total $= 7+4+3+2 = 16$",
+        "$7/16 = 43.75\\%$, $11/16 = 68.75\\%$",
+        "$14/16 = 87.5\\% \\ge 80\\%$ → 3 components"
+      ],
+      "questionZh": "恰好有四个主成分，方差分别为 7、4、3、2。要保留至少 80% 的总方差，最少需要几个前导主成分？这里 d = 4，总方差为四个方差之和。",
+      "optionsZh": [
+        "3 个，保留 87.5%。",
+        "2 个，保留 68.75%。",
+        "4 个，保留 100%。",
+        "3 个，保留 80%。"
+      ]
+    },
+    {
+      "question": "A network contains multiple affine layers but no nonlinear activations. What can be said about the overall input-output mapping?",
+      "options": [
+        "It can represent every nonlinear function simply by adding more affine layers.",
+        "Its outputs must always be zero.",
+        "It can still be represented as one affine mapping.",
+        "Its parameters cannot be learned by gradient descent."
+      ],
+      "correct": 2,
+      "explanation": "Composing affine maps gives another affine map. Nonlinear activations are needed for the usual nonlinear representational benefit of multilayer networks.",
+      "id": 732,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Nonlinear activations · Practice Exam 3 Q18",
+      "lectureWeek": "Week 07",
+      "explanationZh": "W₂(W₁x + b₁) + b₂ = (W₂W₁)x + (W₂b₁ + b₂)：叠多少层仍是一个仿射映射，必须加非线性激活。",
+      "optionNotes": [
+        "Stacking affine layers stays affine, so it cannot become nonlinear.",
+        "Nothing forces the output to be zero.",
+        "A composition of affine maps is a single affine map.",
+        "Gradient descent still trains it; it just stays affine."
+      ],
+      "questionZh": "一个网络有多个仿射层，但没有非线性激活。关于整体输入-输出映射可以得出什么结论？",
+      "optionsZh": [
+        "只要增加仿射层就能表示任何非线性函数。",
+        "输出必然总是 0。",
+        "它仍可表示为一个仿射映射。",
+        "其参数无法用梯度下降学习。"
+      ]
+    },
+    {
+      "question": "A perceptron has $\\mathbf{w} = (-0.1, 0.3)$, $b = -0.6$ and $\\eta = 0.1$. For $\\mathbf{x} = (1, 2)$, its supplied actual output is $a = 0$ and target is $t = 1$. What are the updated weights and bias?",
+      "options": [
+        "w = (−0.2, 0.1); b = −0.7.",
+        "w = (−0.1, 0.3); b = −0.5.",
+        "w = (0.0, 0.5); b = −0.5.",
+        "w = (0.0, 0.5); b = −0.6."
+      ],
+      "correct": 2,
+      "explanation": "η(t−a) = 0.1. Add 0.1(1,2) to the weights, giving (0,0.5), and add 0.1 to the bias, giving −0.5.",
+      "id": 733,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron update · Practice Exam 3 Q19",
+      "lectureWeek": "Week 07",
+      "explanationZh": "η(t−a) = 0.1×(1−0) = 0.1；w = (−0.1, 0.3) + 0.1×(1, 2) = (0.0, 0.5)，b = −0.6 + 0.1 = −0.5。权重和偏置都要更新。",
+      "optionNotes": [
+        "Subtracts the update; t − a = +1, so add.",
+        "Updates the bias but forgets the weights.",
+        "w + 0.1·(1,2) = (0, 0.5) and b + 0.1 = −0.5.",
+        "Updates the weights but forgets the bias."
+      ],
+      "steps": [
+        "$\\eta(t-a) = 0.1\\times(1-0) = 0.1$",
+        "$\\mathbf{w} = (-0.1, 0.3) + 0.1\\times(1, 2) = (0.0, 0.5)$",
+        "$b = -0.6 + 0.1 = -0.5$"
+      ],
+      "questionZh": "感知机 $\\mathbf{w} = (-0.1, 0.3)$，$b = -0.6$，$\\eta = 0.1$。对 $\\mathbf{x} = (1, 2)$，给定实际输出 $a = 0$，目标 $t = 1$。更新后的权重和偏置是多少？",
+      "optionsZh": [
+        "w = (−0.2, 0.1)；b = −0.7。",
+        "w = (−0.1, 0.3)；b = −0.5。",
+        "w = (0.0, 0.5)；b = −0.5。",
+        "w = (0.0, 0.5)；b = −0.6。"
+      ]
+    },
+    {
+      "question": "A later CNN layer combines several edge-like features from an earlier layer. What does this illustrate?",
+      "options": [
+        "Convolutional filters must remain fixed before training begins.",
+        "Hierarchical construction of more complex features from simpler learned features.",
+        "Each added layer necessarily reduces the effective receptive field.",
+        "Every later layer discards the earlier feature maps and starts from raw labels."
+      ],
+      "correct": 1,
+      "explanation": "Successive CNN layers combine earlier features and often integrate information over larger effective receptive fields.",
+      "id": 734,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN representations · Practice Exam 3 Q20",
+      "lectureWeek": "Week 08",
+      "explanationZh": "CNN 逐层组合特征：边缘 → 纹理 → 部件 → 物体，越往后有效感受野越大。",
+      "optionNotes": [
+        "Filters are learned during training, not fixed.",
+        "Later layers build complex features from simpler earlier ones.",
+        "Reversed: deeper layers usually see a larger receptive field.",
+        "Later layers take earlier feature maps as input."
+      ],
+      "questionZh": "CNN 的后层把前层若干类似边缘的特征组合起来。这说明了什么？",
+      "optionsZh": [
+        "卷积滤波器在训练开始前必须保持固定。",
+        "由较简单的已学特征层级式地构建更复杂的特征。",
+        "每增加一层必然缩小有效感受野。",
+        "每个后层都丢弃前面的特征图，从原始标签重新开始。"
+      ]
+    },
+    {
+      "question": "A simple RNN is unrolled over ten time steps and then over twenty time steps, with the same input and hidden dimensions. What happens to its recurrent parameter count?",
+      "options": [
+        "It becomes zero because states replace parameters.",
+        "It doubles because every time step has independent recurrent weights.",
+        "It stays the same because the recurrent weights are shared across time.",
+        "It depends only on the number of training labels."
+      ],
+      "correct": 2,
+      "explanation": "Unrolling shows repeated uses of the same recurrent mapping. More time steps add computations and states, not independent copies of the learned matrices.",
+      "id": 735,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / RNN weight sharing · Practice Exam 3 Q21",
+      "lectureWeek": "Week 08",
+      "explanationZh": "每个时间步用的是同一组 W_xh、W_hh、b；展开更长只是多算几次、多几个隐状态，参数量不变。",
+      "optionNotes": [
+        "Hidden states are activations, not parameters.",
+        "Common mistake: the weights are shared, not copied per step.",
+        "Same W_xh, W_hh, b at every step, so the count is unchanged.",
+        "The parameter count depends on layer sizes, not labels."
+      ],
+      "questionZh": "一个简单 RNN 先展开 10 个时间步，再展开 20 个时间步，输入和隐藏维度不变。它的循环参数数量会怎样？",
+      "optionsZh": [
+        "变为 0，因为状态取代了参数。",
+        "翻倍，因为每个时间步都有独立的循环权重。",
+        "保持不变，因为循环权重在时间上共享。",
+        "只取决于训练标签的数量。"
+      ]
+    },
+    {
+      "question": "A convolutional layer has three 5 × 5 filters, one input channel and one bias per filter. How many trainable parameters are there?",
+      "options": [
+        "150.",
+        "26.",
+        "78.",
+        "75."
+      ],
+      "correct": 2,
+      "explanation": "Each filter has 5×5×1 = 25 weights plus one bias. Three filters contain 3×26 = 78 parameters.",
+      "id": 736,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN parameters · Practice Exam 3 Q22",
+      "lectureWeek": "Week 08",
+      "explanationZh": "每个滤波器 5×5×1 = 25 个权重 + 1 个偏置 = 26；3 个滤波器共 78。通式 (k_h·k_w·C_in + 1)·C_out。",
+      "optionNotes": [
+        "Double-counts: 3 × 50 is not the formula.",
+        "Only one filter's parameters (25 + 1).",
+        "(5·5·1 + 1) × 3 = 78.",
+        "Forgets the three biases."
+      ],
+      "steps": [
+        "Per filter: $5\\times5\\times1 + 1 = 26$",
+        "Three filters: $3\\times26 = 78$"
+      ],
+      "questionZh": "某卷积层有三个 5 × 5 滤波器，一个输入通道，每个滤波器一个偏置。可训练参数共有多少个？",
+      "optionsZh": [
+        "150。",
+        "26。",
+        "78。",
+        "75。"
+      ]
+    },
+    {
+      "question": "A network's training loss keeps decreasing while validation loss has begun to increase. Which action is consistent with early stopping?",
+      "options": [
+        "Retain the checkpoint with the best validation performance.",
+        "Choose the final epoch using the reserved test labels.",
+        "Delete the validation set and report training loss as generalisation performance.",
+        "Always keep training until training loss is exactly zero."
+      ],
+      "correct": 0,
+      "explanation": "Early stopping treats validation performance as a guide to training duration. A later checkpoint with lower training loss may generalise worse.",
+      "id": 737,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Early stopping · Practice Exam 3 Q23",
+      "lectureWeek": "Week 07",
+      "explanationZh": "早停：监控验证损失，开始上升（过拟合）就停，并回到验证表现最好的那个检查点。",
+      "optionNotes": [
+        "Keep the weights from the best validation epoch.",
+        "Using test labels to choose the epoch leaks the test set.",
+        "Training loss does not measure generalisation.",
+        "Training to zero loss is what early stopping avoids."
+      ],
+      "questionZh": "网络的训练损失持续下降，而验证损失已开始上升。哪种做法符合早停？",
+      "optionsZh": [
+        "保留验证表现最好的检查点。",
+        "用预留的测试标签选择最终 epoch。",
+        "删除验证集，把训练损失当作泛化性能报告。",
+        "一直训练到训练损失恰好为 0。"
+      ]
+    },
+    {
+      "question": "An agglomerative hierarchical algorithm begins with each observation in its own cluster. What is its basic next operation?",
+      "options": [
+        "Split the largest cluster into two equal-sized subsets.",
+        "Fit a sigmoid output to each cluster label.",
+        "Assign each observation an independent new random class.",
+        "Merge the closest pair of current clusters according to the selected linkage rule."
+      ],
+      "correct": 3,
+      "explanation": "Agglomerative methods repeatedly merge clusters. The linkage definition determines how distances between the current clusters are calculated.",
+      "id": 738,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Agglomerative clustering · Practice Exam 3 Q24",
+      "lectureWeek": "Week 09",
+      "explanationZh": "凝聚式（自底向上）每轮合并最近的两个簇，簇间距离由链接方式（single / complete / average）定义。",
+      "optionNotes": [
+        "Splitting is divisive (top-down), not agglomerative.",
+        "Sigmoid outputs belong to classifiers, not clustering.",
+        "Random relabelling is not part of hierarchical clustering.",
+        "Bottom-up: merge the closest pair under the chosen linkage."
+      ],
+      "questionZh": "凝聚式层次聚类算法开始时每个样本自成一簇。它下一步的基本操作是什么？",
+      "optionsZh": [
+        "把最大的簇分成两个大小相等的子集。",
+        "为每个簇标签拟合一个 sigmoid 输出。",
+        "给每个样本分配一个独立的新随机类别。",
+        "按选定的链接规则合并当前最近的一对簇。"
+      ]
+    },
+    {
+      "question": "Clusters A = {1, 5} and B = {8, 11} contain one-dimensional points. Using absolute point-to-point distance, what are complete-link and single-link distances, respectively?",
+      "options": [
+        "Complete-link 3; single-link 10.",
+        "Complete-link 10; single-link 6.5.",
+        "Complete-link 10; single-link 3.",
+        "Complete-link 6.5; single-link 3."
+      ],
+      "correct": 2,
+      "explanation": "Cross-cluster distances are 7, 10, 3 and 6. Complete-link takes the maximum, 10, while single-link takes the minimum, 3.",
+      "id": 739,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical linkage · Practice Exam 3 Q25",
+      "lectureWeek": "Week 09",
+      "explanationZh": "跨簇距离 7、10、3、6。完全链取最大 = 10，单链取最小 = 3；6.5 是平均链。",
+      "optionNotes": [
+        "Swapped: complete-link is the maximum.",
+        "6.5 is average linkage, not single-link.",
+        "Complete = max = 10, single = min = 3.",
+        "6.5 is average linkage, not complete-link."
+      ],
+      "steps": [
+        "Cross pairs: $|1-8|=7,\\ |1-11|=10,\\ |5-8|=3,\\ |5-11|=6$",
+        "Complete-link $= \\max = 10$",
+        "Single-link $= \\min = 3$"
+      ],
+      "questionZh": "簇 A = {1, 5} 和 B = {8, 11} 是一维点。用点间绝对距离，完全链和单链距离分别是多少？",
+      "optionsZh": [
+        "完全链 3；单链 10。",
+        "完全链 10；单链 6.5。",
+        "完全链 10；单链 3。",
+        "完全链 6.5；单链 3。"
+      ]
+    },
+    {
+      "question": "In a first-order Markov chain, what does conditioning on the current state imply about earlier states when predicting the next state?",
+      "options": [
+        "The chain must remain in its current state forever.",
+        "All possible next states become equally probable.",
+        "The next state becomes independent of the current state as well.",
+        "Earlier states add no predictive information once the current state is known."
+      ],
+      "correct": 3,
+      "explanation": "The first-order Markov assumption makes the next-state distribution conditionally independent of the more distant past given the current state.",
+      "id": 740,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Markov assumption · Practice Exam 3 Q26",
+      "lectureWeek": "Week 11",
+      "explanationZh": "P(q_{t+1} | q_t, q_{t−1}, …) = P(q_{t+1} | q_t)：已知当前状态后，更早的状态不再提供信息。",
+      "optionNotes": [
+        "The chain still moves according to its transition probabilities.",
+        "Next-state probabilities come from the transition matrix, not uniform.",
+        "Reversed: the next state depends on the current state.",
+        "Given the current state, the past adds nothing."
+      ],
+      "questionZh": "在一阶马尔可夫链中，预测下一状态时，以当前状态为条件对更早的状态意味着什么？",
+      "optionsZh": [
+        "链必须永远停留在当前状态。",
+        "所有可能的下一状态变得等概率。",
+        "下一状态也与当前状态独立。",
+        "已知当前状态后，更早的状态不再提供预测信息。"
+      ]
+    },
+    {
+      "question": "Forward probabilities at time 1 are $f_1(A) = 0.2$ and $f_1(B) = 0.3$. Transitions into A are $P(A|A) = 0.6$ and $P(A|B) = 0.4$. The next observation has emission probability 0.5 in A. What is $f_2(A)$? ($a_{jk}$ is the transition from j to k; $e_k(o_t)$ is the emission likelihood in state k.)",
+      "options": [
+        "0.06.",
+        "0.25.",
+        "0.24.",
+        "0.12."
+      ],
+      "correct": 3,
+      "explanation": "Forward sums predecessor contributions: 0.2×0.6 + 0.3×0.4 = 0.24. Multiplying by the emission probability 0.5 gives 0.12.",
+      "id": 741,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 3 Q27",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₂(A) = e_A(o₂) · Σ_j f₁(j)·a_jA = 0.5 × (0.2×0.6 + 0.3×0.4) = 0.5 × 0.24 = 0.12。",
+      "optionNotes": [
+        "Only the path from A (0.2·0.6·0.5); Forward sums both.",
+        "Not a valid combination of the given numbers.",
+        "Forgets to multiply by the emission 0.5.",
+        "0.5 × (0.12 + 0.12) = 0.12."
+      ],
+      "steps": [
+        "$\\sum_j f_1(j)\\,a_{jA} = 0.2\\times0.6 + 0.3\\times0.4 = 0.24$",
+        "$f_2(A) = e_A(o_2)\\times0.24 = 0.5\\times0.24 = 0.12$"
+      ],
+      "questionZh": "时刻 1 的前向概率为 $f_1(A) = 0.2$、$f_1(B) = 0.3$。转入 A 的转移概率为 $P(A|A) = 0.6$、$P(A|B) = 0.4$。下一个观测在 A 中的发射概率为 0.5。$f_2(A)$ 是多少？（$a_{jk}$ 为从 j 到 k 的转移；$e_k(o_t)$ 为状态 k 的发射似然。）",
+      "optionsZh": [
+        "0.06。",
+        "0.25。",
+        "0.24。",
+        "0.12。"
+      ]
+    },
+    {
+      "question": "Under an epsilon-greedy action rule, why does the agent sometimes choose a random action?",
+      "options": [
+        "To guarantee the greedy action has a known optimal value.",
+        "To make all Q-values remain constant during training.",
+        "To explore actions that may otherwise be overlooked by the current value estimates.",
+        "To remove the need to observe any rewards."
+      ],
+      "correct": 2,
+      "explanation": "Exploration collects information about actions beyond the one currently estimated to be best. Epsilon-greedy balances such exploration with exploitation.",
+      "id": 742,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / Exploration · Practice Exam 3 Q28",
+      "lectureWeek": "Week 12",
+      "explanationZh": "以概率 ε 随机选（探索），否则选当前 Q 最大的（利用）。当前估计可能不准，不探索就发现不了被低估的动作。",
+      "optionNotes": [
+        "Exploration gives no guarantee about the greedy action's value.",
+        "Q-values keep changing as the agent learns.",
+        "Random actions gather information on actions the estimates undervalue.",
+        "Rewards are still needed to update Q."
+      ],
+      "questionZh": "在 ε-greedy 动作规则下，智能体为什么有时会选择随机动作？",
+      "optionsZh": [
+        "为了保证贪心动作的最优价值已知。",
+        "为了让所有 Q 值在训练中保持不变。",
+        "为了探索那些可能被当前价值估计忽略的动作。",
+        "为了不再需要观察任何奖励。"
+      ]
+    },
+    {
+      "question": "Which pairing correctly matches two standard DQN stabilisation techniques to their roles?",
+      "options": [
+        "Replay sampling fixes the target weights; a target network samples stored transitions.",
+        "Both techniques guarantee that training loss decreases after every update.",
+        "Both techniques replace Q-values with class probabilities.",
+        "Replay sampling reduces temporal correlation; a target network slows changes in bootstrap targets."
+      ],
+      "correct": 3,
+      "explanation": "Replay and target networks address distinct sources of training instability: correlated data and rapidly moving bootstrap targets.",
+      "id": 743,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / DQN stabilisation · Practice Exam 3 Q29",
+      "lectureWeek": "Week 12",
+      "explanationZh": "经验回放：随机抽取存储的转移，打破样本的时间相关性；目标网络：用定期同步的旧网络算目标，让 bootstrap 目标变化变慢。",
+      "optionNotes": [
+        "Roles swapped between replay and the target network.",
+        "Neither guarantees a lower loss after every update.",
+        "DQN still estimates Q-values, not class probabilities.",
+        "Replay breaks correlation; the target network stabilises targets."
+      ],
+      "questionZh": "下面哪组正确地把两种标准 DQN 稳定技巧与其作用对应起来？",
+      "optionsZh": [
+        "经验回放固定目标权重；目标网络对存储的转移进行采样。",
+        "两种技巧都保证每次更新后训练损失下降。",
+        "两种技巧都用类别概率取代 Q 值。",
+        "经验回放降低时间相关性；目标网络减缓 bootstrap 目标的变化。"
+      ]
+    },
+    {
+      "question": "A transition ends the episode. $Q_{\\text{old}}(s,a) = 4$, reward $r = 2$ and $\\alpha = 0.25$. The terminal state has zero future return. What is the updated Q-value?",
+      "options": [
+        "4.50.",
+        "3.50.",
+        "1.50.",
+        "2.00."
+      ],
+      "correct": 1,
+      "explanation": "For a terminal transition the target is just r = 2. Hence Q_new = 4 + 0.25(2−4) = 3.5; there is no bootstrap contribution.",
+      "id": 744,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W12 Reinforcement Learning / Terminal Q-learning · Practice Exam 3 Q30",
+      "lectureWeek": "Week 12",
+      "explanationZh": "终止转移没有后续回报，目标就是 r = 2：Q_new = 4 + 0.25 × (2 − 4) = 3.5。",
+      "optionNotes": [
+        "Sign of the TD error flipped.",
+        "Target r = 2: 4 + 0.25(2 − 4) = 3.5.",
+        "Not a valid update of these numbers.",
+        "Replaces Q with the reward (α = 1)."
+      ],
+      "steps": [
+        "Terminal: target $= r = 2$ (no $\\gamma\\max Q$ term)",
+        "$Q_{\\text{new}} = 4 + 0.25\\times(2-4) = 3.5$"
+      ],
+      "questionZh": "某转移结束了回合。$Q_{\\text{old}}(s,a) = 4$，奖励 $r = 2$，$\\alpha = 0.25$。终止状态的未来回报为 0。更新后的 Q 值是多少？",
+      "optionsZh": [
+        "4.50。",
+        "3.50。",
+        "1.50。",
+        "2.00。"
+      ]
+    },
+    {
+      "question": "A parent node contains ten examples: five positive and five negative. Split X gives children (5 positive, 0 negative) and (0 positive, 5 negative). Split Y gives children (4 positive, 1 negative) and (1 positive, 4 negative). Use $0\\log_2 0 = 0$; entropy in bits. (a) What are the parent entropy and the information gain of split X?",
+      "options": [
+        "H(parent) = 1 bit; IG(X) = 1 bit.",
+        "H(parent) = 0.5 bit; IG(X) = 0.5 bit.",
+        "H(parent) = 1 bit; IG(X) = 0 bits.",
+        "H(parent) = 0 bits; IG(X) = 1 bit."
+      ],
+      "correct": 0,
+      "explanation": "H(parent) = −2 × 0.5 log₂ 0.5 = 1 bit. Both children in split X are pure, so H = 0 for each. Weighted child entropy is 0 and IG(X) = 1 bit. Marking: parent entropy 1, pure-child entropies 2, gain 2.",
+      "id": 745,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 3 Q31(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 = −0.5log₂0.5 − 0.5log₂0.5 = 1；X 的两个子节点都纯，熵 0 → IG(X) = 1 − 0 = 1。评分：父熵 1 分、纯子节点熵 2 分、增益 2 分。",
+      "optionNotes": [
+        "Parent 5/5 → 1 bit; pure children → IG = 1 − 0 = 1.",
+        "Uses the proportion 0.5 as the entropy; a 50/50 node has 1 bit.",
+        "Swaps the child entropy (0) and the gain (1).",
+        "A 50/50 node is maximally impure (1 bit), not pure."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = -0.5\\log_2 0.5 - 0.5\\log_2 0.5 = 1$",
+        "Children of X are pure: $H = 0$ each, weighted $= 0$",
+        "$IG(X) = 1 - 0 = 1$ bit"
+      ],
+      "questionZh": "父节点有 10 个样本：5 正 5 负。划分 X 的子节点为 (5 正, 0 负) 和 (0 正, 5 负)；划分 Y 的子节点为 (4 正, 1 负) 和 (1 正, 4 负)。约定 $0\\log_2 0 = 0$，熵以 bit 为单位。(a) 父节点熵和划分 X 的信息增益分别是多少？",
+      "optionsZh": [
+        "H(父) = 1 bit；IG(X) = 1 bit。",
+        "H(父) = 0.5 bit；IG(X) = 0.5 bit。",
+        "H(父) = 1 bit；IG(X) = 0 bit。",
+        "H(父) = 0 bit；IG(X) = 1 bit。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A parent node contains ten examples: five positive and five negative. Split X gives children (5 positive, 0 negative) and (0 positive, 5 negative). Split Y gives children (4 positive, 1 negative) and (1 positive, 4 negative). Use $0\\log_2 0 = 0$; entropy in bits. (b) What is the information gain of split Y (three decimals), and which split does information gain prefer?",
+      "options": [
+        "IG(Y) ≈ 0.722; prefer Y.",
+        "IG(Y) ≈ 0.278; prefer Y.",
+        "IG(Y) ≈ 0.361; prefer X.",
+        "IG(Y) ≈ 0.278; prefer X."
+      ],
+      "correct": 3,
+      "explanation": "Each Y child has proportions 0.8 and 0.2, so H = −(0.8×(−0.3219) + 0.2×(−2.3219)) = 0.7219 bits. Each child has weight 0.5, leaving the same weighted entropy. IG(Y) = 1 − 0.7219 = 0.2781 ≈ 0.278 bits. Prefer split X, whose gain is 1 bit. Marking: child entropy 2, weighting and gain 2, choice 1.",
+      "id": 746,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 3 Q31(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Y 的两个子节点都是 0.8/0.2：H = 0.7219；各占一半，加权仍是 0.7219 → IG(Y) = 1 − 0.7219 ≈ 0.278 < IG(X) = 1，选 X。",
+      "optionNotes": [
+        "0.722 is the child entropy, not the gain.",
+        "Right gain, but X's gain (1) is larger.",
+        "Halves the child entropy instead of weighting both children.",
+        "IG(Y) = 1 − 0.7219 ≈ 0.278 < 1 = IG(X) → X."
+      ],
+      "steps": [
+        "Each Y child: $H = -(0.8\\log_2 0.8 + 0.2\\log_2 0.2) = 0.7219$",
+        "Weighted: $0.5\\times0.7219 + 0.5\\times0.7219 = 0.7219$",
+        "$IG(Y) = 1 - 0.7219 = 0.2781 \\approx 0.278$",
+        "$IG(X) = 1 > 0.278$ → prefer X"
+      ],
+      "questionZh": "父节点有 10 个样本：5 正 5 负。划分 X 的子节点为 (5 正, 0 负) 和 (0 正, 5 负)；划分 Y 的子节点为 (4 正, 1 负) 和 (1 正, 4 负)。约定 $0\\log_2 0 = 0$，熵以 bit 为单位。(b) 划分 Y 的信息增益是多少（保留三位小数）？按信息增益应选哪个划分？",
+      "optionsZh": [
+        "IG(Y) ≈ 0.722；选 Y。",
+        "IG(Y) ≈ 0.278；选 Y。",
+        "IG(Y) ≈ 0.361；选 X。",
+        "IG(Y) ≈ 0.278；选 X。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. (a) For the first example, what are the net input, actual output, updated weights and updated bias?",
+      "options": [
+        "u = 0.1, a = 1; w = (0.4, −0.1), b = 0.1.",
+        "u = 0.1, a = 1; w = (0, −0.1), b = −0.3.",
+        "u = 0.1, a = 1; no update, w = (0.2, −0.1), b = −0.1.",
+        "u = −0.1, a = 0; w = (0, −0.1), b = −0.3."
+      ],
+      "correct": 1,
+      "explanation": "u = 0.2×1 + (−0.1)×0 − 0.1 = 0.1, so a = 1. The correction is η(t−a) = 0.2(0−1) = −0.2. New weights are (0.2, −0.1) − 0.2(1, 0) = (0, −0.1); new bias is −0.1 − 0.2 = −0.3. Marking: net input and output 2, updates 3.",
+      "id": 747,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Practice Exam 3 Q32(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.2 − 0.1 = 0.1 ≥ 0 → a = 1，但 t = 0，错了；η(t−a) = −0.2 → w = (0, −0.1)，b = −0.3。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "u = 0.1 → a = 1 ≠ t, update by −0.2·x and −0.2.",
+        "a = 1 but t = 0, so it is wrong and must update.",
+        "Forgets the bias in u: 0.2 − 0.1 = 0.1, not −0.1."
+      ],
+      "steps": [
+        "$u = 0.2\\times1 + (-0.1)\\times0 - 0.1 = 0.1 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.2\\times(0-1) = -0.2$",
+        "$\\mathbf w = (0.2, -0.1) - 0.2\\times(1, 0) = (0, -0.1)$",
+        "$b = -0.1 - 0.2 = -0.3$"
+      ],
+      "questionZh": "感知机初始权重 $\\mathbf w = (0.2, -0.1)$，偏置 $b = -0.1$，学习率 $\\eta = 0.2$。净输入 ≥ 0 时输出 1，否则输出 0。按顺序处理两个样本，每个样本后立即更新：先 $\\mathbf x = (1, 0)$，$t = 0$；再 $\\mathbf x = (0, 1)$，$t = 1$。(a) 对第一个样本，净输入、实际输出、更新后的权重和偏置分别是什么？",
+      "optionsZh": [
+        "u = 0.1，a = 1；w = (0.4, −0.1)，b = 0.1。",
+        "u = 0.1，a = 1；w = (0, −0.1)，b = −0.3。",
+        "u = 0.1，a = 1；不更新，w = (0.2, −0.1)，b = −0.1。",
+        "u = −0.1，a = 0；w = (0, −0.1)，b = −0.3。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. After the first example the parameters are $\\mathbf w = (0, -0.1)$, $b = -0.3$. (b) For the second example, what are the net input, actual output and final parameters?",
+      "options": [
+        "u = −0.4, a = 0; w = (0, 0.1), b = −0.1.",
+        "u = −0.2, a = 0; w = (0.2, 0.1), b = −0.1.",
+        "u = −0.4, a = 0; no update.",
+        "u = −0.4, a = 0; w = (0, −0.3), b = −0.5."
+      ],
+      "correct": 0,
+      "explanation": "Now u = 0×0 + (−0.1)×1 − 0.3 = −0.4, so a = 0. The correction is 0.2(1−0) = 0.2. Final weights are (0, −0.1) + 0.2(0, 1) = (0, 0.1); final bias is −0.3 + 0.2 = −0.1.",
+      "id": 748,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Practice Exam 3 Q32(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "用更新后的参数：u = −0.1 − 0.3 = −0.4 < 0 → a = 0，t = 1 又错了；η(t−a) = +0.2 → w = (0, 0.1)，b = −0.1。",
+      "optionNotes": [
+        "u = −0.4 → a = 0 ≠ 1; add 0.2·(0, 1) and 0.2.",
+        "Uses the initial parameters instead of the updated ones.",
+        "a = 0 but t = 1, so an update is required.",
+        "Subtracts the correction; t − a = +1, so add."
+      ],
+      "steps": [
+        "$u = 0\\times0 + (-0.1)\\times1 - 0.3 = -0.4 < 0 \\Rightarrow a = 0$",
+        "$\\eta(t-a) = 0.2\\times(1-0) = 0.2$",
+        "$\\mathbf w = (0, -0.1) + 0.2\\times(0, 1) = (0, 0.1)$",
+        "$b = -0.3 + 0.2 = -0.1$"
+      ],
+      "questionZh": "感知机初始权重 $\\mathbf w = (0.2, -0.1)$，偏置 $b = -0.1$，学习率 $\\eta = 0.2$。净输入 ≥ 0 时输出 1，否则输出 0。按顺序处理两个样本，每个样本后立即更新：先 $\\mathbf x = (1, 0)$，$t = 0$；再 $\\mathbf x = (0, 1)$，$t = 1$。第一个样本后参数为 $\\mathbf w = (0, -0.1)$，$b = -0.3$。(b) 对第二个样本，净输入、实际输出和最终参数是什么？",
+      "optionsZh": [
+        "u = −0.4，a = 0；w = (0, 0.1)，b = −0.1。",
+        "u = −0.2，a = 0；w = (0.2, 0.1)，b = −0.1。",
+        "u = −0.4，a = 0；不更新。",
+        "u = −0.4，a = 0；w = (0, −0.3)，b = −0.5。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A = (0,0), B = (0,4), C = (6,0), D = (6,4), starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. (a) What are the squared distances (to μ₁, to μ₂) and the resulting clusters?",
+      "options": [
+        "A (0, 52), B (16, 36), C (36, 16), D (52, 0); clusters {A, C} and {B, D}.",
+        "A (0, 52), B (36, 16), C (16, 36), D (52, 0); clusters {A, C} and {B, D}.",
+        "A (0, 52), B (16, 36), C (36, 16), D (52, 0); clusters {A, B} and {C, D}.",
+        "A (0, 10), B (4, 6), C (6, 4), D (10, 0); clusters {A, B} and {C, D}."
+      ],
+      "correct": 2,
+      "explanation": "Squared-distance pairs (to μ₁, to μ₂) are A: (0, 52), B: (16, 36), C: (36, 16), D: (52, 0). Thus cluster 1 is {A, B} and cluster 2 is {C, D}. Marking: distances 4, assignments 1.",
+      "id": 749,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 3 Q33(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "B：到 μ₁ 16、到 μ₂ 36 → 簇 1；C：36 vs 16 → 簇 2。簇 1 = {A, B}，簇 2 = {C, D}。",
+      "optionNotes": [
+        "Right distances, wrong assignment: B is closer to μ₁ (16 < 36).",
+        "Swaps B's and C's distances.",
+        "Each point joins its nearer centroid: {A, B}, {C, D}.",
+        "These are Manhattan distances, not squared Euclidean."
+      ],
+      "steps": [
+        "B: $\\|B-\\mu_1\\|^2 = 0+16 = 16$, $\\|B-\\mu_2\\|^2 = 36+0 = 36$ → cluster 1",
+        "C: $36+0 = 36$ vs $0+16 = 16$ → cluster 2",
+        "A: (0, 52), D: (52, 0)",
+        "Clusters $\\{A, B\\}$ and $\\{C, D\\}$"
+      ],
+      "questionZh": "对 A = (0,0)、B = (0,4)、C = (6,0)、D = (6,4) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A = (0,0)$、$\\mu_2 = D = (6,4)$。先用初始质心分配全部点，再更新质心。(a) 各点到（μ₁, μ₂）的平方距离和分簇结果是什么？",
+      "optionsZh": [
+        "A (0, 52)、B (16, 36)、C (36, 16)、D (52, 0)；簇为 {A, C} 和 {B, D}。",
+        "A (0, 52)、B (36, 16)、C (16, 36)、D (52, 0)；簇为 {A, C} 和 {B, D}。",
+        "A (0, 52)、B (16, 36)、C (36, 16)、D (52, 0)；簇为 {A, B} 和 {C, D}。",
+        "A (0, 10)、B (4, 6)、C (6, 4)、D (10, 0)；簇为 {A, B} 和 {C, D}。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A = (0,0), B = (0,4), C = (6,0), D = (6,4), starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. The assignment step gives clusters {A, B} and {C, D}. (b) What are the updated centroids and the total within-cluster SSE (using the updated centroids)?",
+      "options": [
+        "μ₁ = (0, 2), μ₂ = (6, 2); SSE = 8.",
+        "μ₁ = (0, 2), μ₂ = (6, 2); SSE = 16.",
+        "μ₁ = (0, 0), μ₂ = (6, 4); SSE = 32.",
+        "μ₁ = (3, 2), μ₂ = (3, 2); SSE = 52."
+      ],
+      "correct": 1,
+      "explanation": "The updated means are μ₁ = (0, 2) and μ₂ = (6, 2). Each of the four points is 2 units vertically from its assigned mean, so each squared distance is 4. Total SSE = 4 + 4 + 4 + 4 = 16. Marking: two means 2, squared errors and sum 3.",
+      "id": 750,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 3 Q33(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₁ = (0, 2)，μ₂ = (6, 2)；每个点到新质心竖直距离 2，平方 4，SSE = 4 × 4 = 16。",
+      "optionNotes": [
+        "Sums distances (2 each) instead of squared distances (4 each).",
+        "Means (0, 2), (6, 2); each squared error 4 → SSE 16.",
+        "Uses the old centroids; the question asks for updated ones.",
+        "Averages all four points into one centre."
+      ],
+      "steps": [
+        "$\\mu_1 = \\left(\\tfrac{0+0}{2}, \\tfrac{0+4}{2}\\right) = (0, 2)$, $\\mu_2 = (6, 2)$",
+        "Each point is 2 units from its centroid: squared error 4",
+        "$\\text{SSE} = 4+4+4+4 = 16$"
+      ],
+      "questionZh": "对 A = (0,0)、B = (0,4)、C = (6,0)、D = (6,4) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A = (0,0)$、$\\mu_2 = D = (6,4)$。先用初始质心分配全部点，再更新质心。分配步得到簇 {A, B} 和 {C, D}。(b) 更新后的质心和簇内 SSE 总和（用更新后的质心）是多少？",
+      "optionsZh": [
+        "μ₁ = (0, 2)，μ₂ = (6, 2)；SSE = 8。",
+        "μ₁ = (0, 2)，μ₂ = (6, 2)；SSE = 16。",
+        "μ₁ = (0, 0)，μ₂ = (6, 4)；SSE = 32。",
+        "μ₁ = (3, 2)，μ₂ = (3, 2)；SSE = 52。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the most probable hidden path and its joint probability with (x, y)?",
+      "options": [
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path A → B, 0.1008.",
+        "V₂(A) = 0.0900, V₂(B) = 0.1680; path A → B, 0.1680.",
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path B → B, 0.1008.",
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path A → A, 0.0756."
+      ],
+      "correct": 0,
+      "explanation": "V₁(A) = 0.6×0.7 = 0.42 and V₁(B) = 0.4×0.4 = 0.16. V₂(A) = 0.3 × max(0.42×0.6, 0.16×0.3) = 0.0756, with predecessor A. V₂(B) = 0.6 × max(0.42×0.4, 0.16×0.7) = 0.1008, also with predecessor A. The best ending state is B, so the best path is A → B with joint probability 0.1008. Marking: initial values 1, two recursions 2, backtrack and probability 2.",
+      "id": 751,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Practice Exam 3 Q34(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁(A) = 0.42，V₁(B) = 0.16；V₂(A) = 0.3 × max(0.252, 0.048) = 0.0756（前驱 A），V₂(B) = 0.6 × max(0.168, 0.112) = 0.1008（前驱 A）。终点取 B，回溯到 A → 路径 A → B，概率 0.1008。",
+      "optionNotes": [
+        "Max at each step, end at B, backtrack to A.",
+        "These are Forward values (sum), not Viterbi (max).",
+        "V₂(B)'s best predecessor is A (0.168 > 0.112).",
+        "The path must end in the larger final state, B."
+      ],
+      "steps": [
+        "$V_1(A) = 0.6\\times0.7 = 0.42$, $V_1(B) = 0.4\\times0.4 = 0.16$",
+        "$V_2(A) = 0.3\\times\\max(0.42\\times0.6,\\ 0.16\\times0.3) = 0.3\\times0.252 = 0.0756$ (from A)",
+        "$V_2(B) = 0.6\\times\\max(0.42\\times0.4,\\ 0.16\\times0.7) = 0.6\\times0.168 = 0.1008$ (from A)",
+        "$V_2(B) > V_2(A)$ → end at B, backtrack → A → B, $0.1008$"
+      ],
+      "questionZh": "HMM 有状态 A、B，先验 $\\pi_A = 0.6$、$\\pi_B = 0.4$；发射 $e_A(x) = 0.7$、$e_A(y) = 0.3$、$e_B(x) = 0.4$、$e_B(y) = 0.6$；转移 $a_{AA} = 0.6$、$a_{AB} = 0.4$、$a_{BA} = 0.3$、$a_{BB} = 0.7$。观测序列为 (x, y)，$f_1(k) = V_1(k)$。(a) 用 Viterbi，$V_2(A)$、$V_2(B)$、最可能的隐状态路径及其与 (x, y) 的联合概率是多少？",
+      "optionsZh": [
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 A → B，0.1008。",
+        "V₂(A) = 0.0900，V₂(B) = 0.1680；路径 A → B，0.1680。",
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 B → B，0.1008。",
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 A → A，0.0756。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$, and why does $P(x, y)$ differ from the best-path probability?",
+      "options": [
+        "f₂(A) = 0.0756, f₂(B) = 0.1008, P = 0.1764; Forward keeps only the best predecessor.",
+        "f₂(A) = 0.0900, f₂(B) = 0.1680, P = 0.2580; Forward multiplies all paths together.",
+        "f₂(A) = 0.0900, f₂(B) = 0.1680, P = 0.2580; Forward sums over all hidden paths, Viterbi keeps the single largest.",
+        "f₂(A) = 0.3000, f₂(B) = 0.2800, P = 0.5800; Forward ignores emissions."
+      ],
+      "correct": 2,
+      "explanation": "f₂(A) = 0.3(0.42×0.6 + 0.16×0.3) = 0.0900. f₂(B) = 0.6(0.42×0.4 + 0.16×0.7) = 0.1680. Thus P(x, y) = 0.0900 + 0.1680 = 0.2580. Forward sums contributions from all possible hidden paths, whereas Viterbi selects the largest single path contribution. Marking: two forward values 2, sum 1, explanation 2.",
+      "id": 752,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 3 Q34(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "把 max 换成求和：f₂(A) = 0.3 × 0.300 = 0.0900，f₂(B) = 0.6 × 0.280 = 0.1680，P = 0.2580。Forward 对所有路径（AA、AB、BA、BB）求和，Viterbi 只取最大的一条，所以 0.2580 ≥ 0.1008。",
+      "optionNotes": [
+        "These are the Viterbi values; Forward sums predecessors.",
+        "Right numbers, wrong reason: Forward adds paths, it does not multiply them.",
+        "Sum instead of max; total likelihood over all paths.",
+        "Forgets to multiply by the emission probabilities."
+      ],
+      "steps": [
+        "$f_2(A) = 0.3\\times(0.252 + 0.048) = 0.0900$",
+        "$f_2(B) = 0.6\\times(0.168 + 0.112) = 0.1680$",
+        "$P(x, y) = 0.0900 + 0.1680 = 0.2580$",
+        "Check: AA 0.0756 + AB 0.1008 + BA 0.0144 + BB 0.0672 = 0.2580; Viterbi keeps max = 0.1008"
+      ],
+      "questionZh": "HMM 有状态 A、B，先验 $\\pi_A = 0.6$、$\\pi_B = 0.4$；发射 $e_A(x) = 0.7$、$e_A(y) = 0.3$、$e_B(x) = 0.4$、$e_B(y) = 0.6$；转移 $a_{AA} = 0.6$、$a_{AB} = 0.4$、$a_{BA} = 0.3$、$a_{BB} = 0.7$。观测序列为 (x, y)，$f_1(k) = V_1(k)$。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？为什么 $P(x, y)$ 与最优路径概率不同？",
+      "optionsZh": [
+        "f₂(A) = 0.0756，f₂(B) = 0.1008，P = 0.1764；Forward 只保留最优前驱。",
+        "f₂(A) = 0.0900，f₂(B) = 0.1680，P = 0.2580；Forward 把所有路径相乘。",
+        "f₂(A) = 0.0900，f₂(B) = 0.1680，P = 0.2580；Forward 对所有隐路径求和，Viterbi 只取最大的一条。",
+        "f₂(A) = 0.3000，f₂(B) = 0.2800，P = 0.5800；Forward 不考虑发射概率。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (a) What are the parent entropy and IG(X) (three decimals)?",
+      "options": [
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.311.",
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.500.",
+        "H(parent) = 1; IG(X) = 0.5.",
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.811."
+      ],
+      "correct": 0,
+      "explanation": "H(parent) = −0.75 log₂ 0.75 − 0.25 log₂ 0.25 = 0.3113 + 0.5 = 0.811. X's children: (4,0) is pure (H = 0), (2,2) has H = 1; each holds 4/8. Weighted = 0.5×0 + 0.5×1 = 0.5, so IG(X) = 0.811 − 0.5 = 0.311.",
+      "id": 753,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S1(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 H(0.75, 0.25) ≈ 0.811；X：纯子节点熵 0、(2,2) 熵 1，各占一半，加权 0.5 → IG(X) = 0.811 − 0.5 ≈ 0.311。",
+      "optionNotes": [
+        "0.811 − (0.5·0 + 0.5·1) = 0.311.",
+        "0.5 is the weighted child entropy, not the gain.",
+        "The parent is 6/2, not 50/50, so H < 1.",
+        "Ignores the impure (2,2) child."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = -0.75\\log_2 0.75 - 0.25\\log_2 0.25 = 0.311 + 0.5 = 0.811$",
+        "$H(4{+},0{-}) = 0$, $H(2{+},2{-}) = 1$",
+        "Weighted $= \\tfrac{4}{8}\\times0 + \\tfrac{4}{8}\\times1 = 0.5$",
+        "$IG(X) = 0.811 - 0.5 = 0.311$"
+      ],
+      "questionZh": "父节点有 8 个样本：6 正 2 负。划分 X 的子节点为 (4 正, 0 负) 和 (2 正, 2 负)；划分 Y 的子节点为 (3 正, 1 负) 和 (3 正, 1 负)。熵以 bit 为单位。(a) 父节点熵和 IG(X) 是多少（保留三位小数）？",
+      "optionsZh": [
+        "H(父) ≈ 0.811；IG(X) ≈ 0.311。",
+        "H(父) ≈ 0.811；IG(X) ≈ 0.500。",
+        "H(父) = 1；IG(X) = 0.5。",
+        "H(父) ≈ 0.811；IG(X) ≈ 0.811。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (b) What is IG(Y), and which split does information gain prefer?",
+      "options": [
+        "IG(Y) ≈ 0.811; prefer Y.",
+        "IG(Y) = 0; prefer X.",
+        "IG(Y) ≈ 0.406; prefer Y.",
+        "IG(Y) = 0; the two splits tie."
+      ],
+      "correct": 1,
+      "explanation": "Both Y children are 3:1, the same proportions as the parent, so each has H = 0.811 and the weighted child entropy equals the parent entropy. IG(Y) = 0.811 − 0.811 = 0: Y tells us nothing about the class. X (0.311) is preferred.",
+      "id": 754,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S1(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Y 的两个子节点比例都和父节点一样（3:1），熵都是 0.811 → IG(Y) = 0，这个划分没有提供任何信息，选 X。",
+      "optionNotes": [
+        "0.811 is each child's entropy; the gain is parent minus weighted children.",
+        "Children keep the parent's 3:1 ratio → IG = 0; X's 0.311 is larger.",
+        "Halves the entropy instead of subtracting the weighted child entropy.",
+        "X has positive gain (0.311), so there is no tie."
+      ],
+      "steps": [
+        "Each Y child is 3:1: $H = 0.811$",
+        "Weighted $= 0.5\\times0.811 + 0.5\\times0.811 = 0.811$",
+        "$IG(Y) = 0.811 - 0.811 = 0$",
+        "$IG(X) = 0.311 > 0$ → prefer X"
+      ],
+      "questionZh": "父节点有 8 个样本：6 正 2 负。划分 X 的子节点为 (4 正, 0 负) 和 (2 正, 2 负)；划分 Y 的子节点为 (3 正, 1 负) 和 (3 正, 1 负)。熵以 bit 为单位。(b) IG(Y) 是多少？按信息增益应选哪个划分？",
+      "optionsZh": [
+        "IG(Y) ≈ 0.811；选 Y。",
+        "IG(Y) = 0；选 X。",
+        "IG(Y) ≈ 0.406；选 Y。",
+        "IG(Y) = 0；两个划分打平。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (a) What are the parent entropy and IG(Z) (three decimals)?",
+      "options": [
+        "H(parent) = 1; IG(Z) ≈ 0.333.",
+        "H(parent) = 1; IG(Z) = 1.",
+        "H(parent) = 1; IG(Z) ≈ 0.667.",
+        "H(parent) ≈ 0.918; IG(Z) ≈ 0.585."
+      ],
+      "correct": 2,
+      "explanation": "H(parent) = 1 (6:6). Z's children: two pure (H = 0) and one 2:2 (H = 1) holding 4/12 of the examples. Weighted = (4/12)×1 = 0.333, so IG(Z) = 1 − 0.333 = 0.667.",
+      "id": 755,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S2(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 1；Z 的三个子节点中两个纯、(2,2) 熵 1 且占 4/12 → 加权 0.333 → IG(Z) ≈ 0.667。",
+      "optionNotes": [
+        "0.333 is the weighted child entropy, not the gain.",
+        "The (2,2) child is impure, so IG < 1.",
+        "1 − (4/12)·1 = 0.667.",
+        "A 6:6 parent has entropy exactly 1."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = 1$ (6:6)",
+        "Children: $H(4,0) = 0$, $H(2,2) = 1$, $H(0,4) = 0$",
+        "Weighted $= \\tfrac{4}{12}\\times0 + \\tfrac{4}{12}\\times1 + \\tfrac{4}{12}\\times0 = 0.333$",
+        "$IG(Z) = 1 - 0.333 = 0.667$"
+      ],
+      "questionZh": "父节点有 12 个样本：6 正 6 负。属性 Z 有三个取值，子节点为 (4 正, 0 负)、(2 正, 2 负)、(0 正, 4 负)；属性 W 有两个取值，子节点为 (5 正, 1 负) 和 (1 正, 5 负)。熵以 bit 为单位。(a) 父节点熵和 IG(Z) 是多少（保留三位小数）？",
+      "optionsZh": [
+        "H(父) = 1；IG(Z) ≈ 0.333。",
+        "H(父) = 1；IG(Z) = 1。",
+        "H(父) = 1；IG(Z) ≈ 0.667。",
+        "H(父) ≈ 0.918；IG(Z) ≈ 0.585。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (b) What is IG(W) (three decimals), and which attribute does information gain choose?",
+      "options": [
+        "IG(W) ≈ 0.650; choose W.",
+        "IG(W) ≈ 0.350; choose Z.",
+        "IG(W) ≈ 0.350; choose W.",
+        "IG(W) ≈ 0.191; choose Z."
+      ],
+      "correct": 1,
+      "explanation": "Each W child is 5:1, so H = −(5/6)log₂(5/6) − (1/6)log₂(1/6) = 0.219 + 0.431 = 0.650. Both children hold half the data, so the weighted entropy is 0.650 and IG(W) = 1 − 0.650 = 0.350. IG(Z) = 0.667 is larger, so choose Z. (Note: IG favours many-valued attributes; gain ratio would penalise Z's three branches.)",
+      "id": 756,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S2(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "W 的子节点都是 5:1：H ≈ 0.650 → IG(W) = 1 − 0.650 ≈ 0.350 < IG(Z) ≈ 0.667，选 Z。（信息增益偏向取值多的属性，增益率会惩罚这一点。）",
+      "optionNotes": [
+        "0.650 is the child entropy, not the gain.",
+        "H(5/6, 1/6) ≈ 0.650 → IG = 0.350 < 0.667 → Z.",
+        "Right gain, but Z's gain is larger.",
+        "Miscomputes H(5/6, 1/6); it is 0.650."
+      ],
+      "steps": [
+        "$H(5{+},1{-}) = -\\tfrac56\\log_2\\tfrac56 - \\tfrac16\\log_2\\tfrac16 = 0.219 + 0.431 = 0.650$",
+        "Weighted $= 0.5\\times0.650 + 0.5\\times0.650 = 0.650$",
+        "$IG(W) = 1 - 0.650 = 0.350$",
+        "$IG(Z) = 0.667 > 0.350$ → choose Z"
+      ],
+      "questionZh": "父节点有 12 个样本：6 正 6 负。属性 Z 有三个取值，子节点为 (4 正, 0 负)、(2 正, 2 负)、(0 正, 4 负)；属性 W 有两个取值，子节点为 (5 正, 1 负) 和 (1 正, 5 负)。熵以 bit 为单位。(b) IG(W) 是多少（保留三位小数）？按信息增益选哪个属性？",
+      "optionsZh": [
+        "IG(W) ≈ 0.650；选 W。",
+        "IG(W) ≈ 0.350；选 Z。",
+        "IG(W) ≈ 0.350；选 W。",
+        "IG(W) ≈ 0.191；选 Z。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. (a) For the first example, what are u, a and the updated parameters?",
+      "options": [
+        "u = 0.2, a = 1; w = (0.6, −0.2), b = 0.1.",
+        "u = 0.2, a = 1; w = (0.4, −0.4), b = −0.1.",
+        "u = 0.2, a = 1; w = (0.4, −0.3), b = −0.1.",
+        "u = 0.8, a = 1; w = (0.4, −0.4), b = −0.1."
+      ],
+      "correct": 1,
+      "explanation": "u = 0.5 − 0.3 + 0 = 0.2 ≥ 0, so a = 1, but t = 0. η(t−a) = −0.1, so w = (0.5, −0.3) − 0.1(1, 1) = (0.4, −0.4) and b = 0 − 0.1 = −0.1.",
+      "id": 757,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S3(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.5 − 0.3 = 0.2 → a = 1 ≠ 0；η(t−a) = −0.1 → w = (0.4, −0.4)，b = −0.1。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "Subtract 0.1·(1, 1) from w and 0.1 from b.",
+        "x₂ = 1 too, so the second weight also changes.",
+        "Uses +0.3 instead of −0.3 in the net input."
+      ],
+      "steps": [
+        "$u = 0.5\\times1 + (-0.3)\\times1 + 0 = 0.2 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.1\\times(0-1) = -0.1$",
+        "$\\mathbf w = (0.5, -0.3) - 0.1\\times(1, 1) = (0.4, -0.4)$, $b = -0.1$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0.5, -0.3)$，$b = 0$，$\\eta = 0.1$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 1)$，$t = 0$；再 $\\mathbf x = (2, 1)$，$t = 1$。(a) 对第一个样本，u、a 和更新后的参数是什么？",
+      "optionsZh": [
+        "u = 0.2，a = 1；w = (0.6, −0.2)，b = 0.1。",
+        "u = 0.2，a = 1；w = (0.4, −0.4)，b = −0.1。",
+        "u = 0.2，a = 1；w = (0.4, −0.3)，b = −0.1。",
+        "u = 0.8，a = 1；w = (0.4, −0.4)，b = −0.1。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. After the first example, $\\mathbf w = (0.4, -0.4)$ and $b = -0.1$. (b) For the second example, what are u, a and the parameters afterwards?",
+      "options": [
+        "u = 0.3, a = 1; w = (0.6, −0.3), b = 0.",
+        "u = −0.1, a = 0; w = (0.6, −0.3), b = 0.",
+        "u = 0.3, a = 1; w = (0.2, −0.5), b = −0.2.",
+        "u = 0.3, a = 1; no update: w = (0.4, −0.4), b = −0.1."
+      ],
+      "correct": 3,
+      "explanation": "u = 0.4×2 − 0.4×1 − 0.1 = 0.3 ≥ 0, so a = 1 = t. The prediction is correct, η(t−a) = 0, and the parameters stay w = (0.4, −0.4), b = −0.1.",
+      "id": 758,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S3(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.8 − 0.4 − 0.1 = 0.3 → a = 1 = t，预测正确，η(t−a) = 0，参数不变。",
+      "optionNotes": [
+        "Updates even though the prediction is correct.",
+        "Miscomputes u: 0.8 − 0.4 − 0.1 = 0.3.",
+        "Subtracts a correction when t − a = 0.",
+        "a = t, so the perceptron rule makes no change."
+      ],
+      "steps": [
+        "$u = 0.4\\times2 + (-0.4)\\times1 - 0.1 = 0.3 \\ge 0 \\Rightarrow a = 1$",
+        "$t - a = 0$ → no update",
+        "$\\mathbf w = (0.4, -0.4)$, $b = -0.1$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0.5, -0.3)$，$b = 0$，$\\eta = 0.1$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 1)$，$t = 0$；再 $\\mathbf x = (2, 1)$，$t = 1$。第一个样本后 $\\mathbf w = (0.4, -0.4)$，$b = -0.1$。(b) 对第二个样本，u、a 和之后的参数是什么？",
+      "optionsZh": [
+        "u = 0.3，a = 1；w = (0.6, −0.3)，b = 0。",
+        "u = −0.1，a = 0；w = (0.6, −0.3)，b = 0。",
+        "u = 0.3，a = 1；w = (0.2, −0.5)，b = −0.2。",
+        "u = 0.3，a = 1；不更新：w = (0.4, −0.4)，b = −0.1。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. (a) For the first example, what are u, a and the updated parameters?",
+      "options": [
+        "u = −0.2, a = 0; w = (0.5, 0.2), b = 0.3.",
+        "u = 0, a = 1; no update.",
+        "u = −0.2, a = 0; w = (0.5, 0.7), b = 0.3.",
+        "u = −0.2, a = 0; w = (0.5, 0.2), b = −0.2."
+      ],
+      "correct": 0,
+      "explanation": "u = 0×1 + 0.2×0 − 0.2 = −0.2 < 0, so a = 0, but t = 1. η(t−a) = 0.5, so w = (0, 0.2) + 0.5(1, 0) = (0.5, 0.2) and b = −0.2 + 0.5 = 0.3.",
+      "id": 759,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S4(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = −0.2 → a = 0 ≠ 1；η(t−a) = +0.5 → w = (0.5, 0.2)，b = 0.3。x₂ = 0，所以第二个权重不变。",
+      "optionNotes": [
+        "Add 0.5·(1, 0) to w and 0.5 to b.",
+        "Forgets the bias: u = −0.2, not 0.",
+        "x₂ = 0, so the second weight does not change.",
+        "Forgets to update the bias."
+      ],
+      "steps": [
+        "$u = 0\\times1 + 0.2\\times0 - 0.2 = -0.2 < 0 \\Rightarrow a = 0$",
+        "$\\eta(t-a) = 0.5\\times(1-0) = 0.5$",
+        "$\\mathbf w = (0, 0.2) + 0.5\\times(1, 0) = (0.5, 0.2)$, $b = -0.2 + 0.5 = 0.3$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0, 0.2)$，$b = -0.2$，$\\eta = 0.5$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 0)$，$t = 1$；再 $\\mathbf x = (1, 1)$，$t = 0$。(a) 对第一个样本，u、a 和更新后的参数是什么？",
+      "optionsZh": [
+        "u = −0.2，a = 0；w = (0.5, 0.2)，b = 0.3。",
+        "u = 0，a = 1；不更新。",
+        "u = −0.2，a = 0；w = (0.5, 0.7)，b = 0.3。",
+        "u = −0.2，a = 0；w = (0.5, 0.2)，b = −0.2。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. After the first example, $\\mathbf w = (0.5, 0.2)$ and $b = 0.3$. (b) For the second example, what are u, a and the final parameters?",
+      "options": [
+        "u = 1.0, a = 1; w = (1.0, 0.7), b = 0.8.",
+        "u = 1.0, a = 1; w = (0, 0.2), b = −0.2.",
+        "u = 1.0, a = 1; w = (0, −0.3), b = −0.2.",
+        "u = 0.7, a = 1; w = (0, −0.3), b = −0.2."
+      ],
+      "correct": 2,
+      "explanation": "u = 0.5 + 0.2 + 0.3 = 1.0 ≥ 0, so a = 1, but t = 0. η(t−a) = −0.5, so w = (0.5, 0.2) − 0.5(1, 1) = (0, −0.3) and b = 0.3 − 0.5 = −0.2.",
+      "id": 760,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S4(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.5 + 0.2 + 0.3 = 1.0 → a = 1 ≠ 0；η(t−a) = −0.5 → w = (0, −0.3)，b = −0.2。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "Only subtracts from the first weight; x₂ = 1 here.",
+        "Subtract 0.5·(1, 1) from w and 0.5 from b.",
+        "Forgets the bias in u: 0.5 + 0.2 + 0.3 = 1.0."
+      ],
+      "steps": [
+        "$u = 0.5\\times1 + 0.2\\times1 + 0.3 = 1.0 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.5\\times(0-1) = -0.5$",
+        "$\\mathbf w = (0.5, 0.2) - 0.5\\times(1, 1) = (0, -0.3)$, $b = 0.3 - 0.5 = -0.2$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0, 0.2)$，$b = -0.2$，$\\eta = 0.5$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 0)$，$t = 1$；再 $\\mathbf x = (1, 1)$，$t = 0$。第一个样本后 $\\mathbf w = (0.5, 0.2)$，$b = 0.3$。(b) 对第二个样本，u、a 和最终参数是什么？",
+      "optionsZh": [
+        "u = 1.0，a = 1；w = (1.0, 0.7)，b = 0.8。",
+        "u = 1.0，a = 1；w = (0, 0.2)，b = −0.2。",
+        "u = 1.0，a = 1；w = (0, −0.3)，b = −0.2。",
+        "u = 0.7，a = 1；w = (0, −0.3)，b = −0.2。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on A = (1,1), B = (2,1), C = (4,3), D = (5,4), starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. (a) What are the squared distances (to μ₁, to μ₂) of C and D, and the resulting clusters?",
+      "options": [
+        "C (13, 8), D (25, 18); clusters {A, C, D} and {B}.",
+        "C (13, 8), D (25, 18); clusters {A} and {B, C, D}.",
+        "C (5, 4), D (7, 6); clusters {A} and {B, C, D}.",
+        "C (13, 8), D (25, 18); clusters {A, B} and {C, D}."
+      ],
+      "correct": 1,
+      "explanation": "A is at μ₁ (0 vs 1) and B at μ₂ (1 vs 0). C: (3²+2², 2²+2²) = (13, 8) → μ₂. D: (4²+3², 3²+3²) = (25, 18) → μ₂. Clusters {A} and {B, C, D}. A poor start leaves one cluster with a single point.",
+      "id": 761,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S5(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "C 到两质心 13 vs 8，D 25 vs 18，都离 μ₂ 更近 → 簇 {A} 和 {B, C, D}。初始质心选得不好时会这样一边倒。",
+      "optionNotes": [
+        "C and D are both nearer μ₂ (8 < 13, 18 < 25).",
+        "Every point joins its nearer centroid: {A}, {B, C, D}.",
+        "These are Manhattan distances, not squared Euclidean.",
+        "Groups by eye; the rule uses the initial centroids only."
+      ],
+      "steps": [
+        "A: (0, 1) → 1;  B: (1, 0) → 2",
+        "C: $3^2+2^2 = 13$ vs $2^2+2^2 = 8$ → 2",
+        "D: $4^2+3^2 = 25$ vs $3^2+3^2 = 18$ → 2",
+        "Clusters $\\{A\\}$, $\\{B, C, D\\}$"
+      ],
+      "questionZh": "对 A = (1,1)、B = (2,1)、C = (4,3)、D = (5,4) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = A = (1,1)$、$\\mu_2 = B = (2,1)$。先用初始质心分配全部点，再更新。(a) C 和 D 到（μ₁, μ₂）的平方距离以及分簇结果是什么？",
+      "optionsZh": [
+        "C (13, 8)、D (25, 18)；簇为 {A, C, D} 和 {B}。",
+        "C (13, 8)、D (25, 18)；簇为 {A} 和 {B, C, D}。",
+        "C (5, 4)、D (7, 6)；簇为 {A} 和 {B, C, D}。",
+        "C (13, 8)、D (25, 18)；簇为 {A, B} 和 {C, D}。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on A = (1,1), B = (2,1), C = (4,3), D = (5,4), starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. The assignment step gives clusters {A} and {B, C, D}. (b) What are the updated centroids and the total SSE (using the updated centroids)?",
+      "options": [
+        "μ₁ = (1, 1), μ₂ ≈ (3.67, 2.67); SSE ≈ 9.33.",
+        "μ₁ = (1, 1), μ₂ ≈ (3.67, 2.67); SSE ≈ 5.56.",
+        "μ₁ = (1, 1), μ₂ = (2, 1); SSE = 26.",
+        "μ₁ = (3, 2.25), μ₂ = (3, 2.25); SSE = 16.75."
+      ],
+      "correct": 0,
+      "explanation": "μ₁ = A = (1, 1). μ₂ = ((2+4+5)/3, (1+3+4)/3) = (11/3, 8/3) ≈ (3.67, 2.67). Squared errors: A 0; B (5/3)²+(5/3)² = 50/9; C (1/3)²+(1/3)² = 2/9; D (4/3)²+(4/3)² = 32/9. SSE = 84/9 ≈ 9.33.",
+      "id": 762,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S5(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₂ = (11/3, 8/3)；B、C、D 的平方误差 50/9、2/9、32/9，A 为 0 → SSE = 84/9 ≈ 9.33。",
+      "optionNotes": [
+        "SSE = 0 + 50/9 + 2/9 + 32/9 = 84/9 ≈ 9.33.",
+        "Counts only B's squared error (50/9 ≈ 5.56).",
+        "Uses the old centroids.",
+        "Averages all points into a single centre."
+      ],
+      "steps": [
+        "$\\mu_1 = (1, 1)$, $\\mu_2 = \\left(\\tfrac{2+4+5}{3}, \\tfrac{1+3+4}{3}\\right) = \\left(\\tfrac{11}{3}, \\tfrac{8}{3}\\right)$",
+        "B: $(\\tfrac53)^2 + (\\tfrac53)^2 = \\tfrac{50}{9}$; C: $\\tfrac{2}{9}$; D: $\\tfrac{32}{9}$; A: 0",
+        "$\\text{SSE} = \\tfrac{84}{9} \\approx 9.33$"
+      ],
+      "questionZh": "对 A = (1,1)、B = (2,1)、C = (4,3)、D = (5,4) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = A = (1,1)$、$\\mu_2 = B = (2,1)$。先用初始质心分配全部点，再更新。分配步得到簇 {A} 和 {B, C, D}。(b) 更新后的质心和 SSE 总和（用更新后的质心）是多少？",
+      "optionsZh": [
+        "μ₁ = (1, 1)，μ₂ ≈ (3.67, 2.67)；SSE ≈ 9.33。",
+        "μ₁ = (1, 1)，μ₂ ≈ (3.67, 2.67)；SSE ≈ 5.56。",
+        "μ₁ = (1, 1)，μ₂ = (2, 1)；SSE = 26。",
+        "μ₁ = (3, 2.25)，μ₂ = (3, 2.25)；SSE = 16.75。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on P1 = (0,0), P2 = (1,0), P3 = (0,2), P4 = (5,5), P5 = (6,5), starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. (a) What are the squared distances (to μ₁, to μ₂) of P2, P3 and P5, and the clusters?",
+      "options": [
+        "P2 (1, 41), P3 (4, 34), P5 (61, 1); clusters {P1, P2, P3} and {P4, P5}.",
+        "P2 (1, 9), P3 (2, 8), P5 (11, 1); clusters {P1, P2, P3} and {P4, P5}.",
+        "P2 (1, 41), P3 (4, 34), P5 (61, 1); clusters {P1, P2} and {P3, P4, P5}.",
+        "P2 (1, 41), P3 (34, 4), P5 (61, 1); clusters {P1, P2} and {P3, P4, P5}."
+      ],
+      "correct": 0,
+      "explanation": "P2: (1, 4²+5² = 41) → μ₁. P3: (2² = 4, 5²+3² = 34) → μ₁. P5: (6²+5² = 61, 1) → μ₂. Clusters {P1, P2, P3} and {P4, P5}.",
+      "id": 763,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S6(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "P2：1 vs 41；P3：4 vs 34；P5：61 vs 1 → 簇 {P1, P2, P3} 和 {P4, P5}。",
+      "optionNotes": [
+        "Squared Euclidean distances; each point to its nearer centroid.",
+        "These are Manhattan distances.",
+        "P3 is much nearer μ₁ (4 < 34).",
+        "Swaps P3's two distances."
+      ],
+      "steps": [
+        "P2: $1^2 = 1$ vs $4^2+5^2 = 41$ → 1",
+        "P3: $2^2 = 4$ vs $5^2+3^2 = 34$ → 1",
+        "P5: $6^2+5^2 = 61$ vs $1^2 = 1$ → 2",
+        "Clusters $\\{P1, P2, P3\\}$, $\\{P4, P5\\}$"
+      ],
+      "questionZh": "对 P1 = (0,0)、P2 = (1,0)、P3 = (0,2)、P4 = (5,5)、P5 = (6,5) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = P1$、$\\mu_2 = P4$。先用初始质心分配全部点，再更新。(a) P2、P3、P5 到（μ₁, μ₂）的平方距离和分簇结果是什么？",
+      "optionsZh": [
+        "P2 (1, 41)、P3 (4, 34)、P5 (61, 1)；簇为 {P1, P2, P3} 和 {P4, P5}。",
+        "P2 (1, 9)、P3 (2, 8)、P5 (11, 1)；簇为 {P1, P2, P3} 和 {P4, P5}。",
+        "P2 (1, 41)、P3 (4, 34)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。",
+        "P2 (1, 41)、P3 (34, 4)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on P1 = (0,0), P2 = (1,0), P3 = (0,2), P4 = (5,5), P5 = (6,5), starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. The assignment step gives clusters {P1, P2, P3} and {P4, P5}. (b) What are the updated centroids and the total SSE?",
+      "options": [
+        "μ₁ = (1/3, 2/3), μ₂ = (5.5, 5); SSE ≈ 3.33.",
+        "μ₁ = (0.5, 1), μ₂ = (5.5, 5); SSE = 4.25.",
+        "μ₁ = (1/3, 2/3), μ₂ = (5.5, 5); SSE ≈ 3.83.",
+        "μ₁ = (0, 0), μ₂ = (5, 5); SSE = 6."
+      ],
+      "correct": 2,
+      "explanation": "μ₁ = ((0+1+0)/3, (0+0+2)/3) = (1/3, 2/3); μ₂ = (5.5, 5). Cluster 1: P1 5/9, P2 8/9, P3 17/9 → 30/9 ≈ 3.33. Cluster 2: 0.25 + 0.25 = 0.5. Total SSE ≈ 3.83.",
+      "id": 764,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S6(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；簇 1 平方误差 5/9 + 8/9 + 17/9 = 30/9，簇 2 为 0.5 → SSE ≈ 3.83。",
+      "optionNotes": [
+        "Leaves out cluster 2's 0.5.",
+        "Divides cluster 1 by 2 instead of 3.",
+        "30/9 + 0.5 ≈ 3.83.",
+        "Uses the old centroids."
+      ],
+      "steps": [
+        "$\\mu_1 = (\\tfrac13, \\tfrac23)$, $\\mu_2 = (5.5, 5)$",
+        "P1: $\\tfrac19 + \\tfrac49 = \\tfrac59$; P2: $\\tfrac49 + \\tfrac49 = \\tfrac89$; P3: $\\tfrac19 + \\tfrac{16}{9} = \\tfrac{17}{9}$",
+        "P4, P5: $0.25$ each",
+        "$\\text{SSE} = \\tfrac{30}{9} + 0.5 \\approx 3.83$"
+      ],
+      "questionZh": "对 P1 = (0,0)、P2 = (1,0)、P3 = (0,2)、P4 = (5,5)、P5 = (6,5) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = P1$、$\\mu_2 = P4$。先用初始质心分配全部点，再更新。分配步得到簇 {P1, P2, P3} 和 {P4, P5}。(b) 更新后的质心和 SSE 总和是多少？",
+      "optionsZh": [
+        "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；SSE ≈ 3.33。",
+        "μ₁ = (0.5, 1)，μ₂ = (5.5, 5)；SSE = 4.25。",
+        "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；SSE ≈ 3.83。",
+        "μ₁ = (0, 0)，μ₂ = (5, 5)；SSE = 6。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the best path and its probability?",
+      "options": [
+        "V₂(A) = 0.068, V₂(B) = 0.147; path A → B, 0.147.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path B → B, 0.084.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path A → A, 0.056.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path A → B, 0.084."
+      ],
+      "correct": 3,
+      "explanation": "V₁(A) = 0.5×0.8 = 0.40, V₁(B) = 0.5×0.3 = 0.15. V₂(A) = 0.2 × max(0.40×0.7, 0.15×0.4) = 0.2×0.28 = 0.056 (from A). V₂(B) = 0.7 × max(0.40×0.3, 0.15×0.6) = 0.7×0.12 = 0.084 (from A). End at B and backtrack: A → B, probability 0.084.",
+      "id": 765,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Self-written S7(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁ = (0.40, 0.15)；V₂(A) = 0.2 × 0.28 = 0.056，V₂(B) = 0.7 × max(0.12, 0.09) = 0.084，前驱都是 A → 路径 A → B，0.084。",
+      "optionNotes": [
+        "These are the Forward values (sum, not max).",
+        "B's best predecessor is A (0.12 > 0.09).",
+        "End in the larger final state, B.",
+        "Max at each step, end at B, backtrack to A."
+      ],
+      "steps": [
+        "$V_1(A) = 0.5\\times0.8 = 0.40$, $V_1(B) = 0.5\\times0.3 = 0.15$",
+        "$V_2(A) = 0.2\\times\\max(0.40\\times0.7,\\ 0.15\\times0.4) = 0.2\\times0.28 = 0.056$ (from A)",
+        "$V_2(B) = 0.7\\times\\max(0.40\\times0.3,\\ 0.15\\times0.6) = 0.7\\times0.12 = 0.084$ (from A)",
+        "Best path A → B, $0.084$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = \\pi_B = 0.5$；发射 $e_A(x) = 0.8$、$e_A(y) = 0.2$、$e_B(x) = 0.3$、$e_B(y) = 0.7$；转移 $a_{AA} = 0.7$、$a_{AB} = 0.3$、$a_{BA} = 0.4$、$a_{BB} = 0.6$。观测序列 (x, y)。(a) 用 Viterbi，$V_2(A)$、$V_2(B)$、最优路径及其概率是多少？",
+      "optionsZh": [
+        "V₂(A) = 0.068，V₂(B) = 0.147；路径 A → B，0.147。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 B → B，0.084。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 A → A，0.056。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 A → B，0.084。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
+      "options": [
+        "f₂(A) = 0.068, f₂(B) = 0.147, P = 0.215.",
+        "f₂(A) = 0.056, f₂(B) = 0.084, P = 0.140.",
+        "f₂(A) = 0.340, f₂(B) = 0.210, P = 0.550.",
+        "f₂(A) = 0.068, f₂(B) = 0.147, P = 0.147."
+      ],
+      "correct": 0,
+      "explanation": "f₂(A) = 0.2 × (0.40×0.7 + 0.15×0.4) = 0.2×0.34 = 0.068. f₂(B) = 0.7 × (0.40×0.3 + 0.15×0.6) = 0.7×0.21 = 0.147. P(x, y) = 0.068 + 0.147 = 0.215, larger than the best path's 0.084 because it sums every path.",
+      "id": 766,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Self-written S7(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "把 max 换成求和：f₂(A) = 0.2 × 0.34 = 0.068，f₂(B) = 0.7 × 0.21 = 0.147，P = 0.215 ≥ 最优路径 0.084。",
+      "optionNotes": [
+        "Sum over predecessors, times emission, then add the states.",
+        "Viterbi values (max), not Forward (sum).",
+        "Forgets the emission probabilities for y.",
+        "P(x, y) adds both final states, not the larger one."
+      ],
+      "steps": [
+        "$f_2(A) = 0.2\\times(0.28 + 0.06) = 0.068$",
+        "$f_2(B) = 0.7\\times(0.12 + 0.09) = 0.147$",
+        "$P(x, y) = 0.068 + 0.147 = 0.215$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = \\pi_B = 0.5$；发射 $e_A(x) = 0.8$、$e_A(y) = 0.2$、$e_B(x) = 0.3$、$e_B(y) = 0.7$；转移 $a_{AA} = 0.7$、$a_{AB} = 0.3$、$a_{BA} = 0.4$、$a_{BB} = 0.6$。观测序列 (x, y)。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？",
+      "optionsZh": [
+        "f₂(A) = 0.068，f₂(B) = 0.147，P = 0.215。",
+        "f₂(A) = 0.056，f₂(B) = 0.084，P = 0.140。",
+        "f₂(A) = 0.340，f₂(B) = 0.210，P = 0.550。",
+        "f₂(A) = 0.068，f₂(B) = 0.147，P = 0.147。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (a) Using Viterbi, what are $V_1$, $V_2$, the best path and its probability?",
+      "options": [
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.0896); path A → B, 0.0896.",
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.0896); path B → B, 0.0896.",
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.072); path A → B, 0.072.",
+        "V₁ = (0.18, 0.14), V₂ = (0.0472, 0.1616); path B → B, 0.1616."
+      ],
+      "correct": 1,
+      "explanation": "V₁(A) = 0.3×0.6 = 0.18, V₁(B) = 0.7×0.2 = 0.14. V₂(A) = 0.4 × max(0.18×0.5, 0.14×0.2) = 0.4×0.09 = 0.036 (from A). V₂(B) = 0.8 × max(0.18×0.5, 0.14×0.8) = 0.8×0.112 = 0.0896 (from B). End at B; its predecessor is B, so the best path is B → B with 0.0896, even though V₁(A) > V₁(B). Always backtrack through the stored predecessors.",
+      "id": 767,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Self-written S8(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁(A) = 0.18 > V₁(B) = 0.14，但 V₂(B) 的最优前驱是 B（0.112 > 0.09）。终点 B，回溯得 B → B，0.0896。陷阱：不能按每一步各自最大的状态拼路径。",
+      "optionNotes": [
+        "Picks A at t = 1 because V₁(A) is larger; backtracking from B gives B.",
+        "Backtrack through stored predecessors: B → B.",
+        "Takes the A → B route (0.8 × 0.09 = 0.072), not the max.",
+        "These are the Forward values."
+      ],
+      "steps": [
+        "$V_1(A) = 0.3\\times0.6 = 0.18$, $V_1(B) = 0.7\\times0.2 = 0.14$",
+        "$V_2(A) = 0.4\\times\\max(0.18\\times0.5,\\ 0.14\\times0.2) = 0.4\\times0.09 = 0.036$ (from A)",
+        "$V_2(B) = 0.8\\times\\max(0.18\\times0.5,\\ 0.14\\times0.8) = 0.8\\times0.112 = 0.0896$ (from B)",
+        "End at B, predecessor B → path B → B, $0.0896$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = 0.3$、$\\pi_B = 0.7$；发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$；转移 $a_{AA} = 0.5$、$a_{AB} = 0.5$、$a_{BA} = 0.2$、$a_{BB} = 0.8$。观测序列 (x, y)。(a) 用 Viterbi，$V_1$、$V_2$、最优路径及其概率是多少？",
+      "optionsZh": [
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.0896)；路径 A → B，0.0896。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.0896)；路径 B → B，0.0896。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.072)；路径 A → B，0.072。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.0472, 0.1616)；路径 B → B，0.1616。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
+      "options": [
+        "f₂(A) = 0.036, f₂(B) = 0.0896, P = 0.1256.",
+        "f₂(A) = 0.118, f₂(B) = 0.202, P = 0.320.",
+        "f₂(A) = 0.0472, f₂(B) = 0.1616, P = 0.2088.",
+        "f₂(A) = 0.0472, f₂(B) = 0.1616, P = 0.1616."
+      ],
+      "correct": 2,
+      "explanation": "f₂(A) = 0.4 × (0.18×0.5 + 0.14×0.2) = 0.4×0.118 = 0.0472. f₂(B) = 0.8 × (0.18×0.5 + 0.14×0.8) = 0.8×0.202 = 0.1616. P(x, y) = 0.0472 + 0.1616 = 0.2088.",
+      "id": 768,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Self-written S8(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₂(A) = 0.4 × 0.118 = 0.0472，f₂(B) = 0.8 × 0.202 = 0.1616，P = 0.2088。",
+      "optionNotes": [
+        "Viterbi values (max), not Forward (sum).",
+        "Forgets the emission probabilities for y.",
+        "Sum over predecessors, times emission, add both states.",
+        "P(x, y) is the sum of both final states."
+      ],
+      "steps": [
+        "$f_2(A) = 0.4\\times(0.09 + 0.028) = 0.0472$",
+        "$f_2(B) = 0.8\\times(0.09 + 0.112) = 0.1616$",
+        "$P(x, y) = 0.0472 + 0.1616 = 0.2088$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = 0.3$、$\\pi_B = 0.7$；发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$；转移 $a_{AA} = 0.5$、$a_{AB} = 0.5$、$a_{BA} = 0.2$、$a_{BB} = 0.8$。观测序列 (x, y)。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？",
+      "optionsZh": [
+        "f₂(A) = 0.036，f₂(B) = 0.0896，P = 0.1256。",
+        "f₂(A) = 0.118，f₂(B) = 0.202，P = 0.320。",
+        "f₂(A) = 0.0472，f₂(B) = 0.1616，P = 0.2088。",
+        "f₂(A) = 0.0472，f₂(B) = 0.1616，P = 0.1616。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
       "question": "Which statement best matches the course definition of a complex system?",
       "options": [
         "Many entities whose global behaviour is a non-trivial result of their interactions",
@@ -18483,6 +20324,8 @@
     "Mock Exam 1",
     "Practice Exam 1",
     "Practice Exam 2",
+    "Practice Exam 3",
+    "Part B Practice (self-written)",
     "Textbook Practice (Kurose & Ross)",
     "Sample Exam"
   ],
@@ -18528,7 +20371,9 @@
       "Week 11",
       "Week 12",
       "Practice Exam 1",
-      "Practice Exam 2"
+      "Practice Exam 2",
+      "Practice Exam 3",
+      "Part B Practice (self-written)"
     ],
     "COMP5416": [
       "Week 01",
