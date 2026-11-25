@@ -12260,6 +12260,901 @@ window.QUIZ_DATA = {
       ]
     },
     {
+      "question": "A parent node contains ten examples: five positive and five negative. Split X gives children (5 positive, 0 negative) and (0 positive, 5 negative). Split Y gives children (4 positive, 1 negative) and (1 positive, 4 negative). Use $0\\log_2 0 = 0$; entropy in bits. (a) What are the parent entropy and the information gain of split X?",
+      "options": [
+        "H(parent) = 1 bit; IG(X) = 1 bit.",
+        "H(parent) = 0.5 bit; IG(X) = 0.5 bit.",
+        "H(parent) = 1 bit; IG(X) = 0 bits.",
+        "H(parent) = 0 bits; IG(X) = 1 bit."
+      ],
+      "correct": 0,
+      "explanation": "H(parent) = −2 × 0.5 log₂ 0.5 = 1 bit. Both children in split X are pure, so H = 0 for each. Weighted child entropy is 0 and IG(X) = 1 bit. Marking: parent entropy 1, pure-child entropies 2, gain 2.",
+      "id": 745,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 3 Q31(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 = −0.5log₂0.5 − 0.5log₂0.5 = 1；X 的两个子节点都纯，熵 0 → IG(X) = 1 − 0 = 1。评分：父熵 1 分、纯子节点熵 2 分、增益 2 分。",
+      "optionNotes": [
+        "Parent 5/5 → 1 bit; pure children → IG = 1 − 0 = 1.",
+        "Uses the proportion 0.5 as the entropy; a 50/50 node has 1 bit.",
+        "Swaps the child entropy (0) and the gain (1).",
+        "A 50/50 node is maximally impure (1 bit), not pure."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = -0.5\\log_2 0.5 - 0.5\\log_2 0.5 = 1$",
+        "Children of X are pure: $H = 0$ each, weighted $= 0$",
+        "$IG(X) = 1 - 0 = 1$ bit"
+      ],
+      "questionZh": "父节点有 10 个样本：5 正 5 负。划分 X 的子节点为 (5 正, 0 负) 和 (0 正, 5 负)；划分 Y 的子节点为 (4 正, 1 负) 和 (1 正, 4 负)。约定 $0\\log_2 0 = 0$，熵以 bit 为单位。(a) 父节点熵和划分 X 的信息增益分别是多少？",
+      "optionsZh": [
+        "H(父) = 1 bit；IG(X) = 1 bit。",
+        "H(父) = 0.5 bit；IG(X) = 0.5 bit。",
+        "H(父) = 1 bit；IG(X) = 0 bit。",
+        "H(父) = 0 bit；IG(X) = 1 bit。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A parent node contains ten examples: five positive and five negative. Split X gives children (5 positive, 0 negative) and (0 positive, 5 negative). Split Y gives children (4 positive, 1 negative) and (1 positive, 4 negative). Use $0\\log_2 0 = 0$; entropy in bits. (b) What is the information gain of split Y (three decimals), and which split does information gain prefer?",
+      "options": [
+        "IG(Y) ≈ 0.722; prefer Y.",
+        "IG(Y) ≈ 0.278; prefer Y.",
+        "IG(Y) ≈ 0.361; prefer X.",
+        "IG(Y) ≈ 0.278; prefer X."
+      ],
+      "correct": 3,
+      "explanation": "Each Y child has proportions 0.8 and 0.2, so H = −(0.8×(−0.3219) + 0.2×(−2.3219)) = 0.7219 bits. Each child has weight 0.5, leaving the same weighted entropy. IG(Y) = 1 − 0.7219 = 0.2781 ≈ 0.278 bits. Prefer split X, whose gain is 1 bit. Marking: child entropy 2, weighting and gain 2, choice 1.",
+      "id": 746,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 3 Q31(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Y 的两个子节点都是 0.8/0.2：H = 0.7219；各占一半，加权仍是 0.7219 → IG(Y) = 1 − 0.7219 ≈ 0.278 < IG(X) = 1，选 X。",
+      "optionNotes": [
+        "0.722 is the child entropy, not the gain.",
+        "Right gain, but X's gain (1) is larger.",
+        "Halves the child entropy instead of weighting both children.",
+        "IG(Y) = 1 − 0.7219 ≈ 0.278 < 1 = IG(X) → X."
+      ],
+      "steps": [
+        "Each Y child: $H = -(0.8\\log_2 0.8 + 0.2\\log_2 0.2) = 0.7219$",
+        "Weighted: $0.5\\times0.7219 + 0.5\\times0.7219 = 0.7219$",
+        "$IG(Y) = 1 - 0.7219 = 0.2781 \\approx 0.278$",
+        "$IG(X) = 1 > 0.278$ → prefer X"
+      ],
+      "questionZh": "父节点有 10 个样本：5 正 5 负。划分 X 的子节点为 (5 正, 0 负) 和 (0 正, 5 负)；划分 Y 的子节点为 (4 正, 1 负) 和 (1 正, 4 负)。约定 $0\\log_2 0 = 0$，熵以 bit 为单位。(b) 划分 Y 的信息增益是多少（保留三位小数）？按信息增益应选哪个划分？",
+      "optionsZh": [
+        "IG(Y) ≈ 0.722；选 Y。",
+        "IG(Y) ≈ 0.278；选 Y。",
+        "IG(Y) ≈ 0.361；选 X。",
+        "IG(Y) ≈ 0.278；选 X。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. (a) For the first example, what are the net input, actual output, updated weights and updated bias?",
+      "options": [
+        "u = 0.1, a = 1; w = (0.4, −0.1), b = 0.1.",
+        "u = 0.1, a = 1; w = (0, −0.1), b = −0.3.",
+        "u = 0.1, a = 1; no update, w = (0.2, −0.1), b = −0.1.",
+        "u = −0.1, a = 0; w = (0, −0.1), b = −0.3."
+      ],
+      "correct": 1,
+      "explanation": "u = 0.2×1 + (−0.1)×0 − 0.1 = 0.1, so a = 1. The correction is η(t−a) = 0.2(0−1) = −0.2. New weights are (0.2, −0.1) − 0.2(1, 0) = (0, −0.1); new bias is −0.1 − 0.2 = −0.3. Marking: net input and output 2, updates 3.",
+      "id": 747,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Practice Exam 3 Q32(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.2 − 0.1 = 0.1 ≥ 0 → a = 1，但 t = 0，错了；η(t−a) = −0.2 → w = (0, −0.1)，b = −0.3。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "u = 0.1 → a = 1 ≠ t, update by −0.2·x and −0.2.",
+        "a = 1 but t = 0, so it is wrong and must update.",
+        "Forgets the bias in u: 0.2 − 0.1 = 0.1, not −0.1."
+      ],
+      "steps": [
+        "$u = 0.2\\times1 + (-0.1)\\times0 - 0.1 = 0.1 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.2\\times(0-1) = -0.2$",
+        "$\\mathbf w = (0.2, -0.1) - 0.2\\times(1, 0) = (0, -0.1)$",
+        "$b = -0.1 - 0.2 = -0.3$"
+      ],
+      "questionZh": "感知机初始权重 $\\mathbf w = (0.2, -0.1)$，偏置 $b = -0.1$，学习率 $\\eta = 0.2$。净输入 ≥ 0 时输出 1，否则输出 0。按顺序处理两个样本，每个样本后立即更新：先 $\\mathbf x = (1, 0)$，$t = 0$；再 $\\mathbf x = (0, 1)$，$t = 1$。(a) 对第一个样本，净输入、实际输出、更新后的权重和偏置分别是什么？",
+      "optionsZh": [
+        "u = 0.1，a = 1；w = (0.4, −0.1)，b = 0.1。",
+        "u = 0.1，a = 1；w = (0, −0.1)，b = −0.3。",
+        "u = 0.1，a = 1；不更新，w = (0.2, −0.1)，b = −0.1。",
+        "u = −0.1，a = 0；w = (0, −0.1)，b = −0.3。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. After the first example the parameters are $\\mathbf w = (0, -0.1)$, $b = -0.3$. (b) For the second example, what are the net input, actual output and final parameters?",
+      "options": [
+        "u = −0.4, a = 0; w = (0, 0.1), b = −0.1.",
+        "u = −0.2, a = 0; w = (0.2, 0.1), b = −0.1.",
+        "u = −0.4, a = 0; no update.",
+        "u = −0.4, a = 0; w = (0, −0.3), b = −0.5."
+      ],
+      "correct": 0,
+      "explanation": "Now u = 0×0 + (−0.1)×1 − 0.3 = −0.4, so a = 0. The correction is 0.2(1−0) = 0.2. Final weights are (0, −0.1) + 0.2(0, 1) = (0, 0.1); final bias is −0.3 + 0.2 = −0.1.",
+      "id": 748,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Practice Exam 3 Q32(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "用更新后的参数：u = −0.1 − 0.3 = −0.4 < 0 → a = 0，t = 1 又错了；η(t−a) = +0.2 → w = (0, 0.1)，b = −0.1。",
+      "optionNotes": [
+        "u = −0.4 → a = 0 ≠ 1; add 0.2·(0, 1) and 0.2.",
+        "Uses the initial parameters instead of the updated ones.",
+        "a = 0 but t = 1, so an update is required.",
+        "Subtracts the correction; t − a = +1, so add."
+      ],
+      "steps": [
+        "$u = 0\\times0 + (-0.1)\\times1 - 0.3 = -0.4 < 0 \\Rightarrow a = 0$",
+        "$\\eta(t-a) = 0.2\\times(1-0) = 0.2$",
+        "$\\mathbf w = (0, -0.1) + 0.2\\times(0, 1) = (0, 0.1)$",
+        "$b = -0.3 + 0.2 = -0.1$"
+      ],
+      "questionZh": "感知机初始权重 $\\mathbf w = (0.2, -0.1)$，偏置 $b = -0.1$，学习率 $\\eta = 0.2$。净输入 ≥ 0 时输出 1，否则输出 0。按顺序处理两个样本，每个样本后立即更新：先 $\\mathbf x = (1, 0)$，$t = 0$；再 $\\mathbf x = (0, 1)$，$t = 1$。第一个样本后参数为 $\\mathbf w = (0, -0.1)$，$b = -0.3$。(b) 对第二个样本，净输入、实际输出和最终参数是什么？",
+      "optionsZh": [
+        "u = −0.4，a = 0；w = (0, 0.1)，b = −0.1。",
+        "u = −0.2，a = 0；w = (0.2, 0.1)，b = −0.1。",
+        "u = −0.4，a = 0；不更新。",
+        "u = −0.4，a = 0；w = (0, −0.3)，b = −0.5。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A = (0,0), B = (0,4), C = (6,0), D = (6,4), starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. (a) What are the squared distances (to μ₁, to μ₂) and the resulting clusters?",
+      "options": [
+        "A (0, 52), B (16, 36), C (36, 16), D (52, 0); clusters {A, C} and {B, D}.",
+        "A (0, 52), B (36, 16), C (16, 36), D (52, 0); clusters {A, C} and {B, D}.",
+        "A (0, 52), B (16, 36), C (36, 16), D (52, 0); clusters {A, B} and {C, D}.",
+        "A (0, 10), B (4, 6), C (6, 4), D (10, 0); clusters {A, B} and {C, D}."
+      ],
+      "correct": 2,
+      "explanation": "Squared-distance pairs (to μ₁, to μ₂) are A: (0, 52), B: (16, 36), C: (36, 16), D: (52, 0). Thus cluster 1 is {A, B} and cluster 2 is {C, D}. Marking: distances 4, assignments 1.",
+      "id": 749,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 3 Q33(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "B：到 μ₁ 16、到 μ₂ 36 → 簇 1；C：36 vs 16 → 簇 2。簇 1 = {A, B}，簇 2 = {C, D}。",
+      "optionNotes": [
+        "Right distances, wrong assignment: B is closer to μ₁ (16 < 36).",
+        "Swaps B's and C's distances.",
+        "Each point joins its nearer centroid: {A, B}, {C, D}.",
+        "These are Manhattan distances, not squared Euclidean."
+      ],
+      "steps": [
+        "B: $\\|B-\\mu_1\\|^2 = 0+16 = 16$, $\\|B-\\mu_2\\|^2 = 36+0 = 36$ → cluster 1",
+        "C: $36+0 = 36$ vs $0+16 = 16$ → cluster 2",
+        "A: (0, 52), D: (52, 0)",
+        "Clusters $\\{A, B\\}$ and $\\{C, D\\}$"
+      ],
+      "questionZh": "对 A = (0,0)、B = (0,4)、C = (6,0)、D = (6,4) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A = (0,0)$、$\\mu_2 = D = (6,4)$。先用初始质心分配全部点，再更新质心。(a) 各点到（μ₁, μ₂）的平方距离和分簇结果是什么？",
+      "optionsZh": [
+        "A (0, 52)、B (16, 36)、C (36, 16)、D (52, 0)；簇为 {A, C} 和 {B, D}。",
+        "A (0, 52)、B (36, 16)、C (16, 36)、D (52, 0)；簇为 {A, C} 和 {B, D}。",
+        "A (0, 52)、B (16, 36)、C (36, 16)、D (52, 0)；簇为 {A, B} 和 {C, D}。",
+        "A (0, 10)、B (4, 6)、C (6, 4)、D (10, 0)；簇为 {A, B} 和 {C, D}。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A = (0,0), B = (0,4), C = (6,0), D = (6,4), starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. The assignment step gives clusters {A, B} and {C, D}. (b) What are the updated centroids and the total within-cluster SSE (using the updated centroids)?",
+      "options": [
+        "μ₁ = (0, 2), μ₂ = (6, 2); SSE = 8.",
+        "μ₁ = (0, 2), μ₂ = (6, 2); SSE = 16.",
+        "μ₁ = (0, 0), μ₂ = (6, 4); SSE = 32.",
+        "μ₁ = (3, 2), μ₂ = (3, 2); SSE = 52."
+      ],
+      "correct": 1,
+      "explanation": "The updated means are μ₁ = (0, 2) and μ₂ = (6, 2). Each of the four points is 2 units vertically from its assigned mean, so each squared distance is 4. Total SSE = 4 + 4 + 4 + 4 = 16. Marking: two means 2, squared errors and sum 3.",
+      "id": 750,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 3 Q33(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₁ = (0, 2)，μ₂ = (6, 2)；每个点到新质心竖直距离 2，平方 4，SSE = 4 × 4 = 16。",
+      "optionNotes": [
+        "Sums distances (2 each) instead of squared distances (4 each).",
+        "Means (0, 2), (6, 2); each squared error 4 → SSE 16.",
+        "Uses the old centroids; the question asks for updated ones.",
+        "Averages all four points into one centre."
+      ],
+      "steps": [
+        "$\\mu_1 = \\left(\\tfrac{0+0}{2}, \\tfrac{0+4}{2}\\right) = (0, 2)$, $\\mu_2 = (6, 2)$",
+        "Each point is 2 units from its centroid: squared error 4",
+        "$\\text{SSE} = 4+4+4+4 = 16$"
+      ],
+      "questionZh": "对 A = (0,0)、B = (0,4)、C = (6,0)、D = (6,4) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A = (0,0)$、$\\mu_2 = D = (6,4)$。先用初始质心分配全部点，再更新质心。分配步得到簇 {A, B} 和 {C, D}。(b) 更新后的质心和簇内 SSE 总和（用更新后的质心）是多少？",
+      "optionsZh": [
+        "μ₁ = (0, 2)，μ₂ = (6, 2)；SSE = 8。",
+        "μ₁ = (0, 2)，μ₂ = (6, 2)；SSE = 16。",
+        "μ₁ = (0, 0)，μ₂ = (6, 4)；SSE = 32。",
+        "μ₁ = (3, 2)，μ₂ = (3, 2)；SSE = 52。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the most probable hidden path and its joint probability with (x, y)?",
+      "options": [
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path A → B, 0.1008.",
+        "V₂(A) = 0.0900, V₂(B) = 0.1680; path A → B, 0.1680.",
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path B → B, 0.1008.",
+        "V₂(A) = 0.0756, V₂(B) = 0.1008; path A → A, 0.0756."
+      ],
+      "correct": 0,
+      "explanation": "V₁(A) = 0.6×0.7 = 0.42 and V₁(B) = 0.4×0.4 = 0.16. V₂(A) = 0.3 × max(0.42×0.6, 0.16×0.3) = 0.0756, with predecessor A. V₂(B) = 0.6 × max(0.42×0.4, 0.16×0.7) = 0.1008, also with predecessor A. The best ending state is B, so the best path is A → B with joint probability 0.1008. Marking: initial values 1, two recursions 2, backtrack and probability 2.",
+      "id": 751,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Practice Exam 3 Q34(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁(A) = 0.42，V₁(B) = 0.16；V₂(A) = 0.3 × max(0.252, 0.048) = 0.0756（前驱 A），V₂(B) = 0.6 × max(0.168, 0.112) = 0.1008（前驱 A）。终点取 B，回溯到 A → 路径 A → B，概率 0.1008。",
+      "optionNotes": [
+        "Max at each step, end at B, backtrack to A.",
+        "These are Forward values (sum), not Viterbi (max).",
+        "V₂(B)'s best predecessor is A (0.168 > 0.112).",
+        "The path must end in the larger final state, B."
+      ],
+      "steps": [
+        "$V_1(A) = 0.6\\times0.7 = 0.42$, $V_1(B) = 0.4\\times0.4 = 0.16$",
+        "$V_2(A) = 0.3\\times\\max(0.42\\times0.6,\\ 0.16\\times0.3) = 0.3\\times0.252 = 0.0756$ (from A)",
+        "$V_2(B) = 0.6\\times\\max(0.42\\times0.4,\\ 0.16\\times0.7) = 0.6\\times0.168 = 0.1008$ (from A)",
+        "$V_2(B) > V_2(A)$ → end at B, backtrack → A → B, $0.1008$"
+      ],
+      "questionZh": "HMM 有状态 A、B，先验 $\\pi_A = 0.6$、$\\pi_B = 0.4$；发射 $e_A(x) = 0.7$、$e_A(y) = 0.3$、$e_B(x) = 0.4$、$e_B(y) = 0.6$；转移 $a_{AA} = 0.6$、$a_{AB} = 0.4$、$a_{BA} = 0.3$、$a_{BB} = 0.7$。观测序列为 (x, y)，$f_1(k) = V_1(k)$。(a) 用 Viterbi，$V_2(A)$、$V_2(B)$、最可能的隐状态路径及其与 (x, y) 的联合概率是多少？",
+      "optionsZh": [
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 A → B，0.1008。",
+        "V₂(A) = 0.0900，V₂(B) = 0.1680；路径 A → B，0.1680。",
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 B → B，0.1008。",
+        "V₂(A) = 0.0756，V₂(B) = 0.1008；路径 A → A，0.0756。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$, and why does $P(x, y)$ differ from the best-path probability?",
+      "options": [
+        "f₂(A) = 0.0756, f₂(B) = 0.1008, P = 0.1764; Forward keeps only the best predecessor.",
+        "f₂(A) = 0.0900, f₂(B) = 0.1680, P = 0.2580; Forward multiplies all paths together.",
+        "f₂(A) = 0.0900, f₂(B) = 0.1680, P = 0.2580; Forward sums over all hidden paths, Viterbi keeps the single largest.",
+        "f₂(A) = 0.3000, f₂(B) = 0.2800, P = 0.5800; Forward ignores emissions."
+      ],
+      "correct": 2,
+      "explanation": "f₂(A) = 0.3(0.42×0.6 + 0.16×0.3) = 0.0900. f₂(B) = 0.6(0.42×0.4 + 0.16×0.7) = 0.1680. Thus P(x, y) = 0.0900 + 0.1680 = 0.2580. Forward sums contributions from all possible hidden paths, whereas Viterbi selects the largest single path contribution. Marking: two forward values 2, sum 1, explanation 2.",
+      "id": 752,
+      "week": "Practice Exam 3",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 3 Q34(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "把 max 换成求和：f₂(A) = 0.3 × 0.300 = 0.0900，f₂(B) = 0.6 × 0.280 = 0.1680，P = 0.2580。Forward 对所有路径（AA、AB、BA、BB）求和，Viterbi 只取最大的一条，所以 0.2580 ≥ 0.1008。",
+      "optionNotes": [
+        "These are the Viterbi values; Forward sums predecessors.",
+        "Right numbers, wrong reason: Forward adds paths, it does not multiply them.",
+        "Sum instead of max; total likelihood over all paths.",
+        "Forgets to multiply by the emission probabilities."
+      ],
+      "steps": [
+        "$f_2(A) = 0.3\\times(0.252 + 0.048) = 0.0900$",
+        "$f_2(B) = 0.6\\times(0.168 + 0.112) = 0.1680$",
+        "$P(x, y) = 0.0900 + 0.1680 = 0.2580$",
+        "Check: AA 0.0756 + AB 0.1008 + BA 0.0144 + BB 0.0672 = 0.2580; Viterbi keeps max = 0.1008"
+      ],
+      "questionZh": "HMM 有状态 A、B，先验 $\\pi_A = 0.6$、$\\pi_B = 0.4$；发射 $e_A(x) = 0.7$、$e_A(y) = 0.3$、$e_B(x) = 0.4$、$e_B(y) = 0.6$；转移 $a_{AA} = 0.6$、$a_{AB} = 0.4$、$a_{BA} = 0.3$、$a_{BB} = 0.7$。观测序列为 (x, y)，$f_1(k) = V_1(k)$。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？为什么 $P(x, y)$ 与最优路径概率不同？",
+      "optionsZh": [
+        "f₂(A) = 0.0756，f₂(B) = 0.1008，P = 0.1764；Forward 只保留最优前驱。",
+        "f₂(A) = 0.0900，f₂(B) = 0.1680，P = 0.2580；Forward 把所有路径相乘。",
+        "f₂(A) = 0.0900，f₂(B) = 0.1680，P = 0.2580；Forward 对所有隐路径求和，Viterbi 只取最大的一条。",
+        "f₂(A) = 0.3000，f₂(B) = 0.2800，P = 0.5800；Forward 不考虑发射概率。"
+      ],
+      "partB": true
+    },
+    {
+      "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (a) What are the parent entropy and IG(X) (three decimals)?",
+      "options": [
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.311.",
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.500.",
+        "H(parent) = 1; IG(X) = 0.5.",
+        "H(parent) ≈ 0.811; IG(X) ≈ 0.811."
+      ],
+      "correct": 0,
+      "explanation": "H(parent) = −0.75 log₂ 0.75 − 0.25 log₂ 0.25 = 0.3113 + 0.5 = 0.811. X's children: (4,0) is pure (H = 0), (2,2) has H = 1; each holds 4/8. Weighted = 0.5×0 + 0.5×1 = 0.5, so IG(X) = 0.811 − 0.5 = 0.311.",
+      "id": 753,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S1(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 H(0.75, 0.25) ≈ 0.811；X：纯子节点熵 0、(2,2) 熵 1，各占一半，加权 0.5 → IG(X) = 0.811 − 0.5 ≈ 0.311。",
+      "optionNotes": [
+        "0.811 − (0.5·0 + 0.5·1) = 0.311.",
+        "0.5 is the weighted child entropy, not the gain.",
+        "The parent is 6/2, not 50/50, so H < 1.",
+        "Ignores the impure (2,2) child."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = -0.75\\log_2 0.75 - 0.25\\log_2 0.25 = 0.311 + 0.5 = 0.811$",
+        "$H(4{+},0{-}) = 0$, $H(2{+},2{-}) = 1$",
+        "Weighted $= \\tfrac{4}{8}\\times0 + \\tfrac{4}{8}\\times1 = 0.5$",
+        "$IG(X) = 0.811 - 0.5 = 0.311$"
+      ],
+      "questionZh": "父节点有 8 个样本：6 正 2 负。划分 X 的子节点为 (4 正, 0 负) 和 (2 正, 2 负)；划分 Y 的子节点为 (3 正, 1 负) 和 (3 正, 1 负)。熵以 bit 为单位。(a) 父节点熵和 IG(X) 是多少（保留三位小数）？",
+      "optionsZh": [
+        "H(父) ≈ 0.811；IG(X) ≈ 0.311。",
+        "H(父) ≈ 0.811；IG(X) ≈ 0.500。",
+        "H(父) = 1；IG(X) = 0.5。",
+        "H(父) ≈ 0.811；IG(X) ≈ 0.811。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (b) What is IG(Y), and which split does information gain prefer?",
+      "options": [
+        "IG(Y) ≈ 0.811; prefer Y.",
+        "IG(Y) = 0; prefer X.",
+        "IG(Y) ≈ 0.406; prefer Y.",
+        "IG(Y) = 0; the two splits tie."
+      ],
+      "correct": 1,
+      "explanation": "Both Y children are 3:1, the same proportions as the parent, so each has H = 0.811 and the weighted child entropy equals the parent entropy. IG(Y) = 0.811 − 0.811 = 0: Y tells us nothing about the class. X (0.311) is preferred.",
+      "id": 754,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S1(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "Y 的两个子节点比例都和父节点一样（3:1），熵都是 0.811 → IG(Y) = 0，这个划分没有提供任何信息，选 X。",
+      "optionNotes": [
+        "0.811 is each child's entropy; the gain is parent minus weighted children.",
+        "Children keep the parent's 3:1 ratio → IG = 0; X's 0.311 is larger.",
+        "Halves the entropy instead of subtracting the weighted child entropy.",
+        "X has positive gain (0.311), so there is no tie."
+      ],
+      "steps": [
+        "Each Y child is 3:1: $H = 0.811$",
+        "Weighted $= 0.5\\times0.811 + 0.5\\times0.811 = 0.811$",
+        "$IG(Y) = 0.811 - 0.811 = 0$",
+        "$IG(X) = 0.311 > 0$ → prefer X"
+      ],
+      "questionZh": "父节点有 8 个样本：6 正 2 负。划分 X 的子节点为 (4 正, 0 负) 和 (2 正, 2 负)；划分 Y 的子节点为 (3 正, 1 负) 和 (3 正, 1 负)。熵以 bit 为单位。(b) IG(Y) 是多少？按信息增益应选哪个划分？",
+      "optionsZh": [
+        "IG(Y) ≈ 0.811；选 Y。",
+        "IG(Y) = 0；选 X。",
+        "IG(Y) ≈ 0.406；选 Y。",
+        "IG(Y) = 0；两个划分打平。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (a) What are the parent entropy and IG(Z) (three decimals)?",
+      "options": [
+        "H(parent) = 1; IG(Z) ≈ 0.333.",
+        "H(parent) = 1; IG(Z) = 1.",
+        "H(parent) = 1; IG(Z) ≈ 0.667.",
+        "H(parent) ≈ 0.918; IG(Z) ≈ 0.585."
+      ],
+      "correct": 2,
+      "explanation": "H(parent) = 1 (6:6). Z's children: two pure (H = 0) and one 2:2 (H = 1) holding 4/12 of the examples. Weighted = (4/12)×1 = 0.333, so IG(Z) = 1 − 0.333 = 0.667.",
+      "id": 755,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S2(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父熵 1；Z 的三个子节点中两个纯、(2,2) 熵 1 且占 4/12 → 加权 0.333 → IG(Z) ≈ 0.667。",
+      "optionNotes": [
+        "0.333 is the weighted child entropy, not the gain.",
+        "The (2,2) child is impure, so IG < 1.",
+        "1 − (4/12)·1 = 0.667.",
+        "A 6:6 parent has entropy exactly 1."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = 1$ (6:6)",
+        "Children: $H(4,0) = 0$, $H(2,2) = 1$, $H(0,4) = 0$",
+        "Weighted $= \\tfrac{4}{12}\\times0 + \\tfrac{4}{12}\\times1 + \\tfrac{4}{12}\\times0 = 0.333$",
+        "$IG(Z) = 1 - 0.333 = 0.667$"
+      ],
+      "questionZh": "父节点有 12 个样本：6 正 6 负。属性 Z 有三个取值，子节点为 (4 正, 0 负)、(2 正, 2 负)、(0 正, 4 负)；属性 W 有两个取值，子节点为 (5 正, 1 负) 和 (1 正, 5 负)。熵以 bit 为单位。(a) 父节点熵和 IG(Z) 是多少（保留三位小数）？",
+      "optionsZh": [
+        "H(父) = 1；IG(Z) ≈ 0.333。",
+        "H(父) = 1；IG(Z) = 1。",
+        "H(父) = 1；IG(Z) ≈ 0.667。",
+        "H(父) ≈ 0.918；IG(Z) ≈ 0.585。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (b) What is IG(W) (three decimals), and which attribute does information gain choose?",
+      "options": [
+        "IG(W) ≈ 0.650; choose W.",
+        "IG(W) ≈ 0.350; choose Z.",
+        "IG(W) ≈ 0.350; choose W.",
+        "IG(W) ≈ 0.191; choose Z."
+      ],
+      "correct": 1,
+      "explanation": "Each W child is 5:1, so H = −(5/6)log₂(5/6) − (1/6)log₂(1/6) = 0.219 + 0.431 = 0.650. Both children hold half the data, so the weighted entropy is 0.650 and IG(W) = 1 − 0.650 = 0.350. IG(Z) = 0.667 is larger, so choose Z. (Note: IG favours many-valued attributes; gain ratio would penalise Z's three branches.)",
+      "id": 756,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Self-written S2(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "W 的子节点都是 5:1：H ≈ 0.650 → IG(W) = 1 − 0.650 ≈ 0.350 < IG(Z) ≈ 0.667，选 Z。（信息增益偏向取值多的属性，增益率会惩罚这一点。）",
+      "optionNotes": [
+        "0.650 is the child entropy, not the gain.",
+        "H(5/6, 1/6) ≈ 0.650 → IG = 0.350 < 0.667 → Z.",
+        "Right gain, but Z's gain is larger.",
+        "Miscomputes H(5/6, 1/6); it is 0.650."
+      ],
+      "steps": [
+        "$H(5{+},1{-}) = -\\tfrac56\\log_2\\tfrac56 - \\tfrac16\\log_2\\tfrac16 = 0.219 + 0.431 = 0.650$",
+        "Weighted $= 0.5\\times0.650 + 0.5\\times0.650 = 0.650$",
+        "$IG(W) = 1 - 0.650 = 0.350$",
+        "$IG(Z) = 0.667 > 0.350$ → choose Z"
+      ],
+      "questionZh": "父节点有 12 个样本：6 正 6 负。属性 Z 有三个取值，子节点为 (4 正, 0 负)、(2 正, 2 负)、(0 正, 4 负)；属性 W 有两个取值，子节点为 (5 正, 1 负) 和 (1 正, 5 负)。熵以 bit 为单位。(b) IG(W) 是多少（保留三位小数）？按信息增益选哪个属性？",
+      "optionsZh": [
+        "IG(W) ≈ 0.650；选 W。",
+        "IG(W) ≈ 0.350；选 Z。",
+        "IG(W) ≈ 0.350；选 W。",
+        "IG(W) ≈ 0.191；选 Z。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. (a) For the first example, what are u, a and the updated parameters?",
+      "options": [
+        "u = 0.2, a = 1; w = (0.6, −0.2), b = 0.1.",
+        "u = 0.2, a = 1; w = (0.4, −0.4), b = −0.1.",
+        "u = 0.2, a = 1; w = (0.4, −0.3), b = −0.1.",
+        "u = 0.8, a = 1; w = (0.4, −0.4), b = −0.1."
+      ],
+      "correct": 1,
+      "explanation": "u = 0.5 − 0.3 + 0 = 0.2 ≥ 0, so a = 1, but t = 0. η(t−a) = −0.1, so w = (0.5, −0.3) − 0.1(1, 1) = (0.4, −0.4) and b = 0 − 0.1 = −0.1.",
+      "id": 757,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S3(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.5 − 0.3 = 0.2 → a = 1 ≠ 0；η(t−a) = −0.1 → w = (0.4, −0.4)，b = −0.1。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "Subtract 0.1·(1, 1) from w and 0.1 from b.",
+        "x₂ = 1 too, so the second weight also changes.",
+        "Uses +0.3 instead of −0.3 in the net input."
+      ],
+      "steps": [
+        "$u = 0.5\\times1 + (-0.3)\\times1 + 0 = 0.2 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.1\\times(0-1) = -0.1$",
+        "$\\mathbf w = (0.5, -0.3) - 0.1\\times(1, 1) = (0.4, -0.4)$, $b = -0.1$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0.5, -0.3)$，$b = 0$，$\\eta = 0.1$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 1)$，$t = 0$；再 $\\mathbf x = (2, 1)$，$t = 1$。(a) 对第一个样本，u、a 和更新后的参数是什么？",
+      "optionsZh": [
+        "u = 0.2，a = 1；w = (0.6, −0.2)，b = 0.1。",
+        "u = 0.2，a = 1；w = (0.4, −0.4)，b = −0.1。",
+        "u = 0.2，a = 1；w = (0.4, −0.3)，b = −0.1。",
+        "u = 0.8，a = 1；w = (0.4, −0.4)，b = −0.1。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. After the first example, $\\mathbf w = (0.4, -0.4)$ and $b = -0.1$. (b) For the second example, what are u, a and the parameters afterwards?",
+      "options": [
+        "u = 0.3, a = 1; w = (0.6, −0.3), b = 0.",
+        "u = −0.1, a = 0; w = (0.6, −0.3), b = 0.",
+        "u = 0.3, a = 1; w = (0.2, −0.5), b = −0.2.",
+        "u = 0.3, a = 1; no update: w = (0.4, −0.4), b = −0.1."
+      ],
+      "correct": 3,
+      "explanation": "u = 0.4×2 − 0.4×1 − 0.1 = 0.3 ≥ 0, so a = 1 = t. The prediction is correct, η(t−a) = 0, and the parameters stay w = (0.4, −0.4), b = −0.1.",
+      "id": 758,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S3(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.8 − 0.4 − 0.1 = 0.3 → a = 1 = t，预测正确，η(t−a) = 0，参数不变。",
+      "optionNotes": [
+        "Updates even though the prediction is correct.",
+        "Miscomputes u: 0.8 − 0.4 − 0.1 = 0.3.",
+        "Subtracts a correction when t − a = 0.",
+        "a = t, so the perceptron rule makes no change."
+      ],
+      "steps": [
+        "$u = 0.4\\times2 + (-0.4)\\times1 - 0.1 = 0.3 \\ge 0 \\Rightarrow a = 1$",
+        "$t - a = 0$ → no update",
+        "$\\mathbf w = (0.4, -0.4)$, $b = -0.1$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0.5, -0.3)$，$b = 0$，$\\eta = 0.1$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 1)$，$t = 0$；再 $\\mathbf x = (2, 1)$，$t = 1$。第一个样本后 $\\mathbf w = (0.4, -0.4)$，$b = -0.1$。(b) 对第二个样本，u、a 和之后的参数是什么？",
+      "optionsZh": [
+        "u = 0.3，a = 1；w = (0.6, −0.3)，b = 0。",
+        "u = −0.1，a = 0；w = (0.6, −0.3)，b = 0。",
+        "u = 0.3，a = 1；w = (0.2, −0.5)，b = −0.2。",
+        "u = 0.3，a = 1；不更新：w = (0.4, −0.4)，b = −0.1。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. (a) For the first example, what are u, a and the updated parameters?",
+      "options": [
+        "u = −0.2, a = 0; w = (0.5, 0.2), b = 0.3.",
+        "u = 0, a = 1; no update.",
+        "u = −0.2, a = 0; w = (0.5, 0.7), b = 0.3.",
+        "u = −0.2, a = 0; w = (0.5, 0.2), b = −0.2."
+      ],
+      "correct": 0,
+      "explanation": "u = 0×1 + 0.2×0 − 0.2 = −0.2 < 0, so a = 0, but t = 1. η(t−a) = 0.5, so w = (0, 0.2) + 0.5(1, 0) = (0.5, 0.2) and b = −0.2 + 0.5 = 0.3.",
+      "id": 759,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S4(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = −0.2 → a = 0 ≠ 1；η(t−a) = +0.5 → w = (0.5, 0.2)，b = 0.3。x₂ = 0，所以第二个权重不变。",
+      "optionNotes": [
+        "Add 0.5·(1, 0) to w and 0.5 to b.",
+        "Forgets the bias: u = −0.2, not 0.",
+        "x₂ = 0, so the second weight does not change.",
+        "Forgets to update the bias."
+      ],
+      "steps": [
+        "$u = 0\\times1 + 0.2\\times0 - 0.2 = -0.2 < 0 \\Rightarrow a = 0$",
+        "$\\eta(t-a) = 0.5\\times(1-0) = 0.5$",
+        "$\\mathbf w = (0, 0.2) + 0.5\\times(1, 0) = (0.5, 0.2)$, $b = -0.2 + 0.5 = 0.3$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0, 0.2)$，$b = -0.2$，$\\eta = 0.5$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 0)$，$t = 1$；再 $\\mathbf x = (1, 1)$，$t = 0$。(a) 对第一个样本，u、a 和更新后的参数是什么？",
+      "optionsZh": [
+        "u = −0.2，a = 0；w = (0.5, 0.2)，b = 0.3。",
+        "u = 0，a = 1；不更新。",
+        "u = −0.2，a = 0；w = (0.5, 0.7)，b = 0.3。",
+        "u = −0.2，a = 0；w = (0.5, 0.2)，b = −0.2。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. After the first example, $\\mathbf w = (0.5, 0.2)$ and $b = 0.3$. (b) For the second example, what are u, a and the final parameters?",
+      "options": [
+        "u = 1.0, a = 1; w = (1.0, 0.7), b = 0.8.",
+        "u = 1.0, a = 1; w = (0, 0.2), b = −0.2.",
+        "u = 1.0, a = 1; w = (0, −0.3), b = −0.2.",
+        "u = 0.7, a = 1; w = (0, −0.3), b = −0.2."
+      ],
+      "correct": 2,
+      "explanation": "u = 0.5 + 0.2 + 0.3 = 1.0 ≥ 0, so a = 1, but t = 0. η(t−a) = −0.5, so w = (0.5, 0.2) − 0.5(1, 1) = (0, −0.3) and b = 0.3 − 0.5 = −0.2.",
+      "id": 760,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Perceptron learning · Self-written S4(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u = 0.5 + 0.2 + 0.3 = 1.0 → a = 1 ≠ 0；η(t−a) = −0.5 → w = (0, −0.3)，b = −0.2。",
+      "optionNotes": [
+        "Adds the correction; t − a = −1, so subtract.",
+        "Only subtracts from the first weight; x₂ = 1 here.",
+        "Subtract 0.5·(1, 1) from w and 0.5 from b.",
+        "Forgets the bias in u: 0.5 + 0.2 + 0.3 = 1.0."
+      ],
+      "steps": [
+        "$u = 0.5\\times1 + 0.2\\times1 + 0.3 = 1.0 \\ge 0 \\Rightarrow a = 1$",
+        "$\\eta(t-a) = 0.5\\times(0-1) = -0.5$",
+        "$\\mathbf w = (0.5, 0.2) - 0.5\\times(1, 1) = (0, -0.3)$, $b = 0.3 - 0.5 = -0.2$"
+      ],
+      "questionZh": "感知机 $\\mathbf w = (0, 0.2)$，$b = -0.2$，$\\eta = 0.5$；净输入 ≥ 0 输出 1，否则 0。按顺序处理并逐个更新：先 $\\mathbf x = (1, 0)$，$t = 1$；再 $\\mathbf x = (1, 1)$，$t = 0$。第一个样本后 $\\mathbf w = (0.5, 0.2)$，$b = 0.3$。(b) 对第二个样本，u、a 和最终参数是什么？",
+      "optionsZh": [
+        "u = 1.0，a = 1；w = (1.0, 0.7)，b = 0.8。",
+        "u = 1.0，a = 1；w = (0, 0.2)，b = −0.2。",
+        "u = 1.0，a = 1；w = (0, −0.3)，b = −0.2。",
+        "u = 0.7，a = 1；w = (0, −0.3)，b = −0.2。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on A = (1,1), B = (2,1), C = (4,3), D = (5,4), starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. (a) What are the squared distances (to μ₁, to μ₂) of C and D, and the resulting clusters?",
+      "options": [
+        "C (13, 8), D (25, 18); clusters {A, C, D} and {B}.",
+        "C (13, 8), D (25, 18); clusters {A} and {B, C, D}.",
+        "C (5, 4), D (7, 6); clusters {A} and {B, C, D}.",
+        "C (13, 8), D (25, 18); clusters {A, B} and {C, D}."
+      ],
+      "correct": 1,
+      "explanation": "A is at μ₁ (0 vs 1) and B at μ₂ (1 vs 0). C: (3²+2², 2²+2²) = (13, 8) → μ₂. D: (4²+3², 3²+3²) = (25, 18) → μ₂. Clusters {A} and {B, C, D}. A poor start leaves one cluster with a single point.",
+      "id": 761,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S5(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "C 到两质心 13 vs 8，D 25 vs 18，都离 μ₂ 更近 → 簇 {A} 和 {B, C, D}。初始质心选得不好时会这样一边倒。",
+      "optionNotes": [
+        "C and D are both nearer μ₂ (8 < 13, 18 < 25).",
+        "Every point joins its nearer centroid: {A}, {B, C, D}.",
+        "These are Manhattan distances, not squared Euclidean.",
+        "Groups by eye; the rule uses the initial centroids only."
+      ],
+      "steps": [
+        "A: (0, 1) → 1;  B: (1, 0) → 2",
+        "C: $3^2+2^2 = 13$ vs $2^2+2^2 = 8$ → 2",
+        "D: $4^2+3^2 = 25$ vs $3^2+3^2 = 18$ → 2",
+        "Clusters $\\{A\\}$, $\\{B, C, D\\}$"
+      ],
+      "questionZh": "对 A = (1,1)、B = (2,1)、C = (4,3)、D = (5,4) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = A = (1,1)$、$\\mu_2 = B = (2,1)$。先用初始质心分配全部点，再更新。(a) C 和 D 到（μ₁, μ₂）的平方距离以及分簇结果是什么？",
+      "optionsZh": [
+        "C (13, 8)、D (25, 18)；簇为 {A, C, D} 和 {B}。",
+        "C (13, 8)、D (25, 18)；簇为 {A} 和 {B, C, D}。",
+        "C (5, 4)、D (7, 6)；簇为 {A} 和 {B, C, D}。",
+        "C (13, 8)、D (25, 18)；簇为 {A, B} 和 {C, D}。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on A = (1,1), B = (2,1), C = (4,3), D = (5,4), starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. The assignment step gives clusters {A} and {B, C, D}. (b) What are the updated centroids and the total SSE (using the updated centroids)?",
+      "options": [
+        "μ₁ = (1, 1), μ₂ ≈ (3.67, 2.67); SSE ≈ 9.33.",
+        "μ₁ = (1, 1), μ₂ ≈ (3.67, 2.67); SSE ≈ 5.56.",
+        "μ₁ = (1, 1), μ₂ = (2, 1); SSE = 26.",
+        "μ₁ = (3, 2.25), μ₂ = (3, 2.25); SSE = 16.75."
+      ],
+      "correct": 0,
+      "explanation": "μ₁ = A = (1, 1). μ₂ = ((2+4+5)/3, (1+3+4)/3) = (11/3, 8/3) ≈ (3.67, 2.67). Squared errors: A 0; B (5/3)²+(5/3)² = 50/9; C (1/3)²+(1/3)² = 2/9; D (4/3)²+(4/3)² = 32/9. SSE = 84/9 ≈ 9.33.",
+      "id": 762,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S5(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₂ = (11/3, 8/3)；B、C、D 的平方误差 50/9、2/9、32/9，A 为 0 → SSE = 84/9 ≈ 9.33。",
+      "optionNotes": [
+        "SSE = 0 + 50/9 + 2/9 + 32/9 = 84/9 ≈ 9.33.",
+        "Counts only B's squared error (50/9 ≈ 5.56).",
+        "Uses the old centroids.",
+        "Averages all points into a single centre."
+      ],
+      "steps": [
+        "$\\mu_1 = (1, 1)$, $\\mu_2 = \\left(\\tfrac{2+4+5}{3}, \\tfrac{1+3+4}{3}\\right) = \\left(\\tfrac{11}{3}, \\tfrac{8}{3}\\right)$",
+        "B: $(\\tfrac53)^2 + (\\tfrac53)^2 = \\tfrac{50}{9}$; C: $\\tfrac{2}{9}$; D: $\\tfrac{32}{9}$; A: 0",
+        "$\\text{SSE} = \\tfrac{84}{9} \\approx 9.33$"
+      ],
+      "questionZh": "对 A = (1,1)、B = (2,1)、C = (4,3)、D = (5,4) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = A = (1,1)$、$\\mu_2 = B = (2,1)$。先用初始质心分配全部点，再更新。分配步得到簇 {A} 和 {B, C, D}。(b) 更新后的质心和 SSE 总和（用更新后的质心）是多少？",
+      "optionsZh": [
+        "μ₁ = (1, 1)，μ₂ ≈ (3.67, 2.67)；SSE ≈ 9.33。",
+        "μ₁ = (1, 1)，μ₂ ≈ (3.67, 2.67)；SSE ≈ 5.56。",
+        "μ₁ = (1, 1)，μ₂ = (2, 1)；SSE = 26。",
+        "μ₁ = (3, 2.25)，μ₂ = (3, 2.25)；SSE = 16.75。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on P1 = (0,0), P2 = (1,0), P3 = (0,2), P4 = (5,5), P5 = (6,5), starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. (a) What are the squared distances (to μ₁, to μ₂) of P2, P3 and P5, and the clusters?",
+      "options": [
+        "P2 (1, 41), P3 (4, 34), P5 (61, 1); clusters {P1, P2, P3} and {P4, P5}.",
+        "P2 (1, 9), P3 (2, 8), P5 (11, 1); clusters {P1, P2, P3} and {P4, P5}.",
+        "P2 (1, 41), P3 (4, 34), P5 (61, 1); clusters {P1, P2} and {P3, P4, P5}.",
+        "P2 (1, 41), P3 (34, 4), P5 (61, 1); clusters {P1, P2} and {P3, P4, P5}."
+      ],
+      "correct": 0,
+      "explanation": "P2: (1, 4²+5² = 41) → μ₁. P3: (2² = 4, 5²+3² = 34) → μ₁. P5: (6²+5² = 61, 1) → μ₂. Clusters {P1, P2, P3} and {P4, P5}.",
+      "id": 763,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S6(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "P2：1 vs 41；P3：4 vs 34；P5：61 vs 1 → 簇 {P1, P2, P3} 和 {P4, P5}。",
+      "optionNotes": [
+        "Squared Euclidean distances; each point to its nearer centroid.",
+        "These are Manhattan distances.",
+        "P3 is much nearer μ₁ (4 < 34).",
+        "Swaps P3's two distances."
+      ],
+      "steps": [
+        "P2: $1^2 = 1$ vs $4^2+5^2 = 41$ → 1",
+        "P3: $2^2 = 4$ vs $5^2+3^2 = 34$ → 1",
+        "P5: $6^2+5^2 = 61$ vs $1^2 = 1$ → 2",
+        "Clusters $\\{P1, P2, P3\\}$, $\\{P4, P5\\}$"
+      ],
+      "questionZh": "对 P1 = (0,0)、P2 = (1,0)、P3 = (0,2)、P4 = (5,5)、P5 = (6,5) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = P1$、$\\mu_2 = P4$。先用初始质心分配全部点，再更新。(a) P2、P3、P5 到（μ₁, μ₂）的平方距离和分簇结果是什么？",
+      "optionsZh": [
+        "P2 (1, 41)、P3 (4, 34)、P5 (61, 1)；簇为 {P1, P2, P3} 和 {P4, P5}。",
+        "P2 (1, 9)、P3 (2, 8)、P5 (11, 1)；簇为 {P1, P2, P3} 和 {P4, P5}。",
+        "P2 (1, 41)、P3 (4, 34)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。",
+        "P2 (1, 41)、P3 (34, 4)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Run one K-means iteration ($k = 2$) on P1 = (0,0), P2 = (1,0), P3 = (0,2), P4 = (5,5), P5 = (6,5), starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. The assignment step gives clusters {P1, P2, P3} and {P4, P5}. (b) What are the updated centroids and the total SSE?",
+      "options": [
+        "μ₁ = (1/3, 2/3), μ₂ = (5.5, 5); SSE ≈ 3.33.",
+        "μ₁ = (0.5, 1), μ₂ = (5.5, 5); SSE = 4.25.",
+        "μ₁ = (1/3, 2/3), μ₂ = (5.5, 5); SSE ≈ 3.83.",
+        "μ₁ = (0, 0), μ₂ = (5, 5); SSE = 6."
+      ],
+      "correct": 2,
+      "explanation": "μ₁ = ((0+1+0)/3, (0+0+2)/3) = (1/3, 2/3); μ₂ = (5.5, 5). Cluster 1: P1 5/9, P2 8/9, P3 17/9 → 30/9 ≈ 3.33. Cluster 2: 0.25 + 0.25 = 0.5. Total SSE ≈ 3.83.",
+      "id": 764,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Self-written S6(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；簇 1 平方误差 5/9 + 8/9 + 17/9 = 30/9，簇 2 为 0.5 → SSE ≈ 3.83。",
+      "optionNotes": [
+        "Leaves out cluster 2's 0.5.",
+        "Divides cluster 1 by 2 instead of 3.",
+        "30/9 + 0.5 ≈ 3.83.",
+        "Uses the old centroids."
+      ],
+      "steps": [
+        "$\\mu_1 = (\\tfrac13, \\tfrac23)$, $\\mu_2 = (5.5, 5)$",
+        "P1: $\\tfrac19 + \\tfrac49 = \\tfrac59$; P2: $\\tfrac49 + \\tfrac49 = \\tfrac89$; P3: $\\tfrac19 + \\tfrac{16}{9} = \\tfrac{17}{9}$",
+        "P4, P5: $0.25$ each",
+        "$\\text{SSE} = \\tfrac{30}{9} + 0.5 \\approx 3.83$"
+      ],
+      "questionZh": "对 P1 = (0,0)、P2 = (1,0)、P3 = (0,2)、P4 = (5,5)、P5 = (6,5) 做一轮 K-means（$k = 2$），初始质心 $\\mu_1 = P1$、$\\mu_2 = P4$。先用初始质心分配全部点，再更新。分配步得到簇 {P1, P2, P3} 和 {P4, P5}。(b) 更新后的质心和 SSE 总和是多少？",
+      "optionsZh": [
+        "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；SSE ≈ 3.33。",
+        "μ₁ = (0.5, 1)，μ₂ = (5.5, 5)；SSE = 4.25。",
+        "μ₁ = (1/3, 2/3)，μ₂ = (5.5, 5)；SSE ≈ 3.83。",
+        "μ₁ = (0, 0)，μ₂ = (5, 5)；SSE = 6。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the best path and its probability?",
+      "options": [
+        "V₂(A) = 0.068, V₂(B) = 0.147; path A → B, 0.147.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path B → B, 0.084.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path A → A, 0.056.",
+        "V₂(A) = 0.056, V₂(B) = 0.084; path A → B, 0.084."
+      ],
+      "correct": 3,
+      "explanation": "V₁(A) = 0.5×0.8 = 0.40, V₁(B) = 0.5×0.3 = 0.15. V₂(A) = 0.2 × max(0.40×0.7, 0.15×0.4) = 0.2×0.28 = 0.056 (from A). V₂(B) = 0.7 × max(0.40×0.3, 0.15×0.6) = 0.7×0.12 = 0.084 (from A). End at B and backtrack: A → B, probability 0.084.",
+      "id": 765,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Self-written S7(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁ = (0.40, 0.15)；V₂(A) = 0.2 × 0.28 = 0.056，V₂(B) = 0.7 × max(0.12, 0.09) = 0.084，前驱都是 A → 路径 A → B，0.084。",
+      "optionNotes": [
+        "These are the Forward values (sum, not max).",
+        "B's best predecessor is A (0.12 > 0.09).",
+        "End in the larger final state, B.",
+        "Max at each step, end at B, backtrack to A."
+      ],
+      "steps": [
+        "$V_1(A) = 0.5\\times0.8 = 0.40$, $V_1(B) = 0.5\\times0.3 = 0.15$",
+        "$V_2(A) = 0.2\\times\\max(0.40\\times0.7,\\ 0.15\\times0.4) = 0.2\\times0.28 = 0.056$ (from A)",
+        "$V_2(B) = 0.7\\times\\max(0.40\\times0.3,\\ 0.15\\times0.6) = 0.7\\times0.12 = 0.084$ (from A)",
+        "Best path A → B, $0.084$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = \\pi_B = 0.5$；发射 $e_A(x) = 0.8$、$e_A(y) = 0.2$、$e_B(x) = 0.3$、$e_B(y) = 0.7$；转移 $a_{AA} = 0.7$、$a_{AB} = 0.3$、$a_{BA} = 0.4$、$a_{BB} = 0.6$。观测序列 (x, y)。(a) 用 Viterbi，$V_2(A)$、$V_2(B)$、最优路径及其概率是多少？",
+      "optionsZh": [
+        "V₂(A) = 0.068，V₂(B) = 0.147；路径 A → B，0.147。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 B → B，0.084。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 A → A，0.056。",
+        "V₂(A) = 0.056，V₂(B) = 0.084；路径 A → B，0.084。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
+      "options": [
+        "f₂(A) = 0.068, f₂(B) = 0.147, P = 0.215.",
+        "f₂(A) = 0.056, f₂(B) = 0.084, P = 0.140.",
+        "f₂(A) = 0.340, f₂(B) = 0.210, P = 0.550.",
+        "f₂(A) = 0.068, f₂(B) = 0.147, P = 0.147."
+      ],
+      "correct": 0,
+      "explanation": "f₂(A) = 0.2 × (0.40×0.7 + 0.15×0.4) = 0.2×0.34 = 0.068. f₂(B) = 0.7 × (0.40×0.3 + 0.15×0.6) = 0.7×0.21 = 0.147. P(x, y) = 0.068 + 0.147 = 0.215, larger than the best path's 0.084 because it sums every path.",
+      "id": 766,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Self-written S7(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "把 max 换成求和：f₂(A) = 0.2 × 0.34 = 0.068，f₂(B) = 0.7 × 0.21 = 0.147，P = 0.215 ≥ 最优路径 0.084。",
+      "optionNotes": [
+        "Sum over predecessors, times emission, then add the states.",
+        "Viterbi values (max), not Forward (sum).",
+        "Forgets the emission probabilities for y.",
+        "P(x, y) adds both final states, not the larger one."
+      ],
+      "steps": [
+        "$f_2(A) = 0.2\\times(0.28 + 0.06) = 0.068$",
+        "$f_2(B) = 0.7\\times(0.12 + 0.09) = 0.147$",
+        "$P(x, y) = 0.068 + 0.147 = 0.215$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = \\pi_B = 0.5$；发射 $e_A(x) = 0.8$、$e_A(y) = 0.2$、$e_B(x) = 0.3$、$e_B(y) = 0.7$；转移 $a_{AA} = 0.7$、$a_{AB} = 0.3$、$a_{BA} = 0.4$、$a_{BB} = 0.6$。观测序列 (x, y)。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？",
+      "optionsZh": [
+        "f₂(A) = 0.068，f₂(B) = 0.147，P = 0.215。",
+        "f₂(A) = 0.056，f₂(B) = 0.084，P = 0.140。",
+        "f₂(A) = 0.340，f₂(B) = 0.210，P = 0.550。",
+        "f₂(A) = 0.068，f₂(B) = 0.147，P = 0.147。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (a) Using Viterbi, what are $V_1$, $V_2$, the best path and its probability?",
+      "options": [
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.0896); path A → B, 0.0896.",
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.0896); path B → B, 0.0896.",
+        "V₁ = (0.18, 0.14), V₂ = (0.036, 0.072); path A → B, 0.072.",
+        "V₁ = (0.18, 0.14), V₂ = (0.0472, 0.1616); path B → B, 0.1616."
+      ],
+      "correct": 1,
+      "explanation": "V₁(A) = 0.3×0.6 = 0.18, V₁(B) = 0.7×0.2 = 0.14. V₂(A) = 0.4 × max(0.18×0.5, 0.14×0.2) = 0.4×0.09 = 0.036 (from A). V₂(B) = 0.8 × max(0.18×0.5, 0.14×0.8) = 0.8×0.112 = 0.0896 (from B). End at B; its predecessor is B, so the best path is B → B with 0.0896, even though V₁(A) > V₁(B). Always backtrack through the stored predecessors.",
+      "id": 767,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Viterbi · Self-written S8(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "V₁(A) = 0.18 > V₁(B) = 0.14，但 V₂(B) 的最优前驱是 B（0.112 > 0.09）。终点 B，回溯得 B → B，0.0896。陷阱：不能按每一步各自最大的状态拼路径。",
+      "optionNotes": [
+        "Picks A at t = 1 because V₁(A) is larger; backtracking from B gives B.",
+        "Backtrack through stored predecessors: B → B.",
+        "Takes the A → B route (0.8 × 0.09 = 0.072), not the max.",
+        "These are the Forward values."
+      ],
+      "steps": [
+        "$V_1(A) = 0.3\\times0.6 = 0.18$, $V_1(B) = 0.7\\times0.2 = 0.14$",
+        "$V_2(A) = 0.4\\times\\max(0.18\\times0.5,\\ 0.14\\times0.2) = 0.4\\times0.09 = 0.036$ (from A)",
+        "$V_2(B) = 0.8\\times\\max(0.18\\times0.5,\\ 0.14\\times0.8) = 0.8\\times0.112 = 0.0896$ (from B)",
+        "End at B, predecessor B → path B → B, $0.0896$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = 0.3$、$\\pi_B = 0.7$；发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$；转移 $a_{AA} = 0.5$、$a_{AB} = 0.5$、$a_{BA} = 0.2$、$a_{BB} = 0.8$。观测序列 (x, y)。(a) 用 Viterbi，$V_1$、$V_2$、最优路径及其概率是多少？",
+      "optionsZh": [
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.0896)；路径 A → B，0.0896。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.0896)；路径 B → B，0.0896。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.036, 0.072)；路径 A → B，0.072。",
+        "V₁ = (0.18, 0.14)，V₂ = (0.0472, 0.1616)；路径 B → B，0.1616。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
+      "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
+      "options": [
+        "f₂(A) = 0.036, f₂(B) = 0.0896, P = 0.1256.",
+        "f₂(A) = 0.118, f₂(B) = 0.202, P = 0.320.",
+        "f₂(A) = 0.0472, f₂(B) = 0.1616, P = 0.2088.",
+        "f₂(A) = 0.0472, f₂(B) = 0.1616, P = 0.1616."
+      ],
+      "correct": 2,
+      "explanation": "f₂(A) = 0.4 × (0.18×0.5 + 0.14×0.2) = 0.4×0.118 = 0.0472. f₂(B) = 0.8 × (0.18×0.5 + 0.14×0.8) = 0.8×0.202 = 0.1616. P(x, y) = 0.0472 + 0.1616 = 0.2088.",
+      "id": 768,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Self-written S8(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₂(A) = 0.4 × 0.118 = 0.0472，f₂(B) = 0.8 × 0.202 = 0.1616，P = 0.2088。",
+      "optionNotes": [
+        "Viterbi values (max), not Forward (sum).",
+        "Forgets the emission probabilities for y.",
+        "Sum over predecessors, times emission, add both states.",
+        "P(x, y) is the sum of both final states."
+      ],
+      "steps": [
+        "$f_2(A) = 0.4\\times(0.09 + 0.028) = 0.0472$",
+        "$f_2(B) = 0.8\\times(0.09 + 0.112) = 0.1616$",
+        "$P(x, y) = 0.0472 + 0.1616 = 0.2088$"
+      ],
+      "questionZh": "HMM 状态 A、B，$\\pi_A = 0.3$、$\\pi_B = 0.7$；发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$；转移 $a_{AA} = 0.5$、$a_{AB} = 0.5$、$a_{BA} = 0.2$、$a_{BB} = 0.8$。观测序列 (x, y)。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少？",
+      "optionsZh": [
+        "f₂(A) = 0.036，f₂(B) = 0.0896，P = 0.1256。",
+        "f₂(A) = 0.118，f₂(B) = 0.202，P = 0.320。",
+        "f₂(A) = 0.0472，f₂(B) = 0.1616，P = 0.2088。",
+        "f₂(A) = 0.0472，f₂(B) = 0.1616，P = 0.1616。"
+      ],
+      "partB": true,
+      "selfWritten": true
+    },
+    {
       "question": "Which statement best matches the course definition of a complex system?",
       "options": [
         "Many entities whose global behaviour is a non-trivial result of their interactions",
@@ -19430,6 +20325,7 @@ window.QUIZ_DATA = {
     "Practice Exam 1",
     "Practice Exam 2",
     "Practice Exam 3",
+    "Part B Practice (self-written)",
     "Textbook Practice (Kurose & Ross)",
     "Sample Exam"
   ],
@@ -19476,7 +20372,8 @@ window.QUIZ_DATA = {
       "Week 12",
       "Practice Exam 1",
       "Practice Exam 2",
-      "Practice Exam 3"
+      "Practice Exam 3",
+      "Part B Practice (self-written)"
     ],
     "COMP5416": [
       "Week 01",

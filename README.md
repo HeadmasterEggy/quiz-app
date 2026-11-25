@@ -34,7 +34,7 @@ A browser-based quiz app for USYD course revision.
 | Week 10 – Linear programming & randomized rounding | 10 |
 | Week 11 – Distribution learning & testing | 10 |
 | Week 12 – Learning from experts | 10 |
-| COMP5318 total | 162 |
+| COMP5318 total | 186 |
 | Week 01 – Introduction (exam points) | 4 |
 | Week 02 – Data Preprocessing & kNN (exam points) | 8 |
 | Week 03 – Linear & Logistic Regression (exam points) | 6 |
@@ -48,7 +48,8 @@ A browser-based quiz app for USYD course revision.
 | Week 12 – Reinforcement Learning (exam points) | 7 |
 | Practice Exam 1 (official key) | 30 |
 | Practice Exam 2 (official key) | 30 |
-| Practice Exam 3 (official key) | 30 |
+| Practice Exam 3 (official key; 30 MCQs + Part B Q31–34 as 8 calculation steps) | 38 |
+| Part B Practice (self-written: information gain, perceptron, K-means, HMM — 8 questions × 2 parts) | 16 |
 | COMP5416 total | 160 |
 | Week 01 – Introduction & Game Theory (exam points) | 8 |
 | Week 02 – Performance (exam points) | 9 |
@@ -78,7 +79,7 @@ A browser-based quiz app for USYD course revision.
 | Week 11 – Transfer Entropy (exam points) | 8 |
 | Week 12 – Effective Network Inference (exam points) | 8 |
 | Sample Exam (unofficial answers) | 20 |
-| **Total** | **710** |
+| **Total** | **734** |
 
 Weekly *exam points* questions are generated from `tools/kp/*.py`; run `python3 tools/kp/build.py` to rebuild `data/questions.json` and `data/questions.js`.
 
