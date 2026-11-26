@@ -13155,6 +13155,1208 @@ window.QUIZ_DATA = {
       "selfWritten": true
     },
     {
+      "question": "A decision-tree node contains eight examples: four positive and four negative. A proposed split produces child L with three positives and one negative, and child R with one positive and three negatives. Use $0\\log_2 0 = 0$. (a) What are the entropies of the parent, L and R, in bits?",
+      "options": [
+        "H(parent) = 1; H(L) = H(R) ≈ 0.811.",
+        "H(parent) = 1; H(L) = 0.75, H(R) = 0.25.",
+        "H(parent) = 0.5; H(L) = H(R) ≈ 0.811.",
+        "H(parent) ≈ 0.811; H(L) = H(R) = 1."
+      ],
+      "correct": 0,
+      "explanation": "H(parent) = −0.5 log₂0.5 − 0.5 log₂0.5 = 1 bit. Each child has class proportions 0.75 and 0.25, so H(L) = H(R) = −0.75 log₂0.75 − 0.25 log₂0.25 = 0.75×0.4150 + 0.25×2 = 0.81125 ≈ 0.811 bits. Marking: parent 1, each child 2.",
+      "id": 769,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 1 Q31(a)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "父节点 4:4 → 1 bit；两个子节点都是 0.75/0.25 → 0.811。",
+      "optionNotes": [
+        "Parent 50/50 → 1; each child 3:1 → 0.811.",
+        "Those are class proportions, not entropies.",
+        "A 50/50 node has entropy 1, not 0.5.",
+        "Swaps the parent and child entropies."
+      ],
+      "steps": [
+        "$H(\\text{parent}) = -0.5\\log_2 0.5 - 0.5\\log_2 0.5 = 1$",
+        "$H(L) = H(R) = -0.75\\log_2 0.75 - 0.25\\log_2 0.25 = 0.311 + 0.5 = 0.811$"
+      ],
+      "questionZh": "决策树节点有 8 个样本：4 正 4 负。划分后子节点 L 为 3 正 1 负，R 为 1 正 3 负。约定 $0\\log_2 0 = 0$。(a) 父节点、L、R 的熵分别是多少（bit）？",
+      "optionsZh": [
+        "H(父) = 1；H(L) = H(R) ≈ 0.811。",
+        "H(父) = 1；H(L) = 0.75，H(R) = 0.25。",
+        "H(父) = 0.5；H(L) = H(R) ≈ 0.811。",
+        "H(父) ≈ 0.811；H(L) = H(R) = 1。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A decision-tree node contains eight examples: four positive and four negative. A proposed split produces child L with three positives and one negative, and child R with one positive and three negatives. Use $0\\log_2 0 = 0$. (b) What are the size-weighted child entropy and the information gain (three decimals)?",
+      "options": [
+        "Weighted ≈ 1.622; IG ≈ −0.622.",
+        "Weighted ≈ 0.406; IG ≈ 0.594.",
+        "Weighted ≈ 0.811; IG ≈ 0.189.",
+        "Weighted ≈ 0.811; IG ≈ 0.811."
+      ],
+      "correct": 2,
+      "explanation": "Each child holds 4 of the 8 examples, so both weights are 0.5. Weighted child entropy = 0.5×0.81125 + 0.5×0.81125 = 0.811 bits. IG = 1 − 0.81125 = 0.18875 ≈ 0.189 bits. Marking: weights and weighted entropy 2, subtraction 2, rounding 1.",
+      "id": 770,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain · Practice Exam 1 Q31(b)",
+      "lectureWeek": "Week 05",
+      "explanationZh": "两个子节点各占 4/8：加权熵 = 0.811；IG = 1 − 0.811 ≈ 0.189。",
+      "optionNotes": [
+        "Adds the child entropies without weights; IG can never be negative.",
+        "Weights each child by 1/4 instead of 4/8.",
+        "0.5·0.811 + 0.5·0.811 = 0.811; IG = 1 − 0.811 = 0.189.",
+        "0.811 is the weighted entropy, not the gain."
+      ],
+      "steps": [
+        "Weights $4/8 = 0.5$ each",
+        "Weighted $= 0.5\\times0.811 + 0.5\\times0.811 = 0.811$",
+        "$IG = 1 - 0.811 = 0.189$"
+      ],
+      "questionZh": "决策树节点有 8 个样本：4 正 4 负。划分后子节点 L 为 3 正 1 负，R 为 1 正 3 负。约定 $0\\log_2 0 = 0$。(b) 按样本数加权的子节点熵和信息增益是多少（保留三位小数）？",
+      "optionsZh": [
+        "加权 ≈ 1.622；IG ≈ −0.622。",
+        "加权 ≈ 0.406；IG ≈ 0.594。",
+        "加权 ≈ 0.811；IG ≈ 0.189。",
+        "加权 ≈ 0.811；IG ≈ 0.811。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A network receives $x_1 = 1$, $x_2 = 3$. Hidden units use ReLU and the output uses a sigmoid: $u_A = x_1 + x_2 - 3$, $u_B = 2x_1 - x_2$, $h = \\text{ReLU}(u)$, $z = h_A + 2h_B$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$ and $h_B$?",
+      "options": [
+        "u_A = 1, u_B = −1; h_A = 1, h_B = −1.",
+        "u_A = 1, u_B = 5; h_A = 1, h_B = 5.",
+        "u_A = 7, u_B = −1; h_A = 7, h_B = 0.",
+        "u_A = 1, u_B = −1; h_A = 1, h_B = 0."
+      ],
+      "correct": 3,
+      "explanation": "u_A = 1 + 3 − 3 = 1; u_B = 2×1 − 3 = −1. Applying ReLU: h_A = 1, h_B = max(0, −1) = 0. Marking: pre-activations 2, activations 3.",
+      "id": 771,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Practice Exam 1 Q32(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u_A = 1 + 3 − 3 = 1，u_B = 2 − 3 = −1；ReLU 后 h_A = 1，h_B = 0。",
+      "optionNotes": [
+        "Forgets ReLU: max(0, −1) = 0.",
+        "Uses +x₂ in u_B; it is 2x₁ − x₂.",
+        "Uses +3 instead of −3 in u_A.",
+        "ReLU clips u_B = −1 to 0."
+      ],
+      "steps": [
+        "$u_A = 1 + 3 - 3 = 1$, $u_B = 2\\times1 - 3 = -1$",
+        "$h_A = \\max(0, 1) = 1$, $h_B = \\max(0, -1) = 0$"
+      ],
+      "questionZh": "网络输入 $x_1 = 1$、$x_2 = 3$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 + x_2 - 3$，$u_B = 2x_1 - x_2$，$h = \\text{ReLU}(u)$，$z = h_A + 2h_B$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(a) $u_A$、$u_B$、$h_A$、$h_B$ 是多少？",
+      "optionsZh": [
+        "u_A = 1，u_B = −1；h_A = 1，h_B = −1。",
+        "u_A = 1，u_B = 5；h_A = 1，h_B = 5。",
+        "u_A = 7，u_B = −1；h_A = 7，h_B = 0。",
+        "u_A = 1，u_B = −1；h_A = 1，h_B = 0。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A network receives $x_1 = 1$, $x_2 = 3$. Hidden units use ReLU and the output uses a sigmoid: $u_A = x_1 + x_2 - 3$, $u_B = 2x_1 - x_2$, $h = \\text{ReLU}(u)$, $z = h_A + 2h_B$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) What are z, the output probability and class? Then replace only unit B's ReLU by the identity ($h_B = u_B$): what are the new probability and class?",
+      "options": [
+        "z = 1, 0.731 → class 1; identity at B: 0.269 → class 0.",
+        "z = 1, 0.731 → class 1; identity at B: unchanged, 0.731 → class 1.",
+        "z = 1, 0.500 → class 1; identity at B: 0.269 → class 0.",
+        "z = −1, 0.269 → class 0; identity at B: 0.731 → class 1."
+      ],
+      "correct": 0,
+      "explanation": "With both ReLUs: z = 1 + 2×0 = 1, output = 1/(1 + e⁻¹) ≈ 0.731 → class 1. With the identity at B only: h_B = −1 while h_A stays 1, so z = 1 + 2×(−1) = −1, output ≈ 0.269 → class 0. The class changes because ReLU had been clipping B's negative contribution to zero.",
+      "id": 772,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Practice Exam 1 Q32(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "ReLU：z = 1 → σ(1) ≈ 0.731，类 1。B 换恒等后 h_B = −1，z = 1 − 2 = −1 → σ(−1) ≈ 0.269，类 0，分类翻转。",
+      "optionNotes": [
+        "ReLU zeroes B; identity keeps −1 and flips the class.",
+        "With identity, h_B = −1 (not 0), so z changes.",
+        "σ(1) ≈ 0.731; σ(0) is 0.5.",
+        "Swaps the two cases."
+      ],
+      "steps": [
+        "ReLU: $z = 1 + 2\\times0 = 1$, $\\sigma(1) = 1/(1+e^{-1}) \\approx 0.731$ → class 1",
+        "Identity at B: $h_B = -1$, $z = 1 + 2\\times(-1) = -1$",
+        "$\\sigma(-1) \\approx 0.269$ → class 0"
+      ],
+      "questionZh": "网络输入 $x_1 = 1$、$x_2 = 3$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 + x_2 - 3$，$u_B = 2x_1 - x_2$，$h = \\text{ReLU}(u)$，$z = h_A + 2h_B$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(b) $z$、输出概率和类别是多少？再只把 B 的 ReLU 换成恒等激活（$h_B = u_B$），新的概率和类别是什么？",
+      "optionsZh": [
+        "z = 1，0.731 → 类 1；B 换恒等：0.269 → 类 0。",
+        "z = 1，0.731 → 类 1；B 换恒等：不变，0.731 → 类 1。",
+        "z = 1，0.500 → 类 1；B 换恒等：0.269 → 类 0。",
+        "z = −1，0.269 → 类 0；B 换恒等：0.731 → 类 1。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A (0,1), B (2,1), C (6,3), D (8,3), with initial centroids $\\mu_1 = A$ and $\\mu_2 = D$. Assign every point before updating either centroid. (a) What are the squared distances (to μ₁, to μ₂) and the cluster assignments?",
+      "options": [
+        "A (0, 10), B (2, 8), C (8, 2), D (10, 0); {A, B} and {C, D}.",
+        "A (0, 68), B (4, 40), C (40, 4), D (68, 0); {A, B} and {C, D}.",
+        "A (0, 68), B (4, 40), C (40, 4), D (68, 0); {A} and {B, C, D}.",
+        "A (0, 68), B (40, 4), C (4, 40), D (68, 0); {A, C} and {B, D}."
+      ],
+      "correct": 1,
+      "explanation": "Squared distances (to μ₁ = (0,1), to μ₂ = (8,3)): A (0, 68), B (4, 40), C (40, 4), D (68, 0). Assign each point to the nearer centroid: cluster 1 = {A, B}, cluster 2 = {C, D}. Marking: distances 4, assignments 1.",
+      "id": 773,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 1 Q33(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "B：4 vs 40 → 簇 1；C：40 vs 4 → 簇 2。簇 1 = {A, B}，簇 2 = {C, D}。",
+      "optionNotes": [
+        "Manhattan distances, not squared Euclidean.",
+        "Squared distances; each point to its nearer centroid.",
+        "B is nearer μ₁ (4 < 40).",
+        "Swaps B's and C's distances."
+      ],
+      "steps": [
+        "B: $(2-0)^2 + 0 = 4$ vs $(2-8)^2 + (1-3)^2 = 40$ → 1",
+        "C: $36 + 4 = 40$ vs $4 + 0 = 4$ → 2",
+        "A (0, 68), D (68, 0)",
+        "Clusters $\\{A, B\\}$, $\\{C, D\\}$"
+      ],
+      "questionZh": "对 A (0,1)、B (2,1)、C (6,3)、D (8,3) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A$、$\\mu_2 = D$。先分配全部点，再更新质心。(a) 各点到（μ₁, μ₂）的平方距离和分簇结果是什么？",
+      "optionsZh": [
+        "A (0, 10)、B (2, 8)、C (8, 2)、D (10, 0)；{A, B} 和 {C, D}。",
+        "A (0, 68)、B (4, 40)、C (40, 4)、D (68, 0)；{A, B} 和 {C, D}。",
+        "A (0, 68)、B (4, 40)、C (40, 4)、D (68, 0)；{A} 和 {B, C, D}。",
+        "A (0, 68)、B (40, 4)、C (4, 40)、D (68, 0)；{A, C} 和 {B, D}。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Run one complete K-means iteration with $k = 2$ on A (0,1), B (2,1), C (6,3), D (8,3), with initial centroids $\\mu_1 = A$ and $\\mu_2 = D$. Assign every point before updating either centroid. The assignment gives clusters {A, B} and {C, D}. (b) What are the updated centroids?",
+      "options": [
+        "μ₁ = (0, 1), μ₂ = (8, 3).",
+        "μ₁ = (2, 1), μ₂ = (6, 3).",
+        "μ₁ = (4, 2), μ₂ = (4, 2).",
+        "μ₁ = (1, 1), μ₂ = (7, 3)."
+      ],
+      "correct": 3,
+      "explanation": "μ₁,new = ((0+2)/2, (1+1)/2) = (1, 1); μ₂,new = ((6+8)/2, (3+3)/2) = (7, 3). Marking: mean method 2, both centroids 3.",
+      "id": 774,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / K-means · Practice Exam 1 Q33(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "各簇坐标取均值：μ₁ = (1, 1)，μ₂ = (7, 3)。",
+      "optionNotes": [
+        "These are the initial centroids, not updated.",
+        "Picks the newly added points instead of averaging.",
+        "Averages all four points into one centre.",
+        "Coordinate-wise means of each cluster."
+      ],
+      "steps": [
+        "$\\mu_1 = \\left(\\tfrac{0+2}{2}, \\tfrac{1+1}{2}\\right) = (1, 1)$",
+        "$\\mu_2 = \\left(\\tfrac{6+8}{2}, \\tfrac{3+3}{2}\\right) = (7, 3)$"
+      ],
+      "questionZh": "对 A (0,1)、B (2,1)、C (6,3)、D (8,3) 做一轮完整的 K-means（$k = 2$），初始质心 $\\mu_1 = A$、$\\mu_2 = D$。先分配全部点，再更新质心。分配结果为 {A, B} 和 {C, D}。(b) 更新后的两个质心是什么？",
+      "optionsZh": [
+        "μ₁ = (0, 1)，μ₂ = (8, 3)。",
+        "μ₁ = (2, 1)，μ₂ = (6, 3)。",
+        "μ₁ = (4, 2)，μ₂ = (4, 2)。",
+        "μ₁ = (1, 1)，μ₂ = (7, 3)。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "An HMM has states A, B and observations x, y; the observed sequence is (x, y). Priors $\\pi(A) = 0.7$, $\\pi(B) = 0.3$. Emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$. Transitions (row = current): A→A 0.8, A→B 0.2, B→A 0.3, B→B 0.7. (a) What are $f_1(A)$ and $f_1(B)$?",
+      "options": [
+        "f₁(A) = 0.70, f₁(B) = 0.30.",
+        "f₁(A) = 0.875, f₁(B) = 0.125.",
+        "f₁(A) = 0.42, f₁(B) = 0.06.",
+        "f₁(A) = 0.28, f₁(B) = 0.24."
+      ],
+      "correct": 2,
+      "explanation": "f₁(A) = π(A)·e_A(x) = 0.7×0.6 = 0.42; f₁(B) = 0.3×0.2 = 0.06. These are joint probabilities of the first observation and the state, not normalised posteriors. Marking: rule 1, each value 2.",
+      "id": 775,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 1 Q34(a)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₁(k) = π(k)·e_k(x)：0.7×0.6 = 0.42，0.3×0.2 = 0.06。是联合概率，不用归一化。",
+      "optionNotes": [
+        "Priors only; must multiply by the emission of x.",
+        "Normalised posteriors; f₁ is a joint probability.",
+        "π(k) × e_k(x).",
+        "Uses the emission of y instead of x."
+      ],
+      "steps": [
+        "$f_1(A) = 0.7\\times0.6 = 0.42$",
+        "$f_1(B) = 0.3\\times0.2 = 0.06$"
+      ],
+      "questionZh": "HMM 有状态 A、B，观测 x、y；观测序列为 (x, y)。先验 $\\pi(A) = 0.7$、$\\pi(B) = 0.3$。发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$。转移（行 = 当前状态）：A→A 0.8，A→B 0.2，B→A 0.3，B→B 0.7。(a) $f_1(A)$ 和 $f_1(B)$ 是多少？",
+      "optionsZh": [
+        "f₁(A) = 0.70，f₁(B) = 0.30。",
+        "f₁(A) = 0.875，f₁(B) = 0.125。",
+        "f₁(A) = 0.42，f₁(B) = 0.06。",
+        "f₁(A) = 0.28，f₁(B) = 0.24。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "An HMM has states A, B and observations x, y; the observed sequence is (x, y). Priors $\\pi(A) = 0.7$, $\\pi(B) = 0.3$. Emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$. Transitions (row = current): A→A 0.8, A→B 0.2, B→A 0.3, B→B 0.7. (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$ (four decimals)?",
+      "options": [
+        "f₂(A) = 0.1344, f₂(B) = 0.0672, P = 0.2016.",
+        "f₂(A) = 0.1416, f₂(B) = 0.1008, P = 0.2424.",
+        "f₂(A) = 0.1392, f₂(B) = 0.1344, P = 0.2736.",
+        "f₂(A) = 0.3540, f₂(B) = 0.1260, P = 0.4800."
+      ],
+      "correct": 1,
+      "explanation": "f₂(A) = e_A(y)·[f₁(A)a_AA + f₁(B)a_BA] = 0.4×(0.42×0.8 + 0.06×0.3) = 0.4×0.354 = 0.1416. f₂(B) = 0.8×(0.42×0.2 + 0.06×0.7) = 0.8×0.126 = 0.1008. P(x,y) = 0.2424. Marking: each forward value 2, sum 1.",
+      "id": 776,
+      "week": "Practice Exam 1",
+      "course": "COMP5318",
+      "knowledgeLocation": "W11 Markov Models & HMM / Forward algorithm · Practice Exam 1 Q34(b)",
+      "lectureWeek": "Week 11",
+      "explanationZh": "f₂(A) = 0.4 × (0.336 + 0.018) = 0.1416，f₂(B) = 0.8 × (0.084 + 0.042) = 0.1008，P = 0.2424。",
+      "optionNotes": [
+        "Viterbi (max) instead of Forward (sum).",
+        "Sum of predecessors into each state, times emission of y.",
+        "Reads the transition table by columns; rows are the current state.",
+        "Forgets the emission probabilities of y."
+      ],
+      "steps": [
+        "$f_2(A) = 0.4\\times(0.42\\times0.8 + 0.06\\times0.3) = 0.4\\times0.354 = 0.1416$",
+        "$f_2(B) = 0.8\\times(0.42\\times0.2 + 0.06\\times0.7) = 0.8\\times0.126 = 0.1008$",
+        "$P(x, y) = 0.1416 + 0.1008 = 0.2424$"
+      ],
+      "questionZh": "HMM 有状态 A、B，观测 x、y；观测序列为 (x, y)。先验 $\\pi(A) = 0.7$、$\\pi(B) = 0.3$。发射 $e_A(x) = 0.6$、$e_A(y) = 0.4$、$e_B(x) = 0.2$、$e_B(y) = 0.8$。转移（行 = 当前状态）：A→A 0.8，A→B 0.2，B→A 0.3，B→B 0.7。(b) 用 Forward 算法，$f_2(A)$、$f_2(B)$ 和 $P(x, y)$ 是多少（保留四位小数）？",
+      "optionsZh": [
+        "f₂(A) = 0.1344，f₂(B) = 0.0672，P = 0.2016。",
+        "f₂(A) = 0.1416，f₂(B) = 0.1008，P = 0.2424。",
+        "f₂(A) = 0.1392，f₂(B) = 0.1344，P = 0.2736。",
+        "f₂(A) = 0.3540，f₂(B) = 0.1260，P = 0.4800。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A naive Bayes classifier has classes Yes and No; an observation has $F_1$ = present and $F_2$ = present (conditionally independent given the class). Yes: prior 0.4, $P(F_1|\\text{Yes}) = 0.75$, $P(F_2|\\text{Yes}) = 0.50$. No: prior 0.6, $P(F_1|\\text{No}) = 0.25$, $P(F_2|\\text{No}) = 0.50$. (a) What are the two unnormalised class scores?",
+      "options": [
+        "s_Yes = 0.15, s_No = 0.075.",
+        "s_Yes = 0.375, s_No = 0.125.",
+        "s_Yes = 0.225, s_No = 0.050.",
+        "s_Yes = 0.667, s_No = 0.333."
+      ],
+      "correct": 0,
+      "explanation": "s_Yes = 0.4 × 0.75 × 0.50 = 0.15; s_No = 0.6 × 0.25 × 0.50 = 0.075. Marking: includes prior and both likelihoods 1, each score 2.",
+      "id": 777,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes · Practice Exam 2 Q31(a)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "得分 = 先验 × 两个似然：Yes 0.4×0.75×0.5 = 0.15，No 0.6×0.25×0.5 = 0.075。",
+      "optionNotes": [
+        "Prior × P(F₁|c) × P(F₂|c).",
+        "Leaves out the priors.",
+        "Swaps the two priors.",
+        "Those are the normalised posteriors (part b)."
+      ],
+      "steps": [
+        "$s_{\\text{Yes}} = 0.4\\times0.75\\times0.50 = 0.15$",
+        "$s_{\\text{No}} = 0.6\\times0.25\\times0.50 = 0.075$"
+      ],
+      "questionZh": "朴素贝叶斯有 Yes、No 两类；样本 $F_1$ 出现、$F_2$ 出现（给定类别条件独立）。Yes：先验 0.4，$P(F_1|\\text{Yes}) = 0.75$，$P(F_2|\\text{Yes}) = 0.50$。No：先验 0.6，$P(F_1|\\text{No}) = 0.25$，$P(F_2|\\text{No}) = 0.50$。(a) 两个类的未归一化得分是多少？",
+      "optionsZh": [
+        "s_Yes = 0.15，s_No = 0.075。",
+        "s_Yes = 0.375，s_No = 0.125。",
+        "s_Yes = 0.225，s_No = 0.050。",
+        "s_Yes = 0.667，s_No = 0.333。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A naive Bayes classifier has classes Yes and No; an observation has $F_1$ = present and $F_2$ = present (conditionally independent given the class). Yes: prior 0.4, $P(F_1|\\text{Yes}) = 0.75$, $P(F_2|\\text{Yes}) = 0.50$. No: prior 0.6, $P(F_1|\\text{No}) = 0.25$, $P(F_2|\\text{No}) = 0.50$. The scores are $s_{\\text{Yes}} = 0.15$ and $s_{\\text{No}} = 0.075$. (b) What are the posteriors (three decimals) and the predicted class?",
+      "options": [
+        "P(Yes) = 0.400, P(No) = 0.600; predict No.",
+        "P(Yes) = 0.150, P(No) = 0.075; predict Yes.",
+        "P(Yes) = 0.667, P(No) = 0.333; predict Yes.",
+        "P(Yes) = 0.667, P(No) = 0.333; predict No."
+      ],
+      "correct": 2,
+      "explanation": "Evidence = 0.15 + 0.075 = 0.225. P(Yes | F₁,F₂) = 0.15/0.225 = 2/3 ≈ 0.667; P(No | F₁,F₂) = 1/3 ≈ 0.333. Predict Yes. Marking: normalising 1, two posteriors 3, prediction 1.",
+      "id": 778,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes · Practice Exam 2 Q31(b)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "证据 = 0.225；P(Yes) = 0.15/0.225 ≈ 0.667，P(No) ≈ 0.333 → 预测 Yes。F₂ 在两类下似然相同，对判别无贡献。",
+      "optionNotes": [
+        "Those are only the priors.",
+        "Unnormalised scores, not posteriors.",
+        "Divide each score by 0.225; larger posterior wins.",
+        "Right posteriors, but the larger one is Yes."
+      ],
+      "steps": [
+        "Evidence $= 0.15 + 0.075 = 0.225$",
+        "$P(\\text{Yes}|\\cdot) = 0.15/0.225 \\approx 0.667$",
+        "$P(\\text{No}|\\cdot) = 0.075/0.225 \\approx 0.333$ → predict Yes"
+      ],
+      "questionZh": "朴素贝叶斯有 Yes、No 两类；样本 $F_1$ 出现、$F_2$ 出现（给定类别条件独立）。Yes：先验 0.4，$P(F_1|\\text{Yes}) = 0.75$，$P(F_2|\\text{Yes}) = 0.50$。No：先验 0.6，$P(F_1|\\text{No}) = 0.25$，$P(F_2|\\text{No}) = 0.50$。两个得分为 $s_{\\text{Yes}} = 0.15$、$s_{\\text{No}} = 0.075$。(b) 两类后验（保留三位小数）和预测类别是什么？",
+      "optionsZh": [
+        "P(Yes) = 0.400，P(No) = 0.600；预测 No。",
+        "P(Yes) = 0.150，P(No) = 0.075；预测 Yes。",
+        "P(Yes) = 0.667，P(No) = 0.333；预测 Yes。",
+        "P(Yes) = 0.667，P(No) = 0.333；预测 No。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Fit a simple least-squares line to $(x, y) = (1, 2), (2, 2), (3, 5)$. The mean of x is 2 and the mean of y is 3. (a) What are $S_{xy}$, $S_{xx}$, the slope $b_1$ and intercept $b_0$?",
+      "options": [
+        "Sxy = 3, Sxx = 2; b₁ = 1.5, b₀ = 1.5.",
+        "Sxy = 1, Sxx = 2; b₁ = 0.5, b₀ = 2.",
+        "Sxy = 3, Sxx = 2; b₁ ≈ 0.667, b₀ ≈ 1.667.",
+        "Sxy = 3, Sxx = 2; b₁ = 1.5, b₀ = 0."
+      ],
+      "correct": 3,
+      "explanation": "Centred x = (−1, 0, 1), centred y = (−1, −1, 2). Sxy = (−1)(−1) + 0(−1) + 1(2) = 3; Sxx = 1 + 0 + 1 = 2. b₁ = 3/2 = 1.5; b₀ = 3 − 1.5×2 = 0. Marking: two sums 2, slope and intercept 3.",
+      "id": 779,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Practice Exam 2 Q32(a)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "中心化后 x = (−1, 0, 1)，y = (−1, −1, 2)：Sxy = 3，Sxx = 2 → b₁ = 1.5，b₀ = ȳ − b₁x̄ = 3 − 3 = 0。",
+      "optionNotes": [
+        "b₀ = ȳ − b₁·x̄ = 3 − 1.5×2; forgot to multiply by x̄.",
+        "(−1)(−1) = +1, not −1.",
+        "Slope is Sxy/Sxx, not Sxx/Sxy.",
+        "Sxy = 3, Sxx = 2, b₁ = 1.5, b₀ = 0."
+      ],
+      "steps": [
+        "Centred $x$: $(-1, 0, 1)$; centred $y$: $(-1, -1, 2)$",
+        "$S_{xy} = 1 + 0 + 2 = 3$, $S_{xx} = 1 + 0 + 1 = 2$",
+        "$b_1 = 3/2 = 1.5$, $b_0 = 3 - 1.5\\times2 = 0$"
+      ],
+      "questionZh": "对数据 $(x, y) = (1, 2), (2, 2), (3, 5)$ 拟合简单最小二乘直线。x 的均值为 2，y 的均值为 3。(a) $S_{xy}$、$S_{xx}$、斜率 $b_1$ 和截距 $b_0$ 是多少？",
+      "optionsZh": [
+        "Sxy = 3，Sxx = 2；b₁ = 1.5，b₀ = 1.5。",
+        "Sxy = 1，Sxx = 2；b₁ = 0.5，b₀ = 2。",
+        "Sxy = 3，Sxx = 2；b₁ ≈ 0.667，b₀ ≈ 1.667。",
+        "Sxy = 3，Sxx = 2；b₁ = 1.5，b₀ = 0。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Fit a simple least-squares line to $(x, y) = (1, 2), (2, 2), (3, 5)$. The mean of x is 2 and the mean of y is 3. The fitted line is $\\hat y = 1.5x$. (b) What are the fitted predictions and the training MSE?",
+      "options": [
+        "(1.5, 3.0, 4.5); MSE = 1.5.",
+        "(1.5, 3.0, 4.5); MSE = 0.5.",
+        "(1.5, 3.0, 4.5); MSE ≈ 0.667.",
+        "(2, 2, 5); MSE = 0."
+      ],
+      "correct": 1,
+      "explanation": "ŷ = 1.5x gives predictions (1.5, 3.0, 4.5). Residuals y − ŷ = (0.5, −1.0, 0.5); squared-error sum = 0.25 + 1 + 0.25 = 1.5. MSE = 1.5/3 = 0.5. Marking: predictions 2, squared errors 2, averaging 1.",
+      "id": 780,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Practice Exam 2 Q32(b)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "预测 (1.5, 3.0, 4.5)，残差 (0.5, −1, 0.5)，SSE = 1.5，MSE = 1.5/3 = 0.5。",
+      "optionNotes": [
+        "1.5 is the SSE; MSE divides by n = 3.",
+        "SSE 1.5 / 3 = 0.5.",
+        "0.667 is the MAE (mean absolute error).",
+        "Those are the observed y, not the fitted predictions."
+      ],
+      "steps": [
+        "$\\hat y = (1.5, 3.0, 4.5)$",
+        "Residuals $(0.5, -1, 0.5)$",
+        "$\\text{SSE} = 0.25 + 1 + 0.25 = 1.5$",
+        "$\\text{MSE} = 1.5/3 = 0.5$"
+      ],
+      "questionZh": "对数据 $(x, y) = (1, 2), (2, 2), (3, 5)$ 拟合简单最小二乘直线。x 的均值为 2，y 的均值为 3。拟合直线为 $\\hat y = 1.5x$。(b) 各点的预测值和训练 MSE 是多少？",
+      "optionsZh": [
+        "(1.5, 3.0, 4.5)；MSE = 1.5。",
+        "(1.5, 3.0, 4.5)；MSE = 0.5。",
+        "(1.5, 3.0, 4.5)；MSE ≈ 0.667。",
+        "(2, 2, 5)；MSE = 0。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Four one-dimensional observations are A = 0, B = 3, C = 8, D = 10. Begin with singleton clusters and use absolute point-to-point distance. (a) Using complete linkage, what is the first merge, the distances from the merged cluster to A and B, and the second merge?",
+      "options": [
+        "{C, D} at 2; to A = 8, to B = 5; second merge {A, B} at 3.",
+        "{C, D} at 2; to A = 10, to B = 7; second merge {A, B} at 3.",
+        "{A, B} at 3; to C = 8, to D = 10; second merge {C, D} at 2.",
+        "{C, D} at 2; to A = 10, to B = 7; second merge {B, C, D} at 7."
+      ],
+      "correct": 1,
+      "explanation": "Pairwise distances: AB = 3, AC = 8, AD = 10, BC = 5, BD = 7, CD = 2. First merge: {C, D} at 2. Complete-link: d({C,D}, A) = max(8, 10) = 10; d({C,D}, B) = max(5, 7) = 7; d(A, B) = 3 is the smallest, so the second merge is {A, B} at 3. Marking: first merge 1, updated distances 2, second merge 2.",
+      "id": 781,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Practice Exam 2 Q33(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "最近的 CD = 2 先合并；完全链取最大：到 A = max(8, 10) = 10，到 B = max(5, 7) = 7；剩下最小的是 AB = 3 → 合并 {A, B}。",
+      "optionNotes": [
+        "8 and 5 are single-link (min) distances.",
+        "Complete link = max; then AB = 3 is the smallest.",
+        "The smallest distance is CD = 2, so {C, D} merges first.",
+        "AB = 3 < 7, so A and B merge next."
+      ],
+      "steps": [
+        "Distances: AB 3, AC 8, AD 10, BC 5, BD 7, CD 2 → merge $\\{C, D\\}$ at 2",
+        "$d(\\{C,D\\}, A) = \\max(8, 10) = 10$, $d(\\{C,D\\}, B) = \\max(5, 7) = 7$",
+        "Smallest remaining: $AB = 3$ → merge $\\{A, B\\}$"
+      ],
+      "questionZh": "四个一维样本 A = 0、B = 3、C = 8、D = 10。从单点簇开始，用点间绝对距离。(a) 用完全链，第一次合并是什么？合并后的簇到 A、B 的距离是多少？第二次合并是什么？",
+      "optionsZh": [
+        "{C, D}，距离 2；到 A = 8，到 B = 5；第二次合并 {A, B}，距离 3。",
+        "{C, D}，距离 2；到 A = 10，到 B = 7；第二次合并 {A, B}，距离 3。",
+        "{A, B}，距离 3；到 C = 8，到 D = 10；第二次合并 {C, D}，距离 2。",
+        "{C, D}，距离 2；到 A = 10，到 B = 7；第二次合并 {B, C, D}，距离 7。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "Four one-dimensional observations are A = 0, B = 3, C = 8, D = 10. Begin with singleton clusters and use absolute point-to-point distance. After those merges the clusters are {A, B} and {C, D}. (b) What are their single-link and complete-link distances, and which pairs set them?",
+      "options": [
+        "Single 10 (A–D); complete 5 (B–C).",
+        "Single 5 (B–C); complete 10 (A–D).",
+        "Single 5 (B–C); complete 7.5 (average).",
+        "Single 2 (C–D); complete 10 (A–D)."
+      ],
+      "correct": 1,
+      "explanation": "Cross-cluster distances between {A,B} and {C,D} are 8, 10, 5, 7. Single link = min = 5, set by the pair B–C; complete link = max = 10, set by the pair A–D. Marking: each distance 2, naming the pairs 1.",
+      "id": 782,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Practice Exam 2 Q33(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "跨簇距离 8、10、5、7：单链取最小 5（B–C，最近一对），完全链取最大 10（A–D，最远一对）。",
+      "optionNotes": [
+        "Swapped: single = min, complete = max.",
+        "Min 5 by B–C; max 10 by A–D.",
+        "7.5 is the average link.",
+        "C–D is inside one cluster; only cross pairs count."
+      ],
+      "steps": [
+        "Cross pairs: $AC = 8$, $AD = 10$, $BC = 5$, $BD = 7$",
+        "Single $= \\min = 5$ (B–C)",
+        "Complete $= \\max = 10$ (A–D)"
+      ],
+      "questionZh": "四个一维样本 A = 0、B = 3、C = 8、D = 10。从单点簇开始，用点间绝对距离。合并后剩下 {A, B} 和 {C, D}。(b) 它们的单链和完全链距离是多少？分别由哪对点决定？",
+      "optionsZh": [
+        "单链 10（A–D）；完全链 5（B–C）。",
+        "单链 5（B–C）；完全链 10（A–D）。",
+        "单链 5（B–C）；完全链 7.5（平均）。",
+        "单链 2（C–D）；完全链 10（A–D）。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A network receives $x_1 = 2$, $x_2 = -1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 + 2x_2 - 1$, $u_B = 2x_1 - x_2 - 2$, $z = 3h_A + h_B - 1$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$ and $h_B$?",
+      "options": [
+        "u_A = −1, u_B = 3; h_A = −1, h_B = 3.",
+        "u_A = 3, u_B = 3; h_A = 3, h_B = 3.",
+        "u_A = −1, u_B = 3; h_A = 0, h_B = 3.",
+        "u_A = −1, u_B = 1; h_A = 0, h_B = 1."
+      ],
+      "correct": 2,
+      "explanation": "u_A = 2 + 2×(−1) − 1 = −1; u_B = 2×2 − (−1) − 2 = 3. ReLU gives h_A = 0, h_B = 3.",
+      "id": 783,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Practice Exam 2 Q34(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u_A = 2 − 2 − 1 = −1，u_B = 4 + 1 − 2 = 3；ReLU 后 h_A = 0，h_B = 3。",
+      "optionNotes": [
+        "Forgets ReLU on A: max(0, −1) = 0.",
+        "Drops the sign of x₂ = −1 in u_A.",
+        "ReLU clips −1 to 0 and keeps 3.",
+        "−x₂ = +1, so u_B = 4 + 1 − 2 = 3."
+      ],
+      "steps": [
+        "$u_A = 2 + 2\\times(-1) - 1 = -1$",
+        "$u_B = 2\\times2 - (-1) - 2 = 3$",
+        "$h_A = 0$, $h_B = 3$"
+      ],
+      "questionZh": "网络输入 $x_1 = 2$、$x_2 = -1$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 + 2x_2 - 1$，$u_B = 2x_1 - x_2 - 2$，$z = 3h_A + h_B - 1$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(a) $u_A$、$u_B$、$h_A$、$h_B$ 是多少？",
+      "optionsZh": [
+        "u_A = −1，u_B = 3；h_A = −1，h_B = 3。",
+        "u_A = 3，u_B = 3；h_A = 3，h_B = 3。",
+        "u_A = −1，u_B = 3；h_A = 0，h_B = 3。",
+        "u_A = −1，u_B = 1；h_A = 0，h_B = 1。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A network receives $x_1 = 2$, $x_2 = -1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 + 2x_2 - 1$, $u_B = 2x_1 - x_2 - 2$, $z = 3h_A + h_B - 1$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) What are z, the probability and class? Then replace only unit A's ReLU by the identity ($h_A = u_A$): new probability and class?",
+      "options": [
+        "z = 2, 0.881 → class 1; identity at A: unchanged, class 1.",
+        "z = 2, 0.731 → class 1; identity at A: 0.269 → class 0.",
+        "z = 2, 0.881 → class 1; identity at A: 0.269 → class 0.",
+        "z = 3, 0.953 → class 1; identity at A: 0.500 → class 1."
+      ],
+      "correct": 2,
+      "explanation": "With both ReLUs: z = 3×0 + 3 − 1 = 2, output = 1/(1 + e⁻²) ≈ 0.881 → class 1. With the identity at A only: h_A = −1, h_B = 3, z = 3×(−1) + 3 − 1 = −1, output ≈ 0.269 → class 0. The class changes.",
+      "id": 784,
+      "week": "Practice Exam 2",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Practice Exam 2 Q34(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "ReLU：z = 0 + 3 − 1 = 2 → σ(2) ≈ 0.881，类 1。A 换恒等：h_A = −1，z = −3 + 3 − 1 = −1 → 0.269，类 0。",
+      "optionNotes": [
+        "Identity keeps h_A = −1, which changes z.",
+        "σ(2) ≈ 0.881; 0.731 is σ(1).",
+        "z = 2 → 0.881; identity at A → z = −1 → 0.269.",
+        "Forgets the −1 bias in z."
+      ],
+      "steps": [
+        "ReLU: $z = 3\\times0 + 3 - 1 = 2$, $\\sigma(2) \\approx 0.881$ → class 1",
+        "Identity at A: $z = 3\\times(-1) + 3 - 1 = -1$",
+        "$\\sigma(-1) \\approx 0.269$ → class 0"
+      ],
+      "questionZh": "网络输入 $x_1 = 2$、$x_2 = -1$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 + 2x_2 - 1$，$u_B = 2x_1 - x_2 - 2$，$z = 3h_A + h_B - 1$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(b) $z$、输出概率和类别是多少？再只把 A 的 ReLU 换成恒等激活（$h_A = u_A$），新的概率和类别是什么？",
+      "optionsZh": [
+        "z = 2，0.881 → 类 1；A 换恒等：不变，类 1。",
+        "z = 2，0.731 → 类 1；A 换恒等：0.269 → 类 0。",
+        "z = 2，0.881 → 类 1；A 换恒等：0.269 → 类 0。",
+        "z = 3，0.953 → 类 1；A 换恒等：0.500 → 类 1。"
+      ],
+      "partB": true,
+      "partB12": true
+    },
+    {
+      "question": "A naive Bayes spam filter has classes Spam and Ham. Spam: prior 0.3, $P(W_1|\\text{Spam}) = 0.8$, $P(W_2|\\text{Spam}) = 0.6$. Ham: prior 0.7, $P(W_1|\\text{Ham}) = 0.2$, $P(W_2|\\text{Ham}) = 0.5$, where $P(W_i|c)$ is the probability word $W_i$ is present. An email contains $W_1$ but not $W_2$. (a) What are the unnormalised scores?",
+      "options": [
+        "s_Spam = 0.144, s_Ham = 0.070.",
+        "s_Spam = 0.096, s_Ham = 0.070.",
+        "s_Spam = 0.320, s_Ham = 0.100.",
+        "s_Spam = 0.224, s_Ham = 0.030."
+      ],
+      "correct": 1,
+      "explanation": "W₂ is absent, so use 1 − P(W₂|c): Spam 0.3 × 0.8 × 0.4 = 0.096; Ham 0.7 × 0.2 × 0.5 = 0.070.",
+      "id": 785,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes · Self-written S9(a)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "W₂ 不出现要用 1 − P(W₂|c)：Spam 0.3×0.8×0.4 = 0.096；Ham 0.7×0.2×0.5 = 0.070。",
+      "optionNotes": [
+        "Uses P(W₂ present) = 0.6 although W₂ is absent.",
+        "Absent word → 1 − 0.6 = 0.4 for Spam.",
+        "Leaves out the priors.",
+        "Swaps the two priors."
+      ],
+      "steps": [
+        "W₂ absent: $1 - 0.6 = 0.4$ (Spam), $1 - 0.5 = 0.5$ (Ham)",
+        "$s_{\\text{Spam}} = 0.3\\times0.8\\times0.4 = 0.096$",
+        "$s_{\\text{Ham}} = 0.7\\times0.2\\times0.5 = 0.070$"
+      ],
+      "questionZh": "朴素贝叶斯垃圾邮件过滤器有 Spam、Ham 两类。Spam：先验 0.3，$P(W_1|\\text{Spam}) = 0.8$，$P(W_2|\\text{Spam}) = 0.6$。Ham：先验 0.7，$P(W_1|\\text{Ham}) = 0.2$，$P(W_2|\\text{Ham}) = 0.5$，$P(W_i|c)$ 是词 $W_i$ 出现的概率。某邮件含 $W_1$、不含 $W_2$。(a) 两类的未归一化得分是多少？",
+      "optionsZh": [
+        "s_Spam = 0.144，s_Ham = 0.070。",
+        "s_Spam = 0.096，s_Ham = 0.070。",
+        "s_Spam = 0.320，s_Ham = 0.100。",
+        "s_Spam = 0.224，s_Ham = 0.030。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A naive Bayes spam filter has classes Spam and Ham. Spam: prior 0.3, $P(W_1|\\text{Spam}) = 0.8$, $P(W_2|\\text{Spam}) = 0.6$. Ham: prior 0.7, $P(W_1|\\text{Ham}) = 0.2$, $P(W_2|\\text{Ham}) = 0.5$, where $P(W_i|c)$ is the probability word $W_i$ is present. An email contains $W_1$ but not $W_2$. The scores are 0.096 (Spam) and 0.070 (Ham). (b) What are the posteriors (three decimals) and the prediction?",
+      "options": [
+        "P(Spam) = 0.300, P(Ham) = 0.700; predict Ham.",
+        "P(Spam) = 0.096, P(Ham) = 0.070; predict Spam.",
+        "P(Spam) ≈ 0.422, P(Ham) ≈ 0.578; predict Ham.",
+        "P(Spam) ≈ 0.578, P(Ham) ≈ 0.422; predict Spam."
+      ],
+      "correct": 3,
+      "explanation": "Evidence = 0.096 + 0.070 = 0.166. P(Spam) = 0.096/0.166 ≈ 0.578, P(Ham) = 0.070/0.166 ≈ 0.422. Predict Spam, even though Ham has the larger prior.",
+      "id": 786,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes · Self-written S9(b)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "证据 0.166；P(Spam) ≈ 0.578，P(Ham) ≈ 0.422 → 预测 Spam（尽管 Ham 先验更大）。",
+      "optionNotes": [
+        "Those are just the priors.",
+        "Unnormalised scores, not posteriors.",
+        "Swaps the two posteriors.",
+        "Divide by 0.166; Spam is larger."
+      ],
+      "steps": [
+        "Evidence $= 0.096 + 0.070 = 0.166$",
+        "$P(\\text{Spam}) = 0.096/0.166 \\approx 0.578$",
+        "$P(\\text{Ham}) \\approx 0.422$ → Spam"
+      ],
+      "questionZh": "朴素贝叶斯垃圾邮件过滤器有 Spam、Ham 两类。Spam：先验 0.3，$P(W_1|\\text{Spam}) = 0.8$，$P(W_2|\\text{Spam}) = 0.6$。Ham：先验 0.7，$P(W_1|\\text{Ham}) = 0.2$，$P(W_2|\\text{Ham}) = 0.5$，$P(W_i|c)$ 是词 $W_i$ 出现的概率。某邮件含 $W_1$、不含 $W_2$。两类得分为 0.096（Spam）和 0.070（Ham）。(b) 后验（保留三位小数）和预测是什么？",
+      "optionsZh": [
+        "P(Spam) = 0.300，P(Ham) = 0.700；预测 Ham。",
+        "P(Spam) = 0.096，P(Ham) = 0.070；预测 Spam。",
+        "P(Spam) ≈ 0.422，P(Ham) ≈ 0.578；预测 Ham。",
+        "P(Spam) ≈ 0.578，P(Ham) ≈ 0.422；预测 Spam。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. (a) What are the smoothed likelihoods $P(\\text{Sunny}|\\text{Yes})$ and $P(\\text{Sunny}|\\text{No})$, and the two unnormalised scores?",
+      "options": [
+        "1/6 and 1/2; s_Yes ≈ 0.033, s_No = 0.150.",
+        "0 and 1/2; s_Yes = 0, s_No = 0.150.",
+        "1/5 and 4/7; s_Yes = 0.048, s_No ≈ 0.196.",
+        "1/6 and 1/2; s_Yes ≈ 0.083, s_No = 0.250."
+      ],
+      "correct": 0,
+      "explanation": "Smoothed: P(Sunny|Yes) = (0+1)/(4+2) = 1/6, P(Sunny|No) = (3+1)/(6+2) = 1/2, P(Windy|Yes) = (2+1)/6 = 1/2, P(Windy|No) = 4/8 = 1/2. Priors 0.4 and 0.6. s_Yes = 0.4 × 1/6 × 1/2 ≈ 0.033; s_No = 0.6 × 1/2 × 1/2 = 0.150.",
+      "id": 787,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Laplace smoothing · Self-written S10(a)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "平滑后 P(Sunny|Yes) = 1/6，P(Sunny|No) = 1/2，两类的 P(Windy|c) 都是 1/2；s_Yes = 0.4×1/6×1/2 ≈ 0.033，s_No = 0.6×1/2×1/2 = 0.150。",
+      "optionNotes": [
+        "(count + 1)/(n + 2), then prior × likelihoods.",
+        "No smoothing: a zero count wipes out the Yes score.",
+        "Adds 1 to the denominator instead of 2 (two values).",
+        "Leaves out the priors."
+      ],
+      "steps": [
+        "$P(\\text{Sunny}|\\text{Yes}) = \\tfrac{0+1}{4+2} = \\tfrac16$, $P(\\text{Sunny}|\\text{No}) = \\tfrac{3+1}{6+2} = \\tfrac12$",
+        "$P(\\text{Windy}|\\text{Yes}) = \\tfrac{3}{6} = \\tfrac12$, $P(\\text{Windy}|\\text{No}) = \\tfrac{4}{8} = \\tfrac12$",
+        "$s_{\\text{Yes}} = 0.4\\times\\tfrac16\\times\\tfrac12 \\approx 0.033$, $s_{\\text{No}} = 0.6\\times\\tfrac12\\times\\tfrac12 = 0.150$"
+      ],
+      "questionZh": "训练数据：4 个 Yes 天、6 个 No 天。Sunny 在 Yes 天出现 0 次、在 No 天出现 3 次；Windy 在 Yes 天出现 2 次、在 No 天出现 3 次。每个特征都是二值的。用拉普拉斯平滑（计数 $+1$，分母 $+2$），先验按类别频率。新的一天 Sunny 且 Windy。(a) 平滑后的 $P(\\text{Sunny}|\\text{Yes})$、$P(\\text{Sunny}|\\text{No})$ 和两类未归一化得分是多少？",
+      "optionsZh": [
+        "1/6 和 1/2；s_Yes ≈ 0.033，s_No = 0.150。",
+        "0 和 1/2；s_Yes = 0，s_No = 0.150。",
+        "1/5 和 4/7；s_Yes = 0.048，s_No ≈ 0.196。",
+        "1/6 和 1/2；s_Yes ≈ 0.083，s_No = 0.250。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. The scores are $s_{\\text{Yes}} = 1/30 \\approx 0.033$ and $s_{\\text{No}} = 0.15$. (b) What are the posteriors and the prediction, and what would happen without smoothing?",
+      "options": [
+        "P(Yes) ≈ 0.818, P(No) ≈ 0.182; predict Yes. Without smoothing nothing changes.",
+        "P(Yes) ≈ 0.182, P(No) ≈ 0.818; predict No. Without smoothing P(Yes) = 0 exactly, from one unseen value.",
+        "P(Yes) ≈ 0.182, P(No) ≈ 0.818; predict No. Without smoothing both scores are 0.",
+        "P(Yes) = 0.4, P(No) = 0.6; predict No. Without smoothing P(Yes) = 0."
+      ],
+      "correct": 1,
+      "explanation": "Evidence = 1/30 + 0.15 = 0.1833. P(Yes) = 0.0333/0.1833 ≈ 0.182, P(No) ≈ 0.818 → No. Without smoothing, P(Sunny|Yes) = 0/4 = 0 makes the whole Yes product 0, so one unseen feature value would veto the class.",
+      "id": 788,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W4 Naive Bayes & Evaluation / Laplace smoothing · Self-written S10(b)",
+      "lectureWeek": "Week 04",
+      "explanationZh": "证据 0.1833；P(Yes) ≈ 0.182，P(No) ≈ 0.818 → 预测 No。不平滑时 P(Sunny|Yes) = 0 会让整个 Yes 乘积为 0，一个没见过的取值就否决了整个类，这正是平滑要解决的问题。",
+      "optionNotes": [
+        "Swaps the posteriors; and smoothing matters here.",
+        "Normalise; the zero count would zero the whole Yes product.",
+        "Only the Yes count of Sunny is 0; the No score stays 0.15.",
+        "Those are only the priors."
+      ],
+      "steps": [
+        "Evidence $= \\tfrac1{30} + 0.15 \\approx 0.1833$",
+        "$P(\\text{Yes}) = 0.0333/0.1833 \\approx 0.182$, $P(\\text{No}) \\approx 0.818$",
+        "Unsmoothed: $P(\\text{Sunny}|\\text{Yes}) = 0/4 = 0 \\Rightarrow s_{\\text{Yes}} = 0$"
+      ],
+      "questionZh": "训练数据：4 个 Yes 天、6 个 No 天。Sunny 在 Yes 天出现 0 次、在 No 天出现 3 次；Windy 在 Yes 天出现 2 次、在 No 天出现 3 次。每个特征都是二值的。用拉普拉斯平滑（计数 $+1$，分母 $+2$），先验按类别频率。新的一天 Sunny 且 Windy。两类得分为 $s_{\\text{Yes}} = 1/30 \\approx 0.033$、$s_{\\text{No}} = 0.15$。(b) 后验和预测是什么？不做平滑会怎样？",
+      "optionsZh": [
+        "P(Yes) ≈ 0.818，P(No) ≈ 0.182；预测 Yes。不平滑结果不变。",
+        "P(Yes) ≈ 0.182，P(No) ≈ 0.818；预测 No。不平滑时仅因一个没见过的取值 P(Yes) 就恰好为 0。",
+        "P(Yes) ≈ 0.182，P(No) ≈ 0.818；预测 No。不平滑两个得分都为 0。",
+        "P(Yes) = 0.4，P(No) = 0.6；预测 No。不平滑 P(Yes) = 0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. (a) What are $\\bar x$, $\\bar y$, $S_{xy}$, $S_{xx}$, $b_1$ and $b_0$?",
+      "options": [
+        "x̄ = 1.5, ȳ = 3; Sxy = 7, Sxx = 5; b₁ = 1.4, b₀ = 0.9.",
+        "x̄ = 1.5, ȳ = 3; Sxy = 7, Sxx = 5; b₁ = 1.4, b₀ = 1.6.",
+        "x̄ = 1.5, ȳ = 3; Sxy = 5, Sxx = 7; b₁ ≈ 0.714, b₀ ≈ 1.929.",
+        "x̄ = 1.5, ȳ = 3; Sxy = 8, Sxx = 5; b₁ = 1.6, b₀ = 0.6."
+      ],
+      "correct": 0,
+      "explanation": "Centred x = (−1.5, −0.5, 0.5, 1.5), centred y = (−2, 0, −1, 3). Sxy = 3 + 0 − 0.5 + 4.5 = 7; Sxx = 2.25 + 0.25 + 0.25 + 2.25 = 5. b₁ = 7/5 = 1.4; b₀ = 3 − 1.4×1.5 = 0.9.",
+      "id": 789,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Self-written S11(a)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "中心化 x = (−1.5, −0.5, 0.5, 1.5)，y = (−2, 0, −1, 3)：Sxy = 7，Sxx = 5 → b₁ = 1.4，b₀ = 3 − 2.1 = 0.9。",
+      "optionNotes": [
+        "Sxy = 7, Sxx = 5, b₁ = 1.4, b₀ = ȳ − b₁x̄ = 0.9.",
+        "b₀ = 3 − 1.4 = 1.6 forgets to multiply by x̄.",
+        "Slope is Sxy/Sxx; these are swapped.",
+        "Sign slip: (0.5)(−1) taken as +0.5."
+      ],
+      "steps": [
+        "Centred $x$: $(-1.5, -0.5, 0.5, 1.5)$; centred $y$: $(-2, 0, -1, 3)$",
+        "$S_{xy} = 3 + 0 - 0.5 + 4.5 = 7$, $S_{xx} = 5$",
+        "$b_1 = 7/5 = 1.4$, $b_0 = 3 - 1.4\\times1.5 = 0.9$"
+      ],
+      "questionZh": "对四个点 $(0, 1), (1, 3), (2, 2), (3, 6)$ 拟合最小二乘直线 $\\hat y = b_0 + b_1 x$。(a) $\\bar x$、$\\bar y$、$S_{xy}$、$S_{xx}$、$b_1$、$b_0$ 是多少？",
+      "optionsZh": [
+        "x̄ = 1.5，ȳ = 3；Sxy = 7，Sxx = 5；b₁ = 1.4，b₀ = 0.9。",
+        "x̄ = 1.5，ȳ = 3；Sxy = 7，Sxx = 5；b₁ = 1.4，b₀ = 1.6。",
+        "x̄ = 1.5，ȳ = 3；Sxy = 5，Sxx = 7；b₁ ≈ 0.714，b₀ ≈ 1.929。",
+        "x̄ = 1.5，ȳ = 3；Sxy = 8，Sxx = 5；b₁ = 1.6，b₀ = 0.6。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. The fitted line is $\\hat y = 0.9 + 1.4x$. (b) What are the fitted values and the training MSE?",
+      "options": [
+        "(0.9, 2.3, 3.7, 5.1); MSE = 4.2.",
+        "(0.9, 2.3, 3.7, 5.1); MSE = 0.85.",
+        "(0.9, 2.3, 3.7, 5.1); MSE = 1.05.",
+        "(1, 3, 2, 6); MSE = 0."
+      ],
+      "correct": 2,
+      "explanation": "Predictions 0.9, 2.3, 3.7, 5.1; residuals 0.1, 0.7, −1.7, 0.9; squares 0.01 + 0.49 + 2.89 + 0.81 = 4.2. MSE = 4.2/4 = 1.05.",
+      "id": 790,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Self-written S11(b)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "残差 0.1、0.7、−1.7、0.9，平方和 4.2，MSE = 4.2/4 = 1.05。",
+      "optionNotes": [
+        "4.2 is the SSE; divide by n = 4.",
+        "0.85 is the mean absolute residual (MAE).",
+        "SSE 4.2 / 4 = 1.05.",
+        "Those are the observed y, not the fitted values."
+      ],
+      "steps": [
+        "$\\hat y = (0.9, 2.3, 3.7, 5.1)$",
+        "Residuals $(0.1, 0.7, -1.7, 0.9)$",
+        "$\\text{SSE} = 0.01 + 0.49 + 2.89 + 0.81 = 4.2$",
+        "$\\text{MSE} = 4.2/4 = 1.05$"
+      ],
+      "questionZh": "对四个点 $(0, 1), (1, 3), (2, 2), (3, 6)$ 拟合最小二乘直线 $\\hat y = b_0 + b_1 x$。拟合直线为 $\\hat y = 0.9 + 1.4x$。(b) 各点的拟合值和训练 MSE 是多少？",
+      "optionsZh": [
+        "(0.9, 2.3, 3.7, 5.1)；MSE = 4.2。",
+        "(0.9, 2.3, 3.7, 5.1)；MSE = 0.85。",
+        "(0.9, 2.3, 3.7, 5.1)；MSE = 1.05。",
+        "(1, 3, 2, 6)；MSE = 0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. (a) What are $S_{xy}$, $S_{xx}$, $b_1$, $b_0$, and the prediction at $x = 3$?",
+      "options": [
+        "Sxy = 8, Sxx = 10; b₁ = 1.25, b₀ = −0.75; ŷ(3) = 3.0.",
+        "Sxy = 8, Sxx = 10; b₁ = 0.8, b₀ = 2.2; ŷ(3) = 4.6.",
+        "Sxy = 8, Sxx = 10; b₁ = 0.8, b₀ = 0.6; ŷ(3) = 3.0.",
+        "Sxy = 4, Sxx = 10; b₁ = 0.4, b₀ = 1.8; ŷ(3) = 3.0."
+      ],
+      "correct": 2,
+      "explanation": "x̄ = 3, ȳ = 3. Centred x = (−2, −1, 1, 2), centred y = (−2, 0, 0, 2). Sxy = 4 + 0 + 0 + 4 = 8; Sxx = 4 + 1 + 1 + 4 = 10. b₁ = 0.8; b₀ = 3 − 0.8×3 = 0.6. ŷ(3) = 0.6 + 2.4 = 3.0 (the line always passes through (x̄, ȳ)).",
+      "id": 791,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Self-written S12(a)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "x̄ = ȳ = 3；Sxy = 8，Sxx = 10 → b₁ = 0.8，b₀ = 0.6；ŷ(3) = 3.0。回归直线一定过 (x̄, ȳ)。",
+      "optionNotes": [
+        "Slope is Sxy/Sxx = 0.8, not Sxx/Sxy.",
+        "b₀ = 3 − 0.8 forgets x̄ = 3.",
+        "Sxy = 8, Sxx = 10, b₁ = 0.8, b₀ = 0.6; passes through (3, 3).",
+        "Counts only half of the cross products."
+      ],
+      "steps": [
+        "$\\bar x = 3$, $\\bar y = 3$",
+        "Centred $x$: $(-2, -1, 1, 2)$; centred $y$: $(-2, 0, 0, 2)$",
+        "$S_{xy} = 8$, $S_{xx} = 10$, $b_1 = 0.8$, $b_0 = 3 - 2.4 = 0.6$",
+        "$\\hat y(3) = 0.6 + 0.8\\times3 = 3.0$"
+      ],
+      "questionZh": "对 $(1, 1), (2, 3), (4, 3), (5, 5)$ 拟合最小二乘直线 $\\hat y = b_0 + b_1 x$。(a) $S_{xy}$、$S_{xx}$、$b_1$、$b_0$ 以及 $x = 3$ 处的预测值是多少？",
+      "optionsZh": [
+        "Sxy = 8，Sxx = 10；b₁ = 1.25，b₀ = −0.75；ŷ(3) = 3.0。",
+        "Sxy = 8，Sxx = 10；b₁ = 0.8，b₀ = 2.2；ŷ(3) = 4.6。",
+        "Sxy = 8，Sxx = 10；b₁ = 0.8，b₀ = 0.6；ŷ(3) = 3.0。",
+        "Sxy = 4，Sxx = 10；b₁ = 0.4，b₀ = 1.8；ŷ(3) = 3.0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. The fitted line is $\\hat y = 0.6 + 0.8x$. (b) What are the residuals and the training MSE?",
+      "options": [
+        "Residuals (−0.4, 0.8, −0.8, 0.4); MSE = 0.4.",
+        "Residuals (−0.4, 0.8, −0.8, 0.4); MSE = 1.6.",
+        "Residuals (0.4, −0.8, 0.8, −0.4); MSE = 0.6.",
+        "Residuals (−0.4, 0.8, −0.8, 0.4); MSE = 0."
+      ],
+      "correct": 0,
+      "explanation": "Predictions 1.4, 2.2, 3.8, 4.6; residuals y − ŷ = −0.4, 0.8, −0.8, 0.4 (they sum to 0). Squares 0.16 + 0.64 + 0.64 + 0.16 = 1.6; MSE = 1.6/4 = 0.4.",
+      "id": 792,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares · Self-written S12(b)",
+      "lectureWeek": "Week 03",
+      "explanationZh": "预测 1.4、2.2、3.8、4.6；残差 −0.4、0.8、−0.8、0.4（和为 0）；SSE = 1.6，MSE = 0.4。",
+      "optionNotes": [
+        "SSE 1.6 / 4 = 0.4.",
+        "1.6 is the SSE; divide by n.",
+        "Residuals are y − ŷ; and 0.6 is the MAE.",
+        "Residuals summing to 0 does not make the MSE 0."
+      ],
+      "steps": [
+        "$\\hat y = (1.4, 2.2, 3.8, 4.6)$",
+        "Residuals $y - \\hat y = (-0.4, 0.8, -0.8, 0.4)$",
+        "$\\text{SSE} = 1.6$, $\\text{MSE} = 1.6/4 = 0.4$"
+      ],
+      "questionZh": "对 $(1, 1), (2, 3), (4, 3), (5, 5)$ 拟合最小二乘直线 $\\hat y = b_0 + b_1 x$。拟合直线为 $\\hat y = 0.6 + 0.8x$。(b) 各点的残差和训练 MSE 是多少？",
+      "optionsZh": [
+        "残差 (−0.4, 0.8, −0.8, 0.4)；MSE = 0.4。",
+        "残差 (−0.4, 0.8, −0.8, 0.4)；MSE = 1.6。",
+        "残差 (0.4, −0.8, 0.8, −0.4)；MSE = 0.6。",
+        "残差 (−0.4, 0.8, −0.8, 0.4)；MSE = 0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Five one-dimensional points are A = 0, B = 1, C = 5, D = 7, E = 10. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (a) With single linkage, what are the merges in order with their heights?",
+      "options": [
+        "{A,B} 1; {C,D} 2; {C,D,E} 3; all 4.",
+        "{A,B} 1; {C,D} 2; {C,D,E} 5; all 10.",
+        "{A,B} 1; {C,D} 2; {A,B,C,D} 4; all 3.",
+        "{A,B} 1; {D,E} 3; {C,D,E} 2; all 4."
+      ],
+      "correct": 0,
+      "explanation": "Distances: AB 1, CD 2, DE 3, BC 4, AC 5, CE 5, BD 6, AD 7, BE 9, AE 10. Merge AB (1), then CD (2). Single link: {C,D}–E = min(5, 3) = 3, {A,B}–{C,D} = min = 4 (B–C) → merge {C,D,E} at 3, then everything at 4.",
+      "id": 793,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Self-written S13(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "单链取最小：AB 1 → CD 2 → {C,D}–E = min(5, 3) = 3 → 最后 {A,B}–{C,D,E} = BC = 4。",
+      "optionNotes": [
+        "Single link: {C,D}–E = 3, then B–C = 4.",
+        "Those heights are complete linkage (part b).",
+        "Merge heights must not decrease; {C,D}–E (3) comes before 4.",
+        "CD = 2 is smaller than DE = 3, so it merges first."
+      ],
+      "steps": [
+        "Pairs: AB 1, CD 2, DE 3, BC 4, …",
+        "Merge $\\{A,B\\}$ at 1, $\\{C,D\\}$ at 2",
+        "$d(\\{C,D\\}, E) = \\min(5, 3) = 3$ → $\\{C,D,E\\}$ at 3",
+        "$d(\\{A,B\\}, \\{C,D,E\\}) = \\min = 4$ (B–C)"
+      ],
+      "questionZh": "五个一维点 A = 0、B = 1、C = 5、D = 7、E = 10。从单点簇开始做凝聚式聚类（绝对距离），直到只剩一个簇。(a) 用单链，按顺序的合并及其高度是什么？",
+      "optionsZh": [
+        "{A,B} 1；{C,D} 2；{C,D,E} 3；全部 4。",
+        "{A,B} 1；{C,D} 2；{C,D,E} 5；全部 10。",
+        "{A,B} 1；{C,D} 2；{A,B,C,D} 4；全部 3。",
+        "{A,B} 1；{D,E} 3；{C,D,E} 2；全部 4。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Five one-dimensional points are A = 0, B = 1, C = 5, D = 7, E = 10. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (b) With complete linkage, what are the third and fourth merge heights?",
+      "options": [
+        "3 ({C,D,E}) and 4.",
+        "7 ({A,B,C,D}) and 10.",
+        "5 ({C,D,E}) and 10.",
+        "5 ({C,D,E}) and 7."
+      ],
+      "correct": 2,
+      "explanation": "First two merges are the same (AB 1, CD 2). Complete link: {C,D}–E = max(5, 3) = 5, {A,B}–{C,D} = max(5, 7, 4, 6) = 7, {A,B}–E = 10 → merge {C,D,E} at 5. Final: {A,B}–{C,D,E} = max = 10 (A–E).",
+      "id": 794,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Self-written S13(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "完全链取最大：{C,D}–E = 5，{A,B}–{C,D} = 7 → 先合并 {C,D,E}（5），最后高度是最远的 A–E = 10。",
+      "optionNotes": [
+        "Those are single-link heights.",
+        "{C,D}–E = 5 < {A,B}–{C,D} = 7, so E joins first.",
+        "Max-based: 5, then A–E = 10.",
+        "The final height is the max cross distance, A–E = 10."
+      ],
+      "steps": [
+        "After AB (1), CD (2):",
+        "$d(\\{C,D\\}, E) = \\max(5, 3) = 5$, $d(\\{A,B\\}, \\{C,D\\}) = 7$",
+        "Merge $\\{C,D,E\\}$ at 5",
+        "Final $= \\max = |0 - 10| = 10$"
+      ],
+      "questionZh": "五个一维点 A = 0、B = 1、C = 5、D = 7、E = 10。从单点簇开始做凝聚式聚类（绝对距离），直到只剩一个簇。(b) 用完全链，第三次和第四次合并的高度是多少？",
+      "optionsZh": [
+        "3（{C,D,E}）和 4。",
+        "7（{A,B,C,D}）和 10。",
+        "5（{C,D,E}）和 10。",
+        "5（{C,D,E}）和 7。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Five one-dimensional points are A = 0, B = 3, C = 4, D = 10, E = 12. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. (a) What are the first three merges and their heights?",
+      "options": [
+        "{B,C} 1; {D,E} 2; {A,B,C} 3.",
+        "{B,C} 1; {D,E} 2; {A,B,C} 3.5.",
+        "{B,C} 1; {D,E} 2; {A,B,C} 4.",
+        "{B,C} 1; {A,B,C} 3.5; {D,E} 2."
+      ],
+      "correct": 1,
+      "explanation": "BC = 1 merges first, then DE = 2. Average link: A–{B,C} = (3 + 4)/2 = 3.5; {B,C}–{D,E} = (7 + 9 + 6 + 8)/4 = 7.5; A–{D,E} = 11 → merge {A,B,C} at 3.5.",
+      "id": 795,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Self-written S14(a)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "BC 1、DE 2 先合并；平均链 A–{B,C} = (3 + 4)/2 = 3.5 最小 → {A,B,C} 高度 3.5。",
+      "optionNotes": [
+        "3 is single link (min).",
+        "Average of 3 and 4 = 3.5.",
+        "4 is complete link (max).",
+        "Merges go in order of height: 2 before 3.5."
+      ],
+      "steps": [
+        "$BC = 1$, then $DE = 2$",
+        "$d(A, \\{B,C\\}) = (3+4)/2 = 3.5$",
+        "$d(\\{B,C\\}, \\{D,E\\}) = (7+9+6+8)/4 = 7.5$, $d(A, \\{D,E\\}) = 11$",
+        "Merge $\\{A,B,C\\}$ at 3.5"
+      ],
+      "questionZh": "五个一维点 A = 0、B = 3、C = 4、D = 10、E = 12。用平均链（所有跨簇点对距离的均值）和绝对距离做凝聚式聚类。(a) 前三次合并及其高度是什么？",
+      "optionsZh": [
+        "{B,C} 1；{D,E} 2；{A,B,C} 3。",
+        "{B,C} 1；{D,E} 2；{A,B,C} 3.5。",
+        "{B,C} 1；{D,E} 2；{A,B,C} 4。",
+        "{B,C} 1；{A,B,C} 3.5；{D,E} 2。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "Five one-dimensional points are A = 0, B = 3, C = 4, D = 10, E = 12. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. After {A,B,C} and {D,E} form, (b) what is the final merge height (three decimals), and what clusters do you get by cutting the dendrogram at height 5?",
+      "options": [
+        "8.667; cut at 5 gives {A,B,C} and {D,E}.",
+        "6.000; cut at 5 gives {A,B,C} and {D,E}.",
+        "8.667; cut at 5 gives {A}, {B,C}, {D,E}.",
+        "12.000; cut at 5 gives one cluster."
+      ],
+      "correct": 0,
+      "explanation": "Cross pairs: A–D 10, A–E 12, B–D 7, B–E 9, C–D 6, C–E 8; mean = 52/6 ≈ 8.667. Cutting at 5 keeps every merge below 5 (1, 2, 3.5), so the clusters are {A,B,C} and {D,E}.",
+      "id": 796,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W9 Clustering / Hierarchical clustering · Self-written S14(b)",
+      "lectureWeek": "Week 09",
+      "explanationZh": "6 个跨簇距离平均 52/6 ≈ 8.667；在 5 处切，保留低于 5 的合并（1、2、3.5）→ {A,B,C} 和 {D,E}。",
+      "optionNotes": [
+        "Mean of the 6 cross distances; merges below 5 are kept.",
+        "6 is single link (C–D).",
+        "{A,B,C} merged at 3.5 < 5, so A is already joined.",
+        "12 is complete link; 8.667 > 5 means two clusters remain."
+      ],
+      "steps": [
+        "Cross: 10, 12, 7, 9, 6, 8",
+        "Average $= 52/6 \\approx 8.667$",
+        "Merges below 5: 1, 2, 3.5 → $\\{A,B,C\\}$, $\\{D,E\\}$"
+      ],
+      "questionZh": "五个一维点 A = 0、B = 3、C = 4、D = 10、E = 12。用平均链（所有跨簇点对距离的均值）和绝对距离做凝聚式聚类。{A,B,C} 和 {D,E} 形成后，(b) 最后一次合并的高度是多少（保留三位小数）？在高度 5 处横切树状图得到哪些簇？",
+      "optionsZh": [
+        "8.667；在 5 处切得 {A,B,C} 和 {D,E}。",
+        "6.000；在 5 处切得 {A,B,C} 和 {D,E}。",
+        "8.667；在 5 处切得 {A}、{B,C}、{D,E}。",
+        "12.000；在 5 处切得一个簇。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z and the class?",
+      "options": [
+        "u = (1, −1), h = (1, 0); z = 1.5, σ ≈ 0.818 → class 1.",
+        "u = (1, −1), h = (1, −1); z = 4.5, σ ≈ 0.989 → class 1.",
+        "u = (5, 3), h = (5, 3); z = −3.5, σ ≈ 0.029 → class 0.",
+        "u = (1, −1), h = (1, 0); z = 1.5, σ ≈ 0.731 → class 1."
+      ],
+      "correct": 0,
+      "explanation": "u_A = 2 − 2 + 1 = 1, u_B = 1 − 2 = −1; ReLU → h = (1, 0). z = 1 − 0 + 0.5 = 1.5; σ(1.5) = 1/(1 + e⁻¹·⁵) ≈ 0.818 → class 1.",
+      "id": 797,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Self-written S15(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u_A = 1，u_B = −1；ReLU → (1, 0)；z = 1.5，σ(1.5) ≈ 0.818 → 类 1。",
+      "optionNotes": [
+        "ReLU, then z = 1 − 3·0 + 0.5 = 1.5.",
+        "Forgets ReLU on B (that is part b).",
+        "Drops the sign of x₂ = −2.",
+        "σ(1.5) ≈ 0.818; 0.731 is σ(1)."
+      ],
+      "steps": [
+        "$u_A = 2 - 2 + 1 = 1$, $u_B = 1 - 2 = -1$",
+        "$h_A = 1$, $h_B = 0$",
+        "$z = 1 - 3\\times0 + 0.5 = 1.5$, $\\sigma(1.5) \\approx 0.818$ → class 1"
+      ],
+      "questionZh": "网络输入 $x_1 = 1$、$x_2 = -2$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = 2x_1 + x_2 + 1$，$u_B = x_1 + x_2$，$z = h_A - 3h_B + 0.5$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(a) $u_A$、$u_B$、$h_A$、$h_B$、$z$ 和类别是什么？",
+      "optionsZh": [
+        "u = (1, −1)，h = (1, 0)；z = 1.5，σ ≈ 0.818 → 类 1。",
+        "u = (1, −1)，h = (1, −1)；z = 4.5，σ ≈ 0.989 → 类 1。",
+        "u = (5, 3)，h = (5, 3)；z = −3.5，σ ≈ 0.029 → 类 0。",
+        "u = (1, −1)，h = (1, 0)；z = 1.5，σ ≈ 0.731 → 类 1。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit B's ReLU by the identity ($h_B = u_B$). What are the new z, probability and class?",
+      "options": [
+        "z = −1.5, 0.182 → class 0.",
+        "z = 1.5, 0.818 → class 1 (unchanged).",
+        "z = 4.5, 0.989 → class 1.",
+        "z = 4.5, 0.989 → class 0."
+      ],
+      "correct": 2,
+      "explanation": "h_B = −1 now, and its output weight is −3, so z = 1 − 3×(−1) + 0.5 = 4.5; σ(4.5) ≈ 0.989 → still class 1. Removing the clipping changed the probability a lot but not the class, because B's weight is negative.",
+      "id": 798,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Self-written S15(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "h_B = −1，权重是 −3：z = 1 + 3 + 0.5 = 4.5，σ ≈ 0.989，仍是类 1。和 PE1/PE2 不同：B 的输出权重为负，去掉 ReLU 反而把 z 推高，类别不翻转。",
+      "optionNotes": [
+        "−3 × (−1) = +3, not −3.",
+        "With identity, h_B = −1, so z changes.",
+        "z = 1 + 3 + 0.5 = 4.5 → class 1.",
+        "0.989 ≥ 0.5 is class 1."
+      ],
+      "steps": [
+        "Identity: $h_B = -1$",
+        "$z = 1 - 3\\times(-1) + 0.5 = 4.5$",
+        "$\\sigma(4.5) \\approx 0.989$ → class 1 (no flip)"
+      ],
+      "questionZh": "网络输入 $x_1 = 1$、$x_2 = -2$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = 2x_1 + x_2 + 1$，$u_B = x_1 + x_2$，$z = h_A - 3h_B + 0.5$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(b) 只把 B 的 ReLU 换成恒等激活（$h_B = u_B$），新的 $z$、概率和类别是什么？",
+      "optionsZh": [
+        "z = −1.5，0.182 → 类 0。",
+        "z = 1.5，0.818 → 类 1（不变）。",
+        "z = 4.5，0.989 → 类 1。",
+        "z = 4.5，0.989 → 类 0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z, the probability and the class?",
+      "options": [
+        "u = (−1, 3), h = (0, 3); z = −1, 0.269 → class 0.",
+        "u = (−1, 3), h = (−1, 3); z = 1, 0.731 → class 1.",
+        "u = (−1, 3), h = (0, 3); z = −1, 0.731 → class 1.",
+        "u = (3, 3), h = (3, 3); z = −7, 0.001 → class 0."
+      ],
+      "correct": 0,
+      "explanation": "u_A = 3 − 2 − 2 = −1, u_B = −3 + 2 + 4 = 3; ReLU → h = (0, 3). z = 0 − 3 + 2 = −1; σ(−1) ≈ 0.269 → class 0.",
+      "id": 799,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Self-written S16(a)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "u_A = −1，u_B = 3；ReLU → (0, 3)；z = −3 + 2 = −1，σ(−1) ≈ 0.269 → 类 0。",
+      "optionNotes": [
+        "ReLU zeroes u_A; z = −3 + 2 = −1.",
+        "Forgets ReLU on A (that is part b).",
+        "σ(−1) ≈ 0.269 < 0.5 → class 0.",
+        "Uses +2x₂ in u_A; it is −2x₂."
+      ],
+      "steps": [
+        "$u_A = 3 - 2 - 2 = -1$, $u_B = -3 + 2 + 4 = 3$",
+        "$h = (0, 3)$",
+        "$z = -2\\times0 - 3 + 2 = -1$, $\\sigma(-1) \\approx 0.269$ → class 0"
+      ],
+      "questionZh": "网络输入 $x_1 = 3$、$x_2 = 1$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 - 2x_2 - 2$，$u_B = -x_1 + 2x_2 + 4$，$z = -2h_A - h_B + 2$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(a) $u_A$、$u_B$、$h_A$、$h_B$、$z$、概率和类别是什么？",
+      "optionsZh": [
+        "u = (−1, 3)，h = (0, 3)；z = −1，0.269 → 类 0。",
+        "u = (−1, 3)，h = (−1, 3)；z = 1，0.731 → 类 1。",
+        "u = (−1, 3)，h = (0, 3)；z = −1，0.731 → 类 1。",
+        "u = (3, 3)，h = (3, 3)；z = −7，0.001 → 类 0。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
+      "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit A's ReLU by the identity ($h_A = u_A$). What are the new z, probability and class?",
+      "options": [
+        "z = −3, 0.047 → class 0.",
+        "z = −1, 0.269 → class 0 (unchanged).",
+        "z = 1, 0.269 → class 0.",
+        "z = 1, 0.731 → class 1."
+      ],
+      "correct": 3,
+      "explanation": "h_A = −1 now and its weight is −2, so z = −2×(−1) − 3 + 2 = 1; σ(1) ≈ 0.731 → class 1. The class flips from 0 to 1.",
+      "id": 800,
+      "week": "Part B Practice (self-written)",
+      "course": "COMP5318",
+      "knowledgeLocation": "W7 Neural Networks & Backprop / Forward pass · Self-written S16(b)",
+      "lectureWeek": "Week 07",
+      "explanationZh": "h_A = −1，权重 −2：z = 2 − 3 + 2 = 1，σ(1) ≈ 0.731 → 类 1，分类由 0 翻成 1。",
+      "optionNotes": [
+        "−2 × (−1) = +2, not −2.",
+        "With identity, h_A = −1, so z changes.",
+        "σ(1) ≈ 0.731, not 0.269.",
+        "z = 2 − 3 + 2 = 1 → class 1 (flip)."
+      ],
+      "steps": [
+        "Identity: $h_A = -1$",
+        "$z = -2\\times(-1) - 3 + 2 = 1$",
+        "$\\sigma(1) \\approx 0.731$ → class 1"
+      ],
+      "questionZh": "网络输入 $x_1 = 3$、$x_2 = 1$。隐藏单元用 ReLU，输出用 sigmoid：$u_A = x_1 - 2x_2 - 2$，$u_B = -x_1 + 2x_2 + 4$，$z = -2h_A - h_B + 2$，输出 $= \\sigma(z)$。输出 ≥ 0.5 判为类 1。(b) 只把 A 的 ReLU 换成恒等激活（$h_A = u_A$），新的 $z$、概率和类别是什么？",
+      "optionsZh": [
+        "z = −3，0.047 → 类 0。",
+        "z = −1，0.269 → 类 0（不变）。",
+        "z = 1，0.269 → 类 0。",
+        "z = 1，0.731 → 类 1。"
+      ],
+      "partB": true,
+      "partB12": true,
+      "selfWritten": true
+    },
+    {
       "question": "Which statement best matches the course definition of a complex system?",
       "options": [
         "Many entities whose global behaviour is a non-trivial result of their interactions",
