@@ -15,6 +15,11 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 DATA = os.path.join(ROOT, "data", "questions.json")
 
 import csys5030  # noqa: E402
+from texify import texify_question  # noqa: E402
+from formulas import add_formulas  # noqa: E402
+
+# Courses whose plain-text formulas are wrapped in $...$ at build time.
+TEXIFY = {"COMP5318"}
 
 MODULES = [csys5030]
 for name in ("comp5416", "comp5318"):
@@ -65,6 +70,8 @@ def main():
             lecture = f"Week {w:02d}"
             week = label or lecture
             q = item if item.get("fixedOptions") else shuffled(item, rng)
+            if mod.COURSE in TEXIFY:
+                q = texify_question(dict(q))
             kl = f"W{w} {mod.TOPICS[w]} / {loc}" + (f" · {suffix}" if suffix else "")
             q.update({
                 "id": next_id,
@@ -76,6 +83,7 @@ def main():
             })
             if not label:
                 q["selfWritten"] = True
+            add_formulas(q)
             next_id += 1
             new.append(q)
             if week not in weeks:

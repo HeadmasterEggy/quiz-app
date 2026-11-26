@@ -187,6 +187,26 @@ function topicOf(q) {
     return parts[0];
 }
 
+// Formulas given with the question, shown under the stem as on the exam paper.
+function renderFormulas(q) {
+    const box = $('formulaBox');
+    if (!box) return;
+    box.textContent = '';
+    const list = q.formulas || [];
+    if (!list.length) { hide('formulaBox'); return; }
+    const title = document.createElement('div');
+    title.className = 'formula-title';
+    title.textContent = 'Formulas 公式';
+    box.appendChild(title);
+    list.forEach(f => {
+        const row = document.createElement('div');
+        row.className = 'formula-row';
+        setMath(row, f);
+        box.appendChild(row);
+    });
+    show('formulaBox');
+}
+
 function renderQuestionTags(q) {
     const el = $('qTags');
     if (!el) return;
@@ -894,6 +914,7 @@ function showQuestion() {
     void questionText.offsetWidth;
     questionText.classList.add('q-fade');
     renderQuestionTags(q);
+    renderFormulas(q);
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
     $('nextBtn').classList.remove('exam-next');

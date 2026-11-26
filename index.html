@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0f172a">
     <title>Course Quiz</title>
-    <link rel="stylesheet" href="styles.css?v=20">
+    <link rel="stylesheet" href="styles.css?v=21">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script>
         // Apply saved/system theme before first paint to avoid a flash of the wrong theme
@@ -106,6 +106,7 @@
         <div class="quiz-card hidden" id="quizCard">
             <div class="q-tags" id="qTags"></div>
             <div class="question-text" id="questionText"></div>
+            <div class="formula-box hidden" id="formulaBox" aria-label="Formulas"></div>
             <div class="maq-hint hidden" id="maqHint">Pick <strong>2</strong> answers</div>
             <div class="options" id="options"></div>
             <button class="reveal-btn hidden" id="revealBtn">👁 Show Answer</button>
@@ -141,8 +142,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="data/questions.js?v=22"></script>
+    <script src="data/questions.js?v=23"></script>
     <script src="data/generators.js?v=18"></script>
-    <script src="app.js?v=20"></script>
+    <script src="app.js?v=21"></script>
 </body>
 </html>
