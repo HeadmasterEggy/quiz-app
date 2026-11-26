@@ -12389,7 +12389,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
         "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
         "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.2) \\approx -2.3219, \\quad \\log_2(0.8) \\approx -0.3219$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q31",
+      "part": "a"
     },
     {
       "question": "A parent node contains ten examples: five positive and five negative. Split X gives children (5 positive, 0 negative) and (0 positive, 5 negative). Split Y gives children (4 positive, 1 negative) and (1 positive, 4 negative). Use $0\\log_2 0 = 0$; entropy in bits. (b) What is the information gain of split Y (three decimals), and which split does information gain prefer?",
@@ -12431,7 +12433,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
         "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
         "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.2) \\approx -2.3219, \\quad \\log_2(0.8) \\approx -0.3219$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q31",
+      "part": "b"
     },
     {
       "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. (a) For the first example, what are the net input, actual output, updated weights and updated bias?",
@@ -12472,7 +12476,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle u = w^T x + b,$  $\\displaystyle a = 1 \\text{ if } u \\ge 0, \\text{ else } a = 0$",
         "$\\displaystyle w_{new} = w + \\eta(t - a)x,$  $\\displaystyle b_{new} = b + \\eta(t - a)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q32",
+      "part": "a"
     },
     {
       "question": "A perceptron has initial weights $\\mathbf w = (0.2, -0.1)$, bias $b = -0.1$ and learning rate $\\eta = 0.2$. Its output is 1 when the net input is at least zero and 0 otherwise. Process two examples in order, updating immediately after each: first $\\mathbf x = (1, 0)$, $t = 0$; then $\\mathbf x = (0, 1)$, $t = 1$. After the first example the parameters are $\\mathbf w = (0, -0.1)$, $b = -0.3$. (b) For the second example, what are the net input, actual output and final parameters?",
@@ -12513,7 +12519,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle u = w^T x + b,$  $\\displaystyle a = 1 \\text{ if } u \\ge 0, \\text{ else } a = 0$",
         "$\\displaystyle w_{new} = w + \\eta(t - a)x,$  $\\displaystyle b_{new} = b + \\eta(t - a)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q32",
+      "part": "b"
     },
     {
       "question": "Run one complete K-means iteration with $k = 2$ on $A = (0,0)$, $B = (0,4)$, $C = (6,0)$, $D = (6,4)$, starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ and the resulting clusters?",
@@ -12554,7 +12562,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$",
         "$\\displaystyle \\text{SSE} = \\sum_j \\sum_{x \\in C_j} \\lVert x - \\mu_j \\rVert^2$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q33",
+      "part": "a"
     },
     {
       "question": "Run one complete K-means iteration with $k = 2$ on $A = (0,0)$, $B = (0,4)$, $C = (6,0)$, $D = (6,4)$, starting from $\\mu_1 = A = (0,0)$ and $\\mu_2 = D = (6,4)$. Assign every point using the initial centroids before updating either centroid. The assignment step gives clusters {A, B} and {C, D}. (b) What are the updated centroids and the total within-cluster $\\text{SSE}$ (using the updated centroids)?",
@@ -12594,7 +12604,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$",
         "$\\displaystyle \\text{SSE} = \\sum_j \\sum_{x \\in C_j} \\lVert x - \\mu_j \\rVert^2$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q33",
+      "part": "b"
     },
     {
       "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the most probable hidden path and its joint probability with (x, y)?",
@@ -12636,7 +12648,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle V_1(k) = \\pi_k e_k(x),$  $\\displaystyle V_2(k) = e_k(y) \\max_j \\left[V_1(j)\\, a_{jk}\\right]$",
         "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
         "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q34",
+      "part": "a"
     },
     {
       "question": "An HMM has states A and B with priors $\\pi_A = 0.6$, $\\pi_B = 0.4$; emissions $e_A(x) = 0.7$, $e_A(y) = 0.3$, $e_B(x) = 0.4$, $e_B(y) = 0.6$; transitions $a_{AA} = 0.6$, $a_{AB} = 0.4$, $a_{BA} = 0.3$, $a_{BB} = 0.7$. The observed sequence is (x, y). Use $f_1(k) = V_1(k)$. (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$, and why does $P(x, y)$ differ from the best-path probability?",
@@ -12678,7 +12692,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle V_1(k) = \\pi_k e_k(x),$  $\\displaystyle V_2(k) = e_k(y) \\max_j \\left[V_1(j)\\, a_{jk}\\right]$",
         "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
         "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 3 Q34",
+      "part": "b"
     },
     {
       "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (a) What are the parent entropy and $\\text{IG}(X)$ (three decimals)?",
@@ -12716,7 +12732,9 @@ window.QUIZ_DATA = {
         "$H(\\text{父}) \\approx  0.811$；$\\text{IG}(X) \\approx  0.811$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S1",
+      "part": "a"
     },
     {
       "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (b) What is $\\text{IG}(Y)$, and which split does information gain prefer?",
@@ -12754,7 +12772,9 @@ window.QUIZ_DATA = {
         "$\\text{IG}(Y) = 0$；两个划分打平。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S1",
+      "part": "b"
     },
     {
       "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (a) What are the parent entropy and $\\text{IG}(Z)$ (three decimals)?",
@@ -12792,7 +12812,9 @@ window.QUIZ_DATA = {
         "$H(\\text{父}) \\approx  0.918$；$\\text{IG}(Z) \\approx  0.585$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S2",
+      "part": "a"
     },
     {
       "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (b) What is $\\text{IG}(W)$ (three decimals), and which attribute does information gain choose?",
@@ -12830,7 +12852,9 @@ window.QUIZ_DATA = {
         "$\\text{IG}(W) \\approx  0.191$；选 Z。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S2",
+      "part": "b"
     },
     {
       "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. (a) For the first example, what are u, a and the updated parameters?",
@@ -12867,7 +12891,9 @@ window.QUIZ_DATA = {
         "$u = 0.8$，$a = 1$；$w = (0.4, -0.4)$，$b = -0.1$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S3",
+      "part": "a"
     },
     {
       "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. After the first example, $\\mathbf w = (0.4, -0.4)$ and $b = -0.1$. (b) For the second example, what are u, a and the parameters afterwards?",
@@ -12904,7 +12930,9 @@ window.QUIZ_DATA = {
         "$u = 0.3$，$a = 1$；不更新：$w = (0.4, -0.4)$，$b = -0.1$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S3",
+      "part": "b"
     },
     {
       "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. (a) For the first example, what are u, a and the updated parameters?",
@@ -12941,7 +12969,9 @@ window.QUIZ_DATA = {
         "$u = -0.2$，$a = 0$；$w = (0.5, 0.2)$，$b = -0.2$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S4",
+      "part": "a"
     },
     {
       "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. After the first example, $\\mathbf w = (0.5, 0.2)$ and $b = 0.3$. (b) For the second example, what are u, a and the final parameters?",
@@ -12978,7 +13008,9 @@ window.QUIZ_DATA = {
         "$u = 0.7$，$a = 1$；$w = (0, -0.3)$，$b = -0.2$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S4",
+      "part": "b"
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $A = (1,1)$, $B = (2,1)$, $C = (4,3)$, $D = (5,4)$, starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ of C and D, and the resulting clusters?",
@@ -13016,7 +13048,9 @@ window.QUIZ_DATA = {
         "C (13, 8)、D (25, 18)；簇为 {A, B} 和 {C, D}。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S5",
+      "part": "a"
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $A = (1,1)$, $B = (2,1)$, $C = (4,3)$, $D = (5,4)$, starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. The assignment step gives clusters {A} and {B, C, D}. (b) What are the updated centroids and the total $\\text{SSE}$ (using the updated centroids)?",
@@ -13053,7 +13087,9 @@ window.QUIZ_DATA = {
         "$\\mu_{1} = (3, 2.25)$，$\\mu_{2} = (3, 2.25)$；$\\text{SSE} = 16.75$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S5",
+      "part": "b"
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $P_{1} = (0,0)$, $P_{2} = (1,0)$, $P_{3} = (0,2)$, $P_{4} = (5,5)$, $P_{5} = (6,5)$, starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ of P2, P3 and P5, and the clusters?",
@@ -13091,7 +13127,9 @@ window.QUIZ_DATA = {
         "P2 (1, 41)、P3 (34, 4)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S6",
+      "part": "a"
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $P_{1} = (0,0)$, $P_{2} = (1,0)$, $P_{3} = (0,2)$, $P_{4} = (5,5)$, $P_{5} = (6,5)$, starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. The assignment step gives clusters {P1, P2, P3} and {P4, P5}. (b) What are the updated centroids and the total $\\text{SSE}$?",
@@ -13129,7 +13167,9 @@ window.QUIZ_DATA = {
         "$\\mu_{1} = (0, 0)$，$\\mu_{2} = (5, 5)$；$\\text{SSE} = 6$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S6",
+      "part": "b"
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the best path and its probability?",
@@ -13167,7 +13207,9 @@ window.QUIZ_DATA = {
         "$V_{2}(A) = 0.056$，$V_{2}(B) = 0.084$；路径 A → B，0.084。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S7",
+      "part": "a"
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
@@ -13204,7 +13246,9 @@ window.QUIZ_DATA = {
         "$f_{2}(A) = 0.068$，$f_{2}(B) = 0.147$，$P = 0.147$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S7",
+      "part": "b"
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (a) Using Viterbi, what are $V_1$, $V_2$, the best path and its probability?",
@@ -13242,7 +13286,9 @@ window.QUIZ_DATA = {
         "$V_{1} = (0.18, 0.14)$，$V_{2} = (0.0472, 0.1616)$；路径 B → B，0.1616。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S8",
+      "part": "a"
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
@@ -13279,7 +13325,9 @@ window.QUIZ_DATA = {
         "$f_{2}(A) = 0.0472$，$f_{2}(B) = 0.1616$，$P = 0.1616$。"
       ],
       "partB": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S8",
+      "part": "b"
     },
     {
       "question": "A decision-tree node contains eight examples: four positive and four negative. A proposed split produces child L with three positives and one negative, and child R with one positive and three negatives. Use $0\\log_2 0 = 0$. (a) What are the entropies of the parent, L and R, in bits?",
@@ -13320,7 +13368,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
         "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
         "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.25) = -2, \\quad \\log_2(0.75) \\approx -0.4150$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q31",
+      "part": "a"
     },
     {
       "question": "A decision-tree node contains eight examples: four positive and four negative. A proposed split produces child L with three positives and one negative, and child R with one positive and three negatives. Use $0\\log_2 0 = 0$. (b) What are the size-weighted child entropy and the information gain (three decimals)?",
@@ -13362,7 +13412,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
         "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
         "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.25) = -2, \\quad \\log_2(0.75) \\approx -0.4150$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q31",
+      "part": "b"
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = 3$. Hidden units use ReLU and the output uses a sigmoid: $u_A = x_1 + x_2 - 3$, $u_B = 2x_1 - x_2$, $h = \\text{ReLU}(u)$, $z = h_A + 2h_B$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$ and $h_B$?",
@@ -13404,7 +13456,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
         "$\\displaystyle z = h_A + 2h_B$",
         "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q32",
+      "part": "a"
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = 3$. Hidden units use ReLU and the output uses a sigmoid: $u_A = x_1 + x_2 - 3$, $u_B = 2x_1 - x_2$, $h = \\text{ReLU}(u)$, $z = h_A + 2h_B$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) What are z, the output probability and class? Then replace only unit B's ReLU by the identity ($h_B = u_B$): what are the new probability and class?",
@@ -13447,7 +13501,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
         "$\\displaystyle z = h_A + 2h_B$",
         "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q32",
+      "part": "b"
     },
     {
       "question": "Run one complete K-means iteration with $k = 2$ on A (0,1), B (2,1), C (6,3), D (8,3), with initial centroids $\\mu_1 = A$ and $\\mu_2 = D$. Assign every point before updating either centroid. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ and the cluster assignments?",
@@ -13488,7 +13544,9 @@ window.QUIZ_DATA = {
       "partB12": true,
       "formulas": [
         "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q33",
+      "part": "a"
     },
     {
       "question": "Run one complete K-means iteration with $k = 2$ on A (0,1), B (2,1), C (6,3), D (8,3), with initial centroids $\\mu_1 = A$ and $\\mu_2 = D$. Assign every point before updating either centroid. The assignment gives clusters {A, B} and {C, D}. (b) What are the updated centroids?",
@@ -13527,7 +13585,9 @@ window.QUIZ_DATA = {
       "partB12": true,
       "formulas": [
         "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q33",
+      "part": "b"
     },
     {
       "question": "An HMM has states A, B and observations x, y; the observed sequence is (x, y). Priors $\\pi(A) = 0.7$, $\\pi(B) = 0.3$. Emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$. Transitions (row = current): A→A 0.8, A→B 0.2, B→A 0.3, B→B 0.7. (a) What are $f_1(A)$ and $f_1(B)$?",
@@ -13567,7 +13627,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
         "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q34",
+      "part": "a"
     },
     {
       "question": "An HMM has states A, B and observations x, y; the observed sequence is (x, y). Priors $\\pi(A) = 0.7$, $\\pi(B) = 0.3$. Emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$. Transitions (row = current): A→A 0.8, A→B 0.2, B→A 0.3, B→B 0.7. (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$ (four decimals)?",
@@ -13608,7 +13670,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
         "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 1 Q34",
+      "part": "b"
     },
     {
       "question": "A naive Bayes classifier has classes Yes and No; an observation has $F_1$ = present and $F_2$ = present (conditionally independent given the class). Yes: prior 0.4, $P(F_1|\\text{Yes}) = 0.75$, $P(F_2|\\text{Yes}) = 0.50$. No: prior 0.6, $P(F_1|\\text{No}) = 0.25$, $P(F_2|\\text{No}) = 0.50$. (a) What are the two unnormalised class scores?",
@@ -13648,7 +13712,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle s_c = P(c)\\, P(F_1 \\mid c)\\, P(F_2 \\mid c)$",
         "$\\displaystyle P(c \\mid F_1, F_2) = \\dfrac{s_c}{\\sum_k s_k}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q31",
+      "part": "a"
     },
     {
       "question": "A naive Bayes classifier has classes Yes and No; an observation has $F_1$ = present and $F_2$ = present (conditionally independent given the class). Yes: prior 0.4, $P(F_1|\\text{Yes}) = 0.75$, $P(F_2|\\text{Yes}) = 0.50$. No: prior 0.6, $P(F_1|\\text{No}) = 0.25$, $P(F_2|\\text{No}) = 0.50$. The scores are $s_{\\text{Yes}} = 0.15$ and $s_{\\text{No}} = 0.075$. (b) What are the posteriors (three decimals) and the predicted class?",
@@ -13689,7 +13755,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle s_c = P(c)\\, P(F_1 \\mid c)\\, P(F_2 \\mid c)$",
         "$\\displaystyle P(c \\mid F_1, F_2) = \\dfrac{s_c}{\\sum_k s_k}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q31",
+      "part": "b"
     },
     {
       "question": "Fit a simple least-squares line to $(x, y) = (1, 2), (2, 2), (3, 5)$. The mean of x is 2 and the mean of y is 3. (a) What are $S_{xy}$, $S_{xx}$, the slope $b_1$ and intercept $b_0$?",
@@ -13731,7 +13799,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),$  $\\displaystyle S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
         "$\\displaystyle b_1 = \\dfrac{S_{xy}}{S_{xx}},$  $\\displaystyle b_0 = \\bar{y} - b_1\\bar{x},$  $\\displaystyle \\hat{y}_i = b_0 + b_1 x_i$",
         "$\\displaystyle \\text{MSE} = \\dfrac{1}{n} \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q32",
+      "part": "a"
     },
     {
       "question": "Fit a simple least-squares line to $(x, y) = (1, 2), (2, 2), (3, 5)$. The mean of x is 2 and the mean of y is 3. The fitted line is $\\hat y = 1.5x$. (b) What are the fitted predictions and the training $\\text{MSE}$?",
@@ -13774,7 +13844,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),$  $\\displaystyle S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
         "$\\displaystyle b_1 = \\dfrac{S_{xy}}{S_{xx}},$  $\\displaystyle b_0 = \\bar{y} - b_1\\bar{x},$  $\\displaystyle \\hat{y}_i = b_0 + b_1 x_i$",
         "$\\displaystyle \\text{MSE} = \\dfrac{1}{n} \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q32",
+      "part": "b"
     },
     {
       "question": "Four one-dimensional observations are $A = 0$, $B = 3$, $C = 8$, $D = 10$. Begin with singleton clusters and use absolute point-to-point distance. (a) Using complete linkage, what is the first merge, the distances from the merged cluster to A and B, and the second merge?",
@@ -13815,7 +13887,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle d_{single}(U, V) = \\min_{x \\in U,\\, y \\in V} |x - y|$",
         "$\\displaystyle d_{complete}(U, V) = \\max_{x \\in U,\\, y \\in V} |x - y|$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q33",
+      "part": "a"
     },
     {
       "question": "Four one-dimensional observations are $A = 0$, $B = 3$, $C = 8$, $D = 10$. Begin with singleton clusters and use absolute point-to-point distance. After those merges the clusters are {A, B} and {C, D}. (b) What are their single-link and complete-link distances, and which pairs set them?",
@@ -13856,7 +13930,9 @@ window.QUIZ_DATA = {
       "formulas": [
         "$\\displaystyle d_{single}(U, V) = \\min_{x \\in U,\\, y \\in V} |x - y|$",
         "$\\displaystyle d_{complete}(U, V) = \\max_{x \\in U,\\, y \\in V} |x - y|$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q33",
+      "part": "b"
     },
     {
       "question": "A network receives $x_1 = 2$, $x_2 = -1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 + 2x_2 - 1$, $u_B = 2x_1 - x_2 - 2$, $z = 3h_A + h_B - 1$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$ and $h_B$?",
@@ -13899,7 +13975,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
         "$\\displaystyle z = 3h_A + h_B - 1$",
         "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q34",
+      "part": "a"
     },
     {
       "question": "A network receives $x_1 = 2$, $x_2 = -1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 + 2x_2 - 1$, $u_B = 2x_1 - x_2 - 2$, $z = 3h_A + h_B - 1$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) What are z, the probability and class? Then replace only unit A's ReLU by the identity ($h_A = u_A$): new probability and class?",
@@ -13942,7 +14020,9 @@ window.QUIZ_DATA = {
         "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
         "$\\displaystyle z = 3h_A + h_B - 1$",
         "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      ],
+      "group": "COMP5318 · Practice Exam 2 Q34",
+      "part": "b"
     },
     {
       "question": "A naive Bayes spam filter has classes Spam and Ham. Spam: prior 0.3, $P(W_1|\\text{Spam}) = 0.8$, $P(W_2|\\text{Spam}) = 0.6$. Ham: prior 0.7, $P(W_1|\\text{Ham}) = 0.2$, $P(W_2|\\text{Ham}) = 0.5$, where $P(W_i|c)$ is the probability word $W_i$ is present. An email contains $W_1$ but not $W_2$. (a) What are the unnormalised scores?",
@@ -13980,7 +14060,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S9",
+      "part": "a"
     },
     {
       "question": "A naive Bayes spam filter has classes Spam and Ham. Spam: prior 0.3, $P(W_1|\\text{Spam}) = 0.8$, $P(W_2|\\text{Spam}) = 0.6$. Ham: prior 0.7, $P(W_1|\\text{Ham}) = 0.2$, $P(W_2|\\text{Ham}) = 0.5$, where $P(W_i|c)$ is the probability word $W_i$ is present. An email contains $W_1$ but not $W_2$. The scores are 0.096 (Spam) and 0.070 (Ham). (b) What are the posteriors (three decimals) and the prediction?",
@@ -14018,7 +14100,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S9",
+      "part": "b"
     },
     {
       "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. (a) What are the smoothed likelihoods $P(\\text{Sunny}|\\text{Yes})$ and $P(\\text{Sunny}|\\text{No})$, and the two unnormalised scores?",
@@ -14056,7 +14140,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S10",
+      "part": "a"
     },
     {
       "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. The scores are $s_{\\text{Yes}} = 1/30 \\approx 0.033$ and $s_{\\text{No}} = 0.15$. (b) What are the posteriors and the prediction, and what would happen without smoothing?",
@@ -14094,7 +14180,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S10",
+      "part": "b"
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. (a) What are $\\bar x$, $\\bar y$, $S_{xy}$, $S_{xx}$, $b_1$ and $b_0$?",
@@ -14132,7 +14220,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S11",
+      "part": "a"
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. The fitted line is $\\hat y = 0.9 + 1.4x$. (b) What are the fitted values and the training $\\text{MSE}$?",
@@ -14171,7 +14261,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S11",
+      "part": "b"
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. (a) What are $S_{xy}$, $S_{xx}$, $b_1$, $b_0$, and the prediction at $x = 3$?",
@@ -14210,7 +14302,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S12",
+      "part": "a"
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. The fitted line is $\\hat y = 0.6 + 0.8x$. (b) What are the residuals and the training $\\text{MSE}$?",
@@ -14248,7 +14342,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S12",
+      "part": "b"
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 1$, $C = 5$, $D = 7$, $E = 10$. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (a) With single linkage, what are the merges in order with their heights?",
@@ -14287,7 +14383,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S13",
+      "part": "a"
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 1$, $C = 5$, $D = 7$, $E = 10$. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (b) With complete linkage, what are the third and fourth merge heights?",
@@ -14326,7 +14424,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S13",
+      "part": "b"
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 3$, $C = 4$, $D = 10$, $E = 12$. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. (a) What are the first three merges and their heights?",
@@ -14365,7 +14465,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S14",
+      "part": "a"
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 3$, $C = 4$, $D = 10$, $E = 12$. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. After {A,B,C} and {D,E} form, (b) what is the final merge height (three decimals), and what clusters do you get by cutting the dendrogram at height 5?",
@@ -14403,7 +14505,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S14",
+      "part": "b"
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z and the class?",
@@ -14441,7 +14545,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S15",
+      "part": "a"
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit B's ReLU by the identity ($h_B = u_B$). What are the new z, probability and class?",
@@ -14479,7 +14585,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S15",
+      "part": "b"
     },
     {
       "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z, the probability and the class?",
@@ -14517,7 +14625,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S16",
+      "part": "a"
     },
     {
       "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit A's ReLU by the identity ($h_A = u_A$). What are the new z, probability and class?",
@@ -14555,7 +14665,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true
+      "selfWritten": true,
+      "group": "COMP5318 · Self-written S16",
+      "part": "b"
     },
     {
       "question": "Which statement best matches the course definition of a complex system?",

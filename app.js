@@ -4,6 +4,11 @@ let current = 0;
 let answered = false;
 // Sparse array keyed by question position, so jumping around keeps scoring correct
 const answers = [];
+// Part B questions are stored as sub-parts (a), (b) sharing a `group`. In a run they stay
+// together and count as one numbered question, as on the exam paper: cards[k] lists the
+// indices into `questions` of question k's parts, and cardOf[i] is the card of index i.
+let cards = [];
+let cardOf = [];
 const THEME_KEY = 'quiz_theme';
 const SHUFFLE_KEY = 'quiz_shuffle_enabled';
 const OPTION_SHORTCUTS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -185,6 +190,40 @@ function topicOf(q) {
     // Exam-sourced locations start with "Practice Exam 1 Q3" etc.; the topic follows.
     if (/exam|quiz/i.test(parts[0]) && parts[1]) return parts[1];
     return parts[0];
+}
+
+// On a later part of a multi-part question, recap the earlier parts' answers above the options.
+function renderPartRecap() {
+    const box = $('partRecap');
+    if (!box) return;
+    box.textContent = '';
+    const earlier = (cards[cardOf[current]] || []).filter(i => i < current);
+    if (!earlier.length) { hide('partRecap'); return; }
+    earlier.forEach(i => {
+        const q = questions[i];
+        const a = answers[i];
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'part-recap-row';
+        row.onclick = () => jumpToQuestion(i);
+        const tag = document.createElement('span');
+        tag.className = 'part-recap-tag';
+        const text = document.createElement('span');
+        text.className = 'part-recap-text';
+        const opt = k => `${OPTION_SHORTCUTS[k]}. ${q.options[k] || ''}`;
+        const correctIdx = isMAQ(q) ? q.correct : [q.correct];
+        const chosen = a ? (Array.isArray(a.selected) ? a.selected : [a.selected]) : [];
+        const reveal = a && !examInProgress();
+        tag.textContent = `${partLabel(i)} ` + (!a ? '–' : !reveal ? '•' : a.correct ? '✓' : '✗');
+        if (!a) text.textContent = 'Not answered yet';
+        else if (!reveal) setMath(text, 'Answered ' + chosen.map(k => OPTION_SHORTCUTS[k]).join(', '));
+        else if (a.correct) setMath(text, correctIdx.map(opt).join(' '));
+        else setMath(text, `You chose ${chosen.map(k => OPTION_SHORTCUTS[k]).join(', ')} · Answer ${correctIdx.map(opt).join(' ')}`);
+        row.classList.add(!a ? 'is-open' : !reveal ? 'is-pending' : a.correct ? 'is-right' : 'is-wrong');
+        row.append(tag, text);
+        box.appendChild(row);
+    });
+    show('partRecap');
 }
 
 // Formulas given with the question, shown under the stem as on the exam paper.
@@ -416,6 +455,60 @@ function shuffled(items) {
     return copy;
 }
 
+// Split a list into units: one unit per ungrouped question, one per group of sub-parts
+// (in part order, at the position of the group's first part).
+function unitsOf(items) {
+    const units = [];
+    const byGroup = new Map();
+    items.forEach(q => {
+        if (!q.group) { units.push([q]); return; }
+        if (byGroup.has(q.group)) { byGroup.get(q.group).push(q); return; }
+        const unit = [q];
+        byGroup.set(q.group, unit);
+        units.push(unit);
+    });
+    units.forEach(u => u.sort((a, b) => (a.part || '').localeCompare(b.part || '')));
+    return units;
+}
+
+// Number of questions as the paper counts them: all parts of a group count once.
+function countQuestions(items) { return unitsOf(items).length; }
+
+function keepPartsTogether(items) { return unitsOf(items).flat(); }
+function shuffledKeepingParts(items) { return shuffled(unitsOf(items)).flat(); }
+
+function buildCards() {
+    cards = []; cardOf = [];
+    questions.forEach((q, i) => {
+        const last = cards[cards.length - 1];
+        if (q.group && last && questions[last[0]].group === q.group) last.push(i);
+        else cards.push([i]);
+        cardOf[i] = cards.length - 1;
+    });
+}
+
+// "(a)" / "(b)" when the question at index i is one part of a multi-part card.
+function partLabel(i) {
+    const c = cards[cardOf[i]];
+    return c && c.length > 1 && questions[i].part ? `(${questions[i].part})` : '';
+}
+
+function cardState(c) {
+    const as = c.map(i => answers[i]);
+    const done = as.every(Boolean);
+    const any = as.some(Boolean);
+    const wrong = as.some(a => a && !a.correct);
+    return { done, any, wrong, correct: done && !wrong };
+}
+
+// "Next: (b) →" when the next index is the next part of the same question.
+function nextLabel() {
+    const n = current + 1;
+    return n < questions.length && cardOf[n] === cardOf[current] ? `Next: ${partLabel(n)} →` : 'Next →';
+}
+
+function firstOpenPart(c) { return c.find(i => !answers[i]) ?? c[0]; }
+
 function groupedShuffleByCourse(items) {
     const grouped = new Map();
     items.forEach(q => {
@@ -430,7 +523,7 @@ function groupedShuffleByCourse(items) {
         ...[...grouped.keys()].filter(course => !configuredCourses.includes(course))
     ];
 
-    return orderedCourses.flatMap(course => shuffled(grouped.get(course)));
+    return orderedCourses.flatMap(course => shuffledKeepingParts(grouped.get(course)));
 }
 
 // Return a copy of the question with its options reordered and `correct` remapped,
@@ -463,8 +556,8 @@ function withGeneratedNumbers(q) {
 
 function orderQuestions(items, course) {
     items = items.map(withGeneratedNumbers);
-    if (!shuffleEnabled) return items;
-    const arranged = course === 'all' ? groupedShuffleByCourse(items) : shuffled(items);
+    if (!shuffleEnabled) return keepPartsTogether(items);
+    const arranged = course === 'all' ? groupedShuffleByCourse(items) : shuffledKeepingParts(items);
     return arranged.map(withShuffledOptions);
 }
 
@@ -597,6 +690,7 @@ function startFresh(course = 'all', week = 'all') {
 // Start a run over the given questions (a fresh quiz or a retry of wrong answers).
 function beginRun(items, retry) {
     questions = items;
+    buildCards();
     current = 0; answers.length = 0; isRetryMode = retry;
     resultsShown = false; examSubmitted = false;
     hide('resultsCard'); hide('backResultsBtn');
@@ -631,8 +725,8 @@ function updateExamBar() {
     if (!bar) return;
     if (!examMode || !questions.length) { bar.classList.add('hidden'); return; }
     bar.classList.remove('hidden');
-    const done = answers.filter(Boolean).length;
-    $('examAnswered').textContent = examSubmitted ? 'Submitted' : `${done}/${questions.length} answered`;
+    const done = cards.filter(c => cardState(c).done).length;
+    $('examAnswered').textContent = examSubmitted ? 'Submitted' : `${done}/${cards.length} answered`;
     $('examSubmitBtn').classList.toggle('hidden', examSubmitted);
     updateSideNav();
 }
@@ -648,7 +742,7 @@ function toggleExamMode() {
 
 function submitExam() {
     if (!examInProgress()) return;
-    const unanswered = questions.length - answers.filter(Boolean).length;
+    const unanswered = cards.filter(c => !cardState(c).done).length;
     if (unanswered && !window.confirm(`${unanswered} question${unanswered !== 1 ? 's are' : ' is'} unanswered. Submit anyway?`)) return;
     examSubmitted = true;
     answers.forEach(a => { if (a) recordAttempt(a.question, a.correct); });
@@ -665,7 +759,7 @@ function buildCourseFilter() {
         const optgroup = document.createElement('optgroup');
         optgroup.label = semesterLabel(group);
         group.courses.forEach(course => {
-            const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === course).length;
+            const count = countQuestions((window.QUIZ_DATA.questions || []).filter(q => q.course === course));
             const option = document.createElement('option');
             option.value = course;
             option.textContent = `${course} (${count} Qs)`;
@@ -816,7 +910,7 @@ function buildWeekFilter() {
     sel.innerHTML = '<option value="all">All weeks & exams</option>';
     const weeks = getWeeksForCourse(currentCourseFilter);
     weeks.forEach(w => {
-        const count = (window.QUIZ_DATA.questions || []).filter(q => q.course === currentCourseFilter && q.week === w).length;
+        const count = countQuestions((window.QUIZ_DATA.questions || []).filter(q => q.course === currentCourseFilter && q.week === w));
         const option = document.createElement('option');
         option.value = w;
         option.textContent = `${w} (${count} Qs)`;
@@ -893,7 +987,8 @@ function showQuestion() {
     counter.textContent = '';
     const num = document.createElement('span');
     num.className = 'counter-num';
-    num.textContent = `Q${current + 1} / ${questions.length}`;
+    const part = partLabel(current);
+    num.textContent = `Q${cardOf[current] + 1}${part ? ' ' + part : ''} / ${cards.length}`;
     counter.appendChild(num);
     const sourceParts = [q.course, q.week].filter(Boolean);
     if (sourceParts.length) {
@@ -907,7 +1002,7 @@ function showQuestion() {
     caret.className = 'counter-caret';
     caret.textContent = '▾';
     counter.appendChild(caret);
-    $('progressFill').style.width = `${(current / questions.length) * 100}%`;
+    $('progressFill').style.width = `${(cardOf[current] / cards.length) * 100}%`;
     const questionText = $('questionText');
     setBilingual(questionText, q.question, q.questionZh);
     questionText.classList.remove('q-fade');
@@ -915,6 +1010,7 @@ function showQuestion() {
     questionText.classList.add('q-fade');
     renderQuestionTags(q);
     renderFormulas(q);
+    renderPartRecap();
     renderOptions();
     hide('explanationInline'); hide('nextBtn');
     $('nextBtn').classList.remove('exam-next');
@@ -1016,7 +1112,7 @@ function handleAnswer(index, btn) {
 function showExamNext() {
     const next = $('nextBtn');
     next.disabled = false;
-    next.textContent = current < questions.length - 1 ? 'Next →' : 'Submit exam 🏁';
+    next.textContent = current < questions.length - 1 ? nextLabel() : 'Submit exam 🏁';
     next.classList.add('exam-next');
     show('nextBtn');
 }
@@ -1048,7 +1144,7 @@ function renderReview(q, a) {
     renderExplanation(q, a ? a.selected : null);
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
-    $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
+    $('nextBtn').textContent = current < questions.length - 1 ? nextLabel() : 'See Results 🏆';
 }
 
 // ── MAQ ──
@@ -1108,7 +1204,7 @@ function showInlineExplanation(isCorrect, q) {
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
-    $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
+    $('nextBtn').textContent = current < questions.length - 1 ? nextLabel() : 'See Results 🏆';
     // On compact viewports the next button is sticky-pinned, so bring the explanation into view instead
     scrollActionIntoView(isCompactViewport() ? 'explanationInline' : 'nextBtn');
 }
@@ -1129,7 +1225,7 @@ function revealAnswer() {
     hide('maqHint'); hide('maqCheckBtn'); hide('revealBtn');
     show('explanationInline'); show('nextBtn');
     $('nextBtn').disabled = false;
-    $('nextBtn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results 🏆';
+    $('nextBtn').textContent = current < questions.length - 1 ? nextLabel() : 'See Results 🏆';
     scrollActionIntoView(isCompactViewport() ? 'explanationInline' : 'nextBtn');
 }
 
@@ -1138,13 +1234,14 @@ function showResults() {
     if (isJumpOpen()) closeJumpPanel();
     hide('quizCard'); hide('nextBtn'); show('resultsCard');
     $('progressFill').style.width = '100%';
-    $('questionCounter').textContent = `Done · ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
+    $('questionCounter').textContent = `Done · ${cards.length} question${cards.length !== 1 ? 's' : ''}`;
     $('jumpResultsBtn').textContent = '🏁 View Results';
-    const total = questions.length;
-    const correct = answers.filter(a => a && a.correct).length;
-    const answeredCount = answers.filter(Boolean).length;
-    const wrong = answeredCount - correct;
-    const skipped = total - answeredCount;
+    // A multi-part question counts as right only when every part is right.
+    const total = cards.length;
+    const states = cards.map(cardState);
+    const correct = states.filter(st => st.correct).length;
+    const wrong = states.filter(st => st.wrong).length;
+    const skipped = total - correct - wrong;
     const pct = total ? Math.round((correct / total) * 100) : 0;
     $('finalScore').textContent = `${correct}/${total}`;
     $('scorePercentage').textContent = `${pct}%`;
@@ -1155,17 +1252,18 @@ function showResults() {
     hide('backResultsBtn');
 
     const review = $('answersReview'); review.innerHTML = '';
-    for (let i = 0; i < total; i++) {
-        const a = answers[i];
+    cards.forEach((c, k) => {
+        const st = states[k];
         const dot = document.createElement('button');
-        dot.onclick = () => jumpToQuestion(i);
-        dot.className = 'answer-dot ' + (a ? (a.correct ? 'dot-correct' : 'dot-wrong') : 'dot-skipped');
-        dot.textContent = i + 1;
-        dot.title = a
-            ? `Q${i + 1}: ${a.correct ? '✓' : '✗'} — ${(a.question.question || '').substring(0, 80)}`
-            : `Q${i + 1}: skipped`;
+        dot.onclick = () => jumpToQuestion(c[0]);
+        dot.className = 'answer-dot ' + (st.correct ? 'dot-correct' : st.wrong ? 'dot-wrong' : 'dot-skipped');
+        dot.textContent = k + 1;
+        const parts = c.length > 1 ? ' ' + c.map(i => `${partLabel(i)}${answers[i] ? (answers[i].correct ? '✓' : '✗') : '–'}`).join(' ') : '';
+        dot.title = (st.correct || st.wrong)
+            ? `Q${k + 1}: ${st.correct ? '✓' : '✗'}${parts} — ${(questions[c[0]].question || '').substring(0, 80)}`
+            : `Q${k + 1}: skipped${parts}`;
         review.appendChild(dot);
-    }
+    });
 
     renderTopicSummary();
 
@@ -1272,16 +1370,21 @@ function isJumpOpen() {
 
 function buildJumpGrid(grid = $('jumpGrid'), highlightCurrent = true) {
     grid.innerHTML = '';
-    questions.forEach((q, i) => {
+    cards.forEach((c, k) => {
+        const q = questions[c[0]];
+        const st = cardState(c);
         const chip = document.createElement('button');
         chip.className = 'jump-chip';
-        const a = answers[i];
-        if (a) chip.classList.add(examInProgress() ? 'answered-pending' : (a.correct ? 'answered-correct' : 'answered-wrong'));
-        if (highlightCurrent && i === current) chip.classList.add('current');
-        chip.textContent = i + 1;
+        if (examInProgress()) { if (st.done) chip.classList.add('answered-pending'); }
+        else if (st.wrong) chip.classList.add('answered-wrong');
+        else if (st.correct) chip.classList.add('answered-correct');
+        if (highlightCurrent && cardOf[current] === k) chip.classList.add('current');
+        chip.textContent = k + 1;
         const sourceParts = [q.course, q.week].filter(Boolean);
-        chip.title = `Q${i + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + (a ? (examInProgress() ? ' · answered' : (a.correct ? ' · ✓' : ' · ✗')) : '');
-        chip.onclick = () => jumpToQuestion(i);
+        const status = !st.any ? '' : examInProgress() ? (st.done ? ' · answered' : ' · part answered')
+            : st.wrong ? ' · ✗' : st.correct ? ' · ✓' : ' · part answered';
+        chip.title = `Q${k + 1}` + (sourceParts.length ? ` · ${sourceParts.join(' · ')}` : '') + status;
+        chip.onclick = () => jumpToQuestion(examInProgress() ? c[0] : firstOpenPart(c));
         grid.appendChild(chip);
     });
 }
@@ -1294,16 +1397,18 @@ function updateSideNav() {
     nav.classList.remove('hidden');
     const onResults = !$('resultsCard').classList.contains('hidden');
     buildJumpGrid($('sideGrid'), !onResults);
-    const done = answers.filter(Boolean);
-    const right = done.filter(a => a.correct).length;
-    const wrong = done.length - right;
+    const states = cards.map(cardState);
+    const done = states.filter(st => st.done);
+    const right = states.filter(st => st.correct).length;
+    const wrong = states.filter(st => st.wrong).length;
     const stats = $('sideStats');
     if (examInProgress()) {
-        stats.innerHTML = `<div class="side-title">📝 Exam</div><div class="side-row"><span>Answered</span><strong>${done.length}/${questions.length}</strong></div>`;
+        stats.innerHTML = `<div class="side-title">📝 Exam</div><div class="side-row"><span>Answered</span><strong>${done.length}/${cards.length}</strong></div>`;
     } else {
-        const acc = done.length ? Math.round(right / done.length * 100) + '%' : '–';
+        const judged = right + wrong;
+        const acc = judged ? Math.round(right / judged * 100) + '%' : '–';
         stats.innerHTML = `<div class="side-title">This run</div>`
-            + `<div class="side-row"><span>Answered</span><strong>${done.length}/${questions.length}</strong></div>`
+            + `<div class="side-row"><span>Answered</span><strong>${done.length}/${cards.length}</strong></div>`
             + `<div class="side-row"><span>Mistakes</span><strong class="${wrong ? 'is-wrong' : ''}">${wrong}</strong></div>`
             + `<div class="side-row"><span>Accuracy</span><strong>${acc}</strong></div>`;
     }

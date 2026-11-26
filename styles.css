@@ -1947,7 +1947,7 @@ kbd {
     .quiz-card {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: repeat(11, auto) 1fr;
+        grid-template-rows: repeat(12, auto) 1fr;
         column-gap: 28px;
         align-items: start;
         padding: 28px 30px;
@@ -1956,7 +1956,7 @@ kbd {
     .quiz-card > .explanation-inline,
     .quiz-card > .expl-placeholder {
         grid-column: 2;
-        grid-row: 1 / 13;
+        grid-row: 1 / 14;
         position: sticky;
         top: 16px;
         max-height: calc(100vh - 32px);
@@ -2094,6 +2094,20 @@ body::before { display: none; }
 }
 .formula-row { padding: 3px 0; }
 .formula-row .katex { display: inline-block; margin-right: 1.6em; }
+
+/* Earlier parts of a multi-part question, shown above the current part's options */
+.part-recap { display: flex; flex-direction: column; gap: 6px; margin: -6px 0 16px; }
+.part-recap-row {
+    display: flex; gap: 10px; align-items: baseline; text-align: left;
+    width: 100%; padding: 8px 12px; border-radius: 8px;
+    border: 1px dashed var(--border); background: transparent; color: var(--text);
+    font: inherit; font-size: 0.9rem; line-height: 1.45; cursor: pointer;
+}
+.part-recap-row:hover { border-style: solid; }
+.part-recap-tag { font-weight: 700; white-space: nowrap; color: var(--text-muted); }
+.part-recap-row.is-right .part-recap-tag { color: var(--success); }
+.part-recap-row.is-wrong .part-recap-tag { color: var(--error); }
+.part-recap-text { min-width: 0; overflow-wrap: anywhere; }
 
 /* Options: quiet rows, letter in a rounded square */
 .options { gap: 10px; }
