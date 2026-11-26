@@ -1,120 +1,106 @@
-"""Attach the formulas a COMP5318 calculation question needs, as the exam paper gives them.
+r"""Formulas printed under the question on the COMP5318 practice exam papers.
 
-Each calculation question gets a "formulas" list of LaTeX strings ($...$). The app
-shows them in a box under the question stem. A question is matched to a topic by
-its knowledge location (falling back to the stem), and only questions with numbers
-in the stem and in at least two options count as calculations.
+The papers (COMP5318_Practice_Exam_{1,2,3}.pdf) print the formulas a calculation
+question needs, as images, directly under its stem. This table transcribes them to
+LaTeX, one entry per printed line, keyed by (exam, question number). A question in
+the quiz gets a "formulas" list only when its knowledge location names a practice
+exam question that has printed formulas; Part B sub-parts (a)/(b) share the formulas
+of their question. Every other question (self-written, weekly kp) gets none.
 
-Run from the repo root to (re)apply to every COMP5318 question:
-    python3 tools/kp/formulas.py
+Run from the repo root to (re)apply:  python3 tools/kp/formulas.py
 build.py also calls add_formulas() when it rebuilds the kp questions.
 """
 import json
 import os
 import re
 
-DIST = [r"$d_{\text{Euc}}(x,y) = \sqrt{\sum_i (x_i - y_i)^2}$", r"$d_{\text{Man}}(x,y) = \sum_i |x_i - y_i|$"]
-LINKAGE = [r"$\text{single: } d(A,B) = \min_{a\in A,\, b\in B} d(a,b)$",
-           r"$\text{complete: } d(A,B) = \max_{a\in A,\, b\in B} d(a,b)$",
-           r"$\text{average: } d(A,B) = \dfrac{1}{|A||B|}\sum_{a\in A}\sum_{b\in B} d(a,b)$"]
-ENTROPY = [r"$H(S) = -\sum_c p_c \log_2 p_c,\quad 0\log_2 0 = 0$",
-           r"$IG(S, A) = H(S) - \sum_v \dfrac{|S_v|}{|S|} H(S_v)$"]
-METRICS = [r"$\text{Accuracy} = \dfrac{TP + TN}{TP + TN + FP + FN}$",
-           r"$P = \dfrac{TP}{TP + FP},\quad R = \dfrac{TP}{TP + FN}$",
-           r"$F_1 = \dfrac{2PR}{P + R}$"]
-NB = [r"$P(c \mid x) \propto P(c)\prod_i P(x_i \mid c)$",
-      r"$P(c \mid x) = \dfrac{P(c)\prod_i P(x_i \mid c)}{\sum_{c'} P(c')\prod_i P(x_i \mid c')}$"]
-LAPLACE = [r"$P(x_i = v \mid c) = \dfrac{n_{v,c} + 1}{n_c + k}\quad(k = \text{number of values of } x_i)$"]
-LSQ = [r"$S_{xy} = \sum_i (x_i - \bar{x})(y_i - \bar{y}),\quad S_{xx} = \sum_i (x_i - \bar{x})^2$",
-       r"$b_1 = \dfrac{S_{xy}}{S_{xx}},\quad b_0 = \bar{y} - b_1\bar{x},\quad \hat{y} = b_0 + b_1 x$",
-       r"$\text{SSE} = \sum_i (y_i - \hat{y}_i)^2$"]
-REG_ERR = [r"$\text{MAE} = \dfrac{1}{n}\sum_i |y_i - \hat{y}_i|$", r"$\text{MSE} = \dfrac{1}{n}\sum_i (y_i - \hat{y}_i)^2$"]
-LOGISTIC = [r"$z = w_0 + \sum_i w_i x_i,\quad \sigma(z) = \dfrac{1}{1 + e^{-z}}$",
-            r"$\text{predict class 1 if } \sigma(z) \ge 0.5$"]
-GD = [r"$w \leftarrow w - \eta\, \dfrac{\partial L}{\partial w}$"]
-PERCEPTRON = [r"$u = \mathbf{w}\cdot\mathbf{x} + b,\quad a = 1 \text{ if } u \ge 0 \text{ else } 0$",
-              r"$\mathbf{w} \leftarrow \mathbf{w} + \eta(t - a)\mathbf{x},\quad b \leftarrow b + \eta(t - a)$"]
-FORWARD_NN = [r"$a = g\left(\sum_i w_i x_i + b\right)$",
-              r"$\text{ReLU}(z) = \max(0, z),\quad \sigma(z) = \dfrac{1}{1 + e^{-z}}$"]
-DENSE = [r"$\text{params} = (n_{\text{in}} + 1)\times n_{\text{out}}$"]
-CNN_SIZE = [r"$\text{output size} = \left\lfloor \dfrac{n + 2p - f}{s} \right\rfloor + 1$"]
-CNN_PARAMS = [r"$\text{params} = (f \times f \times C_{\text{in}} + 1)\times C_{\text{out}}$"]
-SVM = [r"$g(\mathbf{x}) = \mathbf{w}^T\mathbf{x} + b,\quad \hat{y} = \operatorname{sign}(g(\mathbf{x}))$"]
-MARGIN = [r"$\text{margin} = \dfrac{2}{\lVert \mathbf{w} \rVert},\quad \lVert \mathbf{w} \rVert = \sqrt{\sum_i w_i^2}$"]
-KERNELS = [r"$\text{polynomial: } K(\mathbf{x}, \mathbf{z}) = (\mathbf{x}^T\mathbf{z} + c)^d$",
-           r"$\text{RBF: } K(\mathbf{x}, \mathbf{z}) = \exp(-\gamma \lVert \mathbf{x} - \mathbf{z} \rVert^2)$"]
-PCA = [r"$\text{retained variance} = \dfrac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{d} \lambda_i}$"]
-KMEANS = [r"$\text{assign } x \text{ to } \arg\min_k \lVert x - \mu_k \rVert^2$",
-          r"$\mu_k = \dfrac{1}{|C_k|}\sum_{x \in C_k} x$",
-          r"$\text{SSE} = \sum_k \sum_{x \in C_k} \lVert x - \mu_k \rVert^2$"]
-GMM = [r"$r_k(x) = \dfrac{\pi_k f_k(x)}{\sum_j \pi_j f_j(x)}$"]
-MARKOV = [r"$P(s_1, \dots, s_T) = \pi_{s_1}\prod_{t=2}^{T} a_{s_{t-1} s_t}$",
-          r"$P(s_{t+n} = k \mid s_t = j) = (A^n)_{jk}$"]
-HMM_FWD = [r"$f_1(k) = \pi_k\, e_k(o_1)$",
-           r"$f_t(k) = e_k(o_t) \sum_j f_{t-1}(j)\, a_{jk}$",
-           r"$P(O) = \sum_k f_T(k)$"]
-VITERBI = [r"$V_1(k) = \pi_k\, e_k(o_1)$",
-           r"$V_t(k) = e_k(o_t) \max_j V_{t-1}(j)\, a_{jk}$"]
-QLEARN = [r"$Q(s,a) \leftarrow Q(s,a) + \alpha\left[r + \gamma \max_{a'} Q(s',a') - Q(s,a)\right]$",
-          r"$\text{terminal } s'\text{: target} = r$"]
-EXP_VALUE = [r"$Q(s,a) = \sum_{s'} P(s' \mid s,a)\left[r + \gamma V(s')\right]$"]
-EPS = [r"$\varepsilon\text{-greedy: random action w.p. } \varepsilon,\ \arg\max_a Q(s,a) \text{ w.p. } 1 - \varepsilon$"]
-MINMAX = [r"$x' = \dfrac{x - \min}{\max - \min},\quad z = \dfrac{x - \mu}{\sigma}$"]
-COSINE = [r"$\cos(x, y) = \dfrac{x \cdot y}{\lVert x \rVert\, \lVert y \rVert}$"]
-BINARY = [r"$\text{SMC} = \dfrac{f_{11} + f_{00}}{f_{00} + f_{01} + f_{10} + f_{11}}$",
-          r"$J = \dfrac{f_{11}}{f_{01} + f_{10} + f_{11}}$"]
-WKNN = [r"$w_i = \dfrac{1}{d_i^2},\quad \text{vote}(c) = \sum_{i:\, y_i = c} w_i$"]
+PAPER = {
+    # ── Practice Exam 1 ──
+    (1, 3): [r"$U_c = \sum_{i \in N_c} 1, \qquad W_c = \sum_{i \in N_c} \dfrac{1}{d_i^2}$"],
+    (1, 7): [r"$b_1 = \dfrac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{y} - b_1\bar{x}, \qquad \hat{y} = b_0 + b_1 x$"],
+    (1, 10): [r"$\text{Precision} = \dfrac{TP}{TP + FP}, \qquad \text{Recall} = \dfrac{TP}{TP + FN}$"],
+    (1, 14): [r"$\lVert w \rVert = \sqrt{\sum_i w_i^2}, \qquad \text{full width} = \dfrac{2}{\lVert w \rVert}$"],
+    (1, 17): [r"$\text{Retained variance}(k) = 100\,\dfrac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{d} \lambda_i}\,\%$"],
+    (1, 19): [r"$w_{\text{new}} = w + \eta(t - a)x, \qquad b_{\text{new}} = b + \eta(t - a)$"],
+    (1, 22): [r"$\text{Parameters} = F_{out}(K_h K_w C_{in} + 1)$"],
+    (1, 25): [r"$P(j \mid x) = \dfrac{\pi_j f_j(x)}{\sum_k \pi_k f_k(x)}$"],
+    (1, 27): [r"$P(S_2 = B \mid S_0 = A) = \sum_{j \in \{A, B\}} a_{Aj}\, a_{jB}$"],
+    (1, 30): [r"$Q_{new}(s,a) = Q_{old}(s,a) + \alpha\left[r + \gamma \max_{a'} Q(s',a') - Q_{old}(s,a)\right]$"],
+    (1, 31): [r"$H(S) = -\sum_c p_c \log_2 p_c$",
+              r"$IG = H(\text{parent}) - \sum_j \dfrac{n_j}{n} H(\text{child}_j)$",
+              r"$\log_2(0.5) = -1, \quad \log_2(0.25) = -2, \quad \log_2(0.75) \approx -0.4150$"],
+    (1, 32): [r"$u_A = x_1 + x_2 - 3, \qquad u_B = 2x_1 - x_2$",
+              r"$h_A = \text{ReLU}(u_A), \qquad h_B = \text{ReLU}(u_B)$",
+              r"$z = h_A + 2h_B$",
+              r"$\text{ReLU}(u) = \max(0, u), \qquad \sigma(z) = \dfrac{1}{1 + e^{-z}}$"],
+    (1, 33): [r"$d^2(x, c) = \sum_i (x_i - c_i)^2, \qquad \mu_{j,new} = \dfrac{1}{|C_j|} \sum_{x \in C_j} x$"],
+    (1, 34): [r"$f_1(k) = \pi_k e_k(x), \qquad f_2(k) = e_k(y) \sum_j f_1(j)\, a_{jk}$",
+              r"$P(x, y) = \sum_k f_2(k)$"],
+    # ── Practice Exam 2 ──
+    (2, 3): [r"$d_1(x, y) = \sum_i |x_i - y_i|, \qquad d_2(x, y) = \sqrt{\sum_i (x_i - y_i)^2}$"],
+    (2, 7): [r"$\text{MAE} = \dfrac{1}{n} \sum_i |y_i - \hat{y}_i|, \qquad \text{MSE} = \dfrac{1}{n} \sum_i (y_i - \hat{y}_i)^2$"],
+    (2, 10): [r"$\text{Recall} = \dfrac{TP}{TP + FN}, \qquad F_1 = \dfrac{2TP}{2TP + FP + FN}$"],
+    (2, 14): [r"$K(x, y) = (x^T y + 2)^2, \qquad x^T y = \sum_i x_i y_i$"],
+    (2, 17): [r"$\text{Retained variance}(k) = 100\,\dfrac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{d} \lambda_i}\,\%$"],
+    (2, 19): [r"$w_{new} = w_{old} - \eta \nabla L(w_{old})$"],
+    (2, 22): [r"$n_{out} = \left\lfloor \dfrac{n_{in} + 2p - f}{s} \right\rfloor + 1$"],
+    (2, 25): [r"$d_{single}(A, B) = \min_{x \in A,\, y \in B} |x - y|$",
+              r"$d_{average}(A, B) = \dfrac{1}{|A||B|} \sum_{x \in A,\, y \in B} |x - y|$"],
+    (2, 27): [r"$V_t(k) = e_k(o_t) \max_j \left[V_{t-1}(j)\, a_{jk}\right]$"],
+    (2, 30): [r"$Q^*(s, a) = \sum_j p_j \left[r_j + \gamma V^*(s_j')\right]$"],
+    (2, 31): [r"$s_c = P(c)\, P(F_1 \mid c)\, P(F_2 \mid c)$",
+              r"$P(c \mid F_1, F_2) = \dfrac{s_c}{\sum_k s_k}$"],
+    (2, 32): [r"$S_{xy} = \sum_i (x_i - \bar{x})(y_i - \bar{y}), \qquad S_{xx} = \sum_i (x_i - \bar{x})^2$",
+              r"$b_1 = \dfrac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{y} - b_1\bar{x}, \qquad \hat{y}_i = b_0 + b_1 x_i$",
+              r"$\text{MSE} = \dfrac{1}{n} \sum_i (y_i - \hat{y}_i)^2$"],
+    (2, 33): [r"$d_{single}(U, V) = \min_{x \in U,\, y \in V} |x - y|$",
+              r"$d_{complete}(U, V) = \max_{x \in U,\, y \in V} |x - y|$"],
+    (2, 34): [r"$u_A = x_1 + 2x_2 - 1, \qquad u_B = 2x_1 - x_2 - 2$",
+              r"$h_A = \text{ReLU}(u_A), \qquad h_B = \text{ReLU}(u_B)$",
+              r"$z = 3h_A + h_B - 1$",
+              r"$\text{ReLU}(u) = \max(0, u), \qquad \sigma(z) = \dfrac{1}{1 + e^{-z}}$"],
+    # ── Practice Exam 3 ──
+    (3, 3): [r"$W_c = \sum_{i \in N_c} \dfrac{1}{d_i^2}$"],
+    (3, 7): [r"$p(y = 1 \mid x) = \dfrac{1}{1 + e^{-z}}$"],
+    (3, 10): [r"$\text{Accuracy} = \dfrac{TP + TN}{TP + TN + FP + FN}, \qquad F_1 = \dfrac{2TP}{2TP + FP + FN}$"],
+    (3, 14): [r"$g(x) = \sum_i w_i x_i + b$"],
+    (3, 17): [r"$\text{Retained variance}(k) = 100\,\dfrac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{d} \lambda_i}\,\%$"],
+    (3, 19): [r"$w_{new} = w + \eta(t - a)x, \qquad b_{new} = b + \eta(t - a)$"],
+    (3, 22): [r"$\text{Parameters} = F_{out}(K_h K_w C_{in} + 1)$"],
+    (3, 25): [r"$d_{complete}(A, B) = \max_{x \in A,\, y \in B} |x - y|, \qquad d_{single}(A, B) = \min_{x \in A,\, y \in B} |x - y|$"],
+    (3, 27): [r"$f_t(k) = e_k(o_t) \sum_j f_{t-1}(j)\, a_{jk}$"],
+    (3, 30): [r"$Q_{new}(s, a) = Q_{old}(s, a) + \alpha\left[r - Q_{old}(s, a)\right] \quad \text{(terminal)}$"],
+    (3, 31): [r"$H(S) = -\sum_c p_c \log_2 p_c$",
+              r"$IG = H(\text{parent}) - \sum_j \dfrac{n_j}{n} H(\text{child}_j)$",
+              r"$\log_2(0.5) = -1, \quad \log_2(0.2) \approx -2.3219, \quad \log_2(0.8) \approx -0.3219$"],
+    (3, 32): [r"$u = w^T x + b, \qquad a = 1 \text{ if } u \ge 0, \text{ else } a = 0$",
+              r"$w_{new} = w + \eta(t - a)x, \qquad b_{new} = b + \eta(t - a)$"],
+    (3, 33): [r"$d^2(x, c) = \sum_i (x_i - c_i)^2, \qquad \mu_{j,new} = \dfrac{1}{|C_j|} \sum_{x \in C_j} x$",
+              r"$\text{SSE} = \sum_j \sum_{x \in C_j} \lVert x - \mu_j \rVert^2$"],
+    (3, 34): [r"$V_1(k) = \pi_k e_k(x), \qquad V_2(k) = e_k(y) \max_j \left[V_1(j)\, a_{jk}\right]$",
+              r"$f_1(k) = \pi_k e_k(x), \qquad f_2(k) = e_k(y) \sum_j f_1(j)\, a_{jk}$",
+              r"$P(x, y) = \sum_k f_2(k)$"],
+}
 
-# (pattern on the knowledge-location topic, then on the stem) -> formulas. First match wins.
-RULES = [
-    (r"Viterbi", VITERBI),
-    (r"Forward algorithm|forward algorithm", HMM_FWD),
-    (r"Markov chain", MARKOV),
-    (r"Terminal Q-learning|Q-learning", QLEARN),
-    (r"Expected action value", EXP_VALUE),
-    (r"Exploration", EPS),
-    (r"Weighted k-NN|distance-weighted", WKNN),
-    (r"SMC|Jaccard", BINARY),
-    (r"Cosine", COSINE),
-    (r"Scaling / calculation", MINMAX),
-    (r"Distance", DIST),
-    (r"Information gain", ENTROPY),
-    (r"Laplace", LAPLACE + NB),
-    (r"Naive Bayes", NB),
-    (r"Classification metrics|Precision|F1", METRICS),
-    (r"Least squares", LSQ),
-    (r"MAE|Regression error", REG_ERR),
-    (r"Logistic regression", LOGISTIC),
-    (r"Gradient descent", GD),
-    (r"Perceptron", PERCEPTRON),
-    (r"Forward pass", FORWARD_NN),
-    (r"Parameter count / dense", DENSE),
-    (r"CNN.*output size|CNN output size", CNN_SIZE),
-    (r"CNN.*param", CNN_PARAMS),
-    (r"Linear SVM decision", SVM),
-    (r"SVM margin", MARGIN),
-    (r"[Kk]ernel", KERNELS),
-    (r"PCA", PCA),
-    (r"GMM", GMM),
-    (r"Hierarchical|linkage|Agglomerative", LINKAGE),
-    (r"[Kk]-means", KMEANS),
-]
-
-def _is_calc(q):
-    stem = q.get("question", "")
-    opts = q.get("options", [])
-    return bool(re.search(r"\d", stem)) and sum(bool(re.search(r"\d", o)) for o in opts) >= 2
+LOC = re.compile(r"Practice Exam (\d) Q(\d+)")
 
 
 def formulas_for(q):
-    if q.get("course") != "COMP5318" or not _is_calc(q):
+    if q.get("course") != "COMP5318":
         return []
-    loc = q.get("knowledgeLocation", "").split(" · ")[0]
-    topic = loc.split(" / ", 1)[1] if " / " in loc else loc
-    for pat, f in RULES:
-        if re.search(pat, topic):
-            return list(f)
-    return []
+    m = LOC.search(q.get("knowledgeLocation", ""))
+    if not m:
+        return []
+    return [_row(f) for f in PAPER.get((int(m.group(1)), int(m.group(2))), [])]
+
+
+def _row(f):
+    """One printed line -> one row. Formulas the paper sets side by side become
+    separate $...$ pieces so a narrow screen wraps between them, not inside one.
+    \\displaystyle puts sum/max/min limits underneath, as on the paper."""
+    parts = f.strip("$").split(r", \qquad ")
+    return "  ".join("$\\displaystyle " + p + ("," if i < len(parts) - 1 else "") + "$"
+                     for i, p in enumerate(parts))
 
 
 def add_formulas(q):

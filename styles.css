@@ -2093,6 +2093,7 @@ body::before { display: none; }
     margin-bottom: 4px;
 }
 .formula-row { padding: 3px 0; }
+.formula-row .katex { display: inline-block; margin-right: 1.6em; }
 
 /* Options: quiet rows, letter in a rounded square */
 .options { gap: 10px; }

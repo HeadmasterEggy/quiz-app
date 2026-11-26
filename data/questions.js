@@ -6886,6 +6886,9 @@ window.QUIZ_DATA = {
         "都是 Blue。",
         "不加权为 Red；加权为 Blue。",
         "都是 Red。"
+      ],
+      "formulas": [
+        "$\\displaystyle U_c = \\sum_{i \\in N_c} 1,$  $\\displaystyle W_c = \\sum_{i \\in N_c} \\dfrac{1}{d_i^2}$"
       ]
     },
     {
@@ -7013,9 +7016,7 @@ window.QUIZ_DATA = {
         "截距 2；预测 12。"
       ],
       "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
+        "$\\displaystyle b_1 = \\dfrac{S_{xy}}{S_{xx}},$  $\\displaystyle b_0 = \\bar{y} - b_1\\bar{x},$  $\\displaystyle \\hat{y} = b_0 + b_1 x$"
       ]
     },
     {
@@ -7113,9 +7114,7 @@ window.QUIZ_DATA = {
         "精确率 0.75；召回率 0.68。"
       ],
       "formulas": [
-        "$\\text{Accuracy} = \\dfrac{TP + TN}{TP + TN + FP + FN}$",
-        "$P = \\dfrac{TP}{TP + FP},\\quad R = \\dfrac{TP}{TP + FN}$",
-        "$F_1 = \\dfrac{2PR}{P + R}$"
+        "$\\displaystyle \\text{Precision} = \\dfrac{TP}{TP + FP},$  $\\displaystyle \\text{Recall} = \\dfrac{TP}{TP + FN}$"
       ]
     },
     {
@@ -7242,7 +7241,7 @@ window.QUIZ_DATA = {
         "0.40."
       ],
       "formulas": [
-        "$\\text{margin} = \\dfrac{2}{\\lVert \\mathbf{w} \\rVert},\\quad \\lVert \\mathbf{w} \\rVert = \\sqrt{\\sum_i w_i^2}$"
+        "$\\displaystyle \\lVert w \\rVert = \\sqrt{\\sum_i w_i^2},$  $\\displaystyle \\text{full width} = \\dfrac{2}{\\lVert w \\rVert}$"
       ]
     },
     {
@@ -7340,7 +7339,7 @@ window.QUIZ_DATA = {
         "两个主成分，保留 70%。"
       ],
       "formulas": [
-        "$\\text{retained variance} = \\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}$"
+        "$\\displaystyle \\text{Retained variance}(k) = 100\\,\\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}\\,\\%$"
       ]
     },
     {
@@ -7408,8 +7407,7 @@ window.QUIZ_DATA = {
         "$w = (0.4, -0.2)$; $b = -0.1$."
       ],
       "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
+        "$\\displaystyle w_{\\text{new}} = w + \\eta(t - a)x,$  $\\displaystyle b_{\\text{new}} = b + \\eta(t - a)$"
       ]
     },
     {
@@ -7506,7 +7504,7 @@ window.QUIZ_DATA = {
         "40."
       ],
       "formulas": [
-        "$\\text{params} = (f \\times f \\times C_{\\text{in}} + 1)\\times C_{\\text{out}}$"
+        "$\\displaystyle \\text{Parameters} = F_{out}(K_h K_w C_{in} + 1)$"
       ]
     },
     {
@@ -7603,7 +7601,7 @@ window.QUIZ_DATA = {
         "约 0.538。"
       ],
       "formulas": [
-        "$r_k(x) = \\dfrac{\\pi_k f_k(x)}{\\sum_j \\pi_j f_j(x)}$"
+        "$\\displaystyle P(j \\mid x) = \\dfrac{\\pi_j f_j(x)}{\\sum_k \\pi_k f_k(x)}$"
       ]
     },
     {
@@ -7671,8 +7669,7 @@ window.QUIZ_DATA = {
         "0.28."
       ],
       "formulas": [
-        "$P(s_1, \\dots, s_T) = \\pi_{s_1}\\prod_{t=2}^{T} a_{s_{t-1} s_t}$",
-        "$P(s_{t+n} = k \\mid s_t = j) = (A^n)_{jk}$"
+        "$\\displaystyle P(S_2 = B \\mid S_0 = A) = \\sum_{j \\in \\{A, B\\}} a_{Aj}\\, a_{jB}$"
       ]
     },
     {
@@ -7769,8 +7766,7 @@ window.QUIZ_DATA = {
         "4.00."
       ],
       "formulas": [
-        "$Q(s,a) \\leftarrow Q(s,a) + \\alpha\\left[r + \\gamma \\max_{a'} Q(s',a') - Q(s,a)\\right]$",
-        "$\\text{terminal } s'\\text{: target} = r$"
+        "$\\displaystyle Q_{new}(s,a) = Q_{old}(s,a) + \\alpha\\left[r + \\gamma \\max_{a'} Q(s',a') - Q_{old}(s,a)\\right]$"
       ]
     },
     {
@@ -7868,8 +7864,7 @@ window.QUIZ_DATA = {
         "7 和 5。"
       ],
       "formulas": [
-        "$d_{\\text{Euc}}(x,y) = \\sqrt{\\sum_i (x_i - y_i)^2}$",
-        "$d_{\\text{Man}}(x,y) = \\sum_i |x_i - y_i|$"
+        "$\\displaystyle d_1(x, y) = \\sum_i |x_i - y_i|,$  $\\displaystyle d_2(x, y) = \\sqrt{\\sum_i (x_i - y_i)^2}$"
       ]
     },
     {
@@ -7930,10 +7925,6 @@ window.QUIZ_DATA = {
         "预测为负类，因为概率小于 1。",
         "用普通最小二乘预测一个恰好为 0.83 的数值目标。",
         "保证该样本是正类。"
-      ],
-      "formulas": [
-        "$z = w_0 + \\sum_i w_i x_i,\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$",
-        "$\\text{predict class 1 if } \\sigma(z) \\ge 0.5$"
       ]
     },
     {
@@ -8001,8 +7992,7 @@ window.QUIZ_DATA = {
         "$\\text{MAE} = 2$；$\\text{MSE} = 4/3$。"
       ],
       "formulas": [
-        "$\\text{MAE} = \\dfrac{1}{n}\\sum_i |y_i - \\hat{y}_i|$",
-        "$\\text{MSE} = \\dfrac{1}{n}\\sum_i (y_i - \\hat{y}_i)^2$"
+        "$\\displaystyle \\text{MAE} = \\dfrac{1}{n} \\sum_i |y_i - \\hat{y}_i|,$  $\\displaystyle \\text{MSE} = \\dfrac{1}{n} \\sum_i (y_i - \\hat{y}_i)^2$"
       ]
     },
     {
@@ -8100,9 +8090,7 @@ window.QUIZ_DATA = {
         "召回率 0.60；F1 0.750。"
       ],
       "formulas": [
-        "$\\text{Accuracy} = \\dfrac{TP + TN}{TP + TN + FP + FN}$",
-        "$P = \\dfrac{TP}{TP + FP},\\quad R = \\dfrac{TP}{TP + FN}$",
-        "$F_1 = \\dfrac{2PR}{P + R}$"
+        "$\\displaystyle \\text{Recall} = \\dfrac{TP}{TP + FN},$  $\\displaystyle F_1 = \\dfrac{2TP}{2TP + FP + FN}$"
       ]
     },
     {
@@ -8229,8 +8217,7 @@ window.QUIZ_DATA = {
         "25."
       ],
       "formulas": [
-        "$\\text{polynomial: } K(\\mathbf{x}, \\mathbf{z}) = (\\mathbf{x}^T\\mathbf{z} + c)^d$",
-        "$\\text{RBF: } K(\\mathbf{x}, \\mathbf{z}) = \\exp(-\\gamma \\lVert \\mathbf{x} - \\mathbf{z} \\rVert^2)$"
+        "$\\displaystyle K(x, y) = (x^T y + 2)^2,$  $\\displaystyle x^T y = \\sum_i x_i y_i$"
       ]
     },
     {
@@ -8328,7 +8315,7 @@ window.QUIZ_DATA = {
         "两个主成分，保留 90%。"
       ],
       "formulas": [
-        "$\\text{retained variance} = \\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}$"
+        "$\\displaystyle \\text{Retained variance}(k) = 100\\,\\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}\\,\\%$"
       ]
     },
     {
@@ -8395,7 +8382,7 @@ window.QUIZ_DATA = {
         "(-2.5, 1.0)."
       ],
       "formulas": [
-        "$w \\leftarrow w - \\eta\\, \\dfrac{\\partial L}{\\partial w}$"
+        "$\\displaystyle w_{new} = w_{old} - \\eta \\nabla L(w_{old})$"
       ]
     },
     {
@@ -8492,7 +8479,7 @@ window.QUIZ_DATA = {
         "$16 \\times  16$."
       ],
       "formulas": [
-        "$\\text{output size} = \\left\\lfloor \\dfrac{n + 2p - f}{s} \\right\\rfloor + 1$"
+        "$\\displaystyle n_{out} = \\left\\lfloor \\dfrac{n_{in} + 2p - f}{s} \\right\\rfloor + 1$"
       ]
     },
     {
@@ -8590,9 +8577,8 @@ window.QUIZ_DATA = {
         "单链接 6；平均链接 4。"
       ],
       "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
+        "$\\displaystyle d_{single}(A, B) = \\min_{x \\in A,\\, y \\in B} |x - y|$",
+        "$\\displaystyle d_{average}(A, B) = \\dfrac{1}{|A||B|} \\sum_{x \\in A,\\, y \\in B} |x - y|$"
       ]
     },
     {
@@ -8659,8 +8645,7 @@ window.QUIZ_DATA = {
         "0.140."
       ],
       "formulas": [
-        "$V_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$V_t(k) = e_k(o_t) \\max_j V_{t-1}(j)\\, a_{jk}$"
+        "$\\displaystyle V_t(k) = e_k(o_t) \\max_j \\left[V_{t-1}(j)\\, a_{jk}\\right]$"
       ]
     },
     {
@@ -8758,7 +8743,7 @@ window.QUIZ_DATA = {
         "5.00."
       ],
       "formulas": [
-        "$Q(s,a) = \\sum_{s'} P(s' \\mid s,a)\\left[r + \\gamma V(s')\\right]$"
+        "$\\displaystyle Q^*(s, a) = \\sum_j p_j \\left[r_j + \\gamma V^*(s_j')\\right]$"
       ]
     },
     {
@@ -11484,7 +11469,7 @@ window.QUIZ_DATA = {
         "A：0.50；B：1.00；预测 B。"
       ],
       "formulas": [
-        "$w_i = \\dfrac{1}{d_i^2},\\quad \\text{vote}(c) = \\sum_{i:\\, y_i = c} w_i$"
+        "$\\displaystyle W_c = \\sum_{i \\in N_c} \\dfrac{1}{d_i^2}$"
       ]
     },
     {
@@ -11612,8 +11597,7 @@ window.QUIZ_DATA = {
         "概率 0.50；类 1。"
       ],
       "formulas": [
-        "$z = w_0 + \\sum_i w_i x_i,\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$",
-        "$\\text{predict class 1 if } \\sigma(z) \\ge 0.5$"
+        "$\\displaystyle p(y = 1 \\mid x) = \\dfrac{1}{1 + e^{-z}}$"
       ]
     },
     {
@@ -11711,9 +11695,7 @@ window.QUIZ_DATA = {
         "准确率 0.75；F1 0.750。"
       ],
       "formulas": [
-        "$\\text{Accuracy} = \\dfrac{TP + TN}{TP + TN + FP + FN}$",
-        "$P = \\dfrac{TP}{TP + FP},\\quad R = \\dfrac{TP}{TP + FN}$",
-        "$F_1 = \\dfrac{2PR}{P + R}$"
+        "$\\displaystyle \\text{Accuracy} = \\dfrac{TP + TN}{TP + TN + FP + FN},$  $\\displaystyle F_1 = \\dfrac{2TP}{2TP + FP + FN}$"
       ]
     },
     {
@@ -11840,7 +11822,7 @@ window.QUIZ_DATA = {
         "得分 5.5；类 +1。"
       ],
       "formulas": [
-        "$g(\\mathbf{x}) = \\mathbf{w}^T\\mathbf{x} + b,\\quad \\hat{y} = \\operatorname{sign}(g(\\mathbf{x}))$"
+        "$\\displaystyle g(x) = \\sum_i w_i x_i + b$"
       ]
     },
     {
@@ -11938,7 +11920,7 @@ window.QUIZ_DATA = {
         "3 个，保留 80%。"
       ],
       "formulas": [
-        "$\\text{retained variance} = \\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}$"
+        "$\\displaystyle \\text{Retained variance}(k) = 100\\,\\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}\\,\\%$"
       ]
     },
     {
@@ -12006,8 +11988,7 @@ window.QUIZ_DATA = {
         "$w = (0.0, 0.5)$；$b = -0.6$。"
       ],
       "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
+        "$\\displaystyle w_{new} = w + \\eta(t - a)x,$  $\\displaystyle b_{new} = b + \\eta(t - a)$"
       ]
     },
     {
@@ -12104,7 +12085,7 @@ window.QUIZ_DATA = {
         "75。"
       ],
       "formulas": [
-        "$\\text{params} = (f \\times f \\times C_{\\text{in}} + 1)\\times C_{\\text{out}}$"
+        "$\\displaystyle \\text{Parameters} = F_{out}(K_h K_w C_{in} + 1)$"
       ]
     },
     {
@@ -12202,9 +12183,7 @@ window.QUIZ_DATA = {
         "完全链 6.5；单链 3。"
       ],
       "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
+        "$\\displaystyle d_{complete}(A, B) = \\max_{x \\in A,\\, y \\in B} |x - y|,$  $\\displaystyle d_{single}(A, B) = \\min_{x \\in A,\\, y \\in B} |x - y|$"
       ]
     },
     {
@@ -12271,9 +12250,7 @@ window.QUIZ_DATA = {
         "0.12。"
       ],
       "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
+        "$\\displaystyle f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$"
       ]
     },
     {
@@ -12370,8 +12347,7 @@ window.QUIZ_DATA = {
         "2.00。"
       ],
       "formulas": [
-        "$Q(s,a) \\leftarrow Q(s,a) + \\alpha\\left[r + \\gamma \\max_{a'} Q(s',a') - Q(s,a)\\right]$",
-        "$\\text{terminal } s'\\text{: target} = r$"
+        "$\\displaystyle Q_{new}(s, a) = Q_{old}(s, a) + \\alpha\\left[r - Q_{old}(s, a)\\right] \\quad \\text{(terminal)}$"
       ]
     },
     {
@@ -12410,8 +12386,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
+        "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
+        "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
+        "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.2) \\approx -2.3219, \\quad \\log_2(0.8) \\approx -0.3219$"
       ]
     },
     {
@@ -12451,8 +12428,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
+        "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
+        "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
+        "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.2) \\approx -2.3219, \\quad \\log_2(0.8) \\approx -0.3219$"
       ]
     },
     {
@@ -12492,8 +12470,8 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
+        "$\\displaystyle u = w^T x + b,$  $\\displaystyle a = 1 \\text{ if } u \\ge 0, \\text{ else } a = 0$",
+        "$\\displaystyle w_{new} = w + \\eta(t - a)x,$  $\\displaystyle b_{new} = b + \\eta(t - a)$"
       ]
     },
     {
@@ -12533,8 +12511,8 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
+        "$\\displaystyle u = w^T x + b,$  $\\displaystyle a = 1 \\text{ if } u \\ge 0, \\text{ else } a = 0$",
+        "$\\displaystyle w_{new} = w + \\eta(t - a)x,$  $\\displaystyle b_{new} = b + \\eta(t - a)$"
       ]
     },
     {
@@ -12574,9 +12552,8 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
+        "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$",
+        "$\\displaystyle \\text{SSE} = \\sum_j \\sum_{x \\in C_j} \\lVert x - \\mu_j \\rVert^2$"
       ]
     },
     {
@@ -12615,9 +12592,8 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
+        "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$",
+        "$\\displaystyle \\text{SSE} = \\sum_j \\sum_{x \\in C_j} \\lVert x - \\mu_j \\rVert^2$"
       ]
     },
     {
@@ -12657,8 +12633,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$V_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$V_t(k) = e_k(o_t) \\max_j V_{t-1}(j)\\, a_{jk}$"
+        "$\\displaystyle V_1(k) = \\pi_k e_k(x),$  $\\displaystyle V_2(k) = e_k(y) \\max_j \\left[V_1(j)\\, a_{jk}\\right]$",
+        "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
+        "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
       ]
     },
     {
@@ -12698,9 +12675,9 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
+        "$\\displaystyle V_1(k) = \\pi_k e_k(x),$  $\\displaystyle V_2(k) = e_k(y) \\max_j \\left[V_1(j)\\, a_{jk}\\right]$",
+        "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
+        "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
       ]
     },
     {
@@ -12739,11 +12716,7 @@ window.QUIZ_DATA = {
         "$H(\\text{父}) \\approx  0.811$；$\\text{IG}(X) \\approx  0.811$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A parent node has eight examples: six positive and two negative. Split X gives children (4 positive, 0 negative) and (2 positive, 2 negative). Split Y gives children (3 positive, 1 negative) and (3 positive, 1 negative). Entropy in bits. (b) What is $\\text{IG}(Y)$, and which split does information gain prefer?",
@@ -12781,11 +12754,7 @@ window.QUIZ_DATA = {
         "$\\text{IG}(Y) = 0$；两个划分打平。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (a) What are the parent entropy and $\\text{IG}(Z)$ (three decimals)?",
@@ -12823,11 +12792,7 @@ window.QUIZ_DATA = {
         "$H(\\text{父}) \\approx  0.918$；$\\text{IG}(Z) \\approx  0.585$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A parent node has twelve examples: six positive and six negative. Attribute Z has three values with children (4 positive, 0 negative), (2 positive, 2 negative) and (0 positive, 4 negative). Attribute W has two values with children (5 positive, 1 negative) and (1 positive, 5 negative). Entropy in bits. (b) What is $\\text{IG}(W)$ (three decimals), and which attribute does information gain choose?",
@@ -12865,11 +12830,7 @@ window.QUIZ_DATA = {
         "$\\text{IG}(W) \\approx  0.191$；选 Z。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. (a) For the first example, what are u, a and the updated parameters?",
@@ -12906,11 +12867,7 @@ window.QUIZ_DATA = {
         "$u = 0.8$，$a = 1$；$w = (0.4, -0.4)$，$b = -0.1$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A perceptron has $\\mathbf w = (0.5, -0.3)$, $b = 0$ and $\\eta = 0.1$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 1)$, $t = 0$; then $\\mathbf x = (2, 1)$, $t = 1$. After the first example, $\\mathbf w = (0.4, -0.4)$ and $b = -0.1$. (b) For the second example, what are u, a and the parameters afterwards?",
@@ -12947,11 +12904,7 @@ window.QUIZ_DATA = {
         "$u = 0.3$，$a = 1$；不更新：$w = (0.4, -0.4)$，$b = -0.1$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. (a) For the first example, what are u, a and the updated parameters?",
@@ -12988,11 +12941,7 @@ window.QUIZ_DATA = {
         "$u = -0.2$，$a = 0$；$w = (0.5, 0.2)$，$b = -0.2$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A perceptron has $\\mathbf w = (0, 0.2)$, $b = -0.2$ and $\\eta = 0.5$; output 1 if the net input is at least 0, else 0. Process in order, updating after each: first $\\mathbf x = (1, 0)$, $t = 1$; then $\\mathbf x = (1, 1)$, $t = 0$. After the first example, $\\mathbf w = (0.5, 0.2)$ and $b = 0.3$. (b) For the second example, what are u, a and the final parameters?",
@@ -13029,11 +12978,7 @@ window.QUIZ_DATA = {
         "$u = 0.7$，$a = 1$；$w = (0, -0.3)$，$b = -0.2$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $A = (1,1)$, $B = (2,1)$, $C = (4,3)$, $D = (5,4)$, starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ of C and D, and the resulting clusters?",
@@ -13071,12 +13016,7 @@ window.QUIZ_DATA = {
         "C (13, 8)、D (25, 18)；簇为 {A, B} 和 {C, D}。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $A = (1,1)$, $B = (2,1)$, $C = (4,3)$, $D = (5,4)$, starting from $\\mu_1 = A = (1,1)$ and $\\mu_2 = B = (2,1)$. Assign all points with the initial centroids, then update. The assignment step gives clusters {A} and {B, C, D}. (b) What are the updated centroids and the total $\\text{SSE}$ (using the updated centroids)?",
@@ -13113,12 +13053,7 @@ window.QUIZ_DATA = {
         "$\\mu_{1} = (3, 2.25)$，$\\mu_{2} = (3, 2.25)$；$\\text{SSE} = 16.75$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $P_{1} = (0,0)$, $P_{2} = (1,0)$, $P_{3} = (0,2)$, $P_{4} = (5,5)$, $P_{5} = (6,5)$, starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. (a) What are the squared distances $(\\text{to} \\mu_{1}, \\text{to} \\mu_{2})$ of P2, P3 and P5, and the clusters?",
@@ -13156,12 +13091,7 @@ window.QUIZ_DATA = {
         "P2 (1, 41)、P3 (34, 4)、P5 (61, 1)；簇为 {P1, P2} 和 {P3, P4, P5}。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Run one K-means iteration ($k = 2$) on $P_{1} = (0,0)$, $P_{2} = (1,0)$, $P_{3} = (0,2)$, $P_{4} = (5,5)$, $P_{5} = (6,5)$, starting from $\\mu_1 = P1$ and $\\mu_2 = P4$. Assign all points with the initial centroids, then update. The assignment step gives clusters {P1, P2, P3} and {P4, P5}. (b) What are the updated centroids and the total $\\text{SSE}$?",
@@ -13199,12 +13129,7 @@ window.QUIZ_DATA = {
         "$\\mu_{1} = (0, 0)$，$\\mu_{2} = (5, 5)$；$\\text{SSE} = 6$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (a) Using Viterbi, what are $V_2(A)$, $V_2(B)$, the best path and its probability?",
@@ -13242,11 +13167,7 @@ window.QUIZ_DATA = {
         "$V_{2}(A) = 0.056$，$V_{2}(B) = 0.084$；路径 A → B，0.084。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$V_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$V_t(k) = e_k(o_t) \\max_j V_{t-1}(j)\\, a_{jk}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = \\pi_B = 0.5$; emissions $e_A(x) = 0.8$, $e_A(y) = 0.2$, $e_B(x) = 0.3$, $e_B(y) = 0.7$; transitions $a_{AA} = 0.7$, $a_{AB} = 0.3$, $a_{BA} = 0.4$, $a_{BB} = 0.6$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
@@ -13283,12 +13204,7 @@ window.QUIZ_DATA = {
         "$f_{2}(A) = 0.068$，$f_{2}(B) = 0.147$，$P = 0.147$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (a) Using Viterbi, what are $V_1$, $V_2$, the best path and its probability?",
@@ -13326,11 +13242,7 @@ window.QUIZ_DATA = {
         "$V_{1} = (0.18, 0.14)$，$V_{2} = (0.0472, 0.1616)$；路径 B → B，0.1616。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$V_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$V_t(k) = e_k(o_t) \\max_j V_{t-1}(j)\\, a_{jk}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "An HMM has states A, B with $\\pi_A = 0.3$, $\\pi_B = 0.7$; emissions $e_A(x) = 0.6$, $e_A(y) = 0.4$, $e_B(x) = 0.2$, $e_B(y) = 0.8$; transitions $a_{AA} = 0.5$, $a_{AB} = 0.5$, $a_{BA} = 0.2$, $a_{BB} = 0.8$. Observed sequence (x, y). (b) Using the Forward algorithm, what are $f_2(A)$, $f_2(B)$ and $P(x, y)$?",
@@ -13367,12 +13279,7 @@ window.QUIZ_DATA = {
         "$f_{2}(A) = 0.0472$，$f_{2}(B) = 0.1616$，$P = 0.1616$。"
       ],
       "partB": true,
-      "selfWritten": true,
-      "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A decision-tree node contains eight examples: four positive and four negative. A proposed split produces child L with three positives and one negative, and child R with one positive and three negatives. Use $0\\log_2 0 = 0$. (a) What are the entropies of the parent, L and R, in bits?",
@@ -13410,8 +13317,9 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
+        "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
+        "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
+        "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.25) = -2, \\quad \\log_2(0.75) \\approx -0.4150$"
       ]
     },
     {
@@ -13451,8 +13359,9 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
+        "$\\displaystyle H(S) = -\\sum_c p_c \\log_2 p_c$",
+        "$\\displaystyle IG = H(\\text{parent}) - \\sum_j \\dfrac{n_j}{n} H(\\text{child}_j)$",
+        "$\\displaystyle \\log_2(0.5) = -1, \\quad \\log_2(0.25) = -2, \\quad \\log_2(0.75) \\approx -0.4150$"
       ]
     },
     {
@@ -13491,8 +13400,10 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
+        "$\\displaystyle u_A = x_1 + x_2 - 3,$  $\\displaystyle u_B = 2x_1 - x_2$",
+        "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
+        "$\\displaystyle z = h_A + 2h_B$",
+        "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
       ]
     },
     {
@@ -13532,8 +13443,10 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
+        "$\\displaystyle u_A = x_1 + x_2 - 3,$  $\\displaystyle u_B = 2x_1 - x_2$",
+        "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
+        "$\\displaystyle z = h_A + 2h_B$",
+        "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
       ]
     },
     {
@@ -13574,9 +13487,7 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
+        "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$"
       ]
     },
     {
@@ -13615,9 +13526,7 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
+        "$\\displaystyle d^2(x, c) = \\sum_i (x_i - c_i)^2,$  $\\displaystyle \\mu_{j,new} = \\dfrac{1}{|C_j|} \\sum_{x \\in C_j} x$"
       ]
     },
     {
@@ -13656,9 +13565,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
+        "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
+        "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
       ]
     },
     {
@@ -13698,9 +13606,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
+        "$\\displaystyle f_1(k) = \\pi_k e_k(x),$  $\\displaystyle f_2(k) = e_k(y) \\sum_j f_1(j)\\, a_{jk}$",
+        "$\\displaystyle P(x, y) = \\sum_k f_2(k)$"
       ]
     },
     {
@@ -13739,8 +13646,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
+        "$\\displaystyle s_c = P(c)\\, P(F_1 \\mid c)\\, P(F_2 \\mid c)$",
+        "$\\displaystyle P(c \\mid F_1, F_2) = \\dfrac{s_c}{\\sum_k s_k}$"
       ]
     },
     {
@@ -13780,8 +13687,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
+        "$\\displaystyle s_c = P(c)\\, P(F_1 \\mid c)\\, P(F_2 \\mid c)$",
+        "$\\displaystyle P(c \\mid F_1, F_2) = \\dfrac{s_c}{\\sum_k s_k}$"
       ]
     },
     {
@@ -13821,9 +13728,9 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
+        "$\\displaystyle S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),$  $\\displaystyle S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
+        "$\\displaystyle b_1 = \\dfrac{S_{xy}}{S_{xx}},$  $\\displaystyle b_0 = \\bar{y} - b_1\\bar{x},$  $\\displaystyle \\hat{y}_i = b_0 + b_1 x_i$",
+        "$\\displaystyle \\text{MSE} = \\dfrac{1}{n} \\sum_i (y_i - \\hat{y}_i)^2$"
       ]
     },
     {
@@ -13864,9 +13771,9 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
+        "$\\displaystyle S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),$  $\\displaystyle S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
+        "$\\displaystyle b_1 = \\dfrac{S_{xy}}{S_{xx}},$  $\\displaystyle b_0 = \\bar{y} - b_1\\bar{x},$  $\\displaystyle \\hat{y}_i = b_0 + b_1 x_i$",
+        "$\\displaystyle \\text{MSE} = \\dfrac{1}{n} \\sum_i (y_i - \\hat{y}_i)^2$"
       ]
     },
     {
@@ -13906,9 +13813,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
+        "$\\displaystyle d_{single}(U, V) = \\min_{x \\in U,\\, y \\in V} |x - y|$",
+        "$\\displaystyle d_{complete}(U, V) = \\max_{x \\in U,\\, y \\in V} |x - y|$"
       ]
     },
     {
@@ -13948,9 +13854,8 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
+        "$\\displaystyle d_{single}(U, V) = \\min_{x \\in U,\\, y \\in V} |x - y|$",
+        "$\\displaystyle d_{complete}(U, V) = \\max_{x \\in U,\\, y \\in V} |x - y|$"
       ]
     },
     {
@@ -13990,8 +13895,10 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
+        "$\\displaystyle u_A = x_1 + 2x_2 - 1,$  $\\displaystyle u_B = 2x_1 - x_2 - 2$",
+        "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
+        "$\\displaystyle z = 3h_A + h_B - 1$",
+        "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
       ]
     },
     {
@@ -14031,8 +13938,10 @@ window.QUIZ_DATA = {
       "partB": true,
       "partB12": true,
       "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
+        "$\\displaystyle u_A = x_1 + 2x_2 - 1,$  $\\displaystyle u_B = 2x_1 - x_2 - 2$",
+        "$\\displaystyle h_A = \\text{ReLU}(u_A),$  $\\displaystyle h_B = \\text{ReLU}(u_B)$",
+        "$\\displaystyle z = 3h_A + h_B - 1$",
+        "$\\displaystyle \\text{ReLU}(u) = \\max(0, u),$  $\\displaystyle \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
       ]
     },
     {
@@ -14071,11 +13980,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A naive Bayes spam filter has classes Spam and Ham. Spam: prior 0.3, $P(W_1|\\text{Spam}) = 0.8$, $P(W_2|\\text{Spam}) = 0.6$. Ham: prior 0.7, $P(W_1|\\text{Ham}) = 0.2$, $P(W_2|\\text{Ham}) = 0.5$, where $P(W_i|c)$ is the probability word $W_i$ is present. An email contains $W_1$ but not $W_2$. The scores are 0.096 (Spam) and 0.070 (Ham). (b) What are the posteriors (three decimals) and the prediction?",
@@ -14113,11 +14018,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. (a) What are the smoothed likelihoods $P(\\text{Sunny}|\\text{Yes})$ and $P(\\text{Sunny}|\\text{No})$, and the two unnormalised scores?",
@@ -14155,12 +14056,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$P(x_i = v \\mid c) = \\dfrac{n_{v,c} + 1}{n_c + k}\\quad(k = \\text{number of values of } x_i)$",
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Training data: 4 Yes days and 6 No days. Outlook = Sunny occurs on 0 of the Yes days and 3 of the No days; Windy = true occurs on 2 of the Yes days and 3 of the No days. Each feature is binary. Use Laplace smoothing ($+1$ to each count, $+2$ to the denominator) and priors from the class frequencies. A new day is Sunny and Windy. The scores are $s_{\\text{Yes}} = 1/30 \\approx 0.033$ and $s_{\\text{No}} = 0.15$. (b) What are the posteriors and the prediction, and what would happen without smoothing?",
@@ -14198,12 +14094,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$P(x_i = v \\mid c) = \\dfrac{n_{v,c} + 1}{n_c + k}\\quad(k = \\text{number of values of } x_i)$",
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. (a) What are $\\bar x$, $\\bar y$, $S_{xy}$, $S_{xx}$, $b_1$ and $b_0$?",
@@ -14241,12 +14132,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to the four points $(0, 1), (1, 3), (2, 2), (3, 6)$. The fitted line is $\\hat y = 0.9 + 1.4x$. (b) What are the fitted values and the training $\\text{MSE}$?",
@@ -14285,12 +14171,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. (a) What are $S_{xy}$, $S_{xx}$, $b_1$, $b_0$, and the prediction at $x = 3$?",
@@ -14329,12 +14210,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Fit a least-squares line $\\hat y = b_0 + b_1 x$ to $(1, 1), (2, 3), (4, 3), (5, 5)$. The fitted line is $\\hat y = 0.6 + 0.8x$. (b) What are the residuals and the training $\\text{MSE}$?",
@@ -14372,12 +14248,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 1$, $C = 5$, $D = 7$, $E = 10$. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (a) With single linkage, what are the merges in order with their heights?",
@@ -14416,12 +14287,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 1$, $C = 5$, $D = 7$, $E = 10$. Run agglomerative clustering from singletons with absolute distance until one cluster remains. (b) With complete linkage, what are the third and fourth merge heights?",
@@ -14460,12 +14326,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 3$, $C = 4$, $D = 10$, $E = 12$. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. (a) What are the first three merges and their heights?",
@@ -14504,12 +14365,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Five one-dimensional points are $A = 0$, $B = 3$, $C = 4$, $D = 10$, $E = 12$. Run agglomerative clustering with average linkage (mean of all cross-cluster pair distances) and absolute distance. After {A,B,C} and {D,E} form, (b) what is the final merge height (three decimals), and what clusters do you get by cutting the dendrogram at height 5?",
@@ -14547,12 +14403,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z and the class?",
@@ -14590,11 +14441,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A network receives $x_1 = 1$, $x_2 = -2$. Hidden units use ReLU, the output a sigmoid: $u_A = 2x_1 + x_2 + 1$, $u_B = x_1 + x_2$, $z = h_A - 3h_B + 0.5$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit B's ReLU by the identity ($h_B = u_B$). What are the new z, probability and class?",
@@ -14632,11 +14479,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (a) What are $u_A$, $u_B$, $h_A$, $h_B$, z, the probability and the class?",
@@ -14674,11 +14517,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A network receives $x_1 = 3$, $x_2 = 1$. Hidden units use ReLU, the output a sigmoid: $u_A = x_1 - 2x_2 - 2$, $u_B = -x_1 + 2x_2 + 4$, $z = -2h_A - h_B + 2$, output $= \\sigma(z)$. Predict class 1 when the output is at least 0.5. (b) Replace only unit A's ReLU by the identity ($h_A = u_A$). What are the new z, probability and class?",
@@ -14716,11 +14555,7 @@ window.QUIZ_DATA = {
       ],
       "partB": true,
       "partB12": true,
-      "selfWritten": true,
-      "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement best matches the course definition of a complex system?",
@@ -20092,10 +19927,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Scaling / calculation",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$x' = \\dfrac{x - \\min}{\\max - \\min},\\quad z = \\dfrac{x - \\mu}{\\sigma}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "What are the Euclidean and Manhattan distances between (1, 2) and (4, 6)?",
@@ -20121,11 +19953,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Distances",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$d_{\\text{Euc}}(x,y) = \\sqrt{\\sum_i (x_i - y_i)^2}$",
-        "$d_{\\text{Man}}(x,y) = \\sum_i |x_i - y_i|$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "$x = 1000000000$ and $y = 0000001001$. What are $\\text{SMC}$ and Jaccard similarity?",
@@ -20151,11 +19979,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Binary similarity / SMC vs Jaccard",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{SMC} = \\dfrac{f_{11} + f_{00}}{f_{00} + f_{01} + f_{10} + f_{11}}$",
-        "$J = \\dfrac{f_{11}}{f_{01} + f_{10} + f_{11}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "What is the cosine similarity between (3, 4) and (4, 3)?",
@@ -20181,10 +20005,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 02",
       "knowledgeLocation": "W2 Data Preprocessing & kNN / Cosine similarity",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\cos(x, y) = \\dfrac{x \\cdot y}{\\lVert x \\rVert\\, \\lVert y \\rVert}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "For a test point, the 3 nearest neighbours are: class A at distance 1, class B at distance 2, class B at distance 2. Which class do plain 3-NN and $1/d^{2}$-weighted 3-NN predict?",
@@ -20298,12 +20119,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Least squares / calculation",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$S_{xy} = \\sum_i (x_i - \\bar{x})(y_i - \\bar{y}),\\quad S_{xx} = \\sum_i (x_i - \\bar{x})^2$",
-        "$b_1 = \\dfrac{S_{xy}}{S_{xx}},\\quad b_0 = \\bar{y} - b_1\\bar{x},\\quad \\hat{y} = b_0 + b_1 x$",
-        "$\\text{SSE} = \\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A model's errors on three examples are +1, $-2$, +3. What are $\\text{MAE}$ and $\\text{MSE}$?",
@@ -20329,11 +20145,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / MAE vs MSE",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{MAE} = \\dfrac{1}{n}\\sum_i |y_i - \\hat{y}_i|$",
-        "$\\text{MSE} = \\dfrac{1}{n}\\sum_i (y_i - \\hat{y}_i)^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement about regularised linear regression is correct?",
@@ -20389,11 +20201,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 03",
       "knowledgeLocation": "W3 Linear & Logistic Regression / Logistic regression / prediction",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$z = w_0 + \\sum_i w_i x_i,\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$",
-        "$\\text{predict class 1 if } \\sigma(z) \\ge 0.5$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement about least-squares linear regression is correct?",
@@ -20476,11 +20284,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Naive Bayes / calculation",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "What is the 'naive' assumption in Naive Bayes?",
@@ -20532,12 +20336,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Laplace smoothing",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$P(x_i = v \\mid c) = \\dfrac{n_{v,c} + 1}{n_c + k}\\quad(k = \\text{number of values of } x_i)$",
-        "$P(c \\mid x) \\propto P(c)\\prod_i P(x_i \\mid c)$",
-        "$P(c \\mid x) = \\dfrac{P(c)\\prod_i P(x_i \\mid c)}{\\sum_{c'} P(c')\\prod_i P(x_i \\mid c')}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A classifier has $\\text{TP} = 40$, $\\text{FP} = 10$, $\\text{FN} = 20$. What are precision, recall and F1?",
@@ -20568,12 +20367,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 04",
       "knowledgeLocation": "W4 Naive Bayes & Evaluation / Precision, recall, F1",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{Accuracy} = \\dfrac{TP + TN}{TP + TN + FP + FN}$",
-        "$P = \\dfrac{TP}{TP + FP},\\quad R = \\dfrac{TP}{TP + FN}$",
-        "$F_1 = \\dfrac{2PR}{P + R}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "How should hyperparameters (e.g. $k$ in kNN) be chosen?",
@@ -20683,11 +20477,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 05",
       "knowledgeLocation": "W5 Decision Trees & Ensembles / Information gain / calculation",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$H(S) = -\\sum_c p_c \\log_2 p_c,\\quad 0\\log_2 0 = 0$",
-        "$IG(S, A) = H(S) - \\sum_v \\dfrac{|S_v|}{|S|} H(S_v)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Why can information gain prefer a feature like 'customer ID'?",
@@ -20843,10 +20633,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / SVM margin",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{margin} = \\dfrac{2}{\\lVert \\mathbf{w} \\rVert},\\quad \\lVert \\mathbf{w} \\rVert = \\sqrt{\\sum_i w_i^2}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "For $K(\\mathbf x, \\mathbf z) = (\\mathbf x \\cdot \\mathbf z + 1)^2$ with $\\mathbf x = (1, 2)$ and $\\mathbf z = (3, 1)$, what is $K$?",
@@ -20872,11 +20659,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Kernels / polynomial",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{polynomial: } K(\\mathbf{x}, \\mathbf{z}) = (\\mathbf{x}^T\\mathbf{z} + c)^d$",
-        "$\\text{RBF: } K(\\mathbf{x}, \\mathbf{z}) = \\exp(-\\gamma \\lVert \\mathbf{x} - \\mathbf{z} \\rVert^2)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "For an RBF kernel $K = \\exp(-\\gamma\\lVert\\mathbf x - \\mathbf z\\rVert^2)$ with $\\gamma = 0.5$, $\\mathbf x = (1, 2)$, $\\mathbf z = (3, 1)$, what is $K$?",
@@ -20902,11 +20685,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / Kernels / RBF",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{polynomial: } K(\\mathbf{x}, \\mathbf{z}) = (\\mathbf{x}^T\\mathbf{z} + c)^d$",
-        "$\\text{RBF: } K(\\mathbf{x}, \\mathbf{z}) = \\exp(-\\gamma \\lVert \\mathbf{x} - \\mathbf{z} \\rVert^2)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Why doesn't the kernel trick need to store high-dimensional feature vectors?",
@@ -20984,10 +20763,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 06",
       "knowledgeLocation": "W6 SVM & PCA / PCA / cumulative variance",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{retained variance} = \\dfrac{\\sum_{i=1}^{k} \\lambda_i}{\\sum_{i=1}^{d} \\lambda_i}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement about PCA is correct?",
@@ -21070,11 +20846,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Perceptron update",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$u = \\mathbf{w}\\cdot\\mathbf{x} + b,\\quad a = 1 \\text{ if } u \\ge 0 \\text{ else } 0$",
-        "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\eta(t - a)\\mathbf{x},\\quad b \\leftarrow b + \\eta(t - a)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Hidden units: $h_1 = \\text{ReLU}(0.5x_1 - x_2)$, $h_2 = \\text{ReLU}(-x_1 + x_2)$. Output $o = \\sigma(2h_1 - h_2 - 0.5)$. For $\\mathbf x = (1, 0)$, what is $o$ and the class (threshold 0.5)?",
@@ -21105,11 +20877,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Forward pass",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$a = g\\left(\\sum_i w_i x_i + b\\right)$",
-        "$\\text{ReLU}(z) = \\max(0, z),\\quad \\sigma(z) = \\dfrac{1}{1 + e^{-z}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A weight $w = 2.0$ has loss gradient $\\partial L/\\partial w = 0.5$ and learning rate $\\eta = 0.1$. What is $w$ after one gradient-descent step?",
@@ -21135,10 +20903,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Gradient descent step",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$w \\leftarrow w - \\eta\\, \\dfrac{\\partial L}{\\partial w}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A fully connected layer maps 4 inputs to 3 neurons, each with a bias. How many trainable parameters does it have?",
@@ -21164,10 +20929,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 07",
       "knowledgeLocation": "W7 Neural Networks & Backpropagation / Parameter count / dense layer",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{params} = (n_{\\text{in}} + 1)\\times n_{\\text{out}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement is correct?",
@@ -21300,10 +21062,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / parameter count",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{params} = (f \\times f \\times C_{\\text{in}} + 1)\\times C_{\\text{out}}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A $32 \\times  32$ input goes through a $5 \\times  5$ convolution (stride 1, no padding) and then $2 \\times  2$ max pooling with stride 2. What is the output size?",
@@ -21333,10 +21092,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{output size} = \\left\\lfloor \\dfrac{n + 2p - f}{s} \\right\\rfloor + 1$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A $7 \\times  7$ input, $3 \\times  3$ filter, padding 1, stride 2. What is the output size?",
@@ -21362,10 +21118,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 08",
       "knowledgeLocation": "W8 CNN, RNN & LSTM / CNN / output size with padding",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{output size} = \\left\\lfloor \\dfrac{n + 2p - f}{s} \\right\\rfloor + 1$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement is correct?",
@@ -21469,12 +21222,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / k-means / one iteration",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{assign } x \\text{ to } \\arg\\min_k \\lVert x - \\mu_k \\rVert^2$",
-        "$\\mu_k = \\dfrac{1}{|C_k|}\\sum_{x \\in C_k} x$",
-        "$\\text{SSE} = \\sum_k \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "1-D points 0, 1, 4, 10. Using complete linkage, at what distance does the second merge happen?",
@@ -21500,12 +21248,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / linkage",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Clusters $A = \\{0, 1\\}$ and $B = \\{4, 10\\}$ in 1-D. What is the average-linkage distance between them?",
@@ -21531,12 +21274,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Cluster distance / average linkage",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "A GMM has two components with priors 0.5 and 0.5. For point x the likelihoods are 0.3 (component 1) and 0.1 (component 2). What is component 1's responsibility for x?",
@@ -21562,10 +21300,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / GMM / responsibility",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$r_k(x) = \\dfrac{\\pi_k f_k(x)}{\\sum_j \\pi_j f_j(x)}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which statement about k-means is correct?",
@@ -21617,12 +21352,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 09",
       "knowledgeLocation": "W9 Clustering I (k-means, GMM, hierarchical) / Hierarchical clustering / single linkage",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\text{single: } d(A,B) = \\min_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{complete: } d(A,B) = \\max_{a\\in A,\\, b\\in B} d(a,b)$",
-        "$\\text{average: } d(A,B) = \\dfrac{1}{|A||B|}\\sum_{a\\in A}\\sum_{b\\in B} d(a,b)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Weather Markov chain: $P(S\\to S) = 0.8$, $P(S\\to R) = 0.2$, $P(R\\to S) = 0.4$, $P(R\\to R) = 0.6$. Today is sunny. What is the probability that it rains in 2 days?",
@@ -21648,11 +21378,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / n-step probability",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$P(s_1, \\dots, s_T) = \\pi_{s_1}\\prod_{t=2}^{T} a_{s_{t-1} s_t}$",
-        "$P(s_{t+n} = k \\mid s_t = j) = (A^n)_{jk}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Which algorithm answers 'what is the most likely sequence of hidden states for these observations?'",
@@ -21710,12 +21436,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / HMM / forward algorithm",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$f_1(k) = \\pi_k\\, e_k(o_1)$",
-        "$f_t(k) = e_k(o_t) \\sum_j f_{t-1}(j)\\, a_{jk}$",
-        "$P(O) = \\sum_k f_T(k)$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "Same HMM and observations (walk, shop). What is the most likely hidden state sequence?",
@@ -21793,11 +21514,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 11",
       "knowledgeLocation": "W11 Markov Models & HMM / Markov chain / sequence probability",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$P(s_1, \\dots, s_T) = \\pi_{s_1}\\prod_{t=2}^{T} a_{s_{t-1} s_t}$",
-        "$P(s_{t+n} = k \\mid s_t = j) = (A^n)_{jk}$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "$Q(s, a) = 2$, reward $r = 1$, $\\gamma = 0.9$, max over a′ of $Q(s', a') = 5$, learning rate $\\alpha = 0.5$. What is the new Q(s, a)?",
@@ -21828,11 +21545,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Q-learning update",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$Q(s,a) \\leftarrow Q(s,a) + \\alpha\\left[r + \\gamma \\max_{a'} Q(s',a') - Q(s,a)\\right]$",
-        "$\\text{terminal } s'\\text{: target} = r$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "$Q(s, a) = 4$, the action leads to a terminal state with reward $r = 10$, $\\gamma = 0.9$, $\\alpha = 0.5$. What is the new Q(s, a)?",
@@ -21858,11 +21571,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Q-learning / terminal state",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$Q(s,a) \\leftarrow Q(s,a) + \\alpha\\left[r + \\gamma \\max_{a'} Q(s',a') - Q(s,a)\\right]$",
-        "$\\text{terminal } s'\\text{: target} = r$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "An action leads with probability 0.7 to reward 2 and a state of value 10, and with probability 0.3 to reward 0 and a state of value 4. With $\\gamma = 0.9$, what is the expected action value?",
@@ -21893,10 +21602,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Expected action value",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$Q(s,a) = \\sum_{s'} P(s' \\mid s,a)\\left[r + \\gamma V(s')\\right]$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "In DQN, which pairing of technique and purpose is correct?",
@@ -21974,10 +21680,7 @@ window.QUIZ_DATA = {
       "lectureWeek": "Week 12",
       "knowledgeLocation": "W12 Reinforcement Learning / Exploration vs exploitation",
       "source": "kp",
-      "selfWritten": true,
-      "formulas": [
-        "$\\varepsilon\\text{-greedy: random action w.p. } \\varepsilon,\\ \\arg\\max_a Q(s,a) \\text{ w.p. } 1 - \\varepsilon$"
-      ]
+      "selfWritten": true
     },
     {
       "question": "How does reinforcement learning differ from supervised learning?",
