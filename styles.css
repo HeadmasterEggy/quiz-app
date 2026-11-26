@@ -1947,7 +1947,7 @@ kbd {
     .quiz-card {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-rows: repeat(10, auto) 1fr;
+        grid-template-rows: repeat(11, auto) 1fr;
         column-gap: 28px;
         align-items: start;
         padding: 28px 30px;
@@ -1956,7 +1956,7 @@ kbd {
     .quiz-card > .explanation-inline,
     .quiz-card > .expl-placeholder {
         grid-column: 2;
-        grid-row: 1 / 12;
+        grid-row: 1 / 13;
         position: sticky;
         top: 16px;
         max-height: calc(100vh - 32px);
@@ -2072,6 +2072,27 @@ body::before { display: none; }
 }
 
 .question-text { font-size: 1.15rem; line-height: 1.6; font-weight: 600; margin-bottom: 20px; }
+
+/* Formulas given with the question, as on the exam paper */
+.formula-box {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary-light);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: -8px 0 18px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    overflow-x: auto;
+}
+.formula-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.formula-row { padding: 3px 0; }
 
 /* Options: quiet rows, letter in a rounded square */
 .options { gap: 10px; }
